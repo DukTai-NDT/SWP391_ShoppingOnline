@@ -1,3 +1,10 @@
+<%-- 
+    Document   : checkout
+    Created on : Feb 27, 2025, 10:11:21 PM
+    Author     : Admin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
     <html lang="en">
@@ -190,14 +197,14 @@
                 <div class="row mt-5 justify-content-center">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h3 class="sub-title mb-4">Shop Cart</h3>
+                            <h3 class="sub-title mb-4">Checkout</h3>
                             <p class="para-desc mx-auto text-muted">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
                         
                             <nav aria-label="breadcrumb" class="d-inline-block mt-3">
                                 <ul class="breadcrumb bg-light rounded mb-0 bg-transparent">
                                     <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
                                     <li class="breadcrumb-item"><a href="pharmacy.html">Pharmacy</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Shop Cart</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
                                 </ul>
                             </nav>
                         </div>
@@ -218,126 +225,214 @@
         <section class="section">
             <div class="container">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="table-responsive bg-white shadow rounded">
-                            <table class="table table-center table-padding mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="border-bottom p-3" style="min-width:20px "></th>
-                                        <th class="border-bottom p-3" style="min-width: 300px;">Product</th>
-                                        <th class="border-bottom text-center p-3" style="min-width: 160px;">Price</th>
-                                        <th class="border-bottom text-center p-3" style="min-width: 190px;">Qty</th>
-                                        <th class="border-bottom text-end p-3" style="min-width: 50px;">Total</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr>
-                                        <td class="h5 p-3 text-center"><a href="#" class="text-danger"><i class="uil uil-times"></i></a></td>
-                                        <td class="p-3">
-                                            <div class="d-flex align-items-center">
-                                                <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
-                                                <h6 class="mb-0 ms-3">Ashwagandha Churna</h6>
-                                            </div>
-                                        </td>
-                                        <td class="text-center p-3">$ 255.00</td>
-                                        <td class="text-center shop-list p-3">
-                                            <div class="qty-icons">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-icon btn-primary minus">-</button>
-                                                <input min="0" name="quantity" value="0" type="number" class="btn btn-icon btn-primary qty-btn quantity">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-icon btn-primary plus">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-end font-weight-bold p-3">$510.00</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="h5 p-3 text-center"><a href="#" class="text-danger"><i class="uil uil-times"></i></a></td>
-                                        <td class="p-3">
-                                            <div class="d-flex align-items-center">
-                                                <img src="images/pharmacy/shop/diabend.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
-                                                <h6 class="mb-0 ms-3">Diabend</h6>
-                                            </div>
-                                        </td>
-                                        <td class="text-center p-3">$ 520.00</td>
-                                        <td class="text-center shop-list p-3">
-                                            <div class="qty-icons">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-icon btn-primary minus">-</button>
-                                                <input min="0" name="quantity" value="0" type="number" class="btn btn-icon btn-primary qty-btn quantity">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-icon btn-primary plus">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-end font-weight-bold p-3">$520.00</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="h5 p-3 text-center"><a href="#" class="text-danger"><i class="uil uil-times"></i></a></td>
-                                        <td class="p-3">
-                                            <div class="d-flex align-items-center">
-                                                <img src="images/pharmacy/shop/facewash.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
-                                                <h6 class="mb-0 ms-3">Facewash</h6>
-                                            </div>
-                                        </td>
-                                        <td class="text-center p-3">$ 160.00</td>
-                                        <td class="text-center shop-list p-3">
-                                            <div class="qty-icons">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-icon btn-primary minus">-</button>
-                                                <input min="0" name="quantity" value="0" type="number" class="btn btn-icon btn-primary qty-btn quantity">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-icon btn-primary plus">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-end font-weight-bold p-3">$640.00</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="h5 p-3 text-center"><a href="#" class="text-danger"><i class="uil uil-times"></i></a></td>
-                                        <td class="p-3">
-                                            <div class="d-flex align-items-center">
-                                                <img src="images/pharmacy/shop/handwash.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
-                                                <h6 class="mb-0 ms-3">Dettol handwash</h6>
-                                            </div>
-                                        </td>
-                                        <td class="text-center p-3">$ 260.00</td>
-                                        <td class="text-center shop-list p-3">
-                                            <div class="qty-icons">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-icon btn-primary minus">-</button>
-                                                <input min="0" name="quantity" value="0" type="number" class="btn btn-icon btn-primary qty-btn quantity">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-icon btn-primary plus">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-end font-weight-bold p-3">$520.00</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="col-md-5 col-lg-4 order-md-last">
+                        <div class="card rounded shadow p-4 border-0">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="h5 mb-0">Your cart</span>
+                                <span class="badge bg-primary rounded-pill">3</span>
+                            </div>
+                            <ul class="list-group mb-3 border">
+                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
+                                    <div>
+                                        <h6 class="my-0">Product name</h6>
+                                        <small class="text-muted">Brief description</small>
+                                    </div>
+                                    <span class="text-muted">$12</span>
+                                </li>
+                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
+                                    <div>
+                                        <h6 class="my-0">Second product</h6>
+                                        <small class="text-muted">Brief description</small>
+                                    </div>
+                                    <span class="text-muted">$8</span>
+                                </li>
+                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
+                                    <div>
+                                        <h6 class="my-0">Third item</h6>
+                                        <small class="text-muted">Brief description</small>
+                                    </div>
+                                    <span class="text-muted">$5</span>
+                                </li>
+                                <li class="d-flex justify-content-between bg-light p-3 border-bottom">
+                                    <div class="text-success">
+                                        <h6 class="my-0">Promo code</h6>
+                                        <small>EXAMPLECODE</small>
+                                    </div>
+                                    <span class="text-success">−$5</span>
+                                </li>
+                                <li class="d-flex justify-content-between p-3">
+                                    <span>Total (USD)</span>
+                                    <strong>$20</strong>
+                                </li>
+                            </ul>
+                    
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Promo code">
+                                    <button type="submit" class="btn btn-secondary">Redeem</button>
+                                </div>
+                            </form>
                         </div>
                     </div><!--end col-->
-                </div><!--end row-->
-                <div class="row">
-                    <div class="col-lg-8 col-md-6 mt-4 pt-2">
-                        <a href="#" class="btn btn-primary">Shop More</a>
-                        <a href="#" class="btn btn-soft-primary ms-2">Update Cart</a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
-                        <div class="table-responsive bg-white rounded shadow">
-                            <table class="table table-center table-padding mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td class="h6 p-3">Subtotal</td>
-                                        <td class="text-end font-weight-bold p-3">$ 2190</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="h6 p-3">Taxes</td>
-                                        <td class="text-end font-weight-bold p-3">$ 219</td>
-                                    </tr>
-                                    <tr class="bg-light">
-                                        <td class="h6 p-3">Total</td>
-                                        <td class="text-end font-weight-bold p-3">$ 2409</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="mt-4 pt-2 text-end">
-                            <a href="#" class="btn btn-primary">Proceed to checkout</a>
+                    
+                    <div class="col-md-7 col-lg-8">
+                        <div class="card rounded shadow p-4 border-0">
+                            <h5 class="mb-3">Billing address</h5>
+                            <form class="needs-validation" novalidate>
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <label for="firstName" class="form-label">First name</label>
+                                        <input type="text" class="form-control" id="firstName" placeholder="First Name" value=""
+                                            required>
+                                        <div class="invalid-feedback">
+                                            Valid first name is required.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label for="lastName" class="form-label">Last name</label>
+                                        <input type="text" class="form-control" id="lastName" placeholder="Last Name" value=""
+                                            required>
+                                        <div class="invalid-feedback">
+                                            Valid last name is required.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="username" class="form-label">Username</label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text bg-light text-muted border">@</span>
+                                            <input type="text" class="form-control" id="username" placeholder="Username" required>
+                                            <div class="invalid-feedback"> Your username is required. </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Email <span
+                                                class="text-muted">(Optional)</span></label>
+                                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                                        <div class="invalid-feedback">
+                                            Please enter a valid email address for shipping updates.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                                            required>
+                                        <div class="invalid-feedback">
+                                            Please enter your shipping address.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="address2" class="form-label">Address 2 <span
+                                                class="text-muted">(Optional)</span></label>
+                                        <input type="text" class="form-control" id="address2"
+                                            placeholder="Apartment or suite">
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label for="country" class="form-label">Country</label>
+                                        <select class="form-select form-control" id="country" required>
+                                            <option value="">Choose...</option>
+                                            <option>United States</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select a valid country.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="state" class="form-label">State</label>
+                                        <select class="form-select form-control" id="state" required>
+                                            <option value="">Choose...</option>
+                                            <option>California</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid state.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="zip" class="form-label">Zip</label>
+                                        <input type="text" class="form-control" id="zip" placeholder="" required>
+                                        <div class="invalid-feedback">
+                                            Zip code required.
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-check mt-4 pt-4 border-top">
+                                    <input type="checkbox" class="form-check-input" id="same-address">
+                                    <label class="form-check-label" for="same-address">Shipping address is the same as my
+                                        billing address</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="save-info">
+                                    <label class="form-check-label" for="save-info">Save this information for next
+                                        time</label>
+                                </div>
+
+                                <h5 class="mb-3 mt-4 pt-4 border-top">Payment</h5>
+
+                                <div class="my-3">
+                                    <div class="form-check">
+                                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
+                                            checked required>
+                                        <label class="form-check-label" for="credit">Credit card</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input id="debit" name="paymentMethod" type="radio" class="form-check-input"
+                                            required>
+                                        <label class="form-check-label" for="debit">Debit card</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
+                                            required>
+                                        <label class="form-check-label" for="paypal">PayPal</label>
+                                    </div>
+                                </div>
+
+                                <div class="row gy-3">
+                                    <div class="col-md-6">
+                                        <label for="cc-name" class="form-label">Name on card</label>
+                                        <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                                        <small class="text-muted">Full name as displayed on card</small>
+                                        <div class="invalid-feedback">
+                                            Name on card is required
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="cc-number" class="form-label">Credit card number</label>
+                                        <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                                        <div class="invalid-feedback">
+                                            Credit card number is required
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 mb-3">
+                                        <label for="cc-expiration" class="form-label">Expiration</label>
+                                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                                        <div class="invalid-feedback">
+                                            Expiration date required
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 mb-3">
+                                        <label for="cc-cvv" class="form-label">CVV</label>
+                                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                                        <div class="invalid-feedback">
+                                            Security code required
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="w-100 btn btn-primary" type="submit">Continue to checkout</button>
+                            </form>
                         </div>
                     </div><!--end col-->
                 </div><!--end row-->

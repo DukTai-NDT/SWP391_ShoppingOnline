@@ -5,6 +5,7 @@
 package controller;
 
 import entity.Account;
+import entity.Customers;
 import entity.GoogleAccount;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Random;
 import java.util.Vector;
 import model.DAOAccount;
+import model.DAOCustomer;
 import model.DAOGoogleLogin;
 
 
@@ -41,7 +43,7 @@ public class SignUpController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAOAccount dao = new DAOAccount();
-        DAOPatient daoPatient = new DAOPatient();
+        DAOCustomer daoCustomer = new DAOCustomer();
         HttpSession session = request.getSession();
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("service");
@@ -70,7 +72,8 @@ public class SignUpController extends HttpServlet {
                     request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
                 } else {
                     int n = dao.addAccount(new Account(acc.getName(), 1002, getRandom(6), acc.getEmail()));
-                    Patient patient = new Patient(acc.getFirst_name(), acc.getFamily_name(), null, acc.getEmail(), 0, null, 0, 0, dao.getLastAccountID());
+                    Customers customer = new Customers(acc.getFirst_name(), acc.getFamily_name(),
+                             acc.getEmail(), null, null, null, dao.getLastAccountID());
 
                     request.setAttribute("message", "Sign up successfully. Please login");
                     request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
@@ -84,10 +87,10 @@ public class SignUpController extends HttpServlet {
                 String Email = request.getParameter("Email");
                 String Password = request.getParameter("Password");
 
-                Vector<Patient> vector = new Vector<>();
+                Vector<Customers> vector = new Vector<>();
 
-                for (Patient patient : vector) {
-                    if (patient.getEmail().equals(Email)) {
+                for (Customers customer : vector) {
+                    if (customer.getEmail().equals(Email)) {
                         request.setAttribute("accountExist", "Account already exist!!!");
                         request.getRequestDispatcher("jsp/signup.jsp").forward(request, response);
                         return;
@@ -99,8 +102,8 @@ public class SignUpController extends HttpServlet {
                     //request.setAttribute("accountFail", "Can not to signup !!!");
                     request.getRequestDispatcher("jsp/signup.jsp").forward(request, response);
                 } else {
-                    Patient patient = new Patient(FirstName, LastName, null, Email, 0, null, 0, 0, dao.getLastAccountID());
-                    int x = daoPatient.addPatient(patient);
+                    Customers customer = new Customers(FirstName, LastName,Email, null, null, null, dao.getLastAccountID());
+                    int x = daoCustomer.addCustomer(customer);
                     response.sendRedirect("LoginURL?service=login");
                 }
 

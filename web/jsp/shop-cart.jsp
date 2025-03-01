@@ -1,3 +1,10 @@
+<%-- 
+    Document   : shop-cart
+    Created on : Feb 27, 2025, 10:10:17 PM
+    Author     : Admin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
     <html lang="en">

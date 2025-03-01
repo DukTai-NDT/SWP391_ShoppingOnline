@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author Admin
@@ -44,5 +46,6 @@ public class Categories {
     public String toString() {
         return "Categories{" + "CategoriesID=" + CategoriesID + ", Name=" + Name + '}';
     }
+    
     
 }
