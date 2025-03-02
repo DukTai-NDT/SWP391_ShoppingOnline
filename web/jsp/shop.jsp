@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@page import="entity.Products, java.util.Vector" %>
 
 
 <!DOCTYPE html>
@@ -33,6 +33,9 @@
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
         <link rel="stylesheet" href="css/product-css.css">
     </head>
+
+
+    <%Vector<Products> vector = (Vector<Products>)request.getAttribute("vector");%>
 
     <body>
         <!-- Loader -->
@@ -110,7 +113,7 @@
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left">
-                        
+
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
                             <ul class="submenu">
@@ -157,13 +160,14 @@
                 <!-- Bộ lọc giá bán -->
                 <div class="filter-section">
                     <h4>Giá bán</h4>
-                    <select>
-                        <option>Được 100.000đ</option>
-                        <option>100.000đ đến 300.000đ</option>
-                        <option>300.000đ đến 500.000đ</option>
-                        <option>Trên 500.000đ</option>
-                    </select>
+                    <div class="price-filter">
+                        <a href="ProductURL?service=duoi100">Dưới 100.000đ</a>
+                        <a href="ProductURL?service=duoi300">100.000đ đến 300.000đ</a>
+                        <a href="ProductURL?service=duoi500">300.000đ đến 500.000đ</a>
+                        <a href="ProductURL?service=tren500">Trên 500.000đ</a>
+                    </div>
                 </div>
+
 
                 <!-- Bộ lọc loại thuốc -->
                 <div class="filter-section">
@@ -199,83 +203,28 @@
                 <div class="header">
                     <h2>Danh sách sản phẩm</h2>
                     <div class="sort-filter">
-                        <span>Sắp xếp theo</span>
-                        <select>
-                            <option>Giá thấp</option>
-                            <option>Giá cao</option>
-                        </select>
-                        <span>Bán chạy</span>
-                        <span>Giá thấp</span>
-                        <span>Giá cao</span>
+                       
+                        <span><a href="ProductURL">Bán chạy</a></span>
+                        <span><a href="ProductURL?service=listAllProductsLowPrice">Giá thấp</a></span>
+                        <span><a href="ProductURL?service=listAllProductsHighPrice">Giá cao</a></span>
+
                     </div>
                 </div>
 
                 <div class="product-grid">
+                    <%for (Products pro : vector) {%>
                     <!-- Sản phẩm 1 -->
                     <div class="product-card">
-                        <img src="https://via.placeholder.com/150" alt="Product 1">
-                        <h3>Thuốc mơ bài Agiclovir 5% Agimexpharm điều trị nhiễm Herpes simplex...</h3>
-                        <p class="price">10.000đ / Túyp</p>
+                        <a href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><img src="https://via.placeholder.com/150" alt="Product 1"></a>
+                        <h3><%=pro.getProductName()%></h3>
+                        <p class="price"><%=pro.getPrice()%>/ Túyp</p>
                         <div class="buttons">
                             <button class="buy-btn">Chọn mua</button>
                             <button class="pack-btn">Túyp</button>
                         </div>
                     </div>
 
-                    <!-- Sản phẩm 2 -->
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/150" alt="Product 2">
-                        <h3>Thuốc Fugacar 500mg Janssen điều trị nhiễm giun (1 viên)</h3>
-                        <p class="price">22.000đ / Hộp</p>
-                        <div class="buttons">
-                            <button class="buy-btn">Chọn mua</button>
-                            <button class="pack-btn">Hộp 1 vỉ x 1 viên</button>
-                        </div>
-                    </div>
-
-                    <!-- Sản phẩm 3 -->
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/150" alt="Product 3">
-                        <h3>Kem Nizoral Janssen 20mg/g điều trị nhiễm nấm ngoài (15g)</h3>
-                        <p class="price">71.000đ / Hộp</p>
-                        <div class="buttons">
-                            <button class="buy-btn">Chọn mua</button>
-                            <button class="pack-btn">Hộp</button>
-                        </div>
-                    </div>
-
-                    <!-- Sản phẩm 4 -->
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/150" alt="Product 4">
-                        <h3>Viên nen Mebendazole 500mg Mekophar điều trị nhiễm một hay nhiều loại...</h3>
-                        <p class="price">2.200đ / Hộp</p>
-                        <div class="buttons">
-                            <button class="buy-btn">Chọn mua</button>
-                            <button class="pack-btn">Hộp 1 viên</button>
-                        </div>
-                    </div>
-
-                    <!-- Sản phẩm 5 -->
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/150" alt="Product 5">
-                        <h3>Thuốc Fugacar Janssen hướng dẫn điều trị nhiễm giun</h3>
-                        <p class="price">22.000đ / Hộp</p>
-                        <div class="buttons">
-                            <button class="buy-btn">Chọn mua</button>
-                            <button class="pack-btn">Hộp 1 vỉ x 1 viên</button>
-                        </div>
-                    </div>
-
-                    <!-- Sản phẩm 6 -->
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/150" alt="Product 6">
-                        <h3>Thuốc Alzentel 400mg Shinpoong Daewoo điều trị nhiễm giun</h3>
-                        <p class="price">71.000đ / Hộp</p>
-                        <div class="buttons">
-                            <button class="buy-btn">Chọn mua</button>
-                            <button class="pack-btn">Hộp</button>
-                        </div>
-                    </div>
+                    <%}%>
                 </div>
             </div>
         </div>
@@ -454,3 +403,5 @@
     </body>
 
 </html>
+
+
