@@ -1,8 +1,4 @@
-<%-- 
-    Document   : product-detail
-    Created on : Feb 28, 2025, 1:10:55 PM
-    Author     : quang
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -162,7 +158,11 @@
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
+<<<<<<< HEAD
                                 <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
+=======
+                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
                                 <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>

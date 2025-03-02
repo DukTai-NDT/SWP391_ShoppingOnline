@@ -1,8 +1,4 @@
-<%-- 
-    Document   : displayCheckout
-    Created on : Feb 13, 2025, 1:04:53 PM
-    Author     : quang
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -48,7 +44,11 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container-->
+<<<<<<< HEAD
                 <a class="logo" href="index.html">
+=======
+                <a class="logo" href="index.jsp">
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                     <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
@@ -95,10 +95,17 @@
                                         <small class="text-muted">Orthopedic</small>
                                     </div>
                                 </a>
+<<<<<<< HEAD
                                 <a class="dropdown-item text-dark" href="doctor-dashboard.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                 <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="login.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+=======
+                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <div class="dropdown-divider border-top"></div>
+                                <a class="dropdown-item text-dark" href="jsp/login.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                             </div>
                         </div>
                     </li>
@@ -111,7 +118,11 @@
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Home</a><span class="menu-arrow"></span>
                             <ul class="submenu">
+<<<<<<< HEAD
                                 <li><a href="index.html" class="sub-menu-item">Index One</a></li>
+=======
+                                <li><a href="index.jsp" class="sub-menu-item">Index One</a></li>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                                 <li><a href="index-two.html" class="sub-menu-item">Index Two</a></li>
                                 <li><a href="index-three.html" class="sub-menu-item">Index Three</a></li>
                             </ul>
@@ -123,7 +134,11 @@
                                 <li class="has-submenu parent-menu-item">
                                     <a href="javascript:void(0)" class="menu-item"> Dashboard </a><span class="submenu-arrow"></span>
                                     <ul class="submenu">
+<<<<<<< HEAD
                                         <li><a href="doctor-dashboard.html" class="sub-menu-item">Dashboard</a></li>
+=======
+                                        <li><a href="doctor-dashboard.jsp" class="sub-menu-item">Dashboard</a></li>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                                         <li><a href="doctor-appointment.html" class="sub-menu-item">Appointment</a></li>
                                         <li><a href="patient-list.html" class="sub-menu-item">Patients</a></li>
                                         <li><a href="doctor-schedule.html" class="sub-menu-item">Schedule Timing</a></li>
@@ -133,8 +148,13 @@
                                         <li><a href="doctor-profile.html" class="sub-menu-item">Profile</a></li>
                                         <li><a href="doctor-profile-setting.html" class="sub-menu-item">Profile Settings</a></li>
                                         <li><a href="doctor-chat.html" class="sub-menu-item">Chat</a></li>
+<<<<<<< HEAD
                                         <li><a href="login.html" class="sub-menu-item">Login</a></li>
                                         <li><a href="signup.html" class="sub-menu-item">Sign Up</a></li>
+=======
+                                        <li><a href="jsp/login.jsp" class="sub-menu-item">Login</a></li>
+                                        <li><a href="jsp/signup.jsp" class="sub-menu-item">Sign Up</a></li>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                                         <li><a href="forgot-password.html" class="sub-menu-item">Forgot Password</a></li>
                                     </ul>
                                 </li>
@@ -157,10 +177,18 @@
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
                             <ul class="submenu">
+<<<<<<< HEAD
                                 
                                 <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
                                 <li><a href="CartURL?service=showCart" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="CheckoutURL" class="sub-menu-item">Checkout</a></li>
+=======
+                                <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
+                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
+                                <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
+                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
                         </li>
@@ -183,7 +211,11 @@
                                 <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
                             </ul>
                         </li>
+<<<<<<< HEAD
                         <li><a href="../admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
+=======
+                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -201,7 +233,11 @@
                         
                             <nav aria-label="breadcrumb" class="d-inline-block mt-3">
                                 <ul class="breadcrumb bg-light rounded mb-0 bg-transparent">
+<<<<<<< HEAD
                                     <li class="breadcrumb-item"><a href="index.html">Doctris</a></li>
+=======
+                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                                     <li class="breadcrumb-item"><a href="pharmacy.html">Pharmacy</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Checkout</li>
                                 </ul>
@@ -513,7 +549,11 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="text-sm-start text-center">
+<<<<<<< HEAD
                                 <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.html" target="_blank" class="text-reset">Shreethemes</a>.</p>
+=======
+                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                             </div>
                         </div><!--end col-->
     
@@ -581,7 +621,11 @@
                                     <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
                                     <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
                                     <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
+<<<<<<< HEAD
                                     <li class="d-grid"><a href="../admin/index.html" target="_blank" class="mt-4"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
+=======
+                                    <li class="d-grid"><a href="indexAdmin.jsp" target="_blank" class="mt-4"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                                 </ul>
                             </div>
                         </div>
@@ -598,7 +642,11 @@
                     <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
+<<<<<<< HEAD
                     <li class="list-inline-item mb-0"><a href="../../../index.html" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
+=======
+                    <li class="list-inline-item mb-0"><a href="../../../index.jsp" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
                 </ul><!--end icon-->
             </div>
         </div>
@@ -612,4 +660,8 @@
         <script src="js/app.js"></script>
     </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> dd89797db69cc0db5c49a43d266b198ee9a3ef17
