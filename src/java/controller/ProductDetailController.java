@@ -39,12 +39,12 @@ public class ProductDetailController extends HttpServlet {
             String service = request.getParameter("service");
             if(service.equals("detailProduct")){
                 String pid = request.getParameter("pid");
-                sql = "select * from MedicalProducts where MedicationID = " + pid;
+                sql = "select * from Products where ProductID = " + pid;
             }
             
             Vector<Products> vector = dao.getProducts(sql);
             request.setAttribute("vector", vector);
-           request.getRequestDispatcher("/jsp/displayProductDetail.jsp").forward(request, response);
+           request.getRequestDispatcher("/jsp/product-detail.jsp").forward(request, response);
         }
     } 
 

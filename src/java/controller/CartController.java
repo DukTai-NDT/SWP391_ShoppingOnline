@@ -41,10 +41,13 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        
-
+        HttpSession session = request.getSession(true);
         try (PrintWriter out = response.getWriter()) {
-          
+            String service = request.getParameter("service");
+            if (service == null) {
+                service = "showCart";
+            }
+            request.getRequestDispatcher("/jsp/shop-cart.jsp").forward(request, response);
 
         }
     }
