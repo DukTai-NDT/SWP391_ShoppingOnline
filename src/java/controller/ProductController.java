@@ -37,33 +37,9 @@ public class ProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAOProducts dao = new DAOProducts();
-        DAOCategories daoCat = new DAOCategories();
+       
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String service = request.getParameter("service");
-            String sql = "select * from MedicalProducts";
-            String sqlCat = "select * from Categories";
-            if(service == null){
-                service = "listAllProducts";
-            }
-            
-            if(service.equals("listAllProducts")){
-                sql = "select * from MedicalProducts";
-            }
-            
-            if (service.equals("categories")) {
-                String cid = request.getParameter("cid");
-                sql = "select * from MedicalProducts a join Categories b on a.CategoriesID = b.CategoriesID\n"
-                        + "where b.CategoriesID = " + cid;
-            }
-            Vector<Products> vector = dao.getProducts(sql);
-            Vector<Categories> vectorCat = daoCat.getCategories(sqlCat);
-                request.setAttribute("data", vector);
-                request.setAttribute("dataCat", vectorCat);
-                request.getRequestDispatcher("/jsp/displayProduct.jsp").forward(request, response);
-            
-            
+           
             
 
             

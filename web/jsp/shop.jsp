@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Vector,entity.MedicalProducts, entity.Categories" %>
+
 
 
 <!DOCTYPE html>

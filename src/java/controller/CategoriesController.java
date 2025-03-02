@@ -33,18 +33,9 @@ public class CategoriesController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAOProducts dao = new DAOProducts();
-        String sql = "";
+        
         try (PrintWriter out = response.getWriter()) {
-            String service = request.getParameter("service");
-            if (service.equals("categories")) {
-                String cid = request.getParameter("cid");
-                sql = "select * from MedicalProducts a join Categories b on a.CategoriesID = b.CategoriesID\n"
-                        + "where b.CategoriesID = " + cid;
-            }
-            Vector<Products> vector = dao.getProducts(sql);
-            request.setAttribute("data", vector);
-            request.getRequestDispatcher("/jsp/displayProduct.jsp").forward(request, response);
+         
         }
     }
 
