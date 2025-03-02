@@ -70,7 +70,7 @@ public class DAORole extends DBConnection {
     public Vector<Role> getRole(String sql) {
         Vector<Role> vector = new Vector<>();
         try {
-            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
