@@ -78,7 +78,7 @@ public class LoginController extends HttpServlet {
 
                 String accessToken = daoGoogle.getToken(code);
                 GoogleAccount acc = daoGoogle.getUserInfo(accessToken);
-                Vector<Account> vectorAcc = dao.getAccount("Select * from Account");
+                Vector<Account> vectorAcc = dao.getAccount("Select * from Accounts");
                 Account accountExists = new Account();
                 boolean userExists = false;
                 for (Account account : vectorAcc) {
@@ -115,7 +115,7 @@ public class LoginController extends HttpServlet {
                         request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
 
                     } else if (account != null) {
-                        if (account.getRoleID() == 1002) {
+                        if (account.getRoleID() == 1) {
                             
                             session.setAttribute("dataUser", account);
                             request.getRequestDispatcher("index.jsp").forward(request, response);

@@ -57,7 +57,7 @@ public class SignUpController extends HttpServlet {
 
                 String accessToken = daoGoogle.getTokenSignUp(code);
                 GoogleAccount acc = daoGoogle.getUserInfo(accessToken);
-                Vector<Account> vectorAcc = dao.getAccount("Select * from Account");
+                Vector<Account> vectorAcc = dao.getAccount("Select * from Accounts");
 
                 boolean userExists = false;
                 for (Account account : vectorAcc) {
