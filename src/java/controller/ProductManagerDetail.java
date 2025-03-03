@@ -13,21 +13,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import entity.Categories;
-import entity.Products;
-import jakarta.servlet.RequestDispatcher;
-import java.util.Vector;
-import model.DAOCategories;
-import model.DAOProducts;
-
 /**
  *
- * @author quang
+ * @author whyth
  */
-@WebServlet(name="MedicalProductController", urlPatterns={"/ProductURL"})
-public class ProductController extends HttpServlet {
-   
-    /** 
+@WebServlet(name="ProductManagerDetail", urlPatterns={"/ProductManagerDetail"})
+public class ProductManagerDetail extends HttpServlet {
+
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
@@ -37,14 +30,13 @@ public class ProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
         try (PrintWriter out = response.getWriter()) {
-            request.getRequestDispatcher("jsp/shop.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/product-detail.jsp").forward(request, response);
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -55,9 +47,9 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -70,7 +62,7 @@ public class ProductController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */

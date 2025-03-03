@@ -44,7 +44,7 @@ public class ProductDetailController extends HttpServlet {
             
             Vector<Products> vector = dao.getProducts(sql);
             request.setAttribute("vector", vector);
-           request.getRequestDispatcher("/jsp/displayProductDetail.jsp").forward(request, response);
+           request.getRequestDispatcher("").forward(request, response);
         }
     } 
 
