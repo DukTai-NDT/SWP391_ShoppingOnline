@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="entity.Products, java.util.Vector" %>
+<%@page import="entity.Products, entity.Brand, java.util.Vector" %>
 
 
 
@@ -32,12 +32,272 @@
         <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
-        <link rel="stylesheet" href="css/product-css.css">
+        <link rel="stylesheet" href="css/product-css.css">      
+        <style>
+            /* CSS cho giao diện danh sách sản phẩm */
+
+            /* Đảm bảo body có khoảng cách để tránh navbar che phủ */
+            body {
+                padding: 0 !important; /* Đảm bảo không có padding-top mặc định ghi đè */
+            }
+
+            /* Đảm bảo container chính không bị navbar che phủ */
+            .container {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                gap: 30px;
+                justify-content: space-evenly !important;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            /* Navbar */
+            #topnav.defaultscroll.sticky {
+                position: sticky;
+                top: 0;
+                z-index: 1000 !important; /* Đảm bảo navbar ở trên các phần tử khác */
+            }
+
+            /* Sidebar bộ lọc */
+            .sidebar {
+                width: 250px;
+                background-color: #fff;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                padding: 20px;
+            }
+
+            .sidebar h3 {
+                font-size: 18px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            .filter-section {
+                margin-bottom: 20px;
+            }
+
+            .filter-section h4 {
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .price-filter a {
+                display: block;
+                font-size: 14px;
+                color: #333;
+                padding: 8px 0;
+                text-decoration: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .price-filter a:hover {
+                color: #007bff;
+            }
+
+
+
+            /* Bộ lọc loại thuốc */
+            .filter-section {
+                margin-bottom: 20px;
+                padding: 15px;
+                background-color: #fff;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+            }
+
+            .filter-section h4 {
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .filter-section a {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 8px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+
+            .filter-section label:hover {
+                background: #e6f7ff;
+            }
+
+            .filter-section input[type="radio"] {
+                width: 16px;
+                height: 16px;
+                accent-color: #007bff; /* Màu xanh đồng bộ với giao diện */
+                cursor: pointer;
+            }
+
+            .filter-section a {
+                text-decoration: none;
+                font-size: 14px;
+                color: #333;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .filter-section a:hover {
+                color: #007bff;
+            }
+
+            .filter-section select {
+                width: 100%;
+                padding: 10px;
+                font-size: 14px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                background-color: #fff;
+                cursor: pointer;
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+            .filter-section select:hover {
+                border-color: #007bff;
+            }
+
+            .filter-section select:focus {
+                outline: none;
+                border-color: #007bff;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+
+
+            /* Main content - Danh sách sản phẩm */
+            .main-content {
+                flex: 1;
+                background-color: #fff;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                padding: 20px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .header h2 {
+                font-size: 20px;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .sort-filter {
+                display: flex;
+                gap: 15px;
+            }
+
+            .sort-filter span a {
+                font-size: 14px;
+                color: #007bff;
+                text-decoration: none;
+            }
+
+            .sort-filter span a:hover {
+                text-decoration: underline;
+            }
+
+            /* Lưới sản phẩm */
+            .product-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .product-card {
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                padding: 15px;
+                text-align: center;
+                transition: box-shadow 0.3s ease;
+            }
+
+            .product-card:hover {
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .product-card img {
+                width: 100%;
+                max-width: 150px;
+                height: auto;
+                margin-bottom: 10px;
+            }
+
+            .product-card h3 {
+                font-size: 14px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 10px;
+                height: 40px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+
+            .product-card .price {
+                font-size: 16px;
+                font-weight: 600;
+                color: #e74c3c;
+                margin-bottom: 15px;
+            }
+
+            .buttons {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .no-buy-btn button {
+                padding: 8px 15px;
+                font-size: 14px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .no-buy-btn button:hover {
+                background-color: #0056b3;
+            }
+
+            .pack-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+                background-color: #fff;
+                color: #333;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .pack-btn:hover {
+                background-color: #f5f5f5;
+            }
+
+
+        </style>
     </head>
 
 
     <%Vector<Products> vector = (Vector<Products>)request.getAttribute("vector");%>
-
+    <%Vector<Brand> vectorB = (Vector<Brand>)request.getAttribute("vectorB");%>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -54,7 +314,7 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container-->
-                <a class="logo" href="index.html">
+                <a class="logo" href="index.jsp">
                     <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
@@ -77,49 +337,17 @@
                 <!-- End Mobile Toggle -->
 
                 <!-- Start Dropdown -->
-                <ul class="dropdowns list-inline mb-0">
-                    <li class="list-inline-item mb-0">
-                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
-                        </a>
-                    </li>
 
-                    <li class="list-inline-item mb-0 ms-1">
-                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-                            <i class="uil uil-search"></i>
-                        </a>
-                    </li>
-
-                    <li class="list-inline-item mb-0 ms-1">
-                        <div class="dropdown dropdown-primary">
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
-                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                                <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
-                                    <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1">Calvin Carlo</span>
-                                        <small class="text-muted">Orthopedic</small>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                                <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="login.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
                 <!-- Start Dropdown -->
 
                 <div id="navigation">
                     <!-- Navigation Menu-->   
-                    <ul class="navigation-menu nav-left">
-
+                    <ul class="navigation-menu nav-left">              
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
+                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
                                 <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
@@ -145,9 +373,41 @@
                                 <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
                             </ul>
                         </li>
-                        <li><a href="../admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
+                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
+                <ul class="dropdowns list-inline mb-0">
+                    <li class="list-inline-item mb-0">
+                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
+                        </a>
+                    </li>
+
+                    <li class="list-inline-item mb-0 ms-1">
+                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                            <i class="uil uil-search"></i>
+                        </a>
+                    </li>
+
+                    <li class="list-inline-item mb-0 ms-1">
+                        <div class="dropdown dropdown-primary">
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
+                                <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
+                                    <img src="images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <div class="flex-1 ms-2">
+                                        <span class="d-block mb-1">Calvin Carlo</span>
+                                        <small class="text-muted">Orthopedic</small>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <div class="dropdown-divider border-top"></div>
+                                <a class="dropdown-item text-dark" href="jsp/login.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div><!--end container-->
         </header><!--end header-->
         <!-- Navbar End -->
@@ -156,7 +416,7 @@
         <div class="container">
             <!-- Sidebar (Bộ lọc) -->
             <div class="sidebar">
-                <h3>Bộ lọc nâng cao</h3>
+                <h3>Bộ lọc</h3>
 
                 <!-- Bộ lọc giá bán -->
                 <div class="filter-section">
@@ -172,31 +432,34 @@
 
                 <!-- Bộ lọc loại thuốc -->
                 <div class="filter-section">
-                    <h4>Loại thuốc</h4>
-                    <label><input type="checkbox" checked> Tất cả</label>
-                    <label><input type="checkbox"> Thuốc kê đơn</label>
-                    <label><input type="checkbox"> Thuốc không kê đơn</label>
+                    <div class="drug">
+                        <input type="radio" id="html" name="fav_language" value="HTML" checked="">
+                        <label for="html"><a href="ProductURL?service=listAllProducts" >Tất cả</a></label><br>
+                    </div>
+                    <div class="drug">
+                        <input type="radio" id="css" name="fav_language" value="CSS">
+                        <label for="css"><a href="ProductURL?service=isDrug">Thuốc kê đơn</a></label><br>
+                    </div >
+                    <div class="drug">
+                        <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+                        <label for="javascript"><a href="ProductURL?service=notIsDrug">Thuốc không kê đơn</a></label>
+                    </div>
                 </div>
 
-                <!-- Bộ lọc đối tượng sử dụng -->
-                <div class="filter-section">
-                    <h4>Đối tượng sử dụng</h4>
-                    <label><input type="checkbox" checked> Tất cả</label>
-                    <label><input type="checkbox"> Trẻ em</label>
-                    <label><input type="checkbox"> Người cao tuổi</label>
-                    <label><input type="checkbox"> Người lớn</label>
-                </div>
 
+
+                
                 <!-- Bộ lọc nước sản xuất -->
                 <div class="filter-section">
                     <h4>Nước sản xuất</h4>
-                    <select>
-                        <option>Tất cả</option>
-                        <option>Việt Nam</option>
-                        <option>Hàn Quốc</option>
-                        <option>Mỹ</option>
+                    
+                    <select name="BrandID">
+                        <%for (Brand b : vectorB){%>
+                        <option value="<%=b.getBrandID()%>" ><%=b.getCountry()%></option>
+                        <%}%>
                     </select>
                 </div>
+                
             </div>
 
             <!-- Danh sách sản phẩm -->
@@ -204,7 +467,7 @@
                 <div class="header">
                     <h2>Danh sách sản phẩm</h2>
                     <div class="sort-filter">
-                       
+
                         <span><a href="ProductURL">Bán chạy</a></span>
                         <span><a href="ProductURL?service=listAllProductsLowPrice">Giá thấp</a></span>
                         <span><a href="ProductURL?service=listAllProductsHighPrice">Giá cao</a></span>
@@ -221,7 +484,7 @@
                         <h3><%=pro.getProductName()%></h3>
                         <p class="price"><%=pro.getPrice()%>/ Túyp</p>
                         <div class="buttons">
-                            
+
                             <a class="no-buy-btn" href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><button >Chọn mua </button></a>
                             <button class="pack-btn">Túyp</button>
                         </div>
@@ -233,7 +496,7 @@
         </div>
 
         <!-- Start -->
-        <footer class="bg-footer">
+        <footer style="margin-top: 30px" class="bg-footer">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-5 col-lg-4 mb-0 mb-md-4 pb-0 pb-md-2">
@@ -337,10 +600,10 @@
                             <div class="text-center">
                                 <h4>Search now.....</h4>
                                 <div class="subcribe-form mt-4">
-                                    <form>
+                                    <form action="ProductURL">
                                         <div class="mb-0">
-                                            <input type="text" id="help" name="name" class="border bg-white rounded-pill" required="" placeholder="Search">
-                                            <button type="submit" class="btn btn-pills btn-primary">Search</button>
+                                            <input type="text" id="help" name="ProductName" class="border bg-white rounded-pill" required="" placeholder="Search">
+                                            <button type="submit" name="submit" class="btn btn-pills btn-primary">Search</button>
                                         </div>
                                     </form>
                                 </div>

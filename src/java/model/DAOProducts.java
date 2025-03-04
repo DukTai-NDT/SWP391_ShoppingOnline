@@ -140,7 +140,7 @@ public class DAOProducts extends DBConnection {
     public static void main(String[] args) {
         DAOProducts dao = new DAOProducts();
         
-        Vector<Products> vector = dao.getProducts("select * from Products p where  p.Price > 300000 and p.Price <= 500000");
+        Vector<Products> vector = dao.getProducts("select * from Products");
         for (Products pro : vector){
             System.out.println(pro);
         }
