@@ -136,14 +136,7 @@ public class DAOProducts extends DBConnection {
         
         return vector;
     }
-    
-    public static void main(String[] args) {
-        DAOProducts dao = new DAOProducts();
-       Products pro = dao.getProducts("select * from Products where ProductID = "+1).get(0);
-        System.out.println(pro);
-          
-        }
-    
+  
 }
 
 

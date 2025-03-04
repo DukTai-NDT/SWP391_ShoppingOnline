@@ -4,6 +4,7 @@
  */
 package controller;
 
+import entity.Brand;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,6 +17,8 @@ import entity.Categories;
 import entity.Products;
 import jakarta.servlet.RequestDispatcher;
 import java.util.Vector;
+import java.sql.ResultSet;
+import model.DAOBrand;
 import model.DAOCategories;
 import model.DAOProducts;
 
@@ -39,11 +42,15 @@ public class ProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAOProducts dao = new DAOProducts();
+        DAOBrand daoB = new DAOBrand();
         Vector<Products> vector = new Vector<Products>();
+        String submit = request.getParameter("submit");
+        String pname = request.getParameter("ProductName");
         String sql = "";
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("service");
-            
+//            String BrandID = request.getParameter("BrandID");
+//            int BrandId = Integer.parseInt(BrandID);
             if(service == null) {
                 service = "listAllProducts";
             }
@@ -68,9 +75,18 @@ public class ProductController extends HttpServlet {
             if(service.equals("listAllProductsHighPrice")){
                 sql = "SELECT * FROM Products p ORDER BY p.Price DESC";
             }
-
-            
+            if(submit != null){
+                sql = "select * from Products p where p.ProductName like '%"+pname+"%'";
+            }
+            if(service.equals("isDrug")){
+                sql = "select * from Products p where p.isPrescriptionDrug = 1";
+            }
+            if(service.equals("notIsDrug")){
+                sql = "select * from Products p where p.isPrescriptionDrug = 0";
+            }
+            Vector<Brand> vectorB = daoB.getBrand("select * from Brand");
             vector = dao.getProducts(sql);
+            request.setAttribute("vectorB", vectorB);
             request.setAttribute("vector", vector);
             request.getRequestDispatcher("/jsp/shop.jsp").forward(request, response);
 
