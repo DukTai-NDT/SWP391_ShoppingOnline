@@ -49,6 +49,7 @@ public class ProductDetailController extends HttpServlet {
         DAOIngredient daoIngre = new DAOIngredient();
         Vector<Brand> vectorBrand = new Vector<Brand>();
         try (PrintWriter out = response.getWriter()) {
+
             /* TODO output your page here. You may use following sample code. */
             String sql = "";
             String pid = request.getParameter("pid");
@@ -61,6 +62,7 @@ public class ProductDetailController extends HttpServlet {
                     + "where p.ProductID = " + pid);
             Brand brand = vectorBrand.get(0);
             Vector<Products> vector = dao.getProducts(sql);
+
             Products product = vector.get(0);
             Vector<Categories> category = daoCat.getCategories("select * from Categories c join Products p on c.CategoryID = p.CategoryID\n"
                     + "where p.ProductID = " + pid);
@@ -73,6 +75,7 @@ public class ProductDetailController extends HttpServlet {
             request.setAttribute("vectorf", vectorf);
             request.setAttribute("vectorIngre", vectorIngre);
             request.getRequestDispatcher("/jsp/product-detail.jsp").forward(request, response);
+
         }
     }
 

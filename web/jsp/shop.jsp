@@ -3,9 +3,12 @@
     Created on : Feb 10, 2025, 9:35:21 PM
     Author     : quang
 --%>
-
+<%@ page import=" entity.Account " %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import=" entity.Products, java.util.Vector" %>
+
 <%@page import="entity.Products, entity.Brand, java.util.Vector" %>
+
 
 
 
@@ -297,7 +300,9 @@
 
 
     <%Vector<Products> vector = (Vector<Products>)request.getAttribute("vector");%>
-    <%Vector<Brand> vectorB = (Vector<Brand>)request.getAttribute("vectorB");%>
+    <%Vector<Brand> vectorB = (Vector<Brand>)request.getAttribute("vectorB");
+    Account account = (Account)session.getAttribute("dataUser");
+    %>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -349,7 +354,7 @@
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
                                 <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
@@ -389,22 +394,34 @@
                         </a>
                     </li>
 
-                    <li class="list-inline-item mb-0 ms-1">
+                      <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
+
+
+                            <%if(account != null){%>
                             <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <img src="" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                                     <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1">Calvin Carlo</span>
-                                        <small class="text-muted">Orthopedic</small>
+                                        <span class="d-block mb-1"><%=account.getUserName()%></span>
+
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                 <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="jsp/login.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                            </div>        
+                            <%}else{%>
+
+                            <div class="auth-links">
+                                <a href="SignUpURL?service=signup">Sign up</a>
+                                <span>|</span>
+                                <a href="LoginURL?service=login">Log in</a>
                             </div>
+                            <%}%>
+
                         </div>
                     </li>
                 </ul>
