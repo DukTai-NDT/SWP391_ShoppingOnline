@@ -18,7 +18,60 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class DAOCustomer extends DBConnection {
+    
+public Customers getCustomerByAccountId(int accountId) {
+        Customers customer = null;
+        String sql = "SELECT * FROM Customers WHERE AccountID = ?";
+        
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, accountId);
+            ResultSet rs = preState.executeQuery();
+            
+            if (rs.next()) {
+                customer = new Customers(
+                    rs.getInt("CustomerID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getString("Email"),
+                    rs.getString("Address"),
+                    rs.getString("Gender"),
+                    rs.getString("Phone"),
+                    rs.getInt("AccountID")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return customer;
+    }
 
+    public Customers getCustomerByUsername(String username) {
+        Customers customer = null;
+        String sql = "SELECT c.* FROM Customers c JOIN Accounts a ON c.AccountID = a.AccountID WHERE a.UserName = ?";
+        
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setString(1, username);
+            ResultSet rs = preState.executeQuery();
+            
+            if (rs.next()) {
+                customer = new Customers(
+                    rs.getInt("CustomerID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getString("Email"),
+                    rs.getString("Address"),
+                    rs.getString("Gender"),
+                    rs.getString("Phone"),
+                    rs.getInt("AccountID")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return customer;
+    }
     public int addCustomer(Customers other) {
         int n = 0;
         String sql = "INSERT INTO [dbo].[Customers]\n"

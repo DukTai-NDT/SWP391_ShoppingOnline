@@ -1,4 +1,5 @@
-
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
+    <%@page import="entity.CartItems,java.util.Vector" %>
 <!DOCTYPE html>
     <html lang="en">
 
@@ -13,18 +14,18 @@
         <meta name="website" content="https://shreethemes.in" />
         <meta name="Version" content="v1.2.0" />
         <!-- favicon -->
-        <link rel="shortcut icon" href="images/favicon.ico.png">
+        <link rel="shortcut icon" href="../assets/images/favicon.ico.png">
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- Icons -->
-        <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
-        <link href="css/remixicon.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/remixicon.css" rel="stylesheet" type="text/css" />
         <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
         <!-- Css -->
-        <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+        <link href="../assets/css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
     </head>
-
+  <%Vector<CartItems> vectorCart = (Vector<CartItems>)session.getAttribute("vectorCart");%>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -41,9 +42,9 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container-->
-                <a class="logo" href="index.jsp">
-                    <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
-                    <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
+                <a class="logo" href="index.html">
+                    <img src="../assets/images/logo-dark.png" height="24" class="logo-light-mode" alt="">
+                    <img src="../assets/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
                 <!-- Logo End -->
                 
@@ -79,19 +80,19 @@
 
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <img src="../assets/images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                                     <div class="flex-1 ms-2">
                                         <span class="d-block mb-1">Calvin Carlo</span>
                                         <small class="text-muted">Orthopedic</small>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" href="doctor-dashboard.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                 <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="jsp/login.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                <a class="dropdown-item text-dark" href="login.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                             </div>
                         </div>
                     </li>
@@ -104,7 +105,7 @@
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Home</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="index.jsp" class="sub-menu-item">Index One</a></li>
+                                <li><a href="index.html" class="sub-menu-item">Index One</a></li>
                                 <li><a href="index-two.html" class="sub-menu-item">Index Two</a></li>
                                 <li><a href="index-three.html" class="sub-menu-item">Index Three</a></li>
                             </ul>
@@ -116,7 +117,7 @@
                                 <li class="has-submenu parent-menu-item">
                                     <a href="javascript:void(0)" class="menu-item"> Dashboard </a><span class="submenu-arrow"></span>
                                     <ul class="submenu">
-                                        <li><a href="doctor-dashboard.jsp" class="sub-menu-item">Dashboard</a></li>
+                                        <li><a href="doctor-dashboard.html" class="sub-menu-item">Dashboard</a></li>
                                         <li><a href="doctor-appointment.html" class="sub-menu-item">Appointment</a></li>
                                         <li><a href="patient-list.html" class="sub-menu-item">Patients</a></li>
                                         <li><a href="doctor-schedule.html" class="sub-menu-item">Schedule Timing</a></li>
@@ -126,8 +127,8 @@
                                         <li><a href="doctor-profile.html" class="sub-menu-item">Profile</a></li>
                                         <li><a href="doctor-profile-setting.html" class="sub-menu-item">Profile Settings</a></li>
                                         <li><a href="doctor-chat.html" class="sub-menu-item">Chat</a></li>
-                                        <li><a href="jsp/login.jsp" class="sub-menu-item">Login</a></li>
-                                        <li><a href="jsp/signup.jsp" class="sub-menu-item">Sign Up</a></li>
+                                        <li><a href="login.html" class="sub-menu-item">Login</a></li>
+                                        <li><a href="signup.html" class="sub-menu-item">Sign Up</a></li>
                                         <li><a href="forgot-password.html" class="sub-menu-item">Forgot Password</a></li>
                                     </ul>
                                 </li>
@@ -151,7 +152,7 @@
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
+                                <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
                                 <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
@@ -177,7 +178,7 @@
                                 <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
                             </ul>
                         </li>
-                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
+                        <li><a href="../admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -195,7 +196,7 @@
                         
                             <nav aria-label="breadcrumb" class="d-inline-block mt-3">
                                 <ul class="breadcrumb bg-light rounded mb-0 bg-transparent">
-                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+                                    <li class="breadcrumb-item"><a href="index.html">Doctris</a></li>
                                     <li class="breadcrumb-item"><a href="pharmacy.html">Pharmacy</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Shop Cart</li>
                                 </ul>
@@ -213,7 +214,14 @@
             </div>
         </div>
         <!-- Hero End -->
-
+    <%
+                  double grandTotal = 0;
+                  if (vectorCart != null) {
+                   double total = 0;
+                  for (CartItems cart : vectorCart) {
+                  total = cart.getPrice() * cart.getQuantity();
+                  grandTotal += total;
+                            %>
         <!-- Start -->
         <section class="section">
             <div class="container">
@@ -232,30 +240,33 @@
                                 </thead>
 
                                 <tbody>
+                                    fo
                                     <tr>
                                         <td class="h5 p-3 text-center"><a href="#" class="text-danger"><i class="uil uil-times"></i></a></td>
                                         <td class="p-3">
                                             <div class="d-flex align-items-center">
-                                                <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
+                                                <img src="../assets/images/pharmacy/shop/ashwagandha.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
                                                 <h6 class="mb-0 ms-3">Ashwagandha Churna</h6>
                                             </div>
                                         </td>
-                                        <td class="text-center p-3">$ 255.00</td>
+                                        <td class="text-center p-3">$<%=cart.getPrice()%></td>
                                         <td class="text-center shop-list p-3">
-                                            <div class="qty-icons">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-icon btn-primary minus">-</button>
-                                                <input min="0" name="quantity" value="0" type="number" class="btn btn-icon btn-primary qty-btn quantity">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-icon btn-primary plus">+</button>
-                                            </div>
+                                             <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-primary btn-minus" onclick="window.location.href = 'CartItemURL?service=removeCart&pid=<%=cart.getProductID()%>'">-</button>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="<%=cart.getQuantity() %>">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-primary btn-plus" onclick="window.location.href = 'CartItemURL?service=add2Cart1&pid=<%=cart.getProductID()%>'">+</button>
+                                        </div>
                                         </td>
-                                        <td class="text-end font-weight-bold p-3">$510.00</td>
+                                        <td class="text-end font-weight-bold p-3"><%=total%></td>
                                     </tr>
 
-                                    <tr>
+                                    <!-- <tr>
                                         <td class="h5 p-3 text-center"><a href="#" class="text-danger"><i class="uil uil-times"></i></a></td>
                                         <td class="p-3">
                                             <div class="d-flex align-items-center">
-                                                <img src="images/pharmacy/shop/diabend.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
+                                                <img src="../assets/images/pharmacy/shop/diabend.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
                                                 <h6 class="mb-0 ms-3">Diabend</h6>
                                             </div>
                                         </td>
@@ -274,7 +285,7 @@
                                         <td class="h5 p-3 text-center"><a href="#" class="text-danger"><i class="uil uil-times"></i></a></td>
                                         <td class="p-3">
                                             <div class="d-flex align-items-center">
-                                                <img src="images/pharmacy/shop/facewash.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
+                                                <img src="../assets/images/pharmacy/shop/facewash.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
                                                 <h6 class="mb-0 ms-3">Facewash</h6>
                                             </div>
                                         </td>
@@ -293,7 +304,7 @@
                                         <td class="h5 p-3 text-center"><a href="#" class="text-danger"><i class="uil uil-times"></i></a></td>
                                         <td class="p-3">
                                             <div class="d-flex align-items-center">
-                                                <img src="images/pharmacy/shop/handwash.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
+                                                <img src="../assets/images/pharmacy/shop/handwash.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
                                                 <h6 class="mb-0 ms-3">Dettol handwash</h6>
                                             </div>
                                         </td>
@@ -306,7 +317,7 @@
                                             </div>
                                         </td>
                                         <td class="text-end font-weight-bold p-3">$520.00</td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -344,14 +355,15 @@
             </div><!--end container-->
         </section><!--end section-->
         <!-- End -->
-
+ <%}
+                              } %>
         <!-- Start -->
         <footer class="bg-footer">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-5 col-lg-4 mb-0 mb-md-4 pb-0 pb-md-2">
                         <a href="#" class="logo-footer">
-                            <img src="images/logo-light.png" height="22" alt="">
+                            <img src="../assets/images/logo-light.png" height="22" alt="">
                         </a>
                         <p class="mt-4 me-xl-5">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
                     </div><!--end col-->
@@ -419,7 +431,7 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="text-sm-start text-center">
-                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> Â© Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.html" target="_blank" class="text-reset">Shreethemes</a>.</p>
                             </div>
                         </div><!--end col-->
     
@@ -469,8 +481,8 @@
         <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header p-4 border-bottom">
                 <h5 id="offcanvasRightLabel" class="mb-0">
-                    <img src="images/logo-dark.png" height="24" class="light-version" alt="">
-                    <img src="images/logo-light.png" height="24" class="dark-version" alt="">
+                    <img src="../assets/images/logo-dark.png" height="24" class="light-version" alt="">
+                    <img src="../assets/images/logo-light.png" height="24" class="dark-version" alt="">
                 </h5>
                 <button type="button" class="btn-close d-flex align-items-center text-dark" data-bs-dismiss="offcanvas" aria-label="Close"><i class="uil uil-times fs-4"></i></button>
             </div>
@@ -481,13 +493,13 @@
                         <div id="style-switcher">
                             <div>
                                 <ul class="text-center list-unstyled mb-0">
-                                    <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="images/layouts/landing-light-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
-                                    <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
-                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-rtl-version t-rtl-dark" onclick="setTheme('style-dark-rtl')"><img src="images/layouts/landing-dark-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
-                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
-                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
-                                    <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
-                                    <li class="d-grid"><a href="indexAdmin.jsp" target="_blank" class="mt-4"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="../assets/images/layouts/landing-light-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="../assets/images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-rtl-version t-rtl-dark" onclick="setTheme('style-dark-rtl')"><img src="../assets/images/layouts/landing-dark-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="../assets/images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="../assets/images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="../assets/images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
+                                    <li class="d-grid"><a href="../admin/index.html" target="_blank" class="mt-4"><img src="../assets/images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -504,18 +516,18 @@
                     <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="../../../index.jsp" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="../../../index.html" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
                 </ul><!--end icon-->
             </div>
         </div>
         <!-- Offcanvas End -->
         
         <!-- javascript -->
-        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
         <!-- Icons -->
-        <script src="js/feather.min.js"></script>
+        <script src="../assets/js/feather.min.js"></script>
         <!-- Main Js -->
-        <script src="js/app.js"></script>
+        <script src="../assets/js/app.js"></script>
     </body>
 
 </html>

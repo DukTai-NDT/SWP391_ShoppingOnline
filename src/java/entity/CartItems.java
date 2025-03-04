@@ -13,10 +13,10 @@ public class CartItems {
     private int CartItemID;
 	private int CartID;
 	private int ProductID;
-	private float Price;
+	private double Price;
 	private int Quantity;
 
-    public CartItems(int CartItemID, int CartID, int ProductID, float Price, int Quantity) {
+    public CartItems(int CartItemID, int CartID, int ProductID, double Price, int Quantity) {
         this.CartItemID = CartItemID;
         this.CartID = CartID;
         this.ProductID = ProductID;
@@ -24,7 +24,7 @@ public class CartItems {
         this.Quantity = Quantity;
     }
 
-    public CartItems(int CartID, int ProductID, float Price, int Quantity) {
+    public CartItems(int CartID, int ProductID, double Price, int Quantity) {
         this.CartID = CartID;
         this.ProductID = ProductID;
         this.Price = Price;
@@ -58,11 +58,11 @@ public class CartItems {
         this.ProductID = ProductID;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return Price;
     }
 
-    public void setPrice(float Price) {
+    public void setPrice(double Price) {
         this.Price = Price;
     }
 

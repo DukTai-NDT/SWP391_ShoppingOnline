@@ -5,6 +5,7 @@
 package controller;
 
 import entity.Account;
+import entity.Customers;
 
 import entity.GoogleAccount;
 import java.io.IOException;
@@ -18,6 +19,8 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Random;
 import java.util.Vector;
 import model.DAOAccount;
+import model.DAOCart;
+import model.DAOCustomer;
 
 import model.DAOGoogleLogin;
 
@@ -42,6 +45,8 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         DAOAccount dao = new DAOAccount();
         HttpSession session = request.getSession();
+        DAOCart daoCart = new DAOCart();
+        DAOCustomer daoCustomers = new DAOCustomer();
 
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("service");
@@ -94,8 +99,12 @@ public class LoginController extends HttpServlet {
 
                 if (userExists) {
                     session.setAttribute("dataUser", accountExists);
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
-                } else {
+                    // Lấy CustomerID từ AccountID hoặc UserName
+                    Customers customer = daoCustomers.getCustomerByUsername(accountExists.getUserName());
+                    if (customer != null) {
+                        session.setAttribute("customerId", customer.getCustomerID());  // Lưu CustomerID vào session
+                    }
+                    request.getRequestDispatcher("index.jsp").forward(request, response);} else {
 //                    int n = dao.addAccount(new Account(acc.getName(), 1002, getRandom(6),acc.getEmail()));
 //                    session.setAttribute("dataUser", acc.getName());
 //                    request.setAttribute("message", "Account does not exist yet. You must SignUp");
@@ -104,7 +113,7 @@ public class LoginController extends HttpServlet {
                 }
             }
 
-            if (service.equals("login")) {
+  if (service.equals("login")) {
                 String submit = request.getParameter("submit");
                 if (submit == null) {
                     request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
@@ -113,29 +122,25 @@ public class LoginController extends HttpServlet {
                     if (account == null) {
                         request.setAttribute("message", "Login fail!!!");
                         request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-
                     } else if (account != null) {
+                        session.setAttribute("dataUser", account);
+                        // Lấy CustomerID từ AccountID hoặc UserName
+                        Customers customer = daoCustomers.getCustomerByUsername(account.getUserName());
+                        if (customer != null) {
+                            session.setAttribute("customerId", customer.getCustomerID());  // Lưu CustomerID vào session
+                        }
                         if (account.getRoleID() == 1) {
-                            
-                            session.setAttribute("dataUser", account);
                             request.getRequestDispatcher("index.jsp").forward(request, response);
                         } else if (account.getRoleID() == 1003) {
-                            session.setAttribute("dataUser", account);
                             request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
-                        } else if (account.getRoleID() == 1) {
-                            session.setAttribute("dataUser", account);
-                            request.getRequestDispatcher("index.jsp").forward(request, response);
                         } else if (account.getRoleID() == 2) {
-                            session.setAttribute("dataUser", account);
                             request.getRequestDispatcher("doctor-dashboard.jsp").forward(request, response);
                         }
                     }
                 }
-            }
-
-        }
     }
-
+        }
+}
 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

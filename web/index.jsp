@@ -167,9 +167,9 @@
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="jsp/shop.jsp" class="sub-menu-item">Shop</a></li>
+                                <li><a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="shop-cart.jsp" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
@@ -180,7 +180,7 @@
                                 <li><a href="aboutus.jsp" class="sub-menu-item"> About Us</a></li>
                                 <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
+                                <li><a href="BlogsURL?service=listAllBlogs" class="sub-menu-item">Blogs</a></li>
                                 
                                 
                             </ul>

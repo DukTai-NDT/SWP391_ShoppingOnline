@@ -5,11 +5,14 @@
 package model;
 
 import entity.Orders;
+import java.security.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,8 +42,8 @@ public class DAOOrders extends DBConnection {
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setFloat(1, o.getAmount());
-            pre.setFloat(2, o.getTotal());
+            pre.setDouble(1, o.getAmount());
+            pre.setDouble(2, o.getTotal());
             pre.setString(3, o.getStatus());
             pre.setInt(4, o.getCustomerID());
             pre.setDate(5, java.sql.Date.valueOf(o.getOrderTime()));
@@ -80,8 +83,8 @@ public class DAOOrders extends DBConnection {
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setFloat(1, o.getAmount());
-            pre.setFloat(2, o.getTotal());
+            pre.setDouble(1, o.getAmount());
+            pre.setDouble(2, o.getTotal());
             pre.setString(3, o.getStatus());
             pre.setInt(4, o.getCustomerID());
             pre.setDate(5, java.sql.Date.valueOf(o.getOrderTime()));
@@ -102,8 +105,8 @@ public class DAOOrders extends DBConnection {
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 int OrderID = rs.getInt("OrderID");
-                float Amount = rs.getFloat("Amount");
-                float Total = rs.getFloat("Total");
+                double Amount = rs.getDouble("Amount");
+                double Total = rs.getDouble("Total");
                 String Status = rs.getString("Status");
                 int CustomerID = rs.getInt("CustomerID");
                 LocalDate OrderTime = rs.getDate("OrderTime").toLocalDate();
@@ -118,5 +121,5 @@ public class DAOOrders extends DBConnection {
         
         return vector;
 
-    }
+    }  
 }

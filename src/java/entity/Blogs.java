@@ -11,13 +11,7 @@ import java.time.LocalDate;
  * @author Admin
  */
 public class Blogs {
-//    [BlogID] [int] IDENTITY(1,1) NOT NULL,
-//	[CustomerID] [int] NULL,
-//	[PostTime] [date] NULL,
-//	[Title] [nvarchar](50) NULL,
-//	[Content] [nvarchar](255) NULL,
-//	[Image] [nvarchar](255) NULL,
-//	[Status] [bit] NULL,
+
     private int BlogID;
 	private int CustomerID;
 	private LocalDate PostTime;

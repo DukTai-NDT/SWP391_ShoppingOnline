@@ -11,16 +11,19 @@ import java.time.LocalDate;
  * @author quang
  */
 public class Orders {
-
     private int OrderID;
-    private float Amount;
-    private float Total;
+    private double Amount;
+    private double Total;
     private String Status;
     private int CustomerID;
     private LocalDate OrderTime;
     private int PaymentID;
-
-    public Orders(int OrderID, float Amount, float Total, String Status, int CustomerID, LocalDate OrderTime, int PaymentID) {
+ 
+    
+    public Orders(){
+        
+    }
+    public Orders(int OrderID, double Amount, double Total, String Status, int CustomerID, LocalDate OrderTime, int PaymentID) {
         this.OrderID = OrderID;
         this.Amount = Amount;
         this.Total = Total;
@@ -30,7 +33,7 @@ public class Orders {
         this.PaymentID = PaymentID;
     }
 
-    public Orders(float Amount, float Total, String Status, int CustomerID, LocalDate OrderTime, int PaymentID) {
+    public Orders(double Amount, double Total, String Status, int CustomerID, LocalDate OrderTime, int PaymentID) {
         this.Amount = Amount;
         this.Total = Total;
         this.Status = Status;
@@ -47,19 +50,19 @@ public class Orders {
         this.OrderID = OrderID;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return Amount;
     }
 
-    public void setAmount(float Amount) {
+    public void setAmount(double Amount) {
         this.Amount = Amount;
     }
 
-    public float getTotal() {
+    public double getTotal() {
         return Total;
     }
 
-    public void setTotal(float Total) {
+    public void setTotal(double Total) {
         this.Total = Total;
     }
 

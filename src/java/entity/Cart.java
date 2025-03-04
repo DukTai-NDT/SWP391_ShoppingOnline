@@ -9,19 +9,15 @@ import java.time.LocalDate;
  * @author Admin
  */
 public class Cart {
-//    [CartID] [int] IDENTITY(1,1) NOT NULL,
-//	[CustomerID] [int] NULL,
-//	[CartStatus] [bit] NULL,
-//	[TotalPrice] [float] NULL,
-//	[CreateDate] [datetime] NULL,
+
     
     private int CartID;
 	private int CustomerID;
 	private boolean CartStatus;
-	private float TotalPrice;
+	private double TotalPrice;
 	private LocalDate CreateDate;
 
-    public Cart(int CartID, int CustomerID, boolean CartStatus, float TotalPrice, LocalDate CreateDate) {
+    public Cart(int CartID, int CustomerID, boolean CartStatus, double TotalPrice, LocalDate CreateDate) {
         this.CartID = CartID;
         this.CustomerID = CustomerID;
         this.CartStatus = CartStatus;
@@ -29,7 +25,7 @@ public class Cart {
         this.CreateDate = CreateDate;
     }
 
-    public Cart(int CustomerID, boolean CartStatus, float TotalPrice, LocalDate CreateDate) {
+    public Cart(int CustomerID, boolean CartStatus, double TotalPrice, LocalDate CreateDate) {
         this.CustomerID = CustomerID;
         this.CartStatus = CartStatus;
         this.TotalPrice = TotalPrice;
@@ -63,11 +59,11 @@ public class Cart {
         this.CartStatus = CartStatus;
     }
 
-    public float getTotalPrice() {
+    public double getTotalPrice() {
         return TotalPrice;
     }
 
-    public void setTotalPrice(float TotalPrice) {
+    public void setTotalPrice(double TotalPrice) {
         this.TotalPrice = TotalPrice;
     }
 
