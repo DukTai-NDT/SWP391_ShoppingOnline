@@ -126,8 +126,7 @@ public class DAOProducts extends DBConnection {
                 int Quantity = rs.getInt("Quantity");
                 String Image = rs.getString("Image");
                 
-                Products pro = new Products(ProductID,ProductName, Price, Description, UnitPrice, CategoryID, 
-                        BrandID, isPrescriptionDrug, Quantity, Image);
+                Products pro = new Products(ProductID, ProductName, Price, Description, UnitPrice, CategoryID, BrandID, isPrescriptionDrug, Quantity, Image);
                 vector.add(pro);
                 
             }
@@ -140,9 +139,12 @@ public class DAOProducts extends DBConnection {
     
     public static void main(String[] args) {
         DAOProducts dao = new DAOProducts();
-        Vector<Products> vector = dao.getProducts("select * from Products");
-        for (Products products : vector) {
-            System.out.println(products);
+       Products pro = dao.getProducts("select * from Products where ProductID = "+1).get(0);
+        System.out.println(pro);
+          
         }
-    }
+    
 }
+
+
+

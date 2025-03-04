@@ -32,9 +32,21 @@ public class ProductDetailController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
+       DAOProducts dao = new DAOProducts();
         try (PrintWriter out = response.getWriter()) {
-           
+
+            /* TODO output your page here. You may use following sample code. */
+            String sql = "";
+            String service = request.getParameter("service");
+            if(service.equals("detailProduct")){
+                String pid = request.getParameter("pid");
+                sql = "select * from Products where ProductID = " + pid;
+            }
+            
+            Vector<Products> vector = dao.getProducts(sql);
+            request.setAttribute("vector", vector);
+           request.getRequestDispatcher("/jsp/product-detail.jsp").forward(request, response);
+
         }
     } 
 

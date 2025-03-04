@@ -18,25 +18,19 @@ public class Cart {
     private int CartID;
 	private int CustomerID;
 	private boolean CartStatus;
-	private float TotalPrice;
 	private LocalDate CreateDate;
 
-    public Cart(int CartID, int CustomerID, boolean CartStatus, float TotalPrice, LocalDate CreateDate) {
+    public Cart(int CartID, int CustomerID, boolean CartStatus, LocalDate CreateDate) {
         this.CartID = CartID;
         this.CustomerID = CustomerID;
         this.CartStatus = CartStatus;
-        this.TotalPrice = TotalPrice;
         this.CreateDate = CreateDate;
     }
 
-    public Cart(int CustomerID, boolean CartStatus, float TotalPrice, LocalDate CreateDate) {
+    public Cart(int CustomerID, boolean CartStatus, LocalDate CreateDate) {
         this.CustomerID = CustomerID;
         this.CartStatus = CartStatus;
-        this.TotalPrice = TotalPrice;
         this.CreateDate = CreateDate;
-    }
-
-    public Cart() {
     }
 
     public int getCartID() {
@@ -63,14 +57,6 @@ public class Cart {
         this.CartStatus = CartStatus;
     }
 
-    public float getTotalPrice() {
-        return TotalPrice;
-    }
-
-    public void setTotalPrice(float TotalPrice) {
-        this.TotalPrice = TotalPrice;
-    }
-
     public LocalDate getCreateDate() {
         return CreateDate;
     }
@@ -81,9 +67,8 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart{" + "CartID=" + CartID + ", CustomerID=" + CustomerID + ", CartStatus=" + CartStatus + ", TotalPrice=" + TotalPrice + ", CreateDate=" + CreateDate + '}';
+        return "Cart{" + "CartID=" + CartID + ", CustomerID=" + CustomerID + ", CartStatus=" + CartStatus + ", CreateDate=" + CreateDate + '}';
     }
-        
-        
-        
+
+    
 }

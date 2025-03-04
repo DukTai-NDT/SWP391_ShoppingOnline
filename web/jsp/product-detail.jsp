@@ -1,4 +1,6 @@
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="entity.Products, java.util.Vector" %>
+<%@page import="entity.Account" %>
 <!DOCTYPE html>
     <html lang="en">
 
@@ -157,7 +159,7 @@
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
                                 <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
@@ -217,8 +219,9 @@
             </div>
         </div>
         <!-- Hero End -->
-
+        <%Vector<Products> vector = (Vector<Products>)request.getAttribute("vector");%>
         <section class="section">
+            <%for (Products pro : vector) {%>
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-5">
@@ -239,8 +242,8 @@
 
                     <div class="col-md-7 mt-4 mt-sm-0 pt-2 pt-sm-0">
                         <div class="section-title ms-md-4">
-                            <h4 class="title">Plastic Medicine Box</h4>
-                            <h5 class="text-muted">$21.00 </h5>
+                            <h4 class="title"><%=pro.getProductName()%></h4>
+                            <h5 class="text-muted"><%=pro.getPrice()%>$ </h5>
                             <ul class="list-unstyled text-warning h5 mb-0">
                                 <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
                                 <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
@@ -251,7 +254,7 @@
                             </ul>
                             
                             <h5 class="mt-4 py-2">Overview :</h5>
-                            <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero exercitationem, unde molestiae sint quae inventore atque minima natus fugiat nihil quisquam voluptates ea omnis. Modi laborum soluta tempore unde accusantium.</p>
+                            <p class="text-muted"><%=pro.getDescription()%></p>
                         
                             <div class="d-flex shop-list align-items-center">
                                 <h6 class="mb-0">Quantity:</h6>
@@ -264,13 +267,13 @@
 
                             <div class="mt-4 pt-2">
                                 <a href="#" class="btn btn-primary">Shop Now</a>
-                                <a href="#" class="btn btn-soft-primary ms-2">Add to Cart</a>
+                                <a href="CartURL?service=add2cart&pid=<%=pro.getProductID()%>" class="btn btn-soft-primary ms-2">Add to Cart</a>
                             </div>
                         </div>
                     </div><!--end col-->
                 </div><!--end row-->
             </div><!--end container-->
-
+            <%}%>
             <div class="container mt-100 mt-60">
                 <div class="row">
                     <div class="col-12">
@@ -619,7 +622,7 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="text-sm-start text-center">
-                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> Â© Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
                             </div>
                         </div><!--end col-->
     

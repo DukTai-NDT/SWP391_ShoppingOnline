@@ -3,9 +3,10 @@
     Created on : Feb 10, 2025, 9:35:21 PM
     Author     : quang
 --%>
-
+<%@ page import=" entity.Account " %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="entity.Products, java.util.Vector" %>
+<%@page import=" entity.Products, java.util.Vector" %>
+
 
 
 <!DOCTYPE html>
@@ -120,7 +121,7 @@
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
                                 <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
@@ -209,6 +210,7 @@
                         <span><a href="ProductURL?service=listAllProductsHighPrice">Giá cao</a></span>
 
                     </div>
+
                 </div>
 
                 <div class="product-grid">
@@ -219,7 +221,8 @@
                         <h3><%=pro.getProductName()%></h3>
                         <p class="price"><%=pro.getPrice()%>/ Túyp</p>
                         <div class="buttons">
-                            <button class="buy-btn">Chọn mua</button>
+                            
+                            <a class="no-buy-btn" href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><button >Chọn mua </button></a>
                             <button class="pack-btn">Túyp</button>
                         </div>
                     </div>
@@ -403,5 +406,3 @@
     </body>
 
 </html>
-
-

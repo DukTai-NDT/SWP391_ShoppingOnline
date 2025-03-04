@@ -68,10 +68,12 @@ public class ProductController extends HttpServlet {
             if(service.equals("listAllProductsHighPrice")){
                 sql = "SELECT * FROM Products p ORDER BY p.Price DESC";
             }
+
             
             vector = dao.getProducts(sql);
             request.setAttribute("vector", vector);
             request.getRequestDispatcher("/jsp/shop.jsp").forward(request, response);
+
         }
     }
 
