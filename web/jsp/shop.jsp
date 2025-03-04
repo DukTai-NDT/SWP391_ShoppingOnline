@@ -5,9 +5,8 @@
 --%>
 <%@ page import=" entity.Account " %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import=" entity.Products, java.util.Vector" %>
 
-<%@page import="entity.Products, entity.Brand, java.util.Vector" %>
+<%@page import="entity.Products, entity.Brand, java.util.Vector, entity.Categories" %>
 
 
 
@@ -254,6 +253,7 @@
             }
 
             .product-card .price {
+                display: block;
                 font-size: 16px;
                 font-weight: 600;
                 color: #e74c3c;
@@ -302,6 +302,7 @@
     <%Vector<Products> vector = (Vector<Products>)request.getAttribute("vector");%>
     <%Vector<Brand> vectorB = (Vector<Brand>)request.getAttribute("vectorB");
     Account account = (Account)session.getAttribute("dataUser");
+    Vector<Categories> vectorCat = (Vector<Categories>)request.getAttribute("vectorCat");
     %>
     <body>
         <!-- Loader -->
@@ -360,32 +361,22 @@
                             </ul>
                         </li>
 
-                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="aboutus.html" class="sub-menu-item"> About Us</a></li>
-                                <li><a href="departments.html" class="sub-menu-item">Departments</a></li>
-                                <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li class="has-submenu parent-menu-item">
-                                    <a href="javascript:void(0)" class="menu-item"> Blogs </a><span class="submenu-arrow"></span>
-                                    <ul class="submenu">
-                                        <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
-                                        <li><a href="blog-detail.html" class="sub-menu-item">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="terms.html" class="sub-menu-item">Terms & Policy</a></li>
-                                <li><a href="privacy.html" class="sub-menu-item">Privacy Policy</a></li>
-                                <li><a href="error.html" class="sub-menu-item">404 !</a></li>
-                                <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
+                                <%for (Categories cat : vectorCat){%>
+                                <li><a href="ProductURL?service=categories&cid=<%=cat.getCategoryID()%>" class="sub-menu-item"> <%=cat.getCategoryName()%></a></li>
+                                <%}%>
                             </ul>
                         </li>
+                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Blog </a></li>
                         <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
                 <ul class="dropdowns list-inline mb-0">
                     <li class="list-inline-item mb-0">
-                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
-                        </a>
+                        
+                        <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"><a></a></i></div>
+                        
                     </li>
 
                     <li class="list-inline-item mb-0 ms-1">
@@ -394,7 +385,7 @@
                         </a>
                     </li>
 
-                      <li class="list-inline-item mb-0 ms-1">
+                    <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
 
 
@@ -465,18 +456,18 @@
 
 
 
-                
+
                 <!-- Bộ lọc nước sản xuất -->
                 <div class="filter-section">
                     <h4>Nước sản xuất</h4>
-                    
+
                     <select name="BrandID">
                         <%for (Brand b : vectorB){%>
                         <option value="<%=b.getBrandID()%>" ><%=b.getCountry()%></option>
                         <%}%>
                     </select>
                 </div>
-                
+
             </div>
 
             <!-- Danh sách sản phẩm -->

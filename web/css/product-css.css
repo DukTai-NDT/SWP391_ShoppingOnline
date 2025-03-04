@@ -140,7 +140,7 @@ body {
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
-        padding-top: 70px !important; /* Giảm padding-top trên màn hình nhỏ hơn */
+        padding-top: 70px !important;  
     }
 
     .sidebar {
@@ -159,9 +159,9 @@ body {
     }
 
     .dropdowns.list-inline {
-        position: static; /* Vô hiệu hóa position absolute trên màn hình nhỏ */
-        transform: none; /* Vô hiệu hóa transform */
-        margin-left: auto; /* Căn phải bằng margin-left */
+        position: static;  
+        transform: none;  
+        margin-left: auto;   
     }
 }
 

@@ -72,7 +72,7 @@ public class SignUpController extends HttpServlet {
                     request.setAttribute("message", "account already exists. Please login");
                     request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
                 } else {
-                    int n = dao.addAccount(new Account(acc.getName(), 2, getRandom(6), acc.getEmail()));
+                    int n = dao.addAccount(new Account(acc.getName(), 1, getRandom(6), acc.getEmail()));
                     Customers customer = new Customers(acc.getName(), acc.getFamily_name(),
                              acc.getEmail(), null, null, null, dao.getLastAccountID());
                      int x = daoCustomer.addCustomer(customer);
@@ -102,7 +102,7 @@ public class SignUpController extends HttpServlet {
                     }
                 }
 
-                int n = dao.addAccount(new Account(UserName, 2, Password, Email));
+                int n = dao.addAccount(new Account(UserName, 1, Password, Email));
                 if (n == 0) {
                     //request.setAttribute("accountFail", "Can not to signup !!!");
                     request.getRequestDispatcher("jsp/signup.jsp").forward(request, response);
