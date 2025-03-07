@@ -5,7 +5,6 @@
 package model;
 
 import entity.Categories;
-import entity.Products;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -71,12 +70,9 @@ public class DAOCategories extends DBConnection {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-
-                int CategoriesID = rs.getInt("CategoriesID");
-                String Name = rs.getString("Name");
-
-                Categories categories = new Categories(CategoriesID, Name);
-
+                int CategoryID = rs.getInt("CategoryID");
+                String CategoryName = rs.getString("CategoryName");
+                Categories categories = new Categories(CategoryID, CategoryName);
                 vector.add(categories);
             }
         } catch (SQLException ex) {
@@ -87,10 +83,22 @@ public class DAOCategories extends DBConnection {
 
     public static void main(String[] args) {
         DAOCategories dao = new DAOCategories();
-        Vector<Categories> vector = dao.getCategories("SELECT * FROM dbo.Categories");
+
+//        Categories cateAdd = new Categories("Thuoc");
+//        int n = dao.addCategories(cateAdd);
+
+//        Categories cateUpdate = new Categories(1, "DungCuYTe");
+//        int n = dao.updateCategories(cateUpdate);
+
+//        int n = dao.deleteCategories("thuoc");
+//        System.out.println(n);
+
+        Vector<Categories> vector = dao.getCategories("select * from Categories");
         for (Categories categories : vector) {
             System.out.println(categories);
+            
         }
     }
-
 }
+
+

@@ -26,7 +26,7 @@ import model.DAOProducts;
  *
  * @author quang
  */
-@WebServlet(name="MedicalProductController", urlPatterns={"/ProductURL"})
+@WebServlet(name = "ProductController", urlPatterns = {"/ProductURL"})
 public class ProductController extends HttpServlet {
 
     /**
@@ -49,7 +49,6 @@ public class ProductController extends HttpServlet {
         String sql = "";
         DAOCategories daoCat = new DAOCategories();
         try (PrintWriter out = response.getWriter()) {
-            request.getRequestDispatcher("jsp/shop.jsp").forward(request, response);
             String service = request.getParameter("service");
             
             if(service == null) {
@@ -148,5 +147,6 @@ public class ProductController extends HttpServlet {
     }// </editor-fold>
 
 }
+
 
 
