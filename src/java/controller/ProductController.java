@@ -88,6 +88,14 @@ public class ProductController extends HttpServlet {
                 String cid = request.getParameter("cid");
                 sql = "select * from Products P where CategoryID = " + cid;
             }
+            if(service.equals("brand")){
+                String bid = request.getParameter("bid");
+                sql = "select * from Products where BrandID = " + bid;    
+            }
+            if(service.equals("ingredient")){
+                String ingreid = request.getParameter("ingreid");
+                sql = "select * from Products p join Ingredient i on p.ProductID = i.ProductID where i.IngredientID = " + ingreid;
+            }
             Vector<Brand> vectorB = daoB.getBrand("select * from Brand");
             Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
             vector = dao.getProducts(sql);
