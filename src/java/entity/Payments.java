@@ -10,21 +10,22 @@ package entity;
  */
 public class Payments {
     private int PaymentID;
-    private String Method;
-    private float Amount;
-    private int StatusID;
+    private int MethodID;
+    
+    private boolean Status;
 
-    public Payments(int PaymentID, String Method, float Amount, int StatusID) {
+    public Payments(int PaymentID, int MethodID, boolean Status) {
         this.PaymentID = PaymentID;
-        this.Method = Method;
-        this.Amount = Amount;
-        this.StatusID = StatusID;
+        this.MethodID = MethodID;
+        this.Status = Status;
     }
 
-    public Payments(String Method, float Amount, int StatusID) {
-        this.Method = Method;
-        this.Amount = Amount;
-        this.StatusID = StatusID;
+    public Payments(int MethodID, boolean Status) {
+        this.MethodID = MethodID;
+        this.Status = Status;
+    }
+
+    public Payments() {
     }
 
     public int getPaymentID() {
@@ -35,33 +36,25 @@ public class Payments {
         this.PaymentID = PaymentID;
     }
 
-    public String getMethod() {
-        return Method;
+    public int getMethodID() {
+        return MethodID;
     }
 
-    public void setMethod(String Method) {
-        this.Method = Method;
+    public void setMethodID(int MethodID) {
+        this.MethodID = MethodID;
     }
 
-    public float getAmount() {
-        return Amount;
+    public boolean isStatus() {
+        return Status;
     }
 
-    public void setAmount(float Amount) {
-        this.Amount = Amount;
-    }
-
-    public int getStatusID() {
-        return StatusID;
-    }
-
-    public void setStatusID(int StatusID) {
-        this.StatusID = StatusID;
+    public void setStatus(boolean Status) {
+        this.Status = Status;
     }
 
     @Override
     public String toString() {
-        return "Payments{" + "PaymentID=" + PaymentID + ", Method=" + Method + ", Amount=" + Amount + ", StatusID=" + StatusID + '}';
+        return "Payments{" + "PaymentID=" + PaymentID + ", MethodID=" + MethodID + ", Status=" + Status + '}';
     }
     
     

@@ -80,7 +80,7 @@ public class DAOAccount extends DBConnection {
         String sql = "UPDATE [dbo].[Accounts]\n"
                 + "   SET [Password] = ?\n"
                 
-                + " WHERE Account.Email = ?";
+                + " WHERE Accounts.Email = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, password);
@@ -196,5 +196,8 @@ public class DAOAccount extends DBConnection {
        Account acc = dao.getLogin("abc", "123");
         System.out.println(acc);
         
+        
+        int n = dao.changePassword("taindhe181162@fpt.edu.vn", "abc");
+        System.out.println(n); 
     }
 }

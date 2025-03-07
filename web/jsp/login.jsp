@@ -26,6 +26,7 @@
     </head>
     <% String message = (String)request.getAttribute("message"); 
     %>
+     
     <body>
         <!-- Loader -->
         <div id="preloader">
