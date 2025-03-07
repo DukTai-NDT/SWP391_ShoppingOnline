@@ -41,7 +41,7 @@ public class DBConnection {
     }
 
     public DBConnection() {
-        this("jdbc:sqlserver://localhost:1433;databaseName=Project_SWP391_03", "sa", "123456");
+        this("jdbc:sqlserver://localhost:1433;databaseName=ECommerceDB", "sa", "123456");
     }
 
     public ResultSet getData(String sql) {

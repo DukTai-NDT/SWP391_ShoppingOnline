@@ -15,12 +15,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author quang
+ * @author whyth
  */
-@WebServlet(name="HomePageController", urlPatterns={"/HomePageURL"})
-public class HomePageController extends HttpServlet {
-   
-    /** 
+@WebServlet(name="UpdateProductController", urlPatterns={"/UpdateProduct"})
+public class UpdateProductController extends HttpServlet {
+
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
@@ -30,14 +30,11 @@ public class HomePageController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        }
-    } 
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -48,9 +45,9 @@ public class HomePageController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -63,7 +60,7 @@ public class HomePageController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */

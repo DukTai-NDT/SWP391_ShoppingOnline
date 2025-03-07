@@ -164,6 +164,7 @@
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
                                 <li><a href="ProductURL" class="sub-menu-item">Shop</a></li>
+                                <li><a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
                                 <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>

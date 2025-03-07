@@ -4,27 +4,24 @@
  */
 package controller;
 
+import entity.Brand;
+import entity.Products;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import entity.Categories;
-import entity.Products;
-import jakarta.servlet.RequestDispatcher;
 import java.util.Vector;
-import model.DAOCategories;
+import model.DAOBrand;
 import model.DAOProducts;
 
 /**
  *
- * @author quang
+ * @author whyth
  */
-@WebServlet(name="MedicalProductController", urlPatterns={"/ProductURL"})
-public class ProductController extends HttpServlet {
+@WebServlet(name = "GetBrandByID", urlPatterns = {"/GetBrandByID"})
+public class GetBrandByID extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,47 +33,50 @@ public class ProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        DAOProducts dao = new DAOProducts();
-        Vector<Products> vector = new Vector<Products>();
-        String sql = "";
-        try (PrintWriter out = response.getWriter()) {
-            request.getRequestDispatcher("jsp/shop.jsp").forward(request, response);
-            String service = request.getParameter("service");
-            
-            if(service == null) {
-                service = "listAllProducts";
-            }
-            if(service.equals("listAllProducts")){
-                sql = "select * from Products";
-            }
-            if(service.equals("duoi100")) {
-                sql = "select * from Products p where  p.Price <= 100000";
-            }
-            if(service.equals("duoi300")){
-                sql = "select * from Products p where  p.Price > 100000 and p.Price <= 300000";
-            }
-            if(service.equals("duoi500")){
-                sql = "select * from Products p where  p.Price > 300000 and p.Price <= 500000";
-            }
-            if(service.equals("tren500")){
-                sql = "select * from Products p where  p.Price > 500000";
-            }
-            if(service.equals("listAllProductsLowPrice")){
-                sql = "SELECT * FROM Products p ORDER BY p.Price ASC;";
-            }
-            if(service.equals("listAllProductsHighPrice")){
-                sql = "SELECT * FROM Products p ORDER BY p.Price DESC";
-            }
+        throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
 
-            
-            vector = dao.getProducts(sql);
-            request.setAttribute("vector", vector);
-            request.getRequestDispatcher("/jsp/shop.jsp").forward(request, response);
+    DAOProducts pDAO = new DAOProducts();
+    DAOBrand bDAO = new DAOBrand();
 
-        }
+    // Lấy productID từ request
+    String pidStr = request.getParameter("pid");
+
+    if (pidStr == null || pidStr.trim().isEmpty()) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Product ID is missing");
+        return;
     }
+
+    int pid;
+    try {
+        pid = Integer.parseInt(pidStr);
+    } catch (NumberFormatException e) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Product ID format");
+        return;
+    }
+
+    // Lấy thông tin sản phẩm
+    Vector<Products> pdList = pDAO.getProducts("SELECT * FROM Products WHERE ProductID = " + pid);
+
+    if (pdList.isEmpty()) {
+        response.sendError(HttpServletResponse.SC_NOT_FOUND, "Product not found");
+        return;
+    }
+
+    Products product = pdList.get(0);
+    request.setAttribute("pdetail", product);
+
+    // Lấy thông tin Brand dựa trên brandID của sản phẩm
+    Vector<Brand> brandList = bDAO.getBrand("SELECT * FROM Brand WHERE BrandID = " + product.getBrandID());
+
+    if (!brandList.isEmpty()) {
+        request.setAttribute("brandDetail", brandList.get(0));
+    }
+
+    // Forward đến trang product-detail.jsp
+    request.getRequestDispatcher("admin/product-detail.jsp").forward(request, response);
+}
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

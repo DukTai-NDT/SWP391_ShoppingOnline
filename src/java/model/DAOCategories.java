@@ -5,6 +5,7 @@
 package model;
 
 import entity.Categories;
+import entity.Products;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -72,6 +73,7 @@ public class DAOCategories extends DBConnection {
             while (rs.next()) {
                 int CategoriesID = rs.getInt("CategoriesID");
                 String Name = rs.getString("Name");
+
                 Categories categories = new Categories(CategoriesID, Name);
                 vector.add(categories);
             }
@@ -83,20 +85,10 @@ public class DAOCategories extends DBConnection {
 
     public static void main(String[] args) {
         DAOCategories dao = new DAOCategories();
-
-//        Categories cateAdd = new Categories("Thuoc");
-//        int n = dao.addCategories(cateAdd);
-
-//        Categories cateUpdate = new Categories(1, "DungCuYTe");
-//        int n = dao.updateCategories(cateUpdate);
-
-//        int n = dao.deleteCategories("thuoc");
-//        System.out.println(n);
-
-        Vector<Categories> vector = dao.getCategories("select * from Categories");
+        Vector<Categories> vector = dao.getCategories("SELECT * FROM dbo.Categories");
         for (Categories categories : vector) {
             System.out.println(categories);
-            
         }
     }
+
 }

@@ -13,22 +13,25 @@ body {
 
 #topnav .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Căn giữa logo và menu chính */
     align-items: center;
     position: relative; /* Để định vị các biểu tượng bên phải */
 }
 
 .logo {
     flex-shrink: 0; /* Đảm bảo logo không bị co lại */
+    margin-right: 20px; /* Khoảng cách giữa logo và menu */
 }
 
 #navigation {
-    flex-grow: 1; /* Menu chính chiếm không gian bên trái */
+    display: flex;
+    justify-content: center; /* Căn giữa menu chính */
 }
 
 .navigation-menu.nav-left {
     display: flex;
-    justify-content: flex-start; /* Menu chính nằm bên trái */
+    justify-content: center; /* Căn giữa các mục menu */
+    gap: 15px; /* Khoảng cách giữa các mục menu */
 }
 
 .dropdowns.list-inline {
@@ -65,6 +68,28 @@ body {
     font-size: 18px;
     margin-bottom: 20px;
     color: #333;
+}
+
+.price-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.price-filter a {
+    display: block;
+    padding: 10px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+}
+
+.price-filter a:hover {
+    background: #e9ecef;
 }
 
 .filter-section {
@@ -171,8 +196,18 @@ body {
 }
 
 .buy-btn {
-    background-color: #007bff;
+    background-color: #ccccff;
     color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.buy-btn {
+    background-color: #ff6666;
+    color: red;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -210,6 +245,11 @@ body {
 
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    #topnav .container {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .dropdowns.list-inline {
