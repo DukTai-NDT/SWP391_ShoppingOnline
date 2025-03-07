@@ -25,17 +25,15 @@ public class DAOCart extends DBConnection {
         String sql = "INSERT INTO [dbo].[Cart]\n"
                 + "           ([CustomerID]\n"
                 + "           ,[CartStatus]\n"
-                + "           ,[TotalPrice]\n"
                 + "           ,[CreateDate])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?)";
+                + "           (?,?,?)";
 
         try {
             PreparedStatement preState = conn.prepareCall(sql);
             preState.setInt(1, other.getCustomerID());
             preState.setInt(2, other.isCartStatus() == true ? 1 : 0);
-            preState.setFloat(3, other.getTotalPrice());
-            preState.setDate(4, java.sql.Date.valueOf(other.getCreateDate()));
+            preState.setDate(3, java.sql.Date.valueOf(other.getCreateDate()));
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
@@ -62,40 +60,51 @@ public class DAOCart extends DBConnection {
         String sql = "UPDATE [dbo].[Cart]\n"
                 + "   SET [CustomerID] = ?\n"
                 + "      ,[CartStatus] = ?\n"
-                + "      ,[TotalPrice] = ?\n"
                 + "      ,[CreateDate] = ?\n"
                 + " WHERE CartID = ?";
-        
+
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setInt(1, other.getCustomerID());
             preState.setInt(2, other.isCartStatus() == true ? 1 : 0);
-            preState.setFloat(3, other.getTotalPrice());
-            preState.setDate(4, java.sql.Date.valueOf(other.getCreateDate()));
-            preState.setInt(5, other.getCartID());
+
+            preState.setDate(3, java.sql.Date.valueOf(other.getCreateDate()));
+            preState.setInt(4, other.getCartID());
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
     }
-    public Vector<Cart> getCart(String sql){
+
+    public Vector<Cart> getCart(String sql) {
         Vector<Cart> vector = new Vector<>();
-        try { 
+        try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-               ResultSet rs = state.executeQuery(sql);
-               while (rs.next()) {                
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
                 int CartID = rs.getInt("CartID");
-	  int CustomerID = rs.getInt("CustomerID");
-	  boolean CartStatus = (rs.getInt("CartStatus")) == 1 ? true : false;
-	  float TotalPrice = rs.getFloat("TotalPrice");
-	  LocalDate CreateDate = rs.getDate("CreateDate").toLocalDate();
-          Cart cart = new Cart(CartID, CustomerID, CartStatus, TotalPrice, CreateDate);
-          vector.add(cart);
+                int CustomerID = rs.getInt("CustomerID");
+                boolean CartStatus = (rs.getInt("CartStatus")) == 1 ? true : false;
+
+                LocalDate CreateDate = rs.getDate("CreateDate").toLocalDate();
+                Cart cart = new Cart(CartID, CustomerID, CartStatus, CreateDate);
+                vector.add(cart);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCart.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+
+    public static void main(String[] args) {
+        DAOCart dao = new DAOCart();
+
+        LocalDate now = LocalDate.now();
+        int x = 3;
+        Cart cart = dao.getCart("  select * from Cart where CreateDate like '" + now + "' and CustomerID = " + x).get(0);
+        
+        System.out.println(cart);
+
     }
 }

@@ -13,30 +13,30 @@ import java.time.LocalDate;
 public class Orders {
 
     private int OrderID;
-    private float Amount;
-    private float Total;
     private String Status;
     private int CustomerID;
     private LocalDate OrderTime;
+    private LocalDate DeliveryETA;
     private int PaymentID;
 
-    public Orders(int OrderID, float Amount, float Total, String Status, int CustomerID, LocalDate OrderTime, int PaymentID) {
+    public Orders(int OrderID, String Status, int CustomerID, LocalDate OrderTime, LocalDate DeliveryETA, int PaymentID) {
         this.OrderID = OrderID;
-        this.Amount = Amount;
-        this.Total = Total;
         this.Status = Status;
         this.CustomerID = CustomerID;
         this.OrderTime = OrderTime;
+        this.DeliveryETA = DeliveryETA;
         this.PaymentID = PaymentID;
     }
 
-    public Orders(float Amount, float Total, String Status, int CustomerID, LocalDate OrderTime, int PaymentID) {
-        this.Amount = Amount;
-        this.Total = Total;
+    public Orders(String Status, int CustomerID, LocalDate OrderTime, LocalDate DeliveryETA, int PaymentID) {
         this.Status = Status;
         this.CustomerID = CustomerID;
         this.OrderTime = OrderTime;
+        this.DeliveryETA = DeliveryETA;
         this.PaymentID = PaymentID;
+    }
+
+    public Orders() {
     }
 
     public int getOrderID() {
@@ -45,22 +45,6 @@ public class Orders {
 
     public void setOrderID(int OrderID) {
         this.OrderID = OrderID;
-    }
-
-    public float getAmount() {
-        return Amount;
-    }
-
-    public void setAmount(float Amount) {
-        this.Amount = Amount;
-    }
-
-    public float getTotal() {
-        return Total;
-    }
-
-    public void setTotal(float Total) {
-        this.Total = Total;
     }
 
     public String getStatus() {
@@ -87,6 +71,14 @@ public class Orders {
         this.OrderTime = OrderTime;
     }
 
+    public LocalDate getDeliveryETA() {
+        return DeliveryETA;
+    }
+
+    public void setDeliveryETA(LocalDate DeliveryETA) {
+        this.DeliveryETA = DeliveryETA;
+    }
+
     public int getPaymentID() {
         return PaymentID;
     }
@@ -97,8 +89,7 @@ public class Orders {
 
     @Override
     public String toString() {
-        return "Orders{" + "OrderID=" + OrderID + ", Amount=" + Amount + ", Total=" + Total + ", Status=" + Status + ", CustomerID=" + CustomerID + ", OrderTime=" + OrderTime + ", PaymentID=" + PaymentID + '}';
+        return "Orders{" + "OrderID=" + OrderID + ", Status=" + Status + ", CustomerID=" + CustomerID + ", OrderTime=" + OrderTime + ", DeliveryETA=" + DeliveryETA + ", PaymentID=" + PaymentID + '}';
     }
-    
-    
+ 
 }

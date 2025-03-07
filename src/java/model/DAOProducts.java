@@ -140,11 +140,7 @@ public class DAOProducts extends DBConnection {
         return vector;
     }
 
-    public static void main(String[] args) {
-        DAOProducts dao = new DAOProducts();
-        Vector<Products> vector = dao.getProducts("SELECT * FROM dbo.Products");
-        for (Products products : vector) {
-            System.out.println(products);
-        }
-    }
 }
+
+
+

@@ -111,4 +111,23 @@ public class DAOCustomer extends DBConnection {
         }
         return vector;
     }
+    
+    public static void main(String[] args) {
+        DAOCustomer dao = new DAOCustomer();
+        Vector<String> items = new Vector<>();
+        for (int i = 1; i <= 10; i++) {
+            items.add("Item " + i);
+        }
+
+        int index = 0; // Biến đếm
+        for (String item : items) {
+            if (index < 4) {
+                System.out.println(item + " thuộc nhóm 1");
+            } else {
+                System.out.println(item + " thuộc nhóm 2");
+            }
+            index++; // Tăng index sau mỗi lần lặp
+        }
+    
+    }
 }

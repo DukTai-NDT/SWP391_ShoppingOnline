@@ -21,7 +21,7 @@ public class DAOAccount extends DBConnection {
 
     public int addAccount(Account other) {
         int n = 0;
-        String sql = "INSERT INTO [dbo].[Account]([Username],[RoleID],[Password],[Email])\n"
+        String sql = "INSERT INTO [dbo].[Accounts]([Username],[RoleID],[Password],[Email])\n"
                 + "     VALUES\n"
                 + "           (?,?,?,?)";
         try {
@@ -40,7 +40,7 @@ public class DAOAccount extends DBConnection {
 
     public int deleteAccount(int AccountID) {
         int n = 0;
-        String sql = "DELETE FROM [dbo].[Account]\n"
+        String sql = "DELETE FROM [dbo].[Accounts]\n"
                 + "      WHERE Account.AccountID = " + AccountID;
         try {
             Statement state = conn.createStatement();
@@ -53,7 +53,7 @@ public class DAOAccount extends DBConnection {
 
     public int updateAccount(Account other) {
         int n = 0;
-        String sql = "UPDATE [dbo].[Account]\n"
+        String sql = "UPDATE [dbo].[Accounts]\n"
                 + "   SET [Username] = ?\n"
                 + "      ,[RoleID] = ?\n"
                 + "      ,[Password] = ?\n"
@@ -77,10 +77,10 @@ public class DAOAccount extends DBConnection {
 
     public int changePassword(String email, String password){
         int n = 0;
-        String sql = "UPDATE [dbo].[Account]\n"
+        String sql = "UPDATE [dbo].[Accounts]\n"
                 + "   SET [Password] = ?\n"
                 
-                + " WHERE Account.Email = ?";
+                + " WHERE Accounts.Email = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, password);
@@ -114,7 +114,7 @@ public class DAOAccount extends DBConnection {
     }
     public Account getAAccount(String email){
         Account account = null;
-        String sql = "SELECT *  FROM [dbo].[Account] where Email = ? ";
+        String sql = "SELECT *  FROM [dbo].[Accounts] where Email = ? ";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, email);
@@ -131,7 +131,7 @@ public class DAOAccount extends DBConnection {
     }
     public Account getLogin(String userName, String password) {
         Account account = null;
-        String sql = "select * from Account where Account.Username = ? and Account.Password = ?";
+        String sql = "select * from Accounts where Accounts.UserName = ? and Accounts.Password = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, userName);
@@ -149,7 +149,7 @@ public class DAOAccount extends DBConnection {
 
     public int getLastAccountID() {
         int n = 0;
-        String sql = "  SELECT top(1) * FROM Account ORDER BY AccountID DESC ";
+        String sql = "  SELECT top(1) * FROM Accounts ORDER BY AccountID DESC ";
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
@@ -165,7 +165,7 @@ public class DAOAccount extends DBConnection {
 
     public Vector<String> getEmailAccount() {
         Vector<String> listEmail = new Vector<>();
-        String sql = "select Email from Account";
+        String sql = "select Email from Accounts";
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
@@ -181,39 +181,23 @@ public class DAOAccount extends DBConnection {
 
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
-//        Account accountAdd = new Account("Tainguyenduc", 2, "abcd123");
+//        Account accountAdd = new Account("quang", 0, Password, Email)
 //        int n = dao.addAccount(accountAdd);
 
 //    int n = dao.deleteAccount(1);
 //          Account accountUpdate = new Account(2, "TaiNguye", 1, "cde123");
 //          int n = dao.updateAccount(accountUpdate);
 //        System.out.println(n);
-        Vector<Account> vector = dao.getAccount("SELECT *  FROM [dbo].[Account] ");
+        Vector<Account> vector = dao.getAccount("SELECT *  FROM [dbo].[Accounts] ");
         for (Account account : vector) {
             System.out.println(account);
         }
         System.out.println("-------------");
-        Vector<String> stringVector = dao.getEmailAccount();
-        String acc = "taindhe181162@fpt.edu.vn";
-        String email = "";
-        for (String string : stringVector) {
-            if (acc.equals(string)) {
-                System.out.println("ok");
-                email = (String)string;
-            }
-        }
-        System.out.println(email);
-        
-        dao.changePassword("taindhe181162@fpt.edu.vn", "123456");
-        
-         Vector<Account> vectorAcc = dao.getAccount("SELECT *  FROM [dbo].[Account] where Email like '"+acc+"' ");
-        for (Account account : vectorAcc) {
-            
-            System.out.println(account);
-        }
-//        dao.deleteAccount(5010);
-        System.out.println(dao.getAAccount("nguyenductai.12a2tqk@gmail.com"));
+       Account acc = dao.getLogin("quang", "123");
+        System.out.println(acc);
         
         
+        int n = dao.changePassword("taindhe181162@fpt.edu.vn", "abc");
+        System.out.println(n); 
     }
 }
