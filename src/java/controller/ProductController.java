@@ -47,10 +47,10 @@ public class ProductController extends HttpServlet {
         String submit = request.getParameter("submit");
         String pname = request.getParameter("ProductName");
         String sql = "";
+        DAOCategories daoCat = new DAOCategories();
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("service");
-//            String BrandID = request.getParameter("BrandID");
-//            int BrandId = Integer.parseInt(BrandID);
+            
             if(service == null) {
                 service = "listAllProducts";
             }
@@ -84,10 +84,24 @@ public class ProductController extends HttpServlet {
             if(service.equals("notIsDrug")){
                 sql = "select * from Products p where p.isPrescriptionDrug = 0";
             }
+            if(service.equals("categories")){
+                String cid = request.getParameter("cid");
+                sql = "select * from Products P where CategoryID = " + cid;
+            }
+            if(service.equals("brand")){
+                String bid = request.getParameter("bid");
+                sql = "select * from Products where BrandID = " + bid;    
+            }
+            if(service.equals("ingredient")){
+                String ingreid = request.getParameter("ingreid");
+                sql = "select * from Products p join Ingredient i on p.ProductID = i.ProductID where i.IngredientID = " + ingreid;
+            }
             Vector<Brand> vectorB = daoB.getBrand("select * from Brand");
+            Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
             vector = dao.getProducts(sql);
             request.setAttribute("vectorB", vectorB);
             request.setAttribute("vector", vector);
+            request.setAttribute("vectorCat", vectorCat);
             request.getRequestDispatcher("/jsp/shop.jsp").forward(request, response);
 
         }

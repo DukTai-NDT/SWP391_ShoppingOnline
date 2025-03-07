@@ -181,7 +181,7 @@ public class DAOAccount extends DBConnection {
 
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
-//        Account accountAdd = new Account("Tainguyenduc", 2, "abcd123");
+//        Account accountAdd = new Account("quang", 0, Password, Email)
 //        int n = dao.addAccount(accountAdd);
 
 //    int n = dao.deleteAccount(1);
@@ -193,7 +193,7 @@ public class DAOAccount extends DBConnection {
             System.out.println(account);
         }
         System.out.println("-------------");
-       Account acc = dao.getLogin("abc", "123");
+       Account acc = dao.getLogin("quang", "123");
         System.out.println(acc);
         
         

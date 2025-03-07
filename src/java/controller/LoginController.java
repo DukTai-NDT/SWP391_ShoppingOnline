@@ -99,6 +99,7 @@ public class LoginController extends HttpServlet {
                 if (userExists) {
                     session.setAttribute("dataUser", accountExists);
                     Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + accountExists.getAccountID()).get(0);
+
                     session.setAttribute("dataCustomer", cus);
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 } else {
@@ -122,6 +123,7 @@ public class LoginController extends HttpServlet {
                         request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
 
                     } else if (account != null) {
+
                         if (account.getRoleID() == 2) {
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             session.setAttribute("dataCustomer", cus);
@@ -132,12 +134,14 @@ public class LoginController extends HttpServlet {
                             session.setAttribute("dataCustomer", cus);
                             session.setAttribute("dataUser", account);
                             request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
+
                         } else if (account.getRoleID() == 1) {
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             session.setAttribute("dataCustomer", cus);
                             session.setAttribute("dataUser", account);
                             request.getRequestDispatcher("index.jsp").forward(request, response);
                         } 
+
                     }
                 }
             }

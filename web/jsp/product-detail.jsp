@@ -703,7 +703,7 @@
                     <!-- Phần thông tin -->
                     <div class="product-info">
                         <div class="product-header">
-                            <div class="brand">Thương hiệu: <span><%=brand.getBrandName()%></span></div>
+                            <div class="brand">Thương hiệu: <span><a href="ProductURL?service=brand&bid=<%=brand.getBrandID()%>"><%=brand.getBrandName()%></a></span></div>
                             <h1><%=product.getProductName()%></h1>
                             <div class="rating">
                                 <span class="code">00345415</span> • 
@@ -727,7 +727,7 @@
                         <div class="product-details">
                             <p><strong>Category: </strong> <a> <%=cat.getCategoryName()%></a></p>
                             <p><strong>Country: </strong> <%=brand.getCountry()%></p>
-                            <p><strong>Ingredient: </strong> <%for (Ingredient ingre : vectorIngre){%><a> <%=ingre.getIngredientName()%> </a><%}%></p> 
+                            <p><strong>Ingredient:  <%for (Ingredient ingre : vectorIngre){%><a href="ProductURL?service=ingredient&ingreid=<%=ingre.getIngredientID()%>"> <%=ingre.getIngredientName()%> </a><%}%></p> 
                         </div>
                     </div>
                 </div>
