@@ -17,18 +17,28 @@ import entity.Categories;
 import entity.Products;
 import jakarta.servlet.RequestDispatcher;
 import java.util.Vector;
-import model.DAOCategories;
-import model.DAOProducts;
+import java.sql.ResultSet;
+import model.DAOBrand;
 
 /**
  *
  * @author quang
  */
+
 @WebServlet(name="MedicalProductController", urlPatterns={"/ProductURL"})
 public class ProductController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+=======
+@WebServlet(name = "ProductController", urlPatterns = {"/ProductURL"})
+public class ProductController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -46,6 +56,80 @@ public class ProductController extends HttpServlet {
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
+=======
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        DAOProducts dao = new DAOProducts();
+        DAOBrand daoB = new DAOBrand();
+        Vector<Products> vector = new Vector<Products>();
+        String submit = request.getParameter("submit");
+        String pname = request.getParameter("ProductName");
+        String sql = "";
+        DAOCategories daoCat = new DAOCategories();
+        try (PrintWriter out = response.getWriter()) {
+            String service = request.getParameter("service");
+            
+            if(service == null) {
+                service = "listAllProducts";
+            }
+            if(service.equals("listAllProducts")){
+                sql = "select * from Products";
+            }
+            if(service.equals("duoi100")) {
+                sql = "select * from Products p where  p.Price <= 100000";
+            }
+            if(service.equals("duoi300")){
+                sql = "select * from Products p where  p.Price > 100000 and p.Price <= 300000";
+            }
+            if(service.equals("duoi500")){
+                sql = "select * from Products p where  p.Price > 300000 and p.Price <= 500000";
+            }
+            if(service.equals("tren500")){
+                sql = "select * from Products p where  p.Price > 500000";
+            }
+            if(service.equals("listAllProductsLowPrice")){
+                sql = "SELECT * FROM Products p ORDER BY p.Price ASC;";
+            }
+            if(service.equals("listAllProductsHighPrice")){
+                sql = "SELECT * FROM Products p ORDER BY p.Price DESC";
+            }
+            if(submit != null){
+                sql = "select * from Products p where p.ProductName like '%"+pname+"%'";
+            }
+            if(service.equals("isDrug")){
+                sql = "select * from Products p where p.isPrescriptionDrug = 1";
+            }
+            if(service.equals("notIsDrug")){
+                sql = "select * from Products p where p.isPrescriptionDrug = 0";
+            }
+            if(service.equals("categories")){
+                String cid = request.getParameter("cid");
+                sql = "select * from Products P where CategoryID = " + cid;
+            }
+            if(service.equals("brand")){
+                String bid = request.getParameter("bid");
+                sql = "select * from Products where BrandID = " + bid;    
+            }
+            if(service.equals("ingredient")){
+                String ingreid = request.getParameter("ingreid");
+                sql = "select * from Products p join Ingredient i on p.ProductID = i.ProductID where i.IngredientID = " + ingreid;
+            }
+            Vector<Brand> vectorB = daoB.getBrand("select * from Brand");
+            Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
+            vector = dao.getProducts(sql);
+            request.setAttribute("vectorB", vectorB);
+            request.setAttribute("vector", vector);
+            request.setAttribute("vectorCat", vectorCat);
+            request.getRequestDispatcher("/jsp/shop.jsp").forward(request, response);
+
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -59,6 +143,15 @@ public class ProductController extends HttpServlet {
 
     /** 
      * Handles the HTTP <code>POST</code> method.
+=======
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -72,6 +165,15 @@ public class ProductController extends HttpServlet {
 
     /** 
      * Returns a short description of the servlet.
+=======
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
      * @return a String containing servlet description
      */
     @Override

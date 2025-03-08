@@ -57,7 +57,9 @@ public class SignUpController extends HttpServlet {
 
                 String accessToken = daoGoogle.getTokenSignUp(code);
                 GoogleAccount acc = daoGoogle.getUserInfo(accessToken);
-                Vector<Account> vectorAcc = dao.getAccount("Select * from Account");
+
+                Vector<Account> vectorAcc = dao.getAccount("Select * from Accounts");
+
 
                 boolean userExists = false;
                 for (Account account : vectorAcc) {
@@ -72,9 +74,11 @@ public class SignUpController extends HttpServlet {
                     request.setAttribute("message", "account already exists. Please login");
                     request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
                 } else {
-                    int n = dao.addAccount(new Account(acc.getName(), 1002, getRandom(6), acc.getEmail(),userExists));
-                    Customers customer = new Customers(acc.getFirst_name(), acc.getFamily_name(),
+
+                    int n = dao.addAccount(new Account(acc.getName(),2 , getRandom(6), acc.getEmail(),true));
+                    Customers customer = new Customers(acc.getName(), acc.getFamily_name(),
                              acc.getEmail(), null, null, null, dao.getLastAccountID());
+                     int x = daoCustomer.addCustomer(customer);
 
                     request.setAttribute("message", "Sign up successfully. Please login");
                     request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
@@ -88,6 +92,7 @@ public class SignUpController extends HttpServlet {
                 String Email = request.getParameter("Email");
                 String Password = request.getParameter("Password");
 
+
                 Vector<Customers> vector = new Vector<>();
 
                 for (Customers customer : vector) {
@@ -98,14 +103,18 @@ public class SignUpController extends HttpServlet {
                     }
                 }
 
-                int n = dao.addAccount(new Account(UserName, 1002, Password, Email,true));
+
+                int n = dao.addAccount(new Account(UserName, 2, Password, Email,true));
+
                 if (n == 0) {
                     //request.setAttribute("accountFail", "Can not to signup !!!");
                     request.getRequestDispatcher("jsp/signup.jsp").forward(request, response);
                 } else {
                     Customers customer = new Customers(FirstName, LastName,Email, null, null, null, dao.getLastAccountID());
                     int x = daoCustomer.addCustomer(customer);
-                    response.sendRedirect("LoginURL?service=login");
+
+                   response.sendRedirect("LoginURL?service=login");
+
                 }
 
             }

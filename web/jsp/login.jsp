@@ -26,6 +26,10 @@
     </head>
     <% String message = (String)request.getAttribute("message"); 
     %>
+<<<<<<< HEAD
+=======
+     
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -91,6 +95,7 @@
                                             <h6 class="text-muted">Or</h6>
                                         </div><!--end col-->
 
+<<<<<<< HEAD
 <!--                                        <div class="col-6 mt-3">
                                             <div class="d-grid">
                                                 <a href="https://www.facebook.com/v19.0/dialog/oauth?fields=id,name,email&client_id=626107953499199&redirect_uri=http://localhost:8080/SWP391/LoginURL&service=loginWithFaceBook" class="btn btn-soft-primary"><i class="uil uil-facebook"></i> Facebook</a>
@@ -102,6 +107,20 @@
                                                 <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/SWP391/LoginURL&response_type=code&client_id=585107335180-i8g585qjpvmq8rvslrel6lkgqv39fjt5.apps.googleusercontent.com&approval_prompt=force" class="btn btn-soft-primary"><i class="uil uil-google"></i> Google</a>
                                             </div>
                                         </div><!--end col-->
+=======
+
+
+                                        <div class="col-12 mt-3">
+                                            <div class="d-grid">
+                                                <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/SWP391/LoginURL&response_type=code&client_id=585107335180-i8g585qjpvmq8rvslrel6lkgqv39fjt5.apps.googleusercontent.com&approval_prompt=force" 
+                                                   class="btn btn-soft-primary btn-lg w-100 text-center">
+                                                    <i class="uil uil-google"></i> Google
+                                                </a>
+                                            </div>
+                                        </div>
+
+
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
 
                                         <div class="col-12 text-center">
                                             <p class="mb-0 mt-3"><small class="text-dark me-2">Don't have an account ?</small> <a href="SignUpURL?service=signup" class="text-dark fw-bold">Sign Up</a></p>

@@ -22,19 +22,15 @@ public class DAOPayments extends DBConnection {
     public int addPayment(Payments pay) {
         int n = 0;
         String sql = "INSERT INTO [dbo].[Payments]\n"
-                + "           ([Method]\n"
-                + "           ,[Amount]\n"
-                + "           ,[StatusID])\n"
+                + "           ([MethodID]\n"
+                + "           ,[Status])\n"
                 + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?)";
+                + "           (?,?)";
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, pay.getMethod());
-            pre.setFloat(2, pay.getAmount());
-            pre.setInt(3, pay.getStatusID());
+            pre.setInt(1, pay.getMethodID());
+            pre.setInt(2, pay.isStatus() == true ? 1 : 0);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOPayments.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,16 +57,14 @@ public class DAOPayments extends DBConnection {
     public int updatePayment(Payments pay) {
         int n = 0;
         String sql = "UPDATE [dbo].[Payments]\n"
-                + "   SET [Method] = ?\n"
-                + "      ,[Amount] = ?\n"
-                + "      ,[StatusID] = ?\n"
-                + " WHERE PaymentID = ?";
+                + "   SET [MethodID] = ?\n"
+                + "      ,[Status] = ?\n"
+                + " WHERE PaymentID = ??";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, pay.getMethod());
-            pre.setFloat(2, pay.getAmount());
-            pre.setInt(3, pay.getStatusID());
-            pre.setInt(4, pay.getPaymentID());
+            pre.setInt(1, pay.getMethodID());
+            pre.setInt(2, pay.isStatus() == true ? 1 : 0);
+            pre.setInt(3, pay.getPaymentID());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOPayments.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,11 +81,11 @@ public class DAOPayments extends DBConnection {
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 int PaymentID = rs.getInt("PaymentID");
-                String Method = rs.getString("Method");
-                float Amount = rs.getFloat("Amount");
-                int StatusID = rs.getInt("StatusID");
-                
-                Payments pay = new Payments(PaymentID, Method, Amount, StatusID);
+                int MethodID = rs.getInt("MethodID");
+
+                boolean Status = (rs.getInt("Status")) == 1 ? true : false;
+
+                Payments pay = new Payments(PaymentID, MethodID, Status);
                 vector.add(pay);
             }
         } catch (SQLException ex) {
@@ -99,4 +93,30 @@ public class DAOPayments extends DBConnection {
         }
         return vector;
     }
+    public int getLastPaymentID() {
+       int n = 0;
+        String sql = "SELECT top(1) * FROM Payments ORDER BY PaymentID DESC";
+         try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {                
+                n = rs.getInt("PaymentID");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOPayments.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    public static void main(String[] args) {
+        DAOPayments dao = new DAOPayments();
+        int n = dao.getLastPaymentID();
+        System.out.println(n);
+          Vector<Payments> vector = dao.getPayment("select * from Payments");
+          for (Payments payments : vector) {
+              System.out.println(payments);
+        }
+    }
 }
+
+

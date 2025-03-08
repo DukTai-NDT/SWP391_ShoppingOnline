@@ -9,12 +9,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import java.time.LocalDate;
+import java.util.Date;
+
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,28 +96,36 @@ public class DAOBlogs extends DBConnection {
             preState.setInt(7, other.getBlogID());
             n = preState.executeUpdate();
 
+
+        
+ 
+             
+
         } catch (SQLException ex) {
             Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
     }
 
-    public Vector<Blogs> getBlogs(String sql) {
-        Vector<Blogs> vector = new Vector<>();
 
+    
+    public Vector<Blogs> getBlogs(String sql){
+        Vector<Blogs> vector = new Vector<>();
+        
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
-            while (rs.next()) {
+            while (rs.next()) { 
                 int BlogID = rs.getInt("BlogID");
                 int CustomerID = rs.getInt("CustomerID");
-                LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
-                String Title = rs.getString("Title");
-                String Content = rs.getString("Content");
-                String Image = rs.getString("Image");
-                boolean Status = (rs.getInt("Status") == 1 ? true : false);
-                Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
-                vector.add(blog);
+	  LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
+	  String Title = rs.getString("Title");
+	  String Content = rs.getString("Content");
+	  String Image = rs.getString("Image");
+	  boolean Status = (rs.getInt("Status") == 1 ? true : false);
+          Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
+          vector.add(blog);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, ex);
@@ -197,4 +210,6 @@ public class DAOBlogs extends DBConnection {
         }
     }
 
+
+   
 }

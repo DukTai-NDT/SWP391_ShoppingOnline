@@ -9,8 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,11 +79,13 @@ public class DAOAccount extends DBConnection {
 
     }
 
+
     public int changePassword(String email, String password) {
         int n = 0;
         String sql = "UPDATE [dbo].[Accounts]\n"
                 + "   SET [Password] = ?\n"
                 + " WHERE Account.Email = ?";
+
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, password);
@@ -105,7 +109,9 @@ public class DAOAccount extends DBConnection {
                 int RoleID = rs.getInt("RoleID");
                 String Password = rs.getString("Password");
                 String Email = rs.getString("Email");
+
                 Account account = new Account(UserName, RoleID, Password, Email, true);
+
                 vector.add(account);
             }
         } catch (SQLException ex) {
@@ -115,16 +121,19 @@ public class DAOAccount extends DBConnection {
         return vector;
     }
 
-    public Account getAAccount(String email) {
+    public Account getAAccount(String email){
+
         Account account = null;
         String sql = "SELECT *  FROM [dbo].[Accounts] where Email = ? ";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, email);
 
+
             ResultSet rs = preState.executeQuery();
             while (rs.next()) {
                 account = new Account(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getBoolean(6));
+
 
             }
         } catch (SQLException ex) {
@@ -132,6 +141,7 @@ public class DAOAccount extends DBConnection {
         }
         return account;
     }
+
 
     public Account getLogin(String userName, String password) {
         Account account = null;
@@ -142,7 +152,9 @@ public class DAOAccount extends DBConnection {
             preState.setString(2, password);
             ResultSet rs = preState.executeQuery();
             while (rs.next()) {
+
                 account = new Account(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getBoolean(6));
+
 
             }
         } catch (SQLException ex) {
@@ -182,6 +194,7 @@ public class DAOAccount extends DBConnection {
         }
         return listEmail;
     }
+
 
     public List<Account> getAllAccounts() {
         List<Account> list = new ArrayList<>();
@@ -291,4 +304,7 @@ public class DAOAccount extends DBConnection {
 //        System.out.println(acc);
 //        
 //    }
-    }
+    
+
+  
+}

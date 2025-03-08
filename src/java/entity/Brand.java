@@ -9,26 +9,15 @@ package entity;
  * @author Admin
  */
 public class Brand {
-//    [BrandID] [int] IDENTITY(1,1) NOT NULL,
-//	[BrandName] [nvarchar](100) NULL,
-//	[Country] [nvarchar](250) NULL,
-    
+
     private int BrandID;
-	private String BrandName;
-	private String Country;
+    private String BrandName;
+    private String Country;
 
     public Brand(int BrandID, String BrandName, String Country) {
         this.BrandID = BrandID;
         this.BrandName = BrandName;
         this.Country = Country;
-    }
-
-    public Brand(String BrandName, String Country) {
-        this.BrandName = BrandName;
-        this.Country = Country;
-    }
-
-    public Brand() {
     }
 
     public int getBrandID() {
@@ -59,7 +48,9 @@ public class Brand {
     public String toString() {
         return "Brand{" + "BrandID=" + BrandID + ", BrandName=" + BrandName + ", Country=" + Country + '}';
     }
-        
-        
-        
+    
+    
 }
+
+
+

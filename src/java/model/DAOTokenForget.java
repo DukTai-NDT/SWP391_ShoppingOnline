@@ -38,7 +38,7 @@ public class DAOTokenForget extends DBConnection {
 
     public int insertTokenForget(TokenForgetPassword tokenForget) {
         int n = 0;
-        String sql = "INSERT INTO [dbo].[TokenForgetPassword]\n"
+        String sql = "INSERT INTO [dbo].[TokenForgetPasswords]\n"
                 + "           ([Token]\n"
                 + "           ,[ExpiryTime]\n"
                 + "           ,[IsUsed]\n"
@@ -61,7 +61,7 @@ public class DAOTokenForget extends DBConnection {
 
     public TokenForgetPassword getTokenPassword(String token) {
         TokenForgetPassword tokenForget = null;
-        String sql = "Select * from [TokenForgetPassword] where Token = ?";
+        String sql = "Select * from [TokenForgetPasswords] where Token = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, token);
@@ -82,7 +82,7 @@ public class DAOTokenForget extends DBConnection {
         System.out.println("token = " + token);
         int n = 0;
         // Đúng cú pháp SQL Server
-        String sql = "UPDATE [dbo].[TokenForgetPassword] "
+        String sql = "UPDATE [dbo].[TokenForgetPasswords] "
                 + "SET [IsUsed] = ? "
                 + "WHERE [Token] = ?";
 
@@ -109,3 +109,5 @@ public class DAOTokenForget extends DBConnection {
         System.out.println(n);
     }
 }
+
+

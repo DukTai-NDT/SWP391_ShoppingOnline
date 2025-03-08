@@ -4,6 +4,9 @@
  */
 package controller;
 
+
+import entity.Brand;
+import entity.Categories;
 import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,11 +16,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Vector;
+import model.DAOBrand;
+import model.DAOCategories;
 import model.DAOProducts;
 
 /**
  *
+<<<<<<< HEAD
  * @author Admin
+=======
+ * @author whyth
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
  */
 @WebServlet(name = "ProductManagerController", urlPatterns = {"/ProductManager"})
 public class ProductManagerController extends HttpServlet {
@@ -34,12 +43,18 @@ public class ProductManagerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        DAOProducts pDAO = new DAOProducts();
-        Vector<Products> pList = pDAO.getProducts("SELECT * FROM dbo.Products");
-
-        request.setAttribute("pList", pList);
         
+        DAOProducts pDAO = new DAOProducts();
+        DAOCategories cDAO = new DAOCategories();
+        DAOBrand bDAO = new DAOBrand();
+        
+        Vector<Products> pList = pDAO.getProducts("SELECT * FROM dbo.Products");
+        Vector<Categories> cList = cDAO.getCategories("SELECT * FROM dbo.Categories ");
+        Vector<Brand> bList = bDAO.getBrand("SELECT * FROM dbo.Brand");
+        
+        request.setAttribute("pList", pList);
+        request.setAttribute("cList", cList);
+        request.setAttribute("bList", bList);
         request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
     }
 

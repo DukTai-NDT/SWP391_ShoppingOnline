@@ -13,7 +13,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.DAOProducts;
 import entity.Products;
+
 import java.util.Vector;
+
+import entity.Categories;
+import java.util.Vector;
+import model.DAOCategories;
+
 /**
  *
  * @author quang
@@ -33,9 +39,13 @@ public class CategoriesController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         
         try (PrintWriter out = response.getWriter()) {
          
+
+        
+
         }
     }
 

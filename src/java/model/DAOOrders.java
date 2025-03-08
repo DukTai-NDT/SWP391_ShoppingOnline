@@ -23,28 +23,22 @@ public class DAOOrders extends DBConnection {
     public int addOrder(Orders o) {
         int n = 0;
         String sql = "INSERT INTO [dbo].[Orders]\n"
-                + "           ([Amount]\n"
-                + "           ,[Total]\n"
-                + "           ,[Status]\n"
+                + "           ([Status]\n"
                 + "           ,[CustomerID]\n"
                 + "           ,[OrderTime]\n"
+                + "           ,[DeliveryETA]\n"
                 + "           ,[PaymentID])\n"
                 + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?)";
+                + "           (?,?,?,?,?)";
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setFloat(1, o.getAmount());
-            pre.setFloat(2, o.getTotal());
-            pre.setString(3, o.getStatus());
-            pre.setInt(4, o.getCustomerID());
-            pre.setDate(5, java.sql.Date.valueOf(o.getOrderTime()));
-            pre.setInt(6, o.getPaymentID());
+
+            pre.setString(1, o.getStatus());
+            pre.setInt(2, o.getCustomerID());
+            pre.setDate(3, java.sql.Date.valueOf(o.getOrderTime()));
+            pre.setDate(4, java.sql.Date.valueOf(o.getDeliveryETA()));
+            pre.setInt(5, o.getPaymentID());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,23 +64,22 @@ public class DAOOrders extends DBConnection {
     public int updateOrder(Orders o) {
         int n = 0;
         String sql = "UPDATE [dbo].[Orders]\n"
-                + "   SET [Amount] = ?\n"
-                + "      ,[Total] = ?\n"
-                + "      ,[Status] = ?\n"
+                + "   SET [Status] = ?\n"
                 + "      ,[CustomerID] = ?\n"
                 + "      ,[OrderTime] = ?\n"
+                + "      ,[DeliveryETA] = ?\n"
                 + "      ,[PaymentID] = ?\n"
                 + " WHERE OrderID = ?";
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setFloat(1, o.getAmount());
-            pre.setFloat(2, o.getTotal());
-            pre.setString(3, o.getStatus());
-            pre.setInt(4, o.getCustomerID());
-            pre.setDate(5, java.sql.Date.valueOf(o.getOrderTime()));
-            pre.setInt(6, o.getPaymentID());
-            pre.setInt(7, o.getOrderID());
+            
+            pre.setString(1, o.getStatus());
+            pre.setInt(2, o.getCustomerID());
+            pre.setDate(3, java.sql.Date.valueOf(o.getOrderTime()));
+            pre.setDate(4, java.sql.Date.valueOf(o.getDeliveryETA()));
+            pre.setInt(5, o.getPaymentID());
+            pre.setInt(6, o.getOrderID());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,21 +95,48 @@ public class DAOOrders extends DBConnection {
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 int OrderID = rs.getInt("OrderID");
-                float Amount = rs.getFloat("Amount");
-                float Total = rs.getFloat("Total");
+               
                 String Status = rs.getString("Status");
                 int CustomerID = rs.getInt("CustomerID");
                 LocalDate OrderTime = rs.getDate("OrderTime").toLocalDate();
+                LocalDate DeliveryETA = rs.getDate("DeliveryETA").toLocalDate();
                 int PaymentID = rs.getInt("PaymentID");
-                
-                Orders order = new Orders(OrderID, Amount, Total, Status, CustomerID, OrderTime, PaymentID);
+
+                Orders order = new Orders(OrderID, Status, CustomerID, OrderTime, DeliveryETA,PaymentID);
                 vector.add(order);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return vector;
 
     }
+    public int getLastOrderID(){
+        int n = 0;
+        String sql = "SELECT top(1) * FROM Orders ORDER BY OrderID DESC ";
+         try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {                
+                n = rs.getInt("OrderID");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    
+    public static void main(String[] args) {
+        DAOOrders dao = new DAOOrders();
+        Vector<Orders> vector = dao.getOrders("select * from Orders");
+        for (Orders orders : vector) {
+            System.out.println(orders);
+        }
+        int n = dao.getLastOrderID();
+        System.out.println(n);
+    }
 }
+
+

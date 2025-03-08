@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+<%-- 
+    Document   : product-detail
+    Created on : Mar 3, 2025, 9:57:25 PM
+    Author     : whyth
+--%>
+<%@page import="entity.Categories"%>
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
 <%@page import="entity.Brand"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,6 +35,11 @@
         <link href="css/slick.css" rel="stylesheet" /> 
         <link href="css/slick-theme.css" rel="stylesheet" />
         <!-- Icons -->
+<<<<<<< HEAD
+=======
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
         <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
         <link href="css/remixicon.css" rel="stylesheet" type="text/css" />
         <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
@@ -35,6 +49,34 @@
             .ms-md-4 {
                 margin-top: -10px;
             }
+
+            .action-icons {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                display: flex;
+                gap: 8px; /* Khoảng cách giữa các icon */
+            }
+
+            .action-icons a {
+                width: 30px;  /* Kích thước nhỏ hơn */
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #396cf2; /* Màu nền */
+                color: white;
+                border-radius: 50%; /* Làm tròn */
+                text-decoration: none;
+                font-size: 14px; /* Giảm kích thước icon */
+                transition: 0.3s;
+            }
+
+            .action-icons a:hover {
+                background-color: #f64747; /* Màu nổi bật khi hover */
+            }
+
+
         </style>
     </head>
 
@@ -61,6 +103,7 @@
                     </div>
 
                     <ul class="sidebar-menu pt-3">
+<<<<<<< HEAD
                         <li><a href="index.jsp"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
                         <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>
 
@@ -96,15 +139,59 @@
                                 </ul>
                             </div>
                         </li>
+=======
+                        <!--                        <li><a href="index.jsp"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
+                                                <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>-->
+
+                        <!--                        <li class="sidebar-dropdown">
+                                                    <a href="javascript:void(0)"><i class="uil uil-user me-2 d-inline-block"></i>Doctors</a>
+                                                    <div class="sidebar-submenu">
+                                                        <ul>
+                                                            <li><a href="doctors.html">Doctors</a></li>
+                                                            <li><a href="add-doctor.html">Add Doctor</a></li>
+                                                            <li><a href="dr-profile.html">Profile</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                        
+                                                <li class="sidebar-dropdown">
+                                                    <a href="javascript:void(0)"><i class="uil uil-wheelchair me-2 d-inline-block"></i>Patients</a>
+                                                    <div class="sidebar-submenu">
+                                                        <ul>
+                                                            <li><a href="patients.html">All Patients</a></li>
+                                                            <li><a href="add-patient.html">Add Patients</a></li>
+                                                            <li><a href="patient-profile.html">Profile</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                        
+                                                <li class="sidebar-dropdown">
+                                                    <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
+                                                    <div class="sidebar-submenu">
+                                                        <ul>
+                                                            <li><a href="chat.html">Chat</a></li>
+                                                            <li><a href="email.html">Email</a></li>
+                                                            <li><a href="calendar.html">Calendar</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>-->
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
 
                         <li class="sidebar-dropdown">
                             <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Pharmacy</a>
                             <div class="sidebar-submenu">
                                 <ul>
+<<<<<<< HEAD
                                     <li><a href="shop.html">Shop</a></li>
                                     <li><a href="product-detail.html">Shop Detail</a></li>
                                     <li><a href="shopcart.html">Shopcart</a></li>
                                     <li><a href="checkout.html">Checkout</a></li>
+=======
+                                    <li><a href="ProductManager" class="active">Product Manager</a></li>
+                                    <!--                                    <li><a href="product-detail.html">Shop Detail</a></li>
+                                                                        <li><a href="shopcart.html">Shopcart</a></li>
+                                                                        <li><a href="checkout.html">Checkout</a></li>-->
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
                                 </ul>
                             </div>
                         </li>
@@ -135,6 +222,7 @@
                             </div>
                         </li>
 
+<<<<<<< HEAD
                         <li class="sidebar-dropdown">
                             <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
                             <div class="sidebar-submenu">
@@ -151,6 +239,24 @@
                         <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
 
                         <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>
+=======
+                        <!--                        <li class="sidebar-dropdown">
+                                                    <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
+                                                    <div class="sidebar-submenu">
+                                                        <ul>
+                                                            <li><a href="jsp/login.jsp">Login</a></li>
+                                                            <li><a href="jsp/signup.jsp">Signup</a></li>
+                                                            <li><a href="forgot-password.html">Forgot Password</a></li>
+                                                            <li><a href="jsp/login.jsp">Lock Screen</a></li>
+                                                            <li><a href="thankyou.html">Thank you...!</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>-->
+
+                        <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
+                        
+                                                <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -317,25 +423,56 @@
                 <div class="container-fluid">
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
+<<<<<<< HEAD
                             <h5 class="mb-0">Plastic Medicine Box</h5>
 
                             <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
                                 <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
                                     <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
                                     <li class="breadcrumb-item"><a href="shop.html">Shop</a></li>
+=======
+                            <h5 class="mb-0">Product Detail:</h5>
+
+                            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
+                                <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
+                                    <li class="breadcrumb-item"><a href="#">Pharmacy</a></li>
+                                    <li class="breadcrumb-item"><a href="ProductManager">Product Manager</a></li>
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
                                     <li class="breadcrumb-item active" aria-current="page">Product Detail</li>
                                 </ul>
                             </nav>
                         </div>
 
                         <div class="card border-0 rounded shadow p-4 mt-4">
+<<<<<<< HEAD
                             <% Products pDetail = (Products) request.getAttribute("pdetail"); %>
                             <% Brand bDetail = (Brand) request.getAttribute("brandDetail");%>
+=======
+                            <%
+                                Products pDetail = (Products) request.getAttribute("pdetail");
+                                Brand bDetail = (Brand) request.getAttribute("brandDetail");
+                                Categories cDetail = (Categories) request.getAttribute("categoryDetail");
+                            %>
+
+                            <div class="action-icons">
+                                <a href="#" id="edit-product-btn" class="edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="DeleteProduct?pid=<%=pDetail.getProductID()%>" class="delete-icon"
+                                   onclick="return confirm('Are you sure you want to delete this product?');">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
 
                             <div class="row align-items-center">
                                 <div class="col-lg-4 col-md-5">
                                     <div class="slider slider-for">
+<<<<<<< HEAD
                                         <div><img src="<%=pDetail.getImage()%>" class="img-fluid rounded" alt="">*Image here*</div>
+=======
+                                        <div><img src="<%=pDetail.getImage()%>" class="img-fluid rounded" alt=""></div>
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
                                     </div>
                                 </div><!--end col-->
 
@@ -343,11 +480,16 @@
                                     <div class="ms-md-4">
                                         <h6 class="brand">Brand: 
                                             <a href="#">
+<<<<<<< HEAD
                                                 <%=pDetail.getProductID()%>
+=======
+                                                <%= (bDetail != null) ? bDetail.getBrandName() : "Unknown Brand"%>
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
                                             </a>
                                         </h6>
                                         <h4 class="title"><%=pDetail.getProductName()%></h4>
                                         <h5 class="text-muted"><%=pDetail.getPrice()%></h5>
+<<<<<<< HEAD
                                         <ul class="list-unstyled text-warning h5 mb-0">
                                             <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
                                             <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
@@ -359,6 +501,14 @@
                                         <div class="d-flex align-items-center">
                                             <h5 class="py-2 mb-0">Category :</h5>
                                             <p class="text-muted mb-0 ms-2"><a href="#"><%=pDetail.getCategoryID()%></a></p>
+=======
+
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="py-2 mb-0">Category :</h5>
+                                            <p class="text-muted mb-0 ms-2">
+                                                <a href="#"><%= (cDetail != null) ? cDetail.getName() : "Unknown Category"%></a>
+                                            </p>
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
                                         </div>
 
                                         <div class="d-flex align-items-center">
@@ -370,6 +520,135 @@
                             </div><!--end row-->
                         </div>
 
+<<<<<<< HEAD
+=======
+                        <div class="modal fade" id="edit-product" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom p-3">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body p-3 pt-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="d-grid me-md-4">
+                                                    <p class="text-muted">Upload your shop image here, Please click "Upload Image" Button.</p>
+
+                                                    <div class="preview-box d-flex justify-content-center align-items-center rounded shadow overflow-hidden bg-light p-1"
+                                                         style="width: 200px; height: 200px; margin-left: 70px;">
+                                                        <img id="preview-img" src="" alt="Preview Image" class="img-fluid d-none">
+                                                    </div>
+
+                                                    <!-- Input file để chọn ảnh -->
+                                                    <input type="file" id="image" name="image" accept="image/*" hidden>
+
+                                                    <!-- Nút chọn ảnh -->
+                                                    <label class="btn-upload btn btn-primary mt-4" for="image">Upload Image</label>
+                                                </div>
+                                            </div>
+
+                                            <script>
+                                                document.getElementById("image").addEventListener("change", function (event) {
+                                                    const file = event.target.files[0];
+                                                    if (file) {
+                                                        const reader = new FileReader();
+                                                        reader.onload = function (e) {
+                                                            const imgElement = document.getElementById("preview-img");
+                                                            imgElement.src = e.target.result;
+                                                            imgElement.classList.remove("d-none");
+                                                        };
+                                                        reader.readAsDataURL(file);
+                                                    }
+                                                });
+                                            </script>
+
+                                            <div class="col-md-6 mt-4 mt-sm-0"> 
+                                                <form action="AddProductController" method="post">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Product Name: <span class="text-danger">*</span></label>
+                                                                <input name="productName" id="productName" type="text" class="form-control" placeholder="Product Name" required>
+                                                            </div>
+                                                        </div><!--end col-->
+
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Brand:</label>
+                                                                <select name="brandID" id="brandID" class="form-control">
+                                                                    <c:forEach var="b" items="${bList}">
+                                                                        <option value="${b.brandID}">${b.brandName}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Price:</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text border bg-transparent">$</span>
+                                                                    <input name="price" id="price" type="number" min="0" step="1000" class="form-control" placeholder="Price" required>
+                                                                </div>
+                                                            </div>
+                                                        </div><!--end col-->
+
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Category:</label>
+                                                                <select name="categoryID" id="categoryID" class="form-control">
+                                                                    <c:forEach var="c" items="${cList}">
+                                                                        <option value="${c.categoriesID}">${c.name}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
+                                                        </div><!--end col-->
+
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Quantity:</label>
+                                                                <input name="quantity" id="quantity" type="number" min="0" step="1" class="form-control" placeholder="Quantity" required>
+                                                            </div>
+                                                        </div><!--end col-->
+
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Unit:</label>
+                                                                <input name="unitPrice" id="unitPrice" type="text" class="form-control" placeholder="Unit Price" required>
+                                                            </div>
+                                                        </div><!--end col-->
+
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Description:</label>
+                                                                <input name="description" id="description" type="text" class="form-control" placeholder="Description" required>
+                                                            </div>
+                                                        </div><!--end col-->
+
+                                                        <!-- Checkbox isPrescriptionDrug -->
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3 form-check">
+                                                                <input name="isPrescriptionDrug" id="isPrescriptionDrug" type="checkbox" class="form-check-input" value="true">
+                                                                <label class="form-check-label" for="isPrescriptionDrug">Prescription Drug</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Button Add -->
+                                                        <div class="col-md-6 text-end">
+                                                            <button type="submit" class="btn btn-primary">Edit</button>
+                                                        </div><!--end col-->
+                                                    </div>
+                                                </form>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
                         <div class="row mt-4">
                             <div class="col-12">
                                 <h5 class="mb-0">Related Products:</h5>
@@ -723,4 +1002,8 @@
 
     </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7

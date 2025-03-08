@@ -201,6 +201,51 @@ function topFunction() {
     document.documentElement.scrollTop = 0;
 }
 
+
+
+function updateQuantity(change, btn) {
+    const quantityElement = btn.parentElement.querySelector('.quantity');
+    let quantity = parseInt(quantityElement.textContent) + change;
+
+    if (quantity < 0) quantity = 0;
+    quantityElement.textContent = quantity;
+
+    updateTotals();
+}
+
+function updateTotals() {
+    let subtotal = 0;
+    const rows = document.querySelectorAll('#cart-items tr');
+
+    rows.forEach(row => {
+        const price = parseFloat(row.cells[1].textContent.replace('$', ''));
+        const quantity = parseInt(row.querySelector('.quantity').textContent);
+        const total = price * quantity;
+        row.cells[3].textContent = `$${total.toFixed(2)}`;
+        subtotal += total;
+    });
+
+    document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+}
+
+function toggleViewMore() {
+    const hiddenItems = document.querySelectorAll('.hidden-item');
+    const viewMoreBtn = document.getElementById('viewMoreBtn');
+
+    hiddenItems.forEach(item => {
+        if (item.style.display === 'none' || item.style.display === '') {
+            item.style.display = 'table-row';
+            viewMoreBtn.textContent = 'View Less';
+        } else {
+            item.style.display = 'none';
+            viewMoreBtn.textContent = 'View More';
+        }
+    });
+
+    updateTotals(); // Update totals when showing/hiding items
+}
+
+
 //Feather icon
 feather.replace();
 

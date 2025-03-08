@@ -13,20 +13,23 @@ public class CartItems {
     private int CartItemID;
 	private int CartID;
 	private int ProductID;
+        private String ProductName;
 	private float Price;
 	private int Quantity;
 
-    public CartItems(int CartItemID, int CartID, int ProductID, float Price, int Quantity) {
+    public CartItems(int CartItemID, int CartID, int ProductID, String ProductName, float Price, int Quantity) {
         this.CartItemID = CartItemID;
         this.CartID = CartID;
         this.ProductID = ProductID;
+        this.ProductName = ProductName;
         this.Price = Price;
         this.Quantity = Quantity;
     }
 
-    public CartItems(int CartID, int ProductID, float Price, int Quantity) {
+    public CartItems(int CartID, int ProductID, String ProductName, float Price, int Quantity) {
         this.CartID = CartID;
         this.ProductID = ProductID;
+        this.ProductName = ProductName;
         this.Price = Price;
         this.Quantity = Quantity;
     }
@@ -58,6 +61,14 @@ public class CartItems {
         this.ProductID = ProductID;
     }
 
+    public String getProductName() {
+        return ProductName;
+    }
+
+    public void setProductName(String ProductName) {
+        this.ProductName = ProductName;
+    }
+
     public float getPrice() {
         return Price;
     }
@@ -76,9 +87,11 @@ public class CartItems {
 
     @Override
     public String toString() {
-        return "CartItems{" + "CartItemID=" + CartItemID + ", CartID=" + CartID + ", ProductID=" + ProductID + ", Price=" + Price + ", Quantity=" + Quantity + '}';
+        return "CartItems{" + "CartItemID=" + CartItemID + ", CartID=" + CartID + ", ProductID=" + ProductID + ", ProductName=" + ProductName + ", Price=" + Price + ", Quantity=" + Quantity + '}';
     }
-        
-        
+
+    
                 
 }
+
+

@@ -1,4 +1,4 @@
-<%@ page import=" entity.Account" %>
+<%@ page import="entity.Account" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,29 +25,29 @@
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
         <style>
-    .auth-links {
-      
-        padding: 10px 15px;
-        text-align: center;
-    }
+            .auth-links {
 
-    .auth-links a {
-        color: white; /* Màu ch? tr?ng */
-    opacity: 0.6; /* Gi?m ?? trong su?t */
-    text-decoration: none;
-    font-weight: bold;
-    transition: opacity 0.3s ease-in-out;
-    }
+                padding: 10px 15px;
+                text-align: center;
+            }
 
-    .auth-links span {
-        color: white;
-        margin: 0 8px;
-    }
+            .auth-links a {
+                color: white; /* Màu ch? tr?ng */
+                opacity: 0.6; /* Gi?m ?? trong su?t */
+                text-decoration: none;
+                font-weight: bold;
+                transition: opacity 0.3s ease-in-out;
+            }
 
-    .auth-links a:hover {
-       opacity: 1;
-    }
-</style>
+            .auth-links span {
+                color: white;
+                margin: 0 8px;
+            }
+
+            .auth-links a:hover {
+                opacity: 1;
+            }
+        </style>
     </head>
     <%
         Account account = (Account)session.getAttribute("dataUser");
@@ -97,17 +97,21 @@
 
                 <!-- Start Dropdown -->
                 <ul class="dropdowns list-inline mb-0">
-<!--                    <li class="list-inline-item mb-0">
-                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
-                        </a>
-                    </li>
-
-                    <li class="list-inline-item mb-0 ms-1">
-                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-                            <i class="uil uil-search"></i>
-                        </a>
-                    </li>-->
+                    <!--                    <li class="list-inline-item mb-0">
+                                            <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <<<<<<< HEAD
+                                                <div class="btn btn-icon btn-pills btn-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
+                    =======
+                                                <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
+                    >>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
+                                            </a>
+                                        </li>
+                    
+                                        <li class="list-inline-item mb-0 ms-1">
+                                            <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                                                <i class="uil uil-search"></i>
+                                            </a>
+                                        </li>-->
 
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
@@ -120,7 +124,7 @@
                                     <img src="" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                                     <div class="flex-1 ms-2">
                                         <span class="d-block mb-1"><%=account.getUserName()%></span>
-                                        
+
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
@@ -145,23 +149,23 @@
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left nav-light">
-<!--                        <li class="has-submenu parent-menu-item">
-                            <a href="index.jsp">Home</a><span class="sub-menu-item"></span>
+                        <!--                        <li class="has-submenu parent-menu-item">
+                                                    <a href="index.jsp">Home</a><span class="sub-menu-item"></span>
+                        
+                        
+                                                </li>-->
 
 
-                        </li>-->
 
-
-
-<!--                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Patients</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="patient-dashboard.html" class="sub-menu-item">Dashboard</a></li>
-                                <li><a href="patient-profile.html" class="sub-menu-item">Profile</a></li>
-                                <li><a href="booking-appointment.html" class="sub-menu-item">Book Appointment</a></li>
-                                <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
-                            </ul>
-                        </li>-->
+                        <!--                        <li class="has-submenu parent-menu-item">
+                                                    <a href="javascript:void(0)">Patients</a><span class="menu-arrow"></span>
+                                                    <ul class="submenu">
+                                                        <li><a href="patient-dashboard.html" class="sub-menu-item">Dashboard</a></li>
+                                                        <li><a href="patient-profile.html" class="sub-menu-item">Profile</a></li>
+                                                        <li><a href="booking-appointment.html" class="sub-menu-item">Book Appointment</a></li>
+                                                        <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
+                                                    </ul>
+                                                </li>-->
 
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
@@ -171,6 +175,13 @@
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
                                 <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
+
+                                <li><a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a></li>
+
+                                <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
+                                <li><a href="CartURL?service=showCart" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="DeliveryAddressURL?service=first" class="sub-menu-item">Checkout</a></li>
+
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
                         </li>
@@ -181,11 +192,14 @@
                                 <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
                                 <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
-                                
-                                
+
+
                             </ul>
                         </li>
                         <li><a href="ProductManager" class="sub-menu-item">Manager</a></li>
+
+                        <!--                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>-->
+
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -1208,4 +1222,5 @@
         <!-- Main Js -->
         <script src="js/app.js"></script>
     </body>
+</html>
 </html>

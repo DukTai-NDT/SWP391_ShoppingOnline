@@ -111,4 +111,17 @@ public class DAOCustomer extends DBConnection {
         }
         return vector;
     }
+    
+    public static void main(String[] args) {
+        DAOCustomer dao = new DAOCustomer();
+        Vector<Customers> vector = dao.getCustomer("select * from Customers");
+        for (Customers customers : vector) {
+            System.out.println(customers);
+        }
+
+       
+    
+    }
 }
+
+
