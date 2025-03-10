@@ -592,7 +592,7 @@
                   <ul class="dropdowns list-inline mb-0">
                     <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
+                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                         </a>
                     </li>
 
@@ -645,7 +645,7 @@
                                 <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
                                 <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
-                                <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
+                                <li><a href="CheckoutURL" class="sub-menu-item">Checkout</a></li>
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
                         </li>
@@ -703,7 +703,7 @@
                     <!-- Phần thông tin -->
                     <div class="product-info">
                         <div class="product-header">
-                            <div class="brand">Thương hiệu: <span><%=brand.getBrandName()%></span></div>
+                            <div class="brand">Thương hiệu: <span><a href="ProductURL?service=brand&bid=<%=brand.getBrandID()%>"><%=brand.getBrandName()%></a></span></div>
                             <h1><%=product.getProductName()%></h1>
                             <div class="rating">
                                 <span class="code">00345415</span> • 
@@ -727,7 +727,7 @@
                         <div class="product-details">
                             <p><strong>Category: </strong> <a> <%=cat.getCategoryName()%></a></p>
                             <p><strong>Country: </strong> <%=brand.getCountry()%></p>
-                            <p><strong>Ingredient: </strong> <%for (Ingredient ingre : vectorIngre){%><a> <%=ingre.getIngredientName()%> </a><%}%></p> 
+                            <p><strong>Ingredient:  <%for (Ingredient ingre : vectorIngre){%><a href="ProductURL?service=ingredient&ingreid=<%=ingre.getIngredientID()%>"> <%=ingre.getIngredientName()%> </a><%}%></p> 
                         </div>
                     </div>
                 </div>

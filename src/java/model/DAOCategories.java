@@ -21,12 +21,16 @@ public class DAOCategories extends DBConnection {
 
     public int addCategories(Categories other) {
         int n = 0;
+
         String sql = "INSERT INTO [dbo].[Categories] ([CategoryName])\n"
+
                 + "VALUES(?)";
 
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
+
             preState.setString(1, other.getCategoryName());
+
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
@@ -37,7 +41,9 @@ public class DAOCategories extends DBConnection {
     public int deleteCategories(String name) {
         int n = 0;
         String sql = "DELETE FROM [dbo].[Categories]\n"
+
                 + "      WHERE Categories.CategoryName like '" + name + "'";
+
 
         try {
             Statement state = conn.createStatement();
@@ -51,12 +57,14 @@ public class DAOCategories extends DBConnection {
     public int updateCategories(Categories other) {
         int n = 0;
         String sql = "UPDATE [dbo].[Categories]\n"
+
                 + "   SET [CategoryName] = ?\n"
                 + " WHERE Categories.CategoryID = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, other.getCategoryName());
             preState.setInt(2, other.getCategoryID());
+
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,14 +73,18 @@ public class DAOCategories extends DBConnection {
     }
 
     public Vector<Categories> getCategories(String sql) {
+
         Vector<Categories> vector = new Vector<Categories>();
+
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
+
                 int CategoryID = rs.getInt("CategoryID");
                 String CategoryName = rs.getString("CategoryName");
                 Categories categories = new Categories(CategoryID, CategoryName);
+
                 vector.add(categories);
             }
         } catch (SQLException ex) {
@@ -92,3 +104,4 @@ public class DAOCategories extends DBConnection {
         }
     }
 }
+

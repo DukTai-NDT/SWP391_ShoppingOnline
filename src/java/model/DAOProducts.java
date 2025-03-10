@@ -4,11 +4,14 @@
  */
 package model;
 
+import entity.Brand;
 import entity.Products;
+import entity.Role;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -117,7 +120,7 @@ public class DAOProducts extends DBConnection {
             while (rs.next()) {
                 int ProductID = rs.getInt("ProductID");
                 String ProductName = rs.getString("ProductName");
-                float Price = rs.getFloat("Price"); 
+                float Price = rs.getFloat("Price");
                 String Description = rs.getString("Description");
                 String UnitPrice = rs.getString("UnitPrice");
                 int CategoryID = rs.getInt("CategoryID");
@@ -125,27 +128,20 @@ public class DAOProducts extends DBConnection {
                 boolean isPrescriptionDrug = (rs.getInt("isPrescriptionDrug") == 1 ? true : false);
                 int Quantity = rs.getInt("Quantity");
                 String Image = rs.getString("Image");
-                
+
                 Products pro = new Products(ProductID, ProductName, Price, Description, UnitPrice, CategoryID, BrandID, isPrescriptionDrug, Quantity, Image);
                 vector.add(pro);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return vector;
     }
-    
-    public static void main(String[] args) {
-        DAOProducts dao = new DAOProducts();
-        Vector<Products> vector = dao.getProducts("select * from Products");
-        for (Products products : vector) {
-            System.out.println(products);
-        }
-    }
-  
+
 }
+
 
 
 

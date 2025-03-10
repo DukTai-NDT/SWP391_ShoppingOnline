@@ -74,7 +74,11 @@
                 <ul class="dropdowns list-inline mb-0">
                     <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+<<<<<<< HEAD
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
+=======
+                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
                         </a>
                     </li>
 
@@ -160,8 +164,13 @@
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
                                 <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
+<<<<<<< HEAD
+                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
+=======
+                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="CheckoutURL" class="sub-menu-item">Checkout</a></li>
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
                         </li>

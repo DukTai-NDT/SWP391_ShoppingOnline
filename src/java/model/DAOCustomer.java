@@ -182,10 +182,7 @@ public Customers getCustomerByAccountId(int accountId) {
         }
         return name;
     }
-    public static void main(String[] args) {
-        DAOCustomer dao = new DAOCustomer();
     
-        String name  = dao.getNameByID(9);
-        System.out.println(name);
-    }
 }
+
+

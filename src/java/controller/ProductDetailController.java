@@ -63,6 +63,7 @@ public class ProductDetailController extends HttpServlet {
             Brand brand = vectorBrand.get(0);
             Vector<Products> vector = dao.getProducts(sql);
 
+
             Products product = vector.get(0);
             Vector<Categories> category = daoCat.getCategories("select * from Categories c join Products p on c.CategoryID = p.CategoryID\n"
                     + "where p.ProductID = " + pid);
@@ -75,6 +76,7 @@ public class ProductDetailController extends HttpServlet {
             request.setAttribute("vectorf", vectorf);
             request.setAttribute("vectorIngre", vectorIngre);
             request.getRequestDispatcher("/jsp/product-detail.jsp").forward(request, response);
+
 
         }
     }
