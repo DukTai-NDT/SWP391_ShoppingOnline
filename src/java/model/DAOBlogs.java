@@ -96,6 +96,8 @@ public class DAOBlogs extends DBConnection {
         }
         return vector;
     }
+    
+    
 
     public Vector<Blogs> getBlogsByCustomerAndTitle(int customerId, String title) {
         Vector<Blogs> vector = new Vector<>();
@@ -125,58 +127,17 @@ public class DAOBlogs extends DBConnection {
         return vector;
     }
 
-    // Lấy tất cả blog
-    public Vector<Blogs> getAllBlogs() {
-        Vector<Blogs> vector = new Vector<>();
-        String sql = "SELECT * FROM [dbo].[Blogs]";
-        
-        try {
-            PreparedStatement preState = conn.prepareStatement(sql);
-            ResultSet rs = preState.executeQuery();
-            
-            while (rs.next()) {
-                int BlogID = rs.getInt("BlogID");
-                int CustomerID = rs.getInt("CustomerID");
-                LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
-                String Title = rs.getString("Title");
-                String Content = rs.getString("Content");
-                String Image = rs.getString("Image");
-                boolean Status = (rs.getInt("Status") == 1 ? true : false);
-                
-                Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
-                vector.add(blog);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return vector;
-    }
+    
+  
 
-    // Tìm kiếm tất cả blog theo tiêu đề
-    public Vector<Blogs> getBlogsByAllAndTitle(String title) {
-        Vector<Blogs> vector = new Vector<>();
-        String sql = "SELECT * FROM [dbo].[Blogs] WHERE Title LIKE ?";
-        
-        try {
-            PreparedStatement preState = conn.prepareStatement(sql);
-            preState.setString(1, "%" + title + "%");
-            ResultSet rs = preState.executeQuery();
+    
+    
+    public static void main(String[] args) {
+        DAOBlogs dao = new DAOBlogs();
+        Vector<Blogs> blog = dao.getBlogs("SELECT * FROM Blogs");
+        for (Blogs blogs : blog) {
+            System.out.println(blog);
             
-            while (rs.next()) {
-                int BlogID = rs.getInt("BlogID");
-                int CustomerID = rs.getInt("CustomerID");
-                LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
-                String Title = rs.getString("Title");
-                String Content = rs.getString("Content");
-                String Image = rs.getString("Image");
-                boolean Status = (rs.getInt("Status") == 1 ? true : false);
-                
-                Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
-                vector.add(blog);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return vector;
     }
 }

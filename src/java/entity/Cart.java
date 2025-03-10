@@ -9,30 +9,28 @@ import java.time.LocalDate;
  * @author Admin
  */
 public class Cart {
-
+//    [CartID] [int] IDENTITY(1,1) NOT NULL,
+//	[CustomerID] [int] NULL,
+//	[CartStatus] [bit] NULL,
+//	[TotalPrice] [float] NULL,
+//	[CreateDate] [datetime] NULL,
     
     private int CartID;
 	private int CustomerID;
 	private boolean CartStatus;
-	private double TotalPrice;
 	private LocalDate CreateDate;
 
-    public Cart(int CartID, int CustomerID, boolean CartStatus, double TotalPrice, LocalDate CreateDate) {
+    public Cart(int CartID, int CustomerID, boolean CartStatus, LocalDate CreateDate) {
         this.CartID = CartID;
         this.CustomerID = CustomerID;
         this.CartStatus = CartStatus;
-        this.TotalPrice = TotalPrice;
         this.CreateDate = CreateDate;
     }
 
-    public Cart(int CustomerID, boolean CartStatus, double TotalPrice, LocalDate CreateDate) {
+    public Cart(int CustomerID, boolean CartStatus, LocalDate CreateDate) {
         this.CustomerID = CustomerID;
         this.CartStatus = CartStatus;
-        this.TotalPrice = TotalPrice;
         this.CreateDate = CreateDate;
-    }
-
-    public Cart() {
     }
 
     public int getCartID() {
@@ -59,14 +57,6 @@ public class Cart {
         this.CartStatus = CartStatus;
     }
 
-    public double getTotalPrice() {
-        return TotalPrice;
-    }
-
-    public void setTotalPrice(double TotalPrice) {
-        this.TotalPrice = TotalPrice;
-    }
-
     public LocalDate getCreateDate() {
         return CreateDate;
     }
@@ -77,9 +67,10 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart{" + "CartID=" + CartID + ", CustomerID=" + CustomerID + ", CartStatus=" + CartStatus + ", TotalPrice=" + TotalPrice + ", CreateDate=" + CreateDate + '}';
+        return "Cart{" + "CartID=" + CartID + ", CustomerID=" + CustomerID + ", CartStatus=" + CartStatus + ", CreateDate=" + CreateDate + '}';
     }
-        
-        
-        
+
+    
 }
+
+

@@ -30,6 +30,16 @@ public class Customers {
         this.AccountID = AccountID;
     }
 
+    public Customers(int CustomerID, String FirstName, String LastName, String Email, String Address, String Gender, String Phone) {
+        this.CustomerID = CustomerID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Address = Address;
+        this.Gender = Gender;
+        this.Phone = Phone;
+    }
+
     public Customers(String FirstName, String LastName, String Email, String Address, String Gender, String Phone, int AccountID) {
         this.FirstName = FirstName;
         this.LastName = LastName;

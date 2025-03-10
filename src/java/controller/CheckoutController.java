@@ -41,35 +41,7 @@ public class CheckoutController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-           Customers user = (Customers) request.getSession().getAttribute("user");
-        
-        if (user != null) {
-            // Tạo đơn hàng
-            Orders order = new Orders(0, 0, "Pending", user.getCustomerID(), LocalDate.now(), 1); // Ví dụ đơn hàng tạm thời
-            DAOOrders daoOrders = new DAOOrders();
-            daoOrders.addOrder(order);
 
-            // Chuyển giỏ hàng thành lịch sử mua hàng
-            DAOCart daoCart = new DAOCart();
-            Vector<Cart> cartList = daoCart.getCart("SELECT * FROM Cart WHERE CustomerID = " + user.getCustomerID());
-            for (Cart cart : cartList) {
-                DAOCartItem daoCartItem = new DAOCartItem();
-                Vector<CartItems> cartItems = daoCartItem.getCartItem("SELECT * FROM CartItem WHERE CartID = " + cart.getCartID());
-                for (CartItems cartItem : cartItems) {
-                    OrderDetails orderDetails = new OrderDetails((float)cartItem.getPrice(), cartItem.getQuantity(), cartItem.getProductID(), order.getOrderID());
-                    DAOOrderDetails daoOrderDetails = new DAOOrderDetails();
-                    daoOrderDetails.addOrderDetails(orderDetails);
-                }
-                // Sau khi thanh toán, xóa giỏ hàng
-                daoCart.deleteCart(cart.getCartID());
-            }
-
-            response.sendRedirect("orderHistory.jsp");
-        } else {
-            response.sendRedirect("login.jsp?error=true");
-        }
-        
-        
         
     } 
 

@@ -21,12 +21,12 @@ public class DAOCategories extends DBConnection {
 
     public int addCategories(Categories other) {
         int n = 0;
-        String sql = "INSERT INTO [dbo].[Categories] ([Name])\n"
+        String sql = "INSERT INTO [dbo].[Categories] ([CategoryName])\n"
                 + "VALUES(?)";
 
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
-            preState.setString(1, other.getName());
+            preState.setString(1, other.getCategoryName());
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
@@ -37,7 +37,7 @@ public class DAOCategories extends DBConnection {
     public int deleteCategories(String name) {
         int n = 0;
         String sql = "DELETE FROM [dbo].[Categories]\n"
-                + "      WHERE Categories.Name like '" + name + "'";
+                + "      WHERE Categories.CategoryName like '" + name + "'";
 
         try {
             Statement state = conn.createStatement();
@@ -51,12 +51,12 @@ public class DAOCategories extends DBConnection {
     public int updateCategories(Categories other) {
         int n = 0;
         String sql = "UPDATE [dbo].[Categories]\n"
-                + "   SET [Name] = ?\n"
-                + " WHERE Categories.CategoriesID = ?";
+                + "   SET [CategoryName] = ?\n"
+                + " WHERE Categories.CategoryID = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
-            preState.setString(1, other.getName());
-            preState.setInt(2, other.getCategoriesID());
+            preState.setString(1, other.getCategoryName());
+            preState.setInt(2, other.getCategoryID());
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,14 +65,14 @@ public class DAOCategories extends DBConnection {
     }
 
     public Vector<Categories> getCategories(String sql) {
-        Vector<Categories> vector = new Vector<>();
+        Vector<Categories> vector = new Vector<Categories>();
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-                int CategoriesID = rs.getInt("CategoriesID");
-                String Name = rs.getString("Name");
-                Categories categories = new Categories(CategoriesID, Name);
+                int CategoryID = rs.getInt("CategoryID");
+                String CategoryName = rs.getString("CategoryName");
+                Categories categories = new Categories(CategoryID, CategoryName);
                 vector.add(categories);
             }
         } catch (SQLException ex) {
@@ -84,14 +84,6 @@ public class DAOCategories extends DBConnection {
     public static void main(String[] args) {
         DAOCategories dao = new DAOCategories();
 
-//        Categories cateAdd = new Categories("Thuoc");
-//        int n = dao.addCategories(cateAdd);
-
-//        Categories cateUpdate = new Categories(1, "DungCuYTe");
-//        int n = dao.updateCategories(cateUpdate);
-
-//        int n = dao.deleteCategories("thuoc");
-//        System.out.println(n);
 
         Vector<Categories> vector = dao.getCategories("select * from Categories");
         for (Categories categories : vector) {

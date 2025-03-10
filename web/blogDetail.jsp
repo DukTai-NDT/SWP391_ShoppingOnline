@@ -1,4 +1,5 @@
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Vector, entity.Comment,entity.Blogs, jakarta.servlet.http.HttpSession, model.DAOCustomer"%>
 <!DOCTYPE html>
     <html lang="en">
 
@@ -20,6 +21,8 @@
         <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
         <link href="css/remixicon.css" rel="stylesheet" type="text/css" />
         <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
+        <!-- SLIDER -->
+        <link rel="stylesheet" href="css/tiny-slider.css"/>
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
@@ -41,7 +44,7 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container-->
-                <a class="logo" href="index.jsp">
+                <a class="logo" href="index.html">
                     <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
@@ -88,10 +91,10 @@
                                         <small class="text-muted">Orthopedic</small>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" href="doctor-dashboard.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                 <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="jsp/login.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                <a class="dropdown-item text-dark" href="login.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                             </div>
                         </div>
                     </li>
@@ -104,7 +107,7 @@
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Home</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="index.jsp" class="sub-menu-item">Index One</a></li>
+                                <li><a href="index.html" class="sub-menu-item">Index One</a></li>
                                 <li><a href="index-two.html" class="sub-menu-item">Index Two</a></li>
                                 <li><a href="index-three.html" class="sub-menu-item">Index Three</a></li>
                             </ul>
@@ -116,7 +119,7 @@
                                 <li class="has-submenu parent-menu-item">
                                     <a href="javascript:void(0)" class="menu-item"> Dashboard </a><span class="submenu-arrow"></span>
                                     <ul class="submenu">
-                                        <li><a href="doctor-dashboard.jsp" class="sub-menu-item">Dashboard</a></li>
+                                        <li><a href="doctor-dashboard.html" class="sub-menu-item">Dashboard</a></li>
                                         <li><a href="doctor-appointment.html" class="sub-menu-item">Appointment</a></li>
                                         <li><a href="patient-list.html" class="sub-menu-item">Patients</a></li>
                                         <li><a href="doctor-schedule.html" class="sub-menu-item">Schedule Timing</a></li>
@@ -126,8 +129,8 @@
                                         <li><a href="doctor-profile.html" class="sub-menu-item">Profile</a></li>
                                         <li><a href="doctor-profile-setting.html" class="sub-menu-item">Profile Settings</a></li>
                                         <li><a href="doctor-chat.html" class="sub-menu-item">Chat</a></li>
-                                        <li><a href="jsp/login.jsp" class="sub-menu-item">Login</a></li>
-                                        <li><a href="jsp/signup.jsp" class="sub-menu-item">Sign Up</a></li>
+                                        <li><a href="login.html" class="sub-menu-item">Login</a></li>
+                                        <li><a href="signup.html" class="sub-menu-item">Sign Up</a></li>
                                         <li><a href="forgot-password.html" class="sub-menu-item">Forgot Password</a></li>
                                     </ul>
                                 </li>
@@ -151,9 +154,9 @@
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
+                                <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
@@ -177,29 +180,28 @@
                                 <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
                             </ul>
                         </li>
-                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
+                        <li><a href="../admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
         </header><!--end header-->
         <!-- Navbar End -->
-
-        <!-- Hero Start -->
-        <section class="bg-half-170 d-table w-100 bg-light">
+<%
+    Blogs blog = (Blogs) session.getAttribute("blog");
+   
+%>
+        <!-- Start Hero -->
+        <section class="bg-half-150 d-table w-100 bg-light">
             <div class="container">
                 <div class="row mt-5 justify-content-center">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h3 class="sub-title mb-4">My Account</h3>
-                            <p class="para-desc mx-auto text-muted">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
-                        
-                            <nav aria-label="breadcrumb" class="d-inline-block mt-3">
-                                <ul class="breadcrumb bg-light rounded mb-0 bg-transparent">
-                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                    <li class="breadcrumb-item"><a href="pharmacy.html">Pharmacy</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Account</li>
-                                </ul>
-                            </nav>
+                            <h3 class="sub-title mb-4"><%=blog.getTitle()%></h3>
+                          
+                            <ul class="list-unstyled mt-4">
+<!--                                <li class="list-inline-item user text-muted me-2"><i class="mdi mdi-account"></i> Calvin Carlo</li>-->
+                                <li class="list-inline-item date text-muted"><i class="mdi mdi-calendar-check"></i><%=blog.getPostTime()%></li>
+                            </ul>
                         </div>
                     </div><!--end col-->
                 </div><!--end row-->
@@ -212,236 +214,187 @@
                 </svg>
             </div>
         </div>
-        <!-- Hero End -->
+        <!-- End Hero -->
 
         <!-- Start -->
         <section class="section">
             <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <div class="d-flex align-items-center">
-                            <img src="images/client/09.jpg" class="avatar avatar-md-md rounded-circle" alt="">
-                            <div class="ms-3">
-                                <h6 class="text-muted mb-0">Hello,</h6>
-                                <h5 class="mb-0">Mrs. Christopher</h5>
+                    <div class="col-lg-8 col-lg-7">
+                        <img src="images/blog/single.jpg" class="img-fluid rounded shadow" alt="">
+
+                        
+
+                       
+                        <p class="text-muted mt-4"><%=blog.getContent()%></p>
+                    
+                        <h5 class="card-title mt-4 mb-0">Comments :</h5>
+                        
+     <%
+    Vector<Comment> comments = (Vector<Comment>) session.getAttribute("comments" + blog.getBlogID());
+    DAOCustomer daoCus = new DAOCustomer();
+    if (comments == null) {
+        comments = new Vector<>(); 
+    }
+
+    if (!comments.isEmpty()) { 
+        for (Comment comment : comments) { 
+%>
+        <ul class="media-list list-unstyled mb-0">
+            <li class="mt-4">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <a class="pe-3" href="#">
+                            <img src="/images/client/01.jpg" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
+                        </a>
+                        <div class="commentor-detail">
+                            <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading"><%=daoCus.getNameByID(comment.getCustomerID())%></a></h6>
+                            <small class="text-muted"><%=comment.getPostTime()%></small>
+                        </div>
+                    </div>
+                  <% 
+    Integer currentCustomerId = (Integer) session.getAttribute("customerId");
+    if (comment.getCustomerID() == currentCustomerId) { 
+%>
+    <div class="dropdown">
+        <a href="#" class="text-muted" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="mdi mdi-dots-vertical"></i>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="CommentURL?service=deleteComment&commentId=<%=comment.getCommentID()%>&blogId=<%=blog.getBlogID()%>">Delete</a></li>
+        </ul>
+    </div>
+<% } %>
+                </div>
+                <div class="mt-3">
+                    <p class="text-muted font-italic p-3 bg-light rounded"><%=comment.getCommentText()%></p>
+                </div>
+            </li>
+        </ul>
+<%
+        }
+    } else {
+%>
+    <p class="text-muted">No comments yet. Be the first to comment!</p>
+<% } %>
+
+                    
+                        <h5 class="card-title mt-4 mb-0">Leave A Comment :</h5>
+
+                        <form class="mt-3" action="CommentURL" method="post">
+                             <input type="hidden" name="service" value="addComment">
+                             <input type="hidden" name="BlogID" value="<%= blog.getBlogID() %>">
+                              <input type="hidden" name="CommentID" value="0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Your Comment</label>
+                                     
+                                        <textarea id="message" name="CommentText" placeholder="Your Comment" rows="5"  class="form-control" required=""></textarea>
+                                    </div>
+                                </div><!--end col-->
+
+
+                                <div class="col-md-12">
+                                    <div class="send d-grid">
+                                        <button name="submit" type="submit" class="btn btn-primary">Send Message</button>
+                                    </div>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </form><!--end form-->
+                    </div><!--end col-->
+
+                    <div class="col-lg-4 col-md-5 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <div class="card border-0 sidebar sticky-bar rounded shadow">
+                            <div class="card-body">
+                                <!-- SEARCH -->
+                                <div class="widget mb-4 pb-2">
+                                    <h5 class="widget-title">Search</h5>
+                                    <div id="search2" class="widget-search mt-4 mb-0">
+                                        <form role="search" method="get" action="BlogsURL" class="searchform">
+                                            
+                                            <div>
+                                                 <input type="hidden" name="service" value="listAllBlogs">
+                                                <input type="text" class="border rounded" name="title"  placeholder="Search Keywords...">
+                                                <input type="submit" name="submit" id="searchsubmit" value="Search">
+                                                
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- SEARCH -->
+    
+                                 
+                             
+                                <!-- TAG CLOUDS -->
+                                
+                                <!-- SOCIAL -->
+                                <div class="widget">
+                                    <h5 class="widget-title">Follow us</h5>
+                                    <ul class="list-unstyled social-icon mb-0 mt-4">
+                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="facebook" class="fea icon-sm fea-social"></i></a></li>
+                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="instagram" class="fea icon-sm fea-social"></i></a></li>
+                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="twitter" class="fea icon-sm fea-social"></i></a></li>
+                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="linkedin" class="fea icon-sm fea-social"></i></a></li>
+                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="github" class="fea icon-sm fea-social"></i></a></li>
+                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="youtube" class="fea icon-sm fea-social"></i></a></li>
+                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="gitlab" class="fea icon-sm fea-social"></i></a></li>
+                                    </ul><!--end icon-->
+                                </div>
+                                <!-- SOCIAL -->
                             </div>
                         </div>
                     </div>
-                </div>
+                </div><!--end row-->
+            </div><!--end container-->
+
+            <div class="container mt-100 mt-60">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title">
+                            <h4 class="title mb-0">Related Post:</h4>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
 
                 <div class="row">
-                    <div class="col-md-4 mt-4 pt-2">
-                        <ul class="nav nav-pills nav-justified flex-column bg-white rounded shadow p-3 mb-0" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link rounded active" id="dashboard" data-bs-toggle="pill" href="#dash" role="tab" aria-controls="dash" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-dashboard h5 align-middle me-2 mb-0"></i> Dashboard</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
+                    <div class="col-lg-12 mt-4 pt-2">
+                        <div class="slider-range-three">
                             
-                            <li class="nav-item mt-2">
-                                <a class="nav-link rounded" id="order-history" data-bs-toggle="pill" href="#orders" role="tab" aria-controls="orders" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-list-ul h5 align-middle me-2 mb-0"></i> Orders</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
                             
-                            <li class="nav-item mt-2">
-                                <a class="nav-link rounded" id="download" data-bs-toggle="pill" href="#down" role="tab" aria-controls="down" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-arrow-circle-down h5 align-middle me-2 mb-0"></i> Downloads</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
+                            <%
+                                 Integer customerId = (Integer) session.getAttribute("customerId");
+                             Vector<Blogs> blogs = (Vector<Blogs>) session.getAttribute("vectorBlogs");
+                if (blogs != null && customerId != null) {
+                    for (Blogs currentBlog  : blogs) {%>
                             
-                            <li class="nav-item mt-2">
-                                <a class="nav-link rounded" id="addresses" data-bs-toggle="pill" href="#address" role="tab" aria-controls="address" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-map-marker h5 align-middle me-2 mb-0"></i> Addresses</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
-                            
-                            <li class="nav-item mt-2">
-                                <a class="nav-link rounded" id="account-details" data-bs-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-user h5 align-middle me-2 mb-0"></i> Account Details</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
-                        </ul><!--end nav pills-->
-                    </div><!--end col-->
-
-                    <div class="col-md-8 col-12 mt-4 pt-2">
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade bg-white show active shadow rounded p-4" id="dash" role="tabpanel" aria-labelledby="dashboard">
-                                <p class="text-muted">Hello <span class="text-dark">christopher</span> (not <span class="text-dark fw-bold">christopher</span>? <a href="#" class="text-danger fw-bold">Log out</a>)</p>
-
-                                <p class="text-muted mb-0">From your account dashboard you can view your <a href="#" class="text-danger fw-bold">recent orders</a>, manage your <a href="#" class="text-danger fw-bold">shipping and billing addresses</a>, and <a href="#" class="text-danger fw-bold">edit your password and account details</a>.</p>
-                            </div><!--end teb pane-->
-
-                            <div class="tab-pane fade bg-white shadow rounded p-4" id="orders" role="tabpanel" aria-labelledby="order-history">
-                                <div class="table-responsive bg-white shadow rounded">
-                                    <table class="table mb-0 table-center table-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="border-bottom p-3" scope="col">Order no.</th>
-                                                <th class="border-bottom p-3" scope="col">Date</th>
-                                                <th class="border-bottom p-3" scope="col">Status</th>
-                                                <th class="border-bottom p-3" scope="col">Total</th>
-                                                <th class="border-bottom p-3" scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="p-3">7107</td>
-                                                <td class="p-3">1st November 2020</td>
-                                                <td class="text-success p-3">Delivered</td>
-                                                <td class="p-3">$ 320 <span class="text-muted">for 2items</span></td>
-                                                <td class="p-3"><a href="#" class="text-primary">View <i class="uil uil-arrow-right"></i></a></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-3">8007</td>
-                                                <td class="p-3">4td November 2020</td>
-                                                <td class="text-muted p-3">Processing</td>
-                                                <td class="p-3">$ 800 <span class="text-muted">for 1item</span></td>
-                                                <td class="p-3"><a href="#" class="text-primary">View <i class="uil uil-arrow-right"></i></a></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-3">8008</td>
-                                                <td class="p-3">4th November 2020</td>
-                                                <td class="text-danger p-3">Canceled</td>
-                                                <td class="p-3">$ 800 <span class="text-muted">for 1item</span></td>
-                                                <td class="p-3"><a href="#" class="text-primary">View <i class="uil uil-arrow-right"></i></a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div><!--end teb pane-->
-
-                            <div class="tab-pane fade bg-white shadow rounded p-4" id="down" role="tabpanel" aria-labelledby="download">
-                                <div class="table-responsive bg-white shadow rounded">
-                                    <table class="table mb-0 table-center table-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="border-bottom p-3" scope="col">Product Name</th>
-                                                <th class="border-bottom p-3" scope="col">Description</th>
-                                                <th class="border-bottom p-3" scope="col">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="p-3">Quick heal</td>
-                                                <td class="text-muted p-3">It is said that song composers of the past <br> used dummy texts as lyrics when writing <br> melodies in order to have a 'ready-made' <br> text to sing with the melody.</td>
-                                                <td class="text-success p-3">Downloaded</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div><!--end teb pane-->
-
-                            <div class="tab-pane fade bg-white shadow rounded p-4" id="address" role="tabpanel" aria-labelledby="addresses">
-                                <h6 class="text-muted mb-0">The following addresses will be used on the checkout page by default.</h6>
-
-                                <div class="row">
-                                    <div class="col-lg-6 mt-4 pt-2">
-                                        <div class="d-flex align-items-center mb-4 justify-content-between">
-                                            <h5 class="mb-0">Billing Address:</h5>
-                                            <a href="#" class="text-primary h5 mb-0" data-bs-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="uil uil-edit align-middle"></i></a>
-                                        </div>
-                                        <div class="pt-4 border-top">
-                                            <p class="h6">Cally Joseph</p>
-                                            <p class="text-muted mb-0">C/54 Northwest Freeway, </p>
-                                            <p class="text-muted mb-0">Suite 558,</p>
-                                            <p class="text-muted mb-0">Houston, USA 485</p>
-                                            <p class="text-muted mb-0">+123 897 5468</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 mt-4 pt-2">
-                                        <div class="d-flex align-items-center mb-4 justify-content-between">
-                                            <h5 class="mb-0">Shipping Address:</h5>
-                                            <a href="#" class="text-primary h5 mb-0" data-bs-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="uil uil-edit align-middle"></i></a>
-                                        </div>
-                                        <div class="pt-4 border-top">
-                                            <p class="h6">Cally Joseph</p>
-                                            <p class="text-muted mb-0">C/54 Northwest Freeway, </p>
-                                            <p class="text-muted mb-0">Suite 558,</p>
-                                            <p class="text-muted mb-0">Houston, USA 485</p>
-                                            <p class="text-muted mb-0">+123 897 5468</p>
+                            <div class="tiny-slide">
+                                <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
+                                    <img src="images/blog/03.jpg" class="img-fluid" alt="">
+                                    <div class="card-body p-4">
+                                        <ul class="list-unstyled mb-2">
+                                            <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i><%=currentBlog.getPostTime()%></li>
+                                            <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
+                                        </ul>
+                                        <a href="BlogsURL?service=detailBlog&blog=<%=currentBlog.getBlogID()%>" class="text-dark title h5"><%=currentBlog.getTitle()%></a>
+                                        <div class="post-meta d-flex justify-content-between mt-3">
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
+                                                <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
+                                            </ul>
+                                            <a href="BlogsURL?service=detailBlog&blog=<%=currentBlog.getBlogID()%>" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                            </div><!--end teb pane-->
-
-                            <div class="tab-pane fade bg-white shadow rounded p-4" id="account" role="tabpanel" aria-labelledby="account-details">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">First Name</label>
-                                                <input name="name" id="first-name" type="text" class="form-control" value="Cally">
-                                            </div>
-                                        </div><!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Last Name</label>
-                                                <input name="name" id="last-name" type="text" class="form-control" value="Joseph">
-                                            </div>
-                                        </div><!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Your Email</label>
-                                                <input name="email" id="email" type="email" class="form-control" value="callyjoseph@gmail.com">
-                                            </div> 
-                                        </div><!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Display Name</label>
-                                                <input name="name" id="display-name" type="text" class="form-control" value="christopher">
-                                            </div> 
-                                        </div><!--end col-->
-
-                                        <div class="col-lg-12 mt-2 mb-0">
-                                            <button class="btn btn-primary">Save Changes</button>
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                </form>
-
-                                <h5 class="mt-4">Change password :</h5>
-                                <form>
-                                    <div class="row mt-3">
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">Old password :</label>
-                                                <input type="password" class="form-control" placeholder="Old password" required="">
-                                            </div>
-                                        </div><!--end col-->
-    
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">New password :</label>
-                                                <input type="password" class="form-control" placeholder="New password" required="">
-                                            </div>
-                                        </div><!--end col-->
-    
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">Re-type New password :</label>
-                                                <input type="password" class="form-control" placeholder="Re-type New password" required="">
-                                            </div>
-                                        </div><!--end col-->
-    
-                                        <div class="col-lg-12 mt-2 mb-0">
-                                            <button class="btn btn-primary">Save Password</button>
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                </form>
-                            </div><!--end teb pane-->
+                            </div>
+        
+                       <%}
+}%>
+                 
+        
+                    
+        
+                        
                         </div>
                     </div><!--end col-->
                 </div><!--end row-->
@@ -523,7 +476,7 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="text-sm-start text-center">
-                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.html" target="_blank" class="text-reset">Shreethemes</a>.</p>
                             </div>
                         </div><!--end col-->
     
@@ -554,10 +507,12 @@
                             <div class="text-center">
                                 <h4>Search now.....</h4>
                                 <div class="subcribe-form mt-4">
-                                    <form>
+                                    <form action="BlogsURL" method="get">
+                                        
                                         <div class="mb-0">
-                                            <input type="text" id="help" name="name" class="border bg-white rounded-pill" required="" placeholder="Search">
-                                            <button type="submit" class="btn btn-pills btn-primary">Search</button>
+                                            <input type="hidden" name="service" value="listAllBlogs">
+                                            <input type="text" id="help" name="title" class="border bg-white rounded-pill" required="" placeholder="Search">
+                                            <button type="submit" name="submit" class="btn btn-pills btn-primary">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -591,7 +546,7 @@
                                     <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
                                     <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
                                     <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
-                                    <li class="d-grid"><a href="indexAdmin.jsp" target="_blank" class="mt-4"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
+                                    <li class="d-grid"><a href="../admin/index.html" target="_blank" class="mt-4"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -608,7 +563,7 @@
                     <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="../../../index.jsp" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="../../../index.html" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
                 </ul><!--end icon-->
             </div>
         </div>
@@ -616,10 +571,14 @@
         
         <!-- javascript -->
         <script src="js/bootstrap.bundle.min.js"></script>
+        <!-- SLIDER -->
+        <script src="js/tiny-slider.js"></script>
+        <script src="js/tiny-slider-init.js"></script>
         <!-- Icons -->
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
+        
     </body>
 
 </html>

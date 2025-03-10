@@ -5,6 +5,7 @@
 package controller;
 
 import entity.Blogs;
+import entity.Comment;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +18,8 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.Vector;
 import model.DAOBlogs;
+import model.DAOComment;
+import model.DAOCustomer;
 
 /**
  *
@@ -38,12 +41,13 @@ public class BlogsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAOBlogs dao = new DAOBlogs();
+        DAOCustomer daoCus = new DAOCustomer();
+        DAOComment daoComments = new DAOComment();
         HttpSession session = request.getSession();
-        
-        // Kiểm tra đăng nhập
+
         Integer customerId = (Integer) session.getAttribute("customerId");
         if (customerId == null) {
-            response.sendRedirect("LoginURL?service=login"); // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
+            response.sendRedirect("LoginURL?service=login");
             return;
         }
 
@@ -55,7 +59,7 @@ public class BlogsController extends HttpServlet {
 
             if (service.equals("deleteBlog")) {
                 int blogId = Integer.parseInt(request.getParameter("blogId"));
-                
+
                 // Lấy thông tin blog để kiểm tra CustomerID
                 Vector<Blogs> blogVector = dao.getBlogs("SELECT * FROM Blogs WHERE BlogID = ?");
                 if (!blogVector.isEmpty()) {
@@ -141,31 +145,39 @@ public class BlogsController extends HttpServlet {
             }
 
             if (service.equals("listAllBlogs")) {
-                String sql = "SELECT * FROM Blogs";  // Lấy tất cả blog
+                String sql = "SELECT * FROM Blogs";
                 String submit = request.getParameter("submit");
-                Vector<Blogs> vectorBlogs;  // Khai báo biến ở đây
+                
                 if (submit != null) {
                     String title = request.getParameter("title");
-                    vectorBlogs = dao.getBlogsByAllAndTitle(title);  // Sử dụng phương thức mới
-                } else {
-                    vectorBlogs = dao.getAllBlogs();  // Lấy tất cả blog
+                    sql="SELECT * FROM Blogs WHERE Title LIKE N'%" + title + "%'" ;
+                  
                 }
-               
-                session.setAttribute("dataBlogs", vectorBlogs);
-                request.setAttribute("title", "All Blogs");
-                 RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/blogList.jsp");
+                 Vector<Blogs> vectorBlogs= dao.getBlogs(sql);
+                session.setAttribute("vectorBlogs", vectorBlogs);
+
+                RequestDispatcher dispatch = request.getRequestDispatcher("blog.jsp");
                 dispatch.forward(request, response);
             }
 
-            if (service.equals("searchBlogs")) {
-                String title = request.getParameter("title");
-                Vector<Blogs> vectorBlogs = dao.getBlogsByAllAndTitle(title);  // Tìm kiếm tất cả blog
-                request.setAttribute("dataBlogs", vectorBlogs);
-                RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/blogList.jsp");
-                dispatch.forward(request, response);
+            
+         
+            
+            if (service.equals("detailBlog")) {
+                String blogIdParam = request.getParameter("blog");
+                Vector<Blogs> vectorBlogs = dao.getBlogs("select * from Blogs where BlogID = " + blogIdParam);
+                Blogs blog = vectorBlogs.get(0);
+                session.setAttribute("blog", blog);
+            
+       Vector<Comment> comments = daoComments.getCommentsByBlogId(blog.getBlogID());
+        session.setAttribute("comments" + blog.getBlogID(), comments);
+                request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
+
             }
+
+        }
     }
-    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -1,4 +1,5 @@
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Vector, entity.Blogs, jakarta.servlet.http.HttpSession"%>
 <!DOCTYPE html>
     <html lang="en">
 
@@ -20,6 +21,7 @@
         <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
         <link href="css/remixicon.css" rel="stylesheet" type="text/css" />
         <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
@@ -41,11 +43,16 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container-->
-                <a class="logo" href="index.jsp">
-                    <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
-                    <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
-                </a>                
-                <!-- Logo End -->
+                <div>
+                    <a class="logo" href="index.html">
+                        <span class="logo-light-mode">
+                            <img src="/images/logo-dark.png" class="l-dark" height="24" alt="">
+                            <img src="/images/logo-light.png" class="l-light" height="24" alt="">
+                        </span>
+                        <img src="/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
+                    </a>
+                </div>
+                <!-- End Logo container-->
                 
                 <!-- Start Mobile Toggle -->
                 <div class="menu-extras">
@@ -79,19 +86,19 @@
 
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <img src="/images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                                     <div class="flex-1 ms-2">
                                         <span class="d-block mb-1">Calvin Carlo</span>
                                         <small class="text-muted">Orthopedic</small>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" href="doctor-dashboard.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                 <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="jsp/login.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                <a class="dropdown-item text-dark" href="login.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                             </div>
                         </div>
                     </li>
@@ -100,11 +107,11 @@
         
                 <div id="navigation">
                     <!-- Navigation Menu-->   
-                    <ul class="navigation-menu nav-left">
+                    <ul class="navigation-menu nav-left nav-light">
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Home</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="index.jsp" class="sub-menu-item">Index One</a></li>
+                                <li><a href="index.html" class="sub-menu-item">Index One</a></li>
                                 <li><a href="index-two.html" class="sub-menu-item">Index Two</a></li>
                                 <li><a href="index-three.html" class="sub-menu-item">Index Three</a></li>
                             </ul>
@@ -116,7 +123,7 @@
                                 <li class="has-submenu parent-menu-item">
                                     <a href="javascript:void(0)" class="menu-item"> Dashboard </a><span class="submenu-arrow"></span>
                                     <ul class="submenu">
-                                        <li><a href="doctor-dashboard.jsp" class="sub-menu-item">Dashboard</a></li>
+                                        <li><a href="doctor-dashboard.html" class="sub-menu-item">Dashboard</a></li>
                                         <li><a href="doctor-appointment.html" class="sub-menu-item">Appointment</a></li>
                                         <li><a href="patient-list.html" class="sub-menu-item">Patients</a></li>
                                         <li><a href="doctor-schedule.html" class="sub-menu-item">Schedule Timing</a></li>
@@ -126,8 +133,8 @@
                                         <li><a href="doctor-profile.html" class="sub-menu-item">Profile</a></li>
                                         <li><a href="doctor-profile-setting.html" class="sub-menu-item">Profile Settings</a></li>
                                         <li><a href="doctor-chat.html" class="sub-menu-item">Chat</a></li>
-                                        <li><a href="jsp/login.jsp" class="sub-menu-item">Login</a></li>
-                                        <li><a href="jsp/signup.jsp" class="sub-menu-item">Sign Up</a></li>
+                                        <li><a href="login.html" class="sub-menu-item">Login</a></li>
+                                        <li><a href="signup.html" class="sub-menu-item">Sign Up</a></li>
                                         <li><a href="forgot-password.html" class="sub-menu-item">Forgot Password</a></li>
                                     </ul>
                                 </li>
@@ -151,9 +158,9 @@
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
+                                <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
@@ -177,27 +184,27 @@
                                 <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
                             </ul>
                         </li>
-                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
+                        <li><a href="../admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
         </header><!--end header-->
         <!-- Navbar End -->
 
-        <!-- Hero Start -->
-        <section class="bg-half-170 d-table w-100 bg-light">
+        <!-- Start Hero -->
+        <section class="bg-half-170 d-table w-100" style="background: url('images/bg/02.jpg') center center;">
+            <div class="bg-overlay bg-overlay-dark"></div>
             <div class="container">
                 <div class="row mt-5 justify-content-center">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h3 class="sub-title mb-4">My Account</h3>
-                            <p class="para-desc mx-auto text-muted">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
+                            <h3 class="sub-title mb-4 text-white title-dark">Blogs & News</h3>
+                            <p class="para-desc mx-auto text-white-50">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
                         
                             <nav aria-label="breadcrumb" class="d-inline-block mt-3">
-                                <ul class="breadcrumb bg-light rounded mb-0 bg-transparent">
+                                <ul class="breadcrumb bg-light rounded mb-0 py-1 px-2">
                                     <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                    <li class="breadcrumb-item"><a href="pharmacy.html">Pharmacy</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Account</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Blogs</li>
                                 </ul>
                             </nav>
                         </div>
@@ -212,237 +219,54 @@
                 </svg>
             </div>
         </div>
-        <!-- Hero End -->
+        <!-- End Hero -->
+        
 
         <!-- Start -->
         <section class="section">
             <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <div class="d-flex align-items-center">
-                            <img src="images/client/09.jpg" class="avatar avatar-md-md rounded-circle" alt="">
-                            <div class="ms-3">
-                                <h6 class="text-muted mb-0">Hello,</h6>
-                                <h5 class="mb-0">Mrs. Christopher</h5>
+                    <%
+//                HttpSession session = request.getSession();
+                Integer customerId = (Integer) session.getAttribute("customerId");
+                Vector<Blogs> blogs = (Vector<Blogs>) session.getAttribute("vectorBlogs");
+                if (blogs != null && customerId != null) {
+                    for (Blogs blog : blogs) {
+            %>
+                    <div class="col-lg-4 col-md-6 col-12 mb-4 pb-2">
+                        <div class="card blog blog-primary border-0 shadow rounded overflow-hidden">
+                            <img src="images/blog/01.jpg" class="img-fluid" alt="">
+                            <div class="card-body p-4">
+                                <ul class="list-unstyled mb-2">
+                                    <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i><%=blog.getPostTime()%></li>
+                                    <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
+                                </ul>
+                                <a href="jsp" class="text-dark title h5"><%=blog.getTitle()%></a>
+                                <div class="post-meta d-flex justify-content-between mt-3">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
+                                        <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
+                                    </ul>
+                                    <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 mt-4 pt-2">
-                        <ul class="nav nav-pills nav-justified flex-column bg-white rounded shadow p-3 mb-0" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link rounded active" id="dashboard" data-bs-toggle="pill" href="#dash" role="tab" aria-controls="dash" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-dashboard h5 align-middle me-2 mb-0"></i> Dashboard</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
-                            
-                            <li class="nav-item mt-2">
-                                <a class="nav-link rounded" id="order-history" data-bs-toggle="pill" href="#orders" role="tab" aria-controls="orders" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-list-ul h5 align-middle me-2 mb-0"></i> Orders</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
-                            
-                            <li class="nav-item mt-2">
-                                <a class="nav-link rounded" id="download" data-bs-toggle="pill" href="#down" role="tab" aria-controls="down" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-arrow-circle-down h5 align-middle me-2 mb-0"></i> Downloads</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
-                            
-                            <li class="nav-item mt-2">
-                                <a class="nav-link rounded" id="addresses" data-bs-toggle="pill" href="#address" role="tab" aria-controls="address" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-map-marker h5 align-middle me-2 mb-0"></i> Addresses</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
-                            
-                            <li class="nav-item mt-2">
-                                <a class="nav-link rounded" id="account-details" data-bs-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="false">
-                                    <div class="text-start py-1 px-3">
-                                        <h6 class="mb-0"><i class="uil uil-user h5 align-middle me-2 mb-0"></i> Account Details</h6>
-                                    </div>
-                                </a><!--end nav link-->
-                            </li><!--end nav item-->
-                        </ul><!--end nav pills-->
                     </div><!--end col-->
 
-                    <div class="col-md-8 col-12 mt-4 pt-2">
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade bg-white show active shadow rounded p-4" id="dash" role="tabpanel" aria-labelledby="dashboard">
-                                <p class="text-muted">Hello <span class="text-dark">christopher</span> (not <span class="text-dark fw-bold">christopher</span>? <a href="#" class="text-danger fw-bold">Log out</a>)</p>
+                <% } } else if (customerId == null) { %>
+                <p class="error">Please log in to view blogs.</p>
+            <% } %>
+                </div><!--end row-->
 
-                                <p class="text-muted mb-0">From your account dashboard you can view your <a href="#" class="text-danger fw-bold">recent orders</a>, manage your <a href="#" class="text-danger fw-bold">shipping and billing addresses</a>, and <a href="#" class="text-danger fw-bold">edit your password and account details</a>.</p>
-                            </div><!--end teb pane-->
-
-                            <div class="tab-pane fade bg-white shadow rounded p-4" id="orders" role="tabpanel" aria-labelledby="order-history">
-                                <div class="table-responsive bg-white shadow rounded">
-                                    <table class="table mb-0 table-center table-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="border-bottom p-3" scope="col">Order no.</th>
-                                                <th class="border-bottom p-3" scope="col">Date</th>
-                                                <th class="border-bottom p-3" scope="col">Status</th>
-                                                <th class="border-bottom p-3" scope="col">Total</th>
-                                                <th class="border-bottom p-3" scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="p-3">7107</td>
-                                                <td class="p-3">1st November 2020</td>
-                                                <td class="text-success p-3">Delivered</td>
-                                                <td class="p-3">$ 320 <span class="text-muted">for 2items</span></td>
-                                                <td class="p-3"><a href="#" class="text-primary">View <i class="uil uil-arrow-right"></i></a></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-3">8007</td>
-                                                <td class="p-3">4td November 2020</td>
-                                                <td class="text-muted p-3">Processing</td>
-                                                <td class="p-3">$ 800 <span class="text-muted">for 1item</span></td>
-                                                <td class="p-3"><a href="#" class="text-primary">View <i class="uil uil-arrow-right"></i></a></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-3">8008</td>
-                                                <td class="p-3">4th November 2020</td>
-                                                <td class="text-danger p-3">Canceled</td>
-                                                <td class="p-3">$ 800 <span class="text-muted">for 1item</span></td>
-                                                <td class="p-3"><a href="#" class="text-primary">View <i class="uil uil-arrow-right"></i></a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div><!--end teb pane-->
-
-                            <div class="tab-pane fade bg-white shadow rounded p-4" id="down" role="tabpanel" aria-labelledby="download">
-                                <div class="table-responsive bg-white shadow rounded">
-                                    <table class="table mb-0 table-center table-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="border-bottom p-3" scope="col">Product Name</th>
-                                                <th class="border-bottom p-3" scope="col">Description</th>
-                                                <th class="border-bottom p-3" scope="col">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="p-3">Quick heal</td>
-                                                <td class="text-muted p-3">It is said that song composers of the past <br> used dummy texts as lyrics when writing <br> melodies in order to have a 'ready-made' <br> text to sing with the melody.</td>
-                                                <td class="text-success p-3">Downloaded</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div><!--end teb pane-->
-
-                            <div class="tab-pane fade bg-white shadow rounded p-4" id="address" role="tabpanel" aria-labelledby="addresses">
-                                <h6 class="text-muted mb-0">The following addresses will be used on the checkout page by default.</h6>
-
-                                <div class="row">
-                                    <div class="col-lg-6 mt-4 pt-2">
-                                        <div class="d-flex align-items-center mb-4 justify-content-between">
-                                            <h5 class="mb-0">Billing Address:</h5>
-                                            <a href="#" class="text-primary h5 mb-0" data-bs-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="uil uil-edit align-middle"></i></a>
-                                        </div>
-                                        <div class="pt-4 border-top">
-                                            <p class="h6">Cally Joseph</p>
-                                            <p class="text-muted mb-0">C/54 Northwest Freeway, </p>
-                                            <p class="text-muted mb-0">Suite 558,</p>
-                                            <p class="text-muted mb-0">Houston, USA 485</p>
-                                            <p class="text-muted mb-0">+123 897 5468</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 mt-4 pt-2">
-                                        <div class="d-flex align-items-center mb-4 justify-content-between">
-                                            <h5 class="mb-0">Shipping Address:</h5>
-                                            <a href="#" class="text-primary h5 mb-0" data-bs-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="uil uil-edit align-middle"></i></a>
-                                        </div>
-                                        <div class="pt-4 border-top">
-                                            <p class="h6">Cally Joseph</p>
-                                            <p class="text-muted mb-0">C/54 Northwest Freeway, </p>
-                                            <p class="text-muted mb-0">Suite 558,</p>
-                                            <p class="text-muted mb-0">Houston, USA 485</p>
-                                            <p class="text-muted mb-0">+123 897 5468</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!--end teb pane-->
-
-                            <div class="tab-pane fade bg-white shadow rounded p-4" id="account" role="tabpanel" aria-labelledby="account-details">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">First Name</label>
-                                                <input name="name" id="first-name" type="text" class="form-control" value="Cally">
-                                            </div>
-                                        </div><!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Last Name</label>
-                                                <input name="name" id="last-name" type="text" class="form-control" value="Joseph">
-                                            </div>
-                                        </div><!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Your Email</label>
-                                                <input name="email" id="email" type="email" class="form-control" value="callyjoseph@gmail.com">
-                                            </div> 
-                                        </div><!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Display Name</label>
-                                                <input name="name" id="display-name" type="text" class="form-control" value="christopher">
-                                            </div> 
-                                        </div><!--end col-->
-
-                                        <div class="col-lg-12 mt-2 mb-0">
-                                            <button class="btn btn-primary">Save Changes</button>
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                </form>
-
-                                <h5 class="mt-4">Change password :</h5>
-                                <form>
-                                    <div class="row mt-3">
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">Old password :</label>
-                                                <input type="password" class="form-control" placeholder="Old password" required="">
-                                            </div>
-                                        </div><!--end col-->
-    
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">New password :</label>
-                                                <input type="password" class="form-control" placeholder="New password" required="">
-                                            </div>
-                                        </div><!--end col-->
-    
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">Re-type New password :</label>
-                                                <input type="password" class="form-control" placeholder="Re-type New password" required="">
-                                            </div>
-                                        </div><!--end col-->
-    
-                                        <div class="col-lg-12 mt-2 mb-0">
-                                            <button class="btn btn-primary">Save Password</button>
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                </form>
-                            </div><!--end teb pane-->
-                        </div>
+                <div class="row text-center">
+                    <div class="col-12">
+                        <ul class="pagination justify-content-center mb-0 list-unstyled">
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Previous">Prev</a></li>
+                            <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next">Next</a></li>
+                        </ul><!--end pagination-->
                     </div><!--end col-->
                 </div><!--end row-->
             </div><!--end container-->
@@ -523,7 +347,7 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="text-sm-start text-center">
-                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.html" target="_blank" class="text-reset">Shreethemes</a>.</p>
                             </div>
                         </div><!--end col-->
     
@@ -554,10 +378,12 @@
                             <div class="text-center">
                                 <h4>Search now.....</h4>
                                 <div class="subcribe-form mt-4">
-                                    <form>
+                                    <form action="BlogsURL" method="get">
+                                       
                                         <div class="mb-0">
-                                            <input type="text" id="help" name="name" class="border bg-white rounded-pill" required="" placeholder="Search">
-                                            <button type="submit" class="btn btn-pills btn-primary">Search</button>
+                                            <input type="hidden" name="service" value="listAllBlogs">
+                                            <input type="text" id="help" name="title" class="border bg-white rounded-pill" required="" placeholder="Search">
+                                            <button type="submit" name="submit" class="btn btn-pills btn-primary">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -585,14 +411,13 @@
                         <div id="style-switcher">
                             <div>
                                 <ul class="text-center list-unstyled mb-0">
-                                    <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="images/layouts/landing-light-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
-                                    <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="/images/layouts/landing-light-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="/images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
                                     <li class="d-grid"><a href="javascript:void(0)" class="dark-rtl-version t-rtl-dark" onclick="setTheme('style-dark-rtl')"><img src="images/layouts/landing-dark-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
-                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
-                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
-                                    <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
-                                    <li class="d-grid"><a href="indexAdmin.jsp" target="_blank" class="mt-4"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
-                                </ul>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="/images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="/images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="/images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
+                                    <li class="d-grid"><a href="${pageContext.request.contextPath}/admin/index.html" target="_blank" class="mt-4"><img src="${pageContext.request.contextPath}images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>   </ul>
                             </div>
                         </div>
                         <!-- end Style switcher -->
@@ -608,7 +433,7 @@
                     <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="../../../index.jsp" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
+                   <li class="list-inline-item mb-0"><a href="${pageContext.request.contextPath}/index.html" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
                 </ul><!--end icon-->
             </div>
         </div>
@@ -620,6 +445,9 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
+        
+         <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+      
     </body>
 
 </html>

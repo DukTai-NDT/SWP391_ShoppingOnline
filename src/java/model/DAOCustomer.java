@@ -123,7 +123,7 @@ public Customers getCustomerByAccountId(int accountId) {
                 + "      ,[Address] = ?\n"
                 + "      ,[Gender] = ?\n"
                 + "      ,[Phone] = ?\n"
-                + "      ,[AccountID] = ?\n"
+                
                 + " WHERE CustomerID = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
@@ -133,8 +133,8 @@ public Customers getCustomerByAccountId(int accountId) {
             preState.setString(4, other.getAddress());
             preState.setString(5, other.getGender());
             preState.setString(6, other.getPhone());
-            preState.setInt(7, other.getAccountID());
-            preState.setInt(8, other.getCustomerID());
+            
+            preState.setInt(7, other.getCustomerID());
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,5 +163,29 @@ public Customers getCustomerByAccountId(int accountId) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+    public String getNameByID(int id){
+        String name = "";
+        String sql ="select LastName from customers where customerID ="+id; 
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+               
+               
+                name = rs.getString("LastName");
+               
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name;
+    }
+    public static void main(String[] args) {
+        DAOCustomer dao = new DAOCustomer();
+    
+        String name  = dao.getNameByID(9);
+        System.out.println(name);
     }
 }

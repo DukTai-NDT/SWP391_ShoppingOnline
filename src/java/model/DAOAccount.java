@@ -41,7 +41,7 @@ public class DAOAccount extends DBConnection {
     public int deleteAccount(int AccountID) {
         int n = 0;
         String sql = "DELETE FROM [dbo].[Accounts]\n"
-                + "      WHERE Accounts.AccountID = " + AccountID;
+                + "      WHERE Account.AccountID = " + AccountID;
         try {
             Statement state = conn.createStatement();
             n = state.executeUpdate(sql);
@@ -58,7 +58,7 @@ public class DAOAccount extends DBConnection {
                 + "      ,[RoleID] = ?\n"
                 + "      ,[Password] = ?\n"
                 + "      ,[Email] = ?\n"
-                + " WHERE Accounts.AccountID = ?";
+                + " WHERE Account.AccountID = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, other.getUserName());
@@ -80,7 +80,7 @@ public class DAOAccount extends DBConnection {
         String sql = "UPDATE [dbo].[Accounts]\n"
                 + "   SET [Password] = ?\n"
                 
-                + " WHERE Accounts.Email = ?";
+                + " WHERE Account.Email = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, password);
@@ -181,9 +181,22 @@ public class DAOAccount extends DBConnection {
 
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
-    Account acc = dao.getLogin("abc", "123");
+//        Account accountAdd = new Account("Tainguyenduc", 2, "abcd123");
+//        int n = dao.addAccount(accountAdd);
+
+//    int n = dao.deleteAccount(1);
+//          Account accountUpdate = new Account(2, "TaiNguye", 1, "cde123");
+//          int n = dao.updateAccount(accountUpdate);
+//        System.out.println(n);
+        Vector<Account> vector = dao.getAccount("SELECT *  FROM [dbo].[Accounts] ");
+        for (Account account : vector) {
+            System.out.println(account);
+        }
+        System.out.println("-------------");
+       Account acc = dao.getLogin("abc", "123");
         System.out.println(acc);
-        
         
     }
 }
+
+
