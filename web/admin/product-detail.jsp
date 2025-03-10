@@ -3,11 +3,10 @@
     Created on : Mar 3, 2025, 9:57:25 PM
     Author     : whyth
 --%>
-<%@page import="entity.Categories"%>
-<%@page import="entity.Brand"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entity.Products, java.util.Vector" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -365,17 +364,11 @@
                         </div>
 
                         <div class="card border-0 rounded shadow p-4 mt-4">
-                            <%
-                                Products pDetail = (Products) request.getAttribute("pdetail");
-                                Brand bDetail = (Brand) request.getAttribute("brandDetail");
-                                Categories cDetail = (Categories) request.getAttribute("categoryDetail");
-                            %>
-
                             <div class="action-icons">
                                 <a href="#" id="edit-product-btn" class="edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="DeleteProduct?pid=<%=pDetail.getProductID()%>" class="delete-icon"
+                                <a href="DeleteProduct?pid=${pDetail.productID}" class="delete-icon"
                                    onclick="return confirm('Are you sure you want to delete this product?');">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
@@ -384,30 +377,49 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-4 col-md-5">
                                     <div class="slider slider-for">
-                                        <div><img src="<%=pDetail.getImage()%>" class="img-fluid rounded" alt=""></div>
+                                        <div><img src="${pDetail.image}" class="img-fluid rounded" alt=""></div>
                                     </div>
                                 </div><!--end col-->
 
                                 <div class="col-lg-8 col-md-7 mt-0 pt-0">
                                     <div class="ms-md-4">
-                                        <h6 class="brand">Brand: 
+                                        <h6 class="brand">Brand:
                                             <a href="#">
-                                                <%= (bDetail != null) ? bDetail.getBrandName() : "Unknown Brand"%>
+                                                ${bDetail != null ? bDetail.brandName : "Unknown Brand"}
                                             </a>
                                         </h6>
-                                        <h4 class="title"><%=pDetail.getProductName()%></h4>
-                                        <h5 class="text-muted"><%=pDetail.getPrice()%></h5>
+                                        <h4 class="title">${pDetail.productName}</h4>
+                                        <h5 class="text-muted">${pDetail.price}</h5>
+
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="py-2 mb-0">Unit :</h5>
+                                            <p class="text-muted mb-0 ms-2">${pDetail.unitPrice}</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="py-2 mb-0">Quantity :</h5>
+                                            <p class="text-muted mb-0 ms-2">${pDetail.quantity}</p>
+                                        </div>
 
                                         <div class="d-flex align-items-center">
                                             <h5 class="py-2 mb-0">Category :</h5>
                                             <p class="text-muted mb-0 ms-2">
-                                                <a href="#"><%= (cDetail != null) ? cDetail.getName() : "Unknown Category"%></a>
+                                                <a href="#">${cDetail != null ? cDetail.categoryName : "Unknown Category"}</a>
+                                            </p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="py-2 mb-0">Ingredient :</h5>
+                                            <p class="text-muted mb-0 ms-2">
+                                                <c:forEach var="i" items="${iList}">
+                                                    ${i}<br/>
+                                                </c:forEach>
                                             </p>
                                         </div>
 
                                         <div class="d-flex align-items-center">
                                             <h5 class="py-2 mb-0">Description :</h5>
-                                            <p class="text-muted mb-0 ms-2"><%=pDetail.getDescription()%></p>
+                                            <p class="text-muted mb-0 ms-2">${pDetail.description}</p>
                                         </div>
                                     </div>
                                 </div><!--end col-->
@@ -418,7 +430,7 @@
                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header border-bottom p-3">
-                                        <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+                                        <h5 class="modal-title" id="editProduct">Edit Product</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
 
@@ -459,7 +471,7 @@
                                             <div class="col-md-6 mt-4 mt-sm-0"> 
                                                 <form action="AddProductController" method="post">
                                                     <div class="row">
-                                                        <div class="col-6">
+                                                        <div class="col-12">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Product Name: <span class="text-danger">*</span></label>
                                                                 <input name="productName" id="productName" type="text" class="form-control" placeholder="Product Name" required>
@@ -479,22 +491,22 @@
 
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Price:</label>
-                                                                <div class="input-group mb-3">
-                                                                    <span class="input-group-text border bg-transparent">$</span>
-                                                                    <input name="price" id="price" type="number" min="0" step="1000" class="form-control" placeholder="Price" required>
-                                                                </div>
+                                                                <label class="form-label">Category:</label>
+                                                                <select name="categoryID" id="categoryID" class="form-control">
+                                                                    <c:forEach var="c" items="${cList}">
+                                                                        <option value="${c.categoryID}">${c.categoryName}</option>
+                                                                    </c:forEach>
+                                                                </select>
                                                             </div>
                                                         </div><!--end col-->
 
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Category:</label>
-                                                                <select name="categoryID" id="categoryID" class="form-control">
-                                                                    <c:forEach var="c" items="${cList}">
-                                                                        <option value="${c.categoriesID}">${c.name}</option>
-                                                                    </c:forEach>
-                                                                </select>
+                                                                <label class="form-label">Price:</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text border bg-transparent">$</span>
+                                                                    <input name="price" id="price" type="number" min="0" step="1000" class="form-control" placeholder="Price" required>
+                                                                </div>
                                                             </div>
                                                         </div><!--end col-->
 
@@ -508,9 +520,16 @@
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Unit:</label>
-                                                                <input name="unitPrice" id="unitPrice" type="text" class="form-control" placeholder="Unit Price" required>
+                                                                <input name="unitPrice" id="unitPrice" type="text" class="form-control" placeholder="Unit" required>
                                                             </div>
                                                         </div><!--end col-->
+
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Ingredient</label>
+                                                                <input name="ingredient" id="ingredient" type="text" class="form-control" placeholder="Ingredient" required>
+                                                            </div>
+                                                        </div>
 
                                                         <div class="col-md-12">
                                                             <div class="mb-3">
@@ -529,7 +548,7 @@
 
                                                         <!-- Button Add -->
                                                         <div class="col-md-6 text-end">
-                                                            <button type="submit" class="btn btn-primary">Edit</button>
+                                                            <button type="submit" class="btn btn-primary">Add</button>
                                                         </div><!--end col-->
                                                     </div>
                                                 </form>
@@ -894,3 +913,5 @@
     </body>
 
 </html>
+
+

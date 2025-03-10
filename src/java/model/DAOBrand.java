@@ -5,7 +5,9 @@
 package model;
 
 import entity.Brand;
+
 import entity.Categories;
+
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -91,6 +93,7 @@ public class DAOBrand extends DBConnection {
         }
         return vector;
     }
+
 
     public static void main(String[] args) {
         DAOBrand dao = new DAOBrand();

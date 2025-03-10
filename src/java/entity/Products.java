@@ -45,8 +45,10 @@ public class Products {
         this.Image = Image;
     }
 
+
     public Products() {
     }
+
 
     public int getProductID() {
         return ProductID;

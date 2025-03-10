@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
 import entity.Brand;
 import entity.Categories;
+
 import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,13 +17,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Vector;
-import model.DAOBrand;
-import model.DAOCategories;
+
 import model.DAOProducts;
 
 /**
  *
+<<<<<<< HEAD
+ * @author Admin
+=======
  * @author whyth
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
  */
 @WebServlet(name = "ProductManagerDetail", urlPatterns = {"/ProductManagerDetail"})
 public class ProductManagerDetail extends HttpServlet {
@@ -39,12 +44,41 @@ public class ProductManagerDetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        DAOProducts pDAO = new DAOProducts();
+
         String pidStr = request.getParameter("pid");
+
+
         if (pidStr == null || pidStr.trim().isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Product ID is missing");
             return;
         }
 
+
+        int pid;
+        try {
+            pid = Integer.parseInt(pidStr);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Product ID format");
+            return;
+        }
+
+        Vector<Products> pdList = pDAO.getProducts("SELECT * FROM dbo.Products WHERE ProductID = " + pid);
+
+        if (!pdList.isEmpty()) {
+            request.setAttribute("pdetail", pdList.get(0)); // Gán sản phẩm đầu tiên vào request
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Product not found");
+            return;
+        }
+
+        request.getRequestDispatcher("/admin/product-detail.jsp").forward(request, response);
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /** 
+     * Handles the HTTP <code>GET</code> method.
+=======
         try {
             int pid = Integer.parseInt(pidStr);
             DAOProducts pDAO = new DAOProducts();
@@ -83,6 +117,7 @@ public class ProductManagerDetail extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -90,6 +125,14 @@ public class ProductManagerDetail extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
+
+    /** 
+     * Handles the HTTP <code>POST</code> method.
+=======
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -97,6 +140,7 @@ public class ProductManagerDetail extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -104,6 +148,14 @@ public class ProductManagerDetail extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+
+    throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /** 
+     * Returns a short description of the servlet.
+=======
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -111,6 +163,7 @@ public class ProductManagerDetail extends HttpServlet {
     /**
      * Returns a short description of the servlet.
      *
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
      * @return a String containing servlet description
      */
     @Override

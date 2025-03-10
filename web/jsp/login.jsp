@@ -26,7 +26,7 @@
     </head>
     <% String message = (String)request.getAttribute("message"); 
     %>
-     
+
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -94,6 +94,7 @@
 
 
 
+
                                         <div class="col-12 mt-3">
                                             <div class="d-grid">
                                                 <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/SWP391/LoginURL&response_type=code&client_id=585107335180-i8g585qjpvmq8rvslrel6lkgqv39fjt5.apps.googleusercontent.com&approval_prompt=force" 
@@ -102,6 +103,7 @@
                                                 </a>
                                             </div>
                                         </div>
+
 
 
 

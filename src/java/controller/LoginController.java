@@ -5,7 +5,10 @@
 package controller;
 
 import entity.Account;
+
+
 import entity.Customers;
+
 
 import entity.GoogleAccount;
 import java.io.IOException;
@@ -19,7 +22,10 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Random;
 import java.util.Vector;
 import model.DAOAccount;
+
+
 import model.DAOCustomer;
+
 
 import model.DAOGoogleLogin;
 
@@ -43,7 +49,9 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAOAccount dao = new DAOAccount();
+
         DAOCustomer daoCus = new DAOCustomer();
+
         HttpSession session = request.getSession();
 
         try (PrintWriter out = response.getWriter()) {
@@ -53,29 +61,7 @@ public class LoginController extends HttpServlet {
                 service = "google";
 
             }
-//            if(service.equals("loginWithFacebook")&& code != null){
-//                DAOFacebookLogin daoFace = new DAOFacebookLogin();
-//                String accessToken = daoFace.getToken(code);
-//                FacebookAccount faceAcc = daoFace.getUserInfo(accessToken);
-//                Vector<String> vectorString = dao.getEmailAccount();
-//
-//                boolean userExists = false;
-//                for (String string : vectorString) {
-//                    if (faceAcc.getEmail().equals(string)) {
-//                        userExists = true;
-//                        break; // Exit loop early if user exists
-//                    }
-//                }
-//
-//                if (userExists) {
-//                    session.setAttribute("dataUser", faceAcc.getName());
-//                    request.getRequestDispatcher("index.jsp").forward(request, response);
-//                } else {
-//                    int n = dao.addAccount(new Account(faceAcc.getName(), 1002, getRandom(6)));
-//                    session.setAttribute("dataUser", faceAcc.getName());
-//                    request.getRequestDispatcher("index.jsp").forward(request, response);
-//                }
-//            }
+
             if ("google".equals(service) && code != null) {
                 DAOGoogleLogin daoGoogle = new DAOGoogleLogin();
 
@@ -86,11 +72,13 @@ public class LoginController extends HttpServlet {
                 boolean userExists = false;
                 for (Account account : vectorAcc) {
                     if (acc.getEmail().equals(account.getEmail())) {
+
                         accountExists.setAccountID(account.getAccountID());
                         accountExists.setUserName(account.getUserName());
                         accountExists.setPassword(account.getPassword());
                         accountExists.setRoleID(account.getRoleID());
                         accountExists.setEmail(account.getEmail());
+
                         userExists = true;
                         break; // Exit loop early if user exists
                     }
@@ -98,16 +86,20 @@ public class LoginController extends HttpServlet {
 
                 if (userExists) {
                     session.setAttribute("dataUser", accountExists);
+
                     Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + accountExists.getAccountID()).get(0);
 
                     session.setAttribute("dataCustomer", cus);
+
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 } else {
 //                    int n = dao.addAccount(new Account(acc.getName(), 1002, getRandom(6),acc.getEmail()));
 //                    session.setAttribute("dataUser", acc.getName());
 //                    request.setAttribute("message", "Account does not exist yet. You must SignUp");
 //                    request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-                    response.sendRedirect("https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/SWP391/LoginURL&response_type=code&client_id=585107335180-i8g585qjpvmq8rvslrel6lkgqv39fjt5.apps.googleusercontent.com&approval_prompt=force");
+
+                      response.sendRedirect("https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/SWP391/SignUpURL&response_type=code&client_id=585107335180-i8g585qjpvmq8rvslrel6lkgqv39fjt5.apps.googleusercontent.com&approval_prompt=force");
+
                 }
             }
 
@@ -117,6 +109,11 @@ public class LoginController extends HttpServlet {
                     request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
                 } else {
                     Account account = dao.getLogin(request.getParameter("username"), request.getParameter("password"));
+                    if(account.isActive() == false){
+                         request.setAttribute("message", "Account is block can not login");
+                        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+
+                    }
 
                     if (account == null) {
                         request.setAttribute("message", "Username or password is incorrect");
@@ -142,12 +139,14 @@ public class LoginController extends HttpServlet {
                             request.getRequestDispatcher("index.jsp").forward(request, response);
                         } 
 
+
                     }
                 }
             }
 
         }
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -187,6 +187,7 @@
                                 
                             </ul>
                         </li>
+                           <li><a href="ProductManager" class="sub-menu-item">Manager</a></li>
 <!--                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>-->
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->

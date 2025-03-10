@@ -4,6 +4,7 @@
  */
 package controller;
 
+
 import entity.Brand;
 import entity.Categories;
 import entity.Products;
@@ -21,7 +22,11 @@ import model.DAOProducts;
 
 /**
  *
+<<<<<<< HEAD
+ * @author Admin
+=======
  * @author whyth
+>>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
  */
 @WebServlet(name = "ProductManagerController", urlPatterns = {"/ProductManager"})
 public class ProductManagerController extends HttpServlet {
