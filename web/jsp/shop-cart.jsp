@@ -40,7 +40,9 @@
     </head>
     <%
             Account account = (Account)session.getAttribute("dataUser");
-            Vector<CartItems> vectorCartItems = (Vector<CartItems>)request.getAttribute("dataCartItem"); 
+            Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+    %>
+    <% String message = (String)request.getAttribute("message"); 
     %>
     <body>
         <!-- Loader -->
@@ -127,26 +129,26 @@
                 </ul>
                 <!-- Start Dropdown -->
 
-              <div id="navigation">
+                <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left nav-light">
-<!--                        <li class="has-submenu parent-menu-item">
-                            <a href="index.jsp">Home</a><span class="sub-menu-item"></span>
+                        <!--                        <li class="has-submenu parent-menu-item">
+                                                    <a href="index.jsp">Home</a><span class="sub-menu-item"></span>
+                        
+                        
+                                                </li>-->
 
 
-                        </li>-->
 
-
-
-<!--                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Patients</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="patient-dashboard.html" class="sub-menu-item">Dashboard</a></li>
-                                <li><a href="patient-profile.html" class="sub-menu-item">Profile</a></li>
-                                <li><a href="booking-appointment.html" class="sub-menu-item">Book Appointment</a></li>
-                                <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
-                            </ul>
-                        </li>-->
+                        <!--                        <li class="has-submenu parent-menu-item">
+                                                    <a href="javascript:void(0)">Patients</a><span class="menu-arrow"></span>
+                                                    <ul class="submenu">
+                                                        <li><a href="patient-dashboard.html" class="sub-menu-item">Dashboard</a></li>
+                                                        <li><a href="patient-profile.html" class="sub-menu-item">Profile</a></li>
+                                                        <li><a href="booking-appointment.html" class="sub-menu-item">Book Appointment</a></li>
+                                                        <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
+                                                    </ul>
+                                                </li>-->
 
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
@@ -168,11 +170,11 @@
                                 <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
                                 <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
-                                
-                                
+
+
                             </ul>
                         </li>
-<!--                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>-->
+                        <!--                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>-->
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -212,7 +214,8 @@
         <!-- Start -->
         <section class="section">
             <div class="container">
-                <form action="CartURL">
+                <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+                <form action="CartURL" method="POST">
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive bg-white shadow rounded">
@@ -227,11 +230,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%  float totalPriceCart = 0;
-                                             int index = 0;
-                                             for (CartItems vectorCartItem : vectorCartItems) {
-                                        if(index <= 3){%>
+                                        <% 
+                                            float totalPriceCart = 0;
+                                            int index = 0;
+                                            for (CartItems vectorCartItem : vectorCartItems) {
+                                                if(index <= 3) {
+                                        %>
                                         <tr>
+                                            <td class="p-3 text-center">
+                                                <input type="checkbox" name="selectedItems" value="<%=vectorCartItem.getCartItemID()%>" class="item-checkbox">
+                                            </td>
                                             <td class="h5 p-3 text-center"><a href="CartURL?service=deleteCart&cartItemID=<%=vectorCartItem.getCartItemID()%>" class="text-danger"><i class="uil uil-times"></i></a></td>
                                             <td class="p-3">
                                                 <div class="d-flex align-items-center">
@@ -247,13 +255,17 @@
                                                     <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-icon btn-primary plus">+</button>
                                                 </div>
                                             </td>
-                                            <% float totalPrice = vectorCartItem.getPrice() * vectorCartItem.getQuantity();
-                                            totalPriceCart += totalPrice;
+                                            <% 
+                                                float totalPrice = vectorCartItem.getPrice() * vectorCartItem.getQuantity();
+                                                totalPriceCart += totalPrice;
                                             %>
                                             <td class="text-end font-weight-bold p-3"><%=totalPrice%></td>
                                         </tr>
-                                        <% }else{ %>
+                                        <% } else { %>
                                         <tr class="hidden-item">
+                                            <td class="p-3 text-center">
+                                                <input type="checkbox" name="selectedItems" value="<%=vectorCartItem.getCartItemID()%>" class="item-checkbox">
+                                            </td>
                                             <td class="h5 p-3 text-center"><a href="CartURL?service=deleteCart&cartItemID=<%=vectorCartItem.getCartItemID()%>" class="text-danger"><i class="uil uil-times"></i></a></td>
                                             <td class="p-3">
                                                 <div class="d-flex align-items-center">
@@ -269,15 +281,15 @@
                                                     <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-icon btn-primary plus">+</button>
                                                 </div>
                                             </td>
-                                            <% float totalPrice = vectorCartItem.getPrice() * vectorCartItem.getQuantity();
-                                            totalPriceCart += totalPrice;
+                                            <% 
+                                                float totalPrice = vectorCartItem.getPrice() * vectorCartItem.getQuantity();
+                                                totalPriceCart += totalPrice;
                                             %>
                                             <td class="text-end font-weight-bold p-3"><%=totalPrice%></td>
                                         </tr>
-
-                                        <%}
-                                           index ++; 
-                                           }%>
+                                        <% }
+                                            index++; 
+                                        } %>
                                     </tbody>
                                 </table>
                                 <div class="view-more" id="viewMoreBtn">
@@ -287,32 +299,31 @@
                         </div><!--end col-->
                     </div><!--end row-->
 
-                    <input type="hidden" name="service" value="updateCart">
-
                     <div class="row">
                         <div class="col-lg-8 col-md-6 mt-4 pt-2">
                             <a href="ProductURL?service=listAllProducts" class="btn btn-primary">Shop More</a>
-                            <button type="submit" class="btn btn-primary">Update Cart</button>
+                            <button type="submit" name="service" value="updateCart" class="btn btn-primary">Update Cart</button>
                         </div>
+                        <div class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
+                            <div class="table-responsive bg-white rounded shadow">
+                                <table class="table table-center table-padding mb-0">
+                                    <tbody>
+                                        <tr class="bg-light">
+                                            <td class="h6 p-3">Total</td>
+                                            <td class="text-end font-weight-bold p-3"><%=totalPriceCart%></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p style="color: red;"><%=(message!=null?message:"")%></p>
+                            <div class="mt-4 pt-2 text-end">
+                                <button type="submit" name="service" value="checkout" class="btn btn-primary">Proceed to checkout</button>
+                            </div>
+                        </div><!--end col-->
                     </div>
                 </form>
 
-                <div class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
-                    <div class="table-responsive bg-white rounded shadow">
-                        <table class="table table-center table-padding mb-0">
-                            <tbody>
 
-                                <tr class="bg-light">
-                                    <td class="h6 p-3">Total</td>
-                                    <td class="text-end font-weight-bold p-3"><%=totalPriceCart%></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mt-4 pt-2 text-end">
-                        <a href="#" class="btn btn-primary">Proceed to checkout</a>
-                    </div>
-                </div><!--end col-->
             </div><!--end row-->
         </div><!--end container-->
     </section><!--end section-->
@@ -393,7 +404,7 @@
                 <div class="row align-items-center">
                     <div class="col-sm-6">
                         <div class="text-sm-start text-center">
-                            <p class="mb-0"><script>document.write(new Date().getFullYear())</script> � Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                            <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
                         </div>
                     </div><!--end col-->
 
@@ -492,7 +503,15 @@
     <script src="js/app.js"></script>
     <!-- View more Js -->
     <script src="js/viewMore.js"></script>
-
+    <!-- JavaScript ?? x? lý "Ch?n t?t c?" -->
+    <script>
+                                    function toggleSelectAll(source) {
+                                        const checkboxes = document.querySelectorAll('.item-checkbox');
+                                        checkboxes.forEach(checkbox => {
+                                            checkbox.checked = source.checked;
+                                        });
+                                    }
+    </script>
 </body>
 
 </html>

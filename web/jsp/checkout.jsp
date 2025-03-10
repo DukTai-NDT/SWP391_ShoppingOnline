@@ -27,7 +27,7 @@
     </head>
     <%
                 Account account = (Account)session.getAttribute("dataUser");
-                Vector<CartItems> vectorCartItems = (Vector<CartItems>)request.getAttribute("dataCartItem"); 
+                Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("selectedCartItems"); 
                 
               
                 String message = (String)request.getAttribute("message"); 
@@ -209,46 +209,28 @@
                                 <span class="badge bg-primary rounded-pill">3</span>
                             </div>
                             <ul class="list-group mb-3 border">
+                                 <% 
+                                            float totalPriceCart = 0;
+                                            
+                                            for (CartItems vectorCartItem : vectorCartItems) {
+                                              float total = vectorCartItem.getQuantity() * vectorCartItem.getPrice();
+                                              totalPriceCart += total;
+                                        %>
                                 <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
                                     <div>
-                                        <h6 class="my-0">Product name</h6>
-                                        <small class="text-muted">Brief description</small>
+                                        <h6 class="my-0"><%=vectorCartItem.getProductName()%></h6>
+                                        <small class="text-muted">Quantity:<%=vectorCartItem.getQuantity()%></small>
                                     </div>
-                                    <span class="text-muted">$12</span>
+                                        <span class="text-muted">VND:<%=total%></span>
                                 </li>
-                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
-                                    <div>
-                                        <h6 class="my-0">Second product</h6>
-                                        <small class="text-muted">Brief description</small>
-                                    </div>
-                                    <span class="text-muted">$8</span>
-                                </li>
-                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
-                                    <div>
-                                        <h6 class="my-0">Third item</h6>
-                                        <small class="text-muted">Brief description</small>
-                                    </div>
-                                    <span class="text-muted">$5</span>
-                                </li>
-                                <li class="d-flex justify-content-between bg-light p-3 border-bottom">
-                                    <div class="text-success">
-                                        <h6 class="my-0">Promo code</h6>
-                                        <small>EXAMPLECODE</small>
-                                    </div>
-                                    <span class="text-success">?$5</span>
-                                </li>
+                                <%}%>
                                 <li class="d-flex justify-content-between p-3">
-                                    <span>Total (USD)</span>
-                                    <strong>$20</strong>
+                                    <span>Total (VND)</span>
+                                    <strong>VND:<%=totalPriceCart%></strong>
                                 </li>
                             </ul>
 
-                            <form>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Promo code">
-                                    <button type="submit" class="btn btn-secondary">Redeem</button>
-                                </div>
-                            </form>
+                            
                         </div>
                     </div><!--end col-->
 

@@ -4,8 +4,10 @@
  */
 package controller;
 
+import entity.CartItems;
 import entity.Customers;
 import entity.DeliveryAddress;
+import entity.OrderDetails;
 import entity.Orders;
 import entity.Payments;
 import java.io.IOException;
@@ -17,7 +19,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.Vector;
+import model.DAOCartItem;
 import model.DAODeliveryAddress;
+import model.DAOOrderDetails;
 import model.DAOOrders;
 import model.DAOPaymentMethod;
 import model.DAOPayments;
@@ -46,7 +51,9 @@ public class CheckoutController extends HttpServlet {
             DAOPaymentMethod daoPaymentMethod = new DAOPaymentMethod();
             DAOPayments daoPayment = new DAOPayments();
             DAOOrders daoOrder = new DAOOrders();
+            DAOOrderDetails daoOrderDetail = new DAOOrderDetails();
             DAODeliveryAddress daoDeliAddress = new DAODeliveryAddress();
+            DAOCartItem daoCartItem = new DAOCartItem();
             Customers customer = (Customers) session.getAttribute("dataCustomer");
             String service = request.getParameter("service");
             if (service == null) {
@@ -94,6 +101,7 @@ public class CheckoutController extends HttpServlet {
 
                     // Add Order
                     int orderID = daoOrder.addOrder(new Orders("Pending Confirmation", customer.getCustomerID(), orderDate, deliveryDate, paymentMethodID));
+                    
                     if (orderID == 0) {
                           request.setAttribute("message", "Order processing failed");
                         request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
@@ -109,7 +117,14 @@ public class CheckoutController extends HttpServlet {
                         return;
                       
                     }
-
+                    Vector<CartItems> vectorCartItems =   (Vector<CartItems>) session.getAttribute("selectedCartItems");
+                    
+                    for (CartItems vectorCartItem : vectorCartItems) {
+                        int n = daoOrderDetail.addOrderDetails(new OrderDetails(vectorCartItem.getPrice(),
+                                vectorCartItem.getQuantity(), vectorCartItem.getProductID(),
+                                daoOrder.getLastOrderID()));
+                        int y = daoCartItem.changeIsBuy(1, vectorCartItem.getCartItemID());
+                    }
                     request.getRequestDispatcher("index.jsp").forward(request, response);
 
                 } catch (Exception e) {
