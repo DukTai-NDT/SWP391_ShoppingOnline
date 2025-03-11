@@ -110,7 +110,7 @@
                     <ul class="sidebar-menu pt-3">
                         <li><a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li><!--
                                                 <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>-->
-                        
+
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
                             <!--                                                    <div class="sidebar-submenu">
@@ -121,7 +121,7 @@
                                                                                     </ul>
                                                                                 </div>-->
                         </li>
-                        
+
                         <li class="sidebar-dropdown">
                             <a href="javascript:void(0)"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Manager</a>
                             <div class="sidebar-submenu">
@@ -425,41 +425,21 @@
                                     </div>
 
                                     <div class="modal-body p-3 pt-4">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="d-grid me-md-4">
-                                                    <p class="text-muted">Upload your shop image here, Please click "Upload Image" Button.</p>
-
+                                        <form action="EditProduct" method="post">
+                                            <div class="row">
+                                                <!-- Trường nhập ảnh -->
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Image URL:</label>
+                                                        <input value="${pDetail.image}" type="text" name="loadImage" id="loadImage" class="form-control" placeholder="Enter image URL">
+                                                    </div>
                                                     <div class="preview-box d-flex justify-content-center align-items-center rounded shadow overflow-hidden bg-light p-1"
                                                          style="width: 200px; height: 200px; margin-left: 70px;">
-                                                        <img id="load-preview-img" src="" alt="Preview Image" class="img-fluid d-none">
+                                                        <img id="preview-img" src="" alt="Preview Image" class="img-fluid d-none">
                                                     </div>
-
-                                                    <!-- Input file để chọn ảnh -->
-                                                    <input type="file" id="loadImage" name="loadImage" accept="image/*" hidden>
-
-                                                    <!-- Nút chọn ảnh -->
-                                                    <label class="btn-upload btn btn-primary mt-4" for="image">Upload Image</label>
                                                 </div>
-                                            </div>
 
-                                            <script>
-                                                document.getElementById("image").addEventListener("change", function (event) {
-                                                    const file = event.target.files[0];
-                                                    if (file) {
-                                                        const reader = new FileReader();
-                                                        reader.onload = function (e) {
-                                                            const imgElement = document.getElementById("preview-img");
-                                                            imgElement.src = e.target.result;
-                                                            imgElement.classList.remove("d-none");
-                                                        };
-                                                        reader.readAsDataURL(file);
-                                                    }
-                                                });
-                                            </script>
-
-                                            <div class="col-md-6 mt-4 mt-sm-0"> z
-                                                <form action="EditProduct" method="post">
+                                                <div class="col-md-6 mt-4 mt-sm-0">                                     
                                                     <div class="row">
                                                         <div class="col-6" style="display: none;">
                                                             <div class="mb-3">
@@ -555,9 +535,43 @@
                                                             <button type="submit" class="btn btn-primary">Edit</button>
                                                         </div><!--end col-->
                                                     </div>
-                                                </form>
-                                            </div><!--end col-->
-                                        </div><!--end row-->
+                                                    </form>
+                                                    <!-- Script hiển thị ảnh xem trước -->
+                                                    <script>
+                                                        document.getElementById("loadImage").addEventListener("input", function () {
+                                                            const imgElement = document.getElementById("preview-img");
+                                                            const imageUrl = this.value.trim();
+
+                                                            if (imageUrl) {
+                                                                imgElement.src = imageUrl;
+                                                                imgElement.classList.remove("d-none");
+                                                            } else {
+                                                                imgElement.src = "";
+                                                                imgElement.classList.add("d-none");
+                                                            }
+                                                        });
+
+                                                        document.addEventListener("DOMContentLoaded", function () {
+                                                            const imgElement = document.getElementById("preview-img");
+                                                            const imageInput = document.getElementById("loadImage");
+
+                                                            function updatePreview() {
+                                                                const imageUrl = imageInput.value.trim();
+                                                                if (imageUrl) {
+                                                                    imgElement.src = imageUrl;
+                                                                    imgElement.classList.remove("d-none");
+                                                                } else {
+                                                                    imgElement.src = "";
+                                                                    imgElement.classList.add("d-none");
+                                                                }
+                                                            }
+
+                                                            imageInput.addEventListener("input", updatePreview);
+                                                            updatePreview(); // Gọi ngay khi modal mở để hiển thị ảnh có sẵn
+                                                        });
+                                                    </script>
+                                                </div><!--end col-->
+                                            </div><!--end row-->
                                     </div>
                                 </div>
                             </div>

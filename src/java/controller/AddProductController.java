@@ -24,7 +24,6 @@ public class AddProductController extends HttpServlet {
             int brandID = Integer.parseInt(request.getParameter("brandID"));
             boolean isPrescriptionDrug = request.getParameter("isPrescriptionDrug") != null;
             int quantity = Integer.parseInt(request.getParameter("quantity"));
-
             String image = request.getParameter("image"); // Nếu có upload ảnh, cần xử lý thêm
 
             // Gọi DAO để thêm sản phẩm vào DB
