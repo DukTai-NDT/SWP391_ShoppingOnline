@@ -60,50 +60,33 @@
                     </div>
 
                     <ul class="sidebar-menu pt-3">
-                        <li><a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li><!--
-                        <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>
+                       
 
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-user me-2 d-inline-block"></i>Doctors</a>
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
+                            <div class="sidebar-submenu">
+                            </div>
+                        </li>
+
+<!--                        <li class="sidebar-dropdown">
+                            <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="doctors.html">Doctors</a></li>
-                                    <li><a href="add-doctor.html">Add Doctor</a></li>
-                                    <li><a href="dr-profile.html">Profile</a></li>
+                                    <li><a href="chat.html">Chat</a></li>
+                                    <li><a href="email.html">Email</a></li>
+                                    <li><a href="calendar.html">Calendar</a></li>
                                 </ul>
                             </div>
                         </li>-->
 
                         <li class="sidebar-dropdown">
-                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
-                            <div class="sidebar-submenu">
-                                <!--                                <ul>
-                                                                    <li><a href="patients.html" class="active">All Accounts</a></li>
-                                                                  
-                                                                </ul>-->
-                            </div>
-                        </li>
-
-                        <!--                        <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="chat.html">Chat</a></li>
-                                                            <li><a href="email.html">Email</a></li>
-                                                            <li><a href="calendar.html">Calendar</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>-->
-
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Manager</a>
+                            <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Pharmacy</a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="ProductManager">All Products</a></li>
-                                    <li><a href="product-detail.html">Dermatological drugs</a></li>
-                                    <li><a href="shopcart.html">Musculoskeletal</a></li>
-                                    <li><a href="checkout.html">Supplements and vitamins</a></li>
-                                    <li><a href="checkout.html">Cancer drugs</a></li>
+                                    <li><a href="shop.html">Shop</a></li>
+                                    <li><a href="product-detail.html">Shop Detail</a></li>
+                                    <li><a href="shopcart.html">Shopcart</a></li>
+                                    <li><a href="checkout.html">Checkout</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -112,8 +95,8 @@
                             <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="admin">Blogs</a></li>
-                                    <!--                                    <li><a href="blog-detail.html">Blog Detail</a></li>-->
+                                    <li><a href="blogs.html">Blogs</a></li>
+<!--                                    <li><a href="blog-detail.html">Blog Detail</a></li>-->
                                 </ul>
                             </div>
                         </li>
@@ -134,22 +117,22 @@
                             </div>
                         </li>
 
-                        <!--                        <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="jsp/login.jsp">Login</a></li>
-                                                            <li><a href="jsp/signup.jsp">Signup</a></li>
-                                                            <li><a href="forgot-password.html">Forgot Password</a></li>
-                                                            <li><a href="jsp/login.jsp">Lock Screen</a></li>
-                                                            <li><a href="thankyou.html">Thank you...!</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>-->
+<!--                        <li class="sidebar-dropdown">
+                            <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li><a href="jsp/login.jsp">Login</a></li>
+                                    <li><a href="jsp/signup.jsp">Signup</a></li>
+                                    <li><a href="forgot-password.html">Forgot Password</a></li>
+                                    <li><a href="jsp/login.jsp">Lock Screen</a></li>
+                                    <li><a href="thankyou.html">Thank you...!</a></li>
+                                </ul>
+                            </div>
+                        </li>-->
 
-                        <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>-->
+<!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
 
-                        <!--                        <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
+                        <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -342,7 +325,7 @@
                                             <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>${b.postTime}</li>
                                             <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
                                         </ul>
-                                        <a href="adminblogdetail" class="text-dark title h5">${b.title}</a>
+                                        <a href="AdminBlogsDetail?bid=${b.blogID}" class="text-dark title h5">${b.title}</a>
                                         <div class="post-meta d-flex justify-content-between mt-3">
                                             <ul class="list-unstyled mb-0">
                                                 <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
@@ -442,90 +425,97 @@
 
         <!-- Start Modal -->
         <div class="modal fade" id="newblogadd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <form action="adminaddblog" method="post">
             <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Blog</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+               
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom p-3">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Blog</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
-                    <div class="modal-body p-3 pt-4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="d-grid">
-                                    <p class="text-muted">Upload your blog image here, Please click "Upload Image" Button.</p>
-                                    <div class="preview-box d-block justify-content-center rounded shadow overflow-hidden bg-light p-1"></div>
-                                    <input type="file" id="input-file" name="input-file" accept="image/*" onchange={
-                                           handleChange()} hidden />
-                                    <label class="btn-upload btn btn-primary mt-4" for="input-file">Upload Image</label>
-                                </div>
-                            </div><!--end col-->
+                        <div class="modal-body p-3 pt-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="d-grid">
+                                        <p class="text-muted">Upload your blog image here, Please click "Upload Image" Button.</p>
+                                        <div class="preview-box d-block justify-content-center rounded shadow overflow-hidden bg-light p-1"></div>
+                                        <input type="file" id="input-file" name="input-file" accept="image/*" onchange={
+                                               handleChange()} hidden />
+                                        <label class="btn-upload btn btn-primary mt-4" for="input-file">Upload Image</label>
+                                    </div>
+                                </div><!--end col-->
 
-                            <div class="col-md-8 mt-4 mt-sm-0">
-                                <div class="ms-md-4">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Blog Title <span class="text-danger">*</span></label>
-                                                    <input name="name" id="name" type="text" class="form-control" placeholder="Title :">
-                                                </div>
-                                            </div><!--end col-->
+                                <div class="col-md-8 mt-4 mt-sm-0">
+                                    <div class="ms-md-4">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"> Customer ID: </label>
+                                                            <input name="customerID" type="text" class="form-control" id="customerID">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"> Date : </label>
+                                                            <input name="date" type="text" class="form-control" id="date" value="09 January 2021">
+                                                        </div>
+                                                    </div><!--end col-->
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Blog Title <span class="text-danger">*</span></label>
+                                                        <input name="title" id="title" type="text" class="form-control" placeholder="Title :">
+                                                    </div>
+                                                </div><!--end col-->
+                                                <div class="col-lg-12">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Description: <span class="text-danger">*</span></label>
+                                                        <textarea name="description:" id="description:" rows="4" class="form-control" placeholder="Blog description :"></textarea>
+                                                    </div>
+                                                </div><!--end col-->
 
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label"> Date : </label>
-                                                    <input name="date" type="text" class="form-control" id="date" value="09 January 2021">
-                                                </div>
-                                            </div><!--end col-->
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label"> Customer ID: </label>
-                                                    <input name="customerID" type="text" class="form-control" id="customerID">
-                                                </div>
+
+
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label"> Status: </label>
+                                                        <input name="active" type="text" class="form-control" id="active">
+                                                    </div>
+                                                </div><!--end col-->
+
+                                                <!--                                            <div class="col-md-6">
+                                                                                                <div class="mb-3">
+                                                                                                    <label class="form-label">Tag</label>
+                                                                                                    <select class="form-control">
+                                                                                                        <option value="EY">Eye Care</option>
+                                                                                                        <option value="GY">Gynecologist</option>
+                                                                                                        <option value="PS">Psychotherapist</option>
+                                                                                                        <option value="OR">Orthopedic</option>
+                                                                                                        <option value="DE">Dentist</option>
+                                                                                                        <option value="GA">Gastrologist</option>
+                                                                                                        <option value="UR">Urologist</option>
+                                                                                                        <option value="NE">Neurologist</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>end col-->
+
+
+
+                                                <div class="col-lg-12 text-end">
+                                                    <button type="submit" class="btn btn-primary">Add Blog</button>
+                                                </div><!--end col-->
                                             </div>
-
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label"> Status: </label>
-                                                    <input name="active" type="text" class="form-control" id="active">
-                                                </div>
-                                            </div><!--end col-->
-
-                                            <!--                                            <div class="col-md-6">
-                                                                                            <div class="mb-3">
-                                                                                                <label class="form-label">Tag</label>
-                                                                                                <select class="form-control">
-                                                                                                    <option value="EY">Eye Care</option>
-                                                                                                    <option value="GY">Gynecologist</option>
-                                                                                                    <option value="PS">Psychotherapist</option>
-                                                                                                    <option value="OR">Orthopedic</option>
-                                                                                                    <option value="DE">Dentist</option>
-                                                                                                    <option value="GA">Gastrologist</option>
-                                                                                                    <option value="UR">Urologist</option>
-                                                                                                    <option value="NE">Neurologist</option>
-                                                                                                </select>
-                                                                                            </div>
-                                                                                        </div>end col-->
-
-                                            <div class="col-lg-12">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Description: <span class="text-danger">*</span></label>
-                                                    <textarea name="comments" id="comments" rows="4" class="form-control" placeholder="Blog description :"></textarea>
-                                                </div>
-                                            </div><!--end col-->
-
-                                            <div class="col-lg-12 text-end">
-                                                <button type="submit" class="btn btn-primary">Add Blog</button>
-                                            </div><!--end col-->
-                                        </div>
-                                    </form>
-                                </div>
-                            </div><!--end col-->
-                        </div><!--end row-->
+                                        </form>
+                                    </div>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div>
                     </div>
-                </div>
+             
+
             </div>
+                </form>
         </div>
         <!-- End modal -->
 
