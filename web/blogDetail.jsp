@@ -253,6 +253,7 @@
                         </div>
                     </div>
                   <% 
+                      
     Integer currentCustomerId = (Integer) session.getAttribute("customerId");
     if (comment.getCustomerID() == currentCustomerId) { 
 %>

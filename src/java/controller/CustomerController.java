@@ -5,6 +5,7 @@
 
 package controller;
 
+import entity.Account;
 import entity.Customers;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -72,8 +73,8 @@ public class CustomerController extends HttpServlet {
                     response.sendRedirect("CustomerURL?error=unauthorized");
                     return;
                 }
-
-                Customers cus = new Customers(cusId, firstName, lastName, email, address, gender, phone);
+                Account account =  (Account)session.getAttribute("dataUser");
+                Customers cus = new Customers(cusId, firstName, lastName, email, address, gender, phone,account.getAccountID());
                 int n = daoCus.updateCustomer(cus);
                 response.sendRedirect("CustomerURL");
             }

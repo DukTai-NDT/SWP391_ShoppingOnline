@@ -6,6 +6,7 @@ package controller;
 
 import entity.Blogs;
 import entity.Comment;
+import entity.Customers;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,9 +45,9 @@ public class BlogsController extends HttpServlet {
         DAOCustomer daoCus = new DAOCustomer();
         DAOComment daoComments = new DAOComment();
         HttpSession session = request.getSession();
-
-        Integer customerId = (Integer) session.getAttribute("customerId");
-        if (customerId == null) {
+      Customers customer = (Customers)  session.getAttribute("dataCustomer");
+        int  customerId = customer.getCustomerID();
+        if (customerId == 0) {
             response.sendRedirect("LoginURL?service=login");
             return;
         }

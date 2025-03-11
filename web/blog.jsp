@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Vector, entity.Blogs, jakarta.servlet.http.HttpSession"%>
+<%@page import="java.util.Vector,entity.Account, entity.Blogs,entity.Customers, jakarta.servlet.http.HttpSession"%>
 <!DOCTYPE html>
     <html lang="en">
 
@@ -26,9 +26,11 @@
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
     </head>
-
+ <%
+        Account account = (Account)session.getAttribute("dataUser");
+    %>
     <body>
-        <!-- Loader -->
+       <!-- Loader -->
         <div id="preloader">
             <div id="status">
                 <div class="spinner">
@@ -38,22 +40,22 @@
             </div>
         </div>
         <!-- Loader -->
-        
+
         <!-- Navbar STart -->
-        <header id="topnav" class="defaultscroll sticky">
+        <header id="topnav" class="navigation sticky">
             <div class="container">
                 <!-- Logo container-->
                 <div>
-                    <a class="logo" href="index.html">
+                    <a class="logo" href="index.jsp">
                         <span class="logo-light-mode">
-                            <img src="/images/logo-dark.png" class="l-dark" height="24" alt="">
-                            <img src="/images/logo-light.png" class="l-light" height="24" alt="">
+                            <img src="images/logo-dark.png" class="l-dark" height="24" alt="">
+                            <img src="images/logo-light.png" class="l-light" height="24" alt="">
                         </span>
-                        <img src="/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
+                        <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                     </a>
                 </div>
                 <!-- End Logo container-->
-                
+
                 <!-- Start Mobile Toggle -->
                 <div class="menu-extras">
                     <div class="menu-item">
@@ -72,9 +74,9 @@
 
                 <!-- Start Dropdown -->
                 <ul class="dropdowns list-inline mb-0">
-                    <li class="list-inline-item mb-0">
+<!--                    <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
+                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                         </a>
                     </li>
 
@@ -82,69 +84,53 @@
                         <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             <i class="uil uil-search"></i>
                         </a>
-                    </li>
+                    </li>-->
 
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+
+
+                            <%if(account != null){%>
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="/images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <img src="" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                                     <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1">Calvin Carlo</span>
-                                        <small class="text-muted">Orthopedic</small>
+                                        <span class="d-block mb-1"><%=account.getUserName()%></span>
+                                        
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                 <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="login.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                            </div>        
+                            <%}else{%>
+
+                            <div class="auth-links">
+                                <a href="SignUpURL?service=signup">Sign up</a>
+                                <span>|</span>
+                                <a href="LoginURL?service=login">Log in</a>
                             </div>
+                            <%}%>
+
                         </div>
                     </li>
                 </ul>
                 <!-- Start Dropdown -->
-        
+
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left nav-light">
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Home</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="index.html" class="sub-menu-item">Index One</a></li>
-                                <li><a href="index-two.html" class="sub-menu-item">Index Two</a></li>
-                                <li><a href="index-three.html" class="sub-menu-item">Index Three</a></li>
-                            </ul>
-                        </li>
+<!--                        <li class="has-submenu parent-menu-item">
+                            <a href="index.jsp">Home</a><span class="sub-menu-item"></span>
 
-                        <li class="has-submenu parent-parent-menu-item">
-                            <a href="javascript:void(0)">Doctors</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li class="has-submenu parent-menu-item">
-                                    <a href="javascript:void(0)" class="menu-item"> Dashboard </a><span class="submenu-arrow"></span>
-                                    <ul class="submenu">
-                                        <li><a href="doctor-dashboard.html" class="sub-menu-item">Dashboard</a></li>
-                                        <li><a href="doctor-appointment.html" class="sub-menu-item">Appointment</a></li>
-                                        <li><a href="patient-list.html" class="sub-menu-item">Patients</a></li>
-                                        <li><a href="doctor-schedule.html" class="sub-menu-item">Schedule Timing</a></li>
-                                        <li><a href="invoices.html" class="sub-menu-item">Invoices</a></li>
-                                        <li><a href="patient-review.html" class="sub-menu-item">Reviews</a></li>
-                                        <li><a href="doctor-messages.html" class="sub-menu-item">Messages</a></li>
-                                        <li><a href="doctor-profile.html" class="sub-menu-item">Profile</a></li>
-                                        <li><a href="doctor-profile-setting.html" class="sub-menu-item">Profile Settings</a></li>
-                                        <li><a href="doctor-chat.html" class="sub-menu-item">Chat</a></li>
-                                        <li><a href="login.html" class="sub-menu-item">Login</a></li>
-                                        <li><a href="signup.html" class="sub-menu-item">Sign Up</a></li>
-                                        <li><a href="forgot-password.html" class="sub-menu-item">Forgot Password</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="doctor-team-one.html" class="sub-menu-item">Doctors One</a></li>
-                                <li><a href="doctor-team-two.html" class="sub-menu-item">Doctors Two</a></li>
-                                <li><a href="doctor-team-three.html" class="sub-menu-item">Doctors Three</a></li>
-                            </ul>
-                        </li>
 
-                        <li class="has-submenu parent-menu-item">
+                        </li>-->
+
+
+
+<!--                        <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Patients</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="patient-dashboard.html" class="sub-menu-item">Dashboard</a></li>
@@ -152,39 +138,54 @@
                                 <li><a href="booking-appointment.html" class="sub-menu-item">Book Appointment</a></li>
                                 <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
                             </ul>
-                        </li>
-
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
+                        </li>-->
+                        <%if(account != null){%>
+                            <li class="has-submenu parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
+
+                                <li><a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a></li>
+
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
-                                <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
+                                <li><a href="CartURL?service=showCart" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="DeliveryAddressURL?service=first" class="sub-menu-item">Checkout</a></li>
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
                         </li>
-        
+
                         <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="aboutus.html" class="sub-menu-item"> About Us</a></li>
-                                <li><a href="departments.html" class="sub-menu-item">Departments</a></li>
+                                <li><a href="aboutus.jsp" class="sub-menu-item"> About Us</a></li>
+                                <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li class="has-submenu parent-menu-item">
-                                    <a href="javascript:void(0)" class="menu-item"> Blogs </a><span class="submenu-arrow"></span>
-                                    <ul class="submenu">
-                                        <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
-                                        <li><a href="blog-detail.html" class="sub-menu-item">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="terms.html" class="sub-menu-item">Terms & Policy</a></li>
-                                <li><a href="privacy.html" class="sub-menu-item">Privacy Policy</a></li>
-                                <li><a href="error.html" class="sub-menu-item">404 !</a></li>
-                                <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
+                                <li><a href="BlogsURL" class="sub-menu-item">Blogs</a></li>
+                                
+                                
                             </ul>
                         </li>
-                        <li><a href="../admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
+<!--                           <li><a href="ProductManager" class="sub-menu-item">Manager</a></li>      -->
+                            <%}else{%>
+                           
+                          <li class="has-submenu parent-menu-item">
+                           <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
+                            
+                        </li>
+
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <li><a href="aboutus.jsp" class="sub-menu-item"> About Us</a></li>
+                                <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
+                                <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
+                                <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
+                                
+                                
+                            </ul>
+                        </li>
+                          
+                            <%}%>
+
+<!--                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>-->
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -227,10 +228,10 @@
             <div class="container">
                 <div class="row">
                     <%
-//                HttpSession session = request.getSession();
-                Integer customerId = (Integer) session.getAttribute("customerId");
+ Customers customer = (Customers)  session.getAttribute("dataCustomer");
+            int  customerId = customer.getCustomerID();
                 Vector<Blogs> blogs = (Vector<Blogs>) session.getAttribute("vectorBlogs");
-                if (blogs != null && customerId != null) {
+                if (blogs != null && customerId != 0) {
                     for (Blogs blog : blogs) {
             %>
                     <div class="col-lg-4 col-md-6 col-12 mb-4 pb-2">
@@ -253,7 +254,7 @@
                         </div>
                     </div><!--end col-->
 
-                <% } } else if (customerId == null) { %>
+                <% } } else if (customerId == 0) { %>
                 <p class="error">Please log in to view blogs.</p>
             <% } %>
                 </div><!--end row-->

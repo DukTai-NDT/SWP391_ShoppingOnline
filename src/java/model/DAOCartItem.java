@@ -167,7 +167,7 @@ public class DAOCartItem extends DBConnection {
         Vector<CartItems> vectorCartItem = dao.getCartItem("select * from CartItem");
         
         Vector<CartItems> vector = dao.getProductIsntBuy("  select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = 3");
-        for (CartItems cartItems : vector) {
+        for (CartItems cartItems : vectorCartItem) {
             System.out.println(cartItems);
         }
     }

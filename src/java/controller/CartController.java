@@ -95,14 +95,21 @@ public class CartController extends HttpServlet {
                 CartItems cartItem = new CartItems(cart.getCartID(), pid, pro.getProductName(), pro.getPrice(), 1, false);
                 Vector<CartItems> vectorCartItem = daoCartItem.getCartItem("select * from CartItem");
                 int isExist = 0;
+                int isBuy = 0;
                 for (CartItems cartItems : vectorCartItem) {
-                    if (cartItems.getCartID() == cartItem.getCartID() && cartItem.getProductID() == cartItems.getProductID()) {
+                    if (cartItems.getCartID() == cartItem.getCartID() && cartItem.getProductID() == cartItems.getProductID()&& cartItems.isIsBuy() == false) {
                         isExist++;
                         int cartItemnumber = daoCartItem.updateQuantityCartItem(cartItems.getQuantity() + 1, cartItems.getCartItemID());
                         System.out.println("ok" + isExist);
                     }
+                    if (cartItems.getCartID() == cartItem.getCartID() && cartItem.getProductID() == cartItems.getProductID() && cartItems.isIsBuy() == true) {
+                        isBuy ++;
+                    }
                 }
-                if (isExist == 0) {
+                if (isExist == 0 && isBuy == 0) {
+                    int cartItemnumber = daoCartItem.addCartItem(cartItem);
+                }
+                if (isBuy != 0 && isExist == 0) {
                     int cartItemnumber = daoCartItem.addCartItem(cartItem);
                 }
                 response.sendRedirect("CartURL?service=showCart");
