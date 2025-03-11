@@ -110,7 +110,7 @@
                             <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="blogs.html">Blogs</a></li>
+                                    <li><a href="admin">Blogs</a></li>
                                     <!--                                    <li><a href="blog-detail.html">Blog Detail</a></li>-->
                                 </ul>
                             </div>
@@ -314,12 +314,12 @@
                 <div class="container-fluid">
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
-                            <h5 class="mb-0">Patients List</h5>
+                            <h5 class="mb-0">Account List</h5>
 
                             <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
                                 <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Patients</li>
+<!--                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Patients</li>-->
                                 </ul>
                             </nav>
                         </div>

@@ -102,7 +102,7 @@ public class DAORole extends DBConnection {
 //            System.out.println("Success");
 //        }
 
-        Vector<Role> vector = dao.getRole("SELECT *  FROM [dbo].[Role] ");
+        Vector<Role> vector = dao.getRole("SELECT *  FROM [dbo].[Roles] ");
         for (Role role : vector) {
             System.out.println(role);
         }
