@@ -31,6 +31,7 @@
         <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+
     </head>
 
     <body>
@@ -59,8 +60,17 @@
                         <li><a href="Dashboard" class="active"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li><!--
                                                 <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>-->
 
- 
-
+                        <li class="sidebar-dropdown">
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
+                            <!--                                                    <div class="sidebar-submenu">
+                                                                                    <ul>
+                                                                                        <li><a href="AdminAccounts">All Accounts</a></li>
+                                                                                        <li><a href="add-patient.html">Add Patients</a></li>
+                                                                                        <li><a href="patient-profile.html">Profile</a></li>
+                                                                                    </ul>
+                                                                                </div>-->
+                        </li>
+                        
                         <li class="sidebar-dropdown">
                             <a href="javascript:void(0)"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Manager</a>
                             <div class="sidebar-submenu">
@@ -78,8 +88,7 @@
                             <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="blogs.html">Blogs</a></li>
-                                    <li><a href="blog-detail.html">Blog Detail</a></li>
+                                    <li><a href="admin">Blogs</a></li>
                                 </ul>
                             </div>
                         </li>

@@ -4,7 +4,6 @@
  */
 package model;
 
-import entity.Categories;
 import entity.Ingredient;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -90,7 +89,7 @@ public class DAOIngredient extends DBConnection {
         }
         return vector;
     }
-    
+
     public Vector<String> getIngredientsByProductID(int productID) {
         Vector<String> ingredients = new Vector<>();
         try {

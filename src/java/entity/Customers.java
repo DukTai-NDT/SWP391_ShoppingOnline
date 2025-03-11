@@ -9,15 +9,6 @@ package entity;
  * @author Admin
  */
 public class Customers {
-//    [CustomerID] [int] IDENTITY(1,1) NOT NULL,
-//	[FirstName] [nvarchar](255) NULL,
-//	[LastName] [nvarchar](255) NULL,
-//	[Email] [nvarchar](255) NULL,
-//	[Address] [nvarchar](255) NULL,
-//	[Gender] [nvarchar](10) NULL,
-//	[Phone] [nvarchar](25) NULL,
-//	[AccountID] [int] NULL,
-    
     private int CustomerID;
 	private String FirstName;
 	private String LastName;

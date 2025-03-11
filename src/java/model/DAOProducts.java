@@ -166,21 +166,20 @@ public class DAOProducts extends DBConnection {
         }
         return product;
     }
-    
-    public int countProducts() {
-    int count = 0;
-    String sql = "SELECT COUNT(*) FROM dbo.Products";
-    try {
-        Statement state = conn.createStatement();
-        ResultSet rs = state.executeQuery(sql);
-        if (rs.next()) {
-            count = rs.getInt(1);
-        }
-    } catch (SQLException ex) {
-        Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    return count;
-}
 
+    public int countProducts() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM dbo.Products";
+        try {
+            Statement state = conn.createStatement();
+            ResultSet rs = state.executeQuery(sql);
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count;
+    }
 
 }

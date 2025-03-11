@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.DAOProducts;
+import model.DAOAccount;
+import model.DAOBlogs;
 
 /**
  *
@@ -31,10 +33,17 @@ public class DashboardController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAOProducts dao = new DAOProducts();
-        int productCount = dao.countProducts();
+        DAOProducts pDAO = new DAOProducts();
+        DAOAccount aDAO = new DAOAccount();
+        DAOBlogs bDAO = new DAOBlogs();
+        
+        int productCount = pDAO.countProducts();
+        int accountCount = aDAO.countAccounts();
+        int blogCount = bDAO.countBlogs();
 
         request.setAttribute("productCount", productCount);
+        request.setAttribute("accountCount", accountCount);
+        request.setAttribute("blogCount", blogCount);
         request.getRequestDispatcher("admin/dashboard.jsp").forward(request, response);
     }
 

@@ -26,9 +26,10 @@ public class DAOCartItem extends DBConnection {
                 + "           ,[ProductID]\n"
                 + "           ,[ProductName]\n"
                 + "           ,[Price]\n"
-                + "           ,[Quantity])\n"
+                + "           ,[Quantity]\n"
+                + "           ,[IsBuy])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?)";
+                + "           (?,?,?,? ,?,?)";
 
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
@@ -37,11 +38,24 @@ public class DAOCartItem extends DBConnection {
             preState.setString(3, other.getProductName());
             preState.setFloat(4, other.getPrice());
             preState.setInt(5, other.getQuantity());
+            preState.setInt(6, other.isIsBuy() == true ? 1 : 0);
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCartItem.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        return n;
+    }
+
+    public int changeIsBuy(int newValue, int CartItemID) {
+        int n = 0;
+        String sql = "  update CartItem set IsBuy = " + newValue + " where CartItemID = " + CartItemID;
+        try {
+            Statement state = conn.createStatement();
+            n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCartItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return n;
     }
 
@@ -67,6 +81,7 @@ public class DAOCartItem extends DBConnection {
                 + "      ,[ProductName] = ?\n"
                 + "      ,[Price] = ?\n"
                 + "      ,[Quantity] = ?\n"
+                + "     ,[IsBuy] = ?\n"
                 + " WHERE CartItemID = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
@@ -75,7 +90,8 @@ public class DAOCartItem extends DBConnection {
             preState.setString(3, other.getProductName());
             preState.setFloat(4, other.getPrice());
             preState.setInt(5, other.getQuantity());
-            preState.setInt(6, other.getCartID());
+            preState.setInt(6, other.isIsBuy() == true ? 1 : 0);
+            preState.setInt(7, other.getCartID());
         } catch (SQLException ex) {
             Logger.getLogger(DAOCartItem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,7 +105,7 @@ public class DAOCartItem extends DBConnection {
                 + "WHERE CartItemID = ?;";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
-            
+
             preState.setInt(1, quantity);
             preState.setInt(2, CartItemID);
             n = preState.executeUpdate();
@@ -111,7 +127,8 @@ public class DAOCartItem extends DBConnection {
                 String ProductName = rs.getString("ProductName");
                 float Price = rs.getFloat("Price");
                 int Quantity = rs.getInt("Quantity");
-                CartItems cartItem = new CartItems(CartItemID, CartID, ProductID, ProductName, Price, Quantity);
+                boolean IsBuy = (rs.getInt("IsBuy")) == 1 ? true : false;
+                CartItems cartItem = new CartItems(CartItemID, CartID, ProductID, ProductName, Price, Quantity, IsBuy);
                 vector.add(cartItem);
             }
         } catch (SQLException ex) {
@@ -120,10 +137,37 @@ public class DAOCartItem extends DBConnection {
         return vector;
     }
 
+    public Vector<CartItems> getProductIsntBuy(String sql) {
+        Vector<CartItems> vector = new Vector<>();
+        Vector<CartItems> vectorCartItem = getCartItem(sql);
+
+        for (int i = 0; i < vectorCartItem.size(); i++) {
+            CartItems cartItems = vectorCartItem.get(i);
+            if (!cartItems.isIsBuy()) {
+                vector.add(cartItems); // ✅ Thêm vào danh sách mới
+            }
+        }
+        return vector;
+    }
+    public Vector<CartItems> getProductIsBuy(String sql) {
+        Vector<CartItems> vector = new Vector<>();
+        Vector<CartItems> vectorCartItem = getCartItem(sql);
+
+        for (int i = 0; i < vectorCartItem.size(); i++) {
+            CartItems cartItems = vectorCartItem.get(i);
+            if (cartItems.isIsBuy()) {
+                vector.add(cartItems); // ✅ Thêm vào danh sách mới
+            }
+        }
+        return vector;
+    }
     public static void main(String[] args) {
         DAOCartItem dao = new DAOCartItem();
- Vector<CartItems> vectorCartItem = dao.getCartItem("select * from CartItem");
-        for (CartItems cartItems : vectorCartItem) {
+
+        Vector<CartItems> vectorCartItem = dao.getCartItem("select * from CartItem");
+        
+        Vector<CartItems> vector = dao.getProductIsntBuy("  select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = 3");
+        for (CartItems cartItems : vector) {
             System.out.println(cartItems);
         }
     }

@@ -16,22 +16,25 @@ public class CartItems {
         private String ProductName;
 	private float Price;
 	private int Quantity;
+        private boolean IsBuy;
 
-    public CartItems(int CartItemID, int CartID, int ProductID, String ProductName, float Price, int Quantity) {
+    public CartItems(int CartItemID, int CartID, int ProductID, String ProductName, float Price, int Quantity, boolean IsBuy) {
         this.CartItemID = CartItemID;
         this.CartID = CartID;
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.Price = Price;
         this.Quantity = Quantity;
+        this.IsBuy = IsBuy;
     }
 
-    public CartItems(int CartID, int ProductID, String ProductName, float Price, int Quantity) {
+    public CartItems(int CartID, int ProductID, String ProductName, float Price, int Quantity, boolean IsBuy) {
         this.CartID = CartID;
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.Price = Price;
         this.Quantity = Quantity;
+        this.IsBuy = IsBuy;
     }
 
     public CartItems() {
@@ -85,11 +88,19 @@ public class CartItems {
         this.Quantity = Quantity;
     }
 
-    @Override
-    public String toString() {
-        return "CartItems{" + "CartItemID=" + CartItemID + ", CartID=" + CartID + ", ProductID=" + ProductID + ", ProductName=" + ProductName + ", Price=" + Price + ", Quantity=" + Quantity + '}';
+    public boolean isIsBuy() {
+        return IsBuy;
     }
 
-    
+    public void setIsBuy(boolean IsBuy) {
+        this.IsBuy = IsBuy;
+    }
+
+    @Override
+    public String toString() {
+        return "CartItems{" + "CartItemID=" + CartItemID + ", CartID=" + CartID + ", ProductID=" + ProductID + ", ProductName=" + ProductName + ", Price=" + Price + ", Quantity=" + Quantity + ", IsBuy=" + IsBuy + '}';
+    }
+ 
                 
 }
+

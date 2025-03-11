@@ -4,8 +4,6 @@
  */
 package entity;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author Admin
@@ -19,6 +17,16 @@ public class Categories {
         this.CategoryName = CategoryName;
     }
 
+//<<<<<<< HEAD
+//=======
+//    public Categories(String CategoryName) {
+//        this.CategoryName = CategoryName;
+//    }
+//
+//    public Categories() {
+//    }
+//
+//>>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889
     public int getCategoryID() {
         return CategoryID;
     }
@@ -39,6 +47,6 @@ public class Categories {
     public String toString() {
         return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + '}';
     }
-
-    
+       
 }
+

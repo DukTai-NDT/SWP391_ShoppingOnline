@@ -1,5 +1,3 @@
-
-import entity.Ingredient;
 import entity.Products;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,12 +7,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DAOIngredient;
 import model.DAOProducts;
 
 @WebServlet(name = "AddProductController", urlPatterns = {"/AddProductController"})
 public class AddProductController extends HttpServlet {
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -28,22 +24,15 @@ public class AddProductController extends HttpServlet {
             int brandID = Integer.parseInt(request.getParameter("brandID"));
             boolean isPrescriptionDrug = request.getParameter("isPrescriptionDrug") != null;
             int quantity = Integer.parseInt(request.getParameter("quantity"));
-            String image = request.getParameter("image");
 
-            // Lấy ingredient từ input
-            String ingredientName = request.getParameter("ingredient");
+            String image = request.getParameter("image"); // Nếu có upload ảnh, cần xử lý thêm
 
-            // Thêm sản phẩm vào cơ sở dữ liệu
+            // Gọi DAO để thêm sản phẩm vào DB
             DAOProducts addDAO = new DAOProducts();
-            int productID = addDAO.addProduct(new Products(productName, price, description, unitPrice, categoryID, brandID, isPrescriptionDrug, quantity, image));
+            int result = addDAO.addProduct(new Products(productName, price, description, unitPrice, categoryID, brandID, isPrescriptionDrug, quantity, image));
 
-            // Nếu thêm sản phẩm thành công, thêm ingredient
-            if (productID > 0) {
-                if (ingredientName != null && !ingredientName.trim().isEmpty()) {
-                    DAOIngredient iDAO = new DAOIngredient();
-                    iDAO.addIngredient(new Ingredient(ingredientName, productID));
-                }
-                response.sendRedirect("ProductManager"); // Chuyển hướng nếu thành công
+            if (result > 0) {
+                response.sendRedirect("ProductManager"); // Chuyển hướng nếu thêm thành công
             } else {
                 request.setAttribute("errorMessage", "Failed to add product.");
                 request.getRequestDispatcher("errorPage.jsp").forward(request, response);
@@ -56,7 +45,7 @@ public class AddProductController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         processRequest(request, response);
     }

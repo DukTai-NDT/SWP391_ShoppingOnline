@@ -16,24 +16,36 @@ public class Account {
     private String Password;
     private String Email;
 
-    public Account(int AccountID, String UserName, int RoleID, String Password,String Email) {
+    private boolean active;
+
+    public Account(int AccountID, String UserName, int RoleID, String Password,String Email,boolean active) {
         this.AccountID = AccountID;
         this.UserName = UserName;
         this.RoleID = RoleID;
         this.Password = Password;
         this.Email = Email;
+        this.active=active;
     }
 
-    public Account(String UserName, int RoleID, String Password,String Email) {
+    public Account(String UserName, int RoleID, String Password,String Email,boolean active) {
         this.UserName = UserName;
         this.RoleID = RoleID;
         this.Password = Password;
         this.Email = Email;
+        this.active=active;
+
     }
 
     public Account() {
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     public int getAccountID() {
         return AccountID;
     }
@@ -41,9 +53,7 @@ public class Account {
     public void setAccountID(int AccountID) {
         this.AccountID = AccountID;
     }
-
    
-
     public String getUserName() {
         return UserName;
     }
@@ -78,11 +88,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "AccountID=" + AccountID + ", UserName=" + UserName + ", RoleID=" + RoleID + ", Password=" + Password + ", Email=" + Email + '}';
+        return "Account{" + "AccountID=" + AccountID + ", UserName=" + UserName + ", RoleID=" + RoleID + ", Password=" + Password + ", Email=" + Email + ", active=" + active + '}';
     }
-    
-    
-
-   
 
 }

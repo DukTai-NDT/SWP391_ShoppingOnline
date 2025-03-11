@@ -110,7 +110,18 @@
                     <ul class="sidebar-menu pt-3">
                         <li><a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li><!--
                                                 <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>-->
-
+                        
+                        <li class="sidebar-dropdown">
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
+                            <!--                                                    <div class="sidebar-submenu">
+                                                                                    <ul>
+                                                                                        <li><a href="AdminAccounts">All Accounts</a></li>
+                                                                                        <li><a href="add-patient.html">Add Patients</a></li>
+                                                                                        <li><a href="patient-profile.html">Profile</a></li>
+                                                                                    </ul>
+                                                                                </div>-->
+                        </li>
+                        
                         <li class="sidebar-dropdown">
                             <a href="javascript:void(0)"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Manager</a>
                             <div class="sidebar-submenu">
@@ -128,8 +139,7 @@
                             <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="blogs.html">Blogs</a></li>
-                                    <li><a href="blog-detail.html">Blog Detail</a></li>
+                                    <li><a href="admin">Blogs</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -448,7 +458,7 @@
                                                 });
                                             </script>
 
-                                            <div class="col-md-6 mt-4 mt-sm-0"> 
+                                            <div class="col-md-6 mt-4 mt-sm-0"> z
                                                 <form action="EditProduct" method="post">
                                                     <div class="row">
                                                         <div class="col-6" style="display: none;">
@@ -505,6 +515,7 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label">Unit:</label>
                                                                 <input value="${pDetail.unitPrice}" name="loadUnitPrice" id="loadUnitPrice" type="text" class="form-control" placeholder="Unit" required>
+
                                                             </div>
                                                         </div><!--end col-->
 

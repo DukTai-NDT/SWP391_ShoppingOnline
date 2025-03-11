@@ -26,7 +26,11 @@
     </head>
     <% String message = (String)request.getAttribute("message"); 
     %>
+<<<<<<< HEAD
      
+=======
+
+>>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -94,6 +98,10 @@
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889
                                         <div class="col-12 mt-3">
                                             <div class="d-grid">
                                                 <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/SWP391/LoginURL&response_type=code&client_id=585107335180-i8g585qjpvmq8rvslrel6lkgqv39fjt5.apps.googleusercontent.com&approval_prompt=force" 
@@ -105,6 +113,10 @@
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889
                                         <div class="col-12 text-center">
                                             <p class="mb-0 mt-3"><small class="text-dark me-2">Don't have an account ?</small> <a href="SignUpURL?service=signup" class="text-dark fw-bold">Sign Up</a></p>
                                         </div>

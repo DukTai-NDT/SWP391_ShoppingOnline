@@ -2,10 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
+import entity.CartItems;
 import entity.Customers;
 import entity.DeliveryAddress;
+import entity.OrderDetails;
 import entity.Orders;
 import entity.Payments;
 import java.io.IOException;
@@ -17,27 +20,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.Vector;
+import model.DAOCartItem;
 import model.DAODeliveryAddress;
+import model.DAOOrderDetails;
 import model.DAOOrders;
 import model.DAOPaymentMethod;
 import model.DAOPayments;
 
 /**
  *
- * @author Admin
+ * @author quang
  */
-@WebServlet(name = "CheckoutController", urlPatterns = {"/CheckoutURL"})
+@WebServlet(name="CheckoutController", urlPatterns={"/CheckoutURL"})
 public class CheckoutController extends HttpServlet {
+   
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -46,7 +44,9 @@ public class CheckoutController extends HttpServlet {
             DAOPaymentMethod daoPaymentMethod = new DAOPaymentMethod();
             DAOPayments daoPayment = new DAOPayments();
             DAOOrders daoOrder = new DAOOrders();
+            DAOOrderDetails daoOrderDetail = new DAOOrderDetails();
             DAODeliveryAddress daoDeliAddress = new DAODeliveryAddress();
+            DAOCartItem daoCartItem = new DAOCartItem();
             Customers customer = (Customers) session.getAttribute("dataCustomer");
             String service = request.getParameter("service");
             if (service == null) {
@@ -109,7 +109,14 @@ public class CheckoutController extends HttpServlet {
                         return;
                       
                     }
-
+                    Vector<CartItems> vectorCartItems =   (Vector<CartItems>) session.getAttribute("selectedCartItems");
+                    
+                    for (CartItems vectorCartItem : vectorCartItems) {
+                        int n = daoOrderDetail.addOrderDetails(new OrderDetails(vectorCartItem.getPrice(),
+                                vectorCartItem.getQuantity(), vectorCartItem.getProductID(),
+                                daoOrder.getLastOrderID()));
+                        int y = daoCartItem.changeIsBuy(1, vectorCartItem.getCartItemID());
+                    }
                     request.getRequestDispatcher("index.jsp").forward(request, response);
 
                 } catch (Exception e) {
@@ -132,7 +139,7 @@ public class CheckoutController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     } 
@@ -155,7 +162,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

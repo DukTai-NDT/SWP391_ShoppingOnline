@@ -27,7 +27,11 @@
     </head>
     <%
                 Account account = (Account)session.getAttribute("dataUser");
+<<<<<<< HEAD
                 Vector<CartItems> vectorCartItems = (Vector<CartItems>)request.getAttribute("dataCartItem"); 
+=======
+                Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("selectedCartItems"); 
+>>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889
                 
               
                 String message = (String)request.getAttribute("message"); 
@@ -209,6 +213,7 @@
                                 <span class="badge bg-primary rounded-pill">3</span>
                             </div>
                             <ul class="list-group mb-3 border">
+<<<<<<< HEAD
                                 <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
                                     <div>
                                         <h6 class="my-0">Product name</h6>
@@ -249,6 +254,30 @@
                                     <button type="submit" class="btn btn-secondary">Redeem</button>
                                 </div>
                             </form>
+=======
+                                 <% 
+                                            float totalPriceCart = 0;
+                                            
+                                            for (CartItems vectorCartItem : vectorCartItems) {
+                                              float total = vectorCartItem.getQuantity() * vectorCartItem.getPrice();
+                                              totalPriceCart += total;
+                                        %>
+                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
+                                    <div>
+                                        <h6 class="my-0"><%=vectorCartItem.getProductName()%></h6>
+                                        <small class="text-muted">Quantity:<%=vectorCartItem.getQuantity()%></small>
+                                    </div>
+                                        <span class="text-muted">VND:<%=total%></span>
+                                </li>
+                                <%}%>
+                                <li class="d-flex justify-content-between p-3">
+                                    <span>Total (VND)</span>
+                                    <strong>VND:<%=totalPriceCart%></strong>
+                                </li>
+                            </ul>
+
+                            
+>>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889
                         </div>
                     </div><!--end col-->
 

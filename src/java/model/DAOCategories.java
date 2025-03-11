@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,7 +83,6 @@ public class DAOCategories extends DBConnection {
 
     public static void main(String[] args) {
         DAOCategories dao = new DAOCategories();
-
 //        Categories cateAdd = new Categories("Thuoc");
 //        int n = dao.addCategories(cateAdd);
 //        Categories cateUpdate = new Categories(1, "DungCuYTe");

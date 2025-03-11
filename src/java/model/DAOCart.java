@@ -98,13 +98,7 @@ public class DAOCart extends DBConnection {
     }
 
     public static void main(String[] args) {
-        DAOCart dao = new DAOCart();
-
-        LocalDate now = LocalDate.now();
-        int x = 3;
-        Cart cart = dao.getCart("  select * from Cart where CreateDate like '" + now + "' and CustomerID = " + x).get(0);
-        
-        System.out.println(cart);
-
+     
     }
 }
+

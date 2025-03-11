@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.DAOProducts;
 import entity.Products;
+import java.util.Vector;
 import entity.Categories;
 import java.util.Vector;
 import model.DAOCategories;
@@ -35,15 +36,7 @@ public class CategoriesController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAOCategories dao = new DAOCategories();
-        Vector<Categories> vectorCatAll = new Vector<Categories>();
-        String service = request.getParameter("service");
-        String sql = "";
-        try (PrintWriter out = response.getWriter()) {
-//            vectorCatAll = dao.getCategories("select * from Categories");
-//            request.setAttribute("vectorCatAll", vectorCatAll);
-//            request.getRequestDispatcher("/jsp/shop.jsp").forward(request, response);
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -64,10 +64,10 @@ public class CartController extends HttpServlet {
             }
             if (service.equals("showCart")) {
                 Customers cus = (Customers) session.getAttribute("dataCustomer");
-                Vector<CartItems> vectorCartItems = daoCartItem.getCartItem("  select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = " + cus.getCustomerID());
-                request.setAttribute("dataCartItem", vectorCartItems);
+                Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy("  select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = " + cus.getCustomerID());
+                session.setAttribute("dataCartItem", vectorCartItems);
                 for (CartItems vectorCartItem : vectorCartItems) {
-                    System.out.println(vectorCartItem.getQuantity());
+                    System.out.println(vectorCartItem);
                 }
                 request.getRequestDispatcher("/jsp/shop-cart.jsp").forward(request, response);
             }
@@ -92,7 +92,7 @@ public class CartController extends HttpServlet {
                 Cart cart = daoCart.getCart("  select * from Cart where CreateDate like '" + now + "' and CustomerID = " + cus.getCustomerID()).get(0);
                 request.setAttribute("dataCart", cart);
                 Products pro = daoPro.getProducts("select * from Products where ProductID = " + pid).get(0);
-                CartItems cartItem = new CartItems(cart.getCartID(), pid, pro.getProductName(), pro.getPrice(), 1);
+                CartItems cartItem = new CartItems(cart.getCartID(), pid, pro.getProductName(), pro.getPrice(), 1, false);
                 Vector<CartItems> vectorCartItem = daoCartItem.getCartItem("select * from CartItem");
                 int isExist = 0;
                 for (CartItems cartItems : vectorCartItem) {
@@ -112,24 +112,43 @@ public class CartController extends HttpServlet {
 
                 for (String paramName : parameterMap.keySet()) {
                     if (paramName.startsWith("quantity_")) {
-                        
+
                         int cartItemID = Integer.parseInt(paramName.split("_")[1]);
 
-                        
                         int newQuantity = Integer.parseInt(request.getParameter(paramName));
 
-                       
                         daoCartItem.updateQuantityCartItem(newQuantity, cartItemID);
                     }
                 }
 
-              
                 response.sendRedirect("CartURL?service=showCart");
             }
-            if(service.equals("deleteCart")){
+            if (service.equals("deleteCart")) {
                 int cartItemID = Integer.parseInt(request.getParameter("cartItemID"));
                 int n = daoCartItem.deleteCartItem(cartItemID);
-                 response.sendRedirect("CartURL?service=showCart");
+                response.sendRedirect("CartURL?service=showCart");
+            }
+            if (service.equals("checkout")) {
+                // Xử lý checkout
+                String[] selectedItems = request.getParameterValues("selectedItems");
+               Vector<CartItems> vectorCartItems= (Vector<CartItems>)  session.getAttribute("dataCartItem");
+                if (selectedItems != null && selectedItems.length > 0) {
+                    Vector<CartItems> selectedCartItems = new Vector<>();
+                    for (String cartItemID : selectedItems) {
+                        for (CartItems item : vectorCartItems) {
+                            if (item.getCartItemID() == Integer.parseInt(cartItemID)) {
+                                
+                                selectedCartItems.add(item);
+                                break;
+                            }
+                        }
+                    }
+                    session.setAttribute("selectedCartItems", selectedCartItems);
+                    response.sendRedirect("CheckoutURL?service=theFirst");
+                } else {
+                   request.setAttribute("message", "Please select at least one item to checkout.");
+                    request.getRequestDispatcher("jsp/shop-cart.jsp").forward(request, response);
+                }
             }
 
         }
@@ -175,5 +194,4 @@ public class CartController extends HttpServlet {
     }// </editor-fold>
 
 }
-
 

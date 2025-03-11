@@ -47,7 +47,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="../landing/index-two.html">
+                        <a href="HomePageURL">
                             <!--<a href="index.jsp">-->
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
@@ -56,6 +56,17 @@
 
                     <ul class="sidebar-menu pt-3">
                         <li><a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
+
+                        <li class="sidebar-dropdown">
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
+                            <!--                                                    <div class="sidebar-submenu">
+                                                                                    <ul>
+                                                                                        <li><a href="AdminAccounts">All Accounts</a></li>
+                                                                                        <li><a href="add-patient.html">Add Patients</a></li>
+                                                                                        <li><a href="patient-profile.html">Profile</a></li>
+                                                                                    </ul>
+                                                                                </div>-->
+                        </li>
 
                         <li class="sidebar-dropdown">
                             <a href="javascript:void(0)"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Manager</a>
@@ -74,8 +85,7 @@
                             <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="blogs.html">Blogs</a></li>
-                                    <li><a href="blog-detail.html">Blog Detail</a></li>
+                                    <li><a href="admin">Blogs</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -284,7 +294,7 @@
                                             <i class="uil uil-user h3 mb-0"></i>
                                         </div>
                                         <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">558</h5>
+                                            <h5 class="mb-0">${accountCount}</h5>
                                             <p class="text-muted mb-0">Users</p>
                                         </div>
                                     </div>
@@ -298,7 +308,7 @@
                                             <i class="uil uil-shopping-cart h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
                                         </div>
                                         <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">1200</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
+                                            <h5 class="mb-0">...</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
                                             <p class="text-muted mb-0">Sold</p>
                                         </div>
                                     </div>
@@ -313,7 +323,7 @@
                                             <i class="uil uil-flip-h h3 mb-0"></i>
                                         </div>
                                         <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">16</h5>
+                                            <h5 class="mb-0">${blogCount}</h5>
                                             <p class="text-muted mb-0">Blogs</p>
                                         </div>
                                     </div>

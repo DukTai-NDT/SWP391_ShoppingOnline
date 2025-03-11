@@ -123,7 +123,6 @@ public class ResetPassword extends HttpServlet {
                 tokenForgetPassword.setisUsed(true);
                 daoAcc.changePassword(email, password);
                 dao.updateStatus(tokenForgetPassword);
-                
                 request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
                 return;
 
