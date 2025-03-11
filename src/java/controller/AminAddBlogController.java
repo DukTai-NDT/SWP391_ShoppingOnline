@@ -36,14 +36,14 @@ public class AminAddBlogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String name = request.getParameter("name");
+        String name = request.getParameter("title");
         String date = request.getParameter("date");
         String customerIDStr = request.getParameter("customerID");
-        String description = request.getParameter("comments");
-        String image = request.getParameter("images");
+        String description = request.getParameter("description:");
+//        String image = request.getParameter("images");
         boolean statusStr = Boolean.parseBoolean(request.getParameter("active"));
         DAOBlogs dblogs = new DAOBlogs();
-        dblogs.insertBlog(customerIDStr, name, date, description, image, statusStr);
+        dblogs.insertBlog(customerIDStr, "", name, description, "", statusStr);
         response.sendRedirect("admin");
     }
 
