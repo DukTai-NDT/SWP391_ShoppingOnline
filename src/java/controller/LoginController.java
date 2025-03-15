@@ -144,7 +144,7 @@ public class LoginController extends HttpServlet {
 
                     } else if (account != null) {
 
-                        if (account.getRoleID() == 2) {
+                        if (account.getRoleID() == 1) {
 
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             session.setAttribute("dataCustomer", cus);

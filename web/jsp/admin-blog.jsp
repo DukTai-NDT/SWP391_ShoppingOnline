@@ -61,12 +61,8 @@
                     </div>
 
                     <ul class="sidebar-menu pt-3">
-
-
                         <li class="sidebar-dropdown">
-                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
-                            <div class="sidebar-submenu">
-                            </div>
+                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
 
                         <!--                        <li class="sidebar-dropdown">
@@ -80,42 +76,34 @@
                                                     </div>
                                                 </li>-->
 
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Pharmacy</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="product-detail.html">Shop Detail</a></li>
-                                    <li><a href="shopcart.html">Shopcart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                </ul>
-                            </div>
-                        </li>
 
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="blogs.html">Blogs</a></li>
-                                    <!--                                    <li><a href="blog-detail.html">Blog Detail</a></li>-->
-                                </ul>
-                            </div>
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="faqs.html">FAQs</a></li>
-                                    <li><a href="review.html">Reviews</a></li>
-                                    <li><a href="invoice-list.html">Invoice List</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="terms.html">Terms & Policy</a></li>
-                                    <li><a href="privacy.html">Privacy Policy</a></li>
-                                    <li><a href="error.html">404 !</a></li>
-                                    <li><a href="blank-page.html">Blank Page</a></li>
-                                </ul>
-                            </div>
+
+                            <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="OrdersManagement"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+                            <!--                            <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li><a href="faqs.html">FAQs</a></li>
+                                                                <li><a href="review.html">Reviews</a></li>
+                                                                <li><a href="invoice-list.html">Invoice List</a></li>
+                                                                <li><a href="invoice.html">Invoice</a></li>
+                                                                <li><a href="terms.html">Terms & Policy</a></li>
+                                                                <li><a href="privacy.html">Privacy Policy</a></li>
+                                                                <li><a href="error.html">404 !</a></li>
+                                                                <li><a href="blank-page.html">Blank Page</a></li>
+                                                            </ul>
+                                                        </div>-->
                         </li>
 
                         <!--                        <li class="sidebar-dropdown">
@@ -134,6 +122,7 @@
                         <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
                         
                                                 <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
+
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -482,7 +471,7 @@
 
         <!-- Start Modal -->
         <div class="modal fade" id="newblogadd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <form action="adminaddblog" method="post" enctype="multipart/form-data">
+            <form action="adminaddblog" method="post">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header border-bottom p-3">
@@ -535,69 +524,69 @@
                             </div>
                             <!--end row-->
                         </div>
-
                     </div>
-
-
                 </div>
             </form>
+
         </div>
-        <!-- End modal -->
 
-        <!-- javascript -->
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <!-- simplebar -->
-        <script src="js/simplebar.min.js"></script>
-        <!-- Icons -->
-        <script src="js/feather.min.js"></script>
-        <!-- Main Js -->
-        <script src="js/app.js"></script>
+    </div>
+    <!-- End modal -->
 
-        <script>
-                                        const handleChange = () => {
-                                            const fileUploader = document.querySelector('#input-file');
-                                            const getFile = fileUploader.files
-                                            if (getFile.length !== 0) {
-                                                const uploadedFile = getFile[0];
-                                                readFile(uploadedFile);
-                                            }
+    <!-- javascript -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- simplebar -->
+    <script src="js/simplebar.min.js"></script>
+    <!-- Icons -->
+    <script src="js/feather.min.js"></script>
+    <!-- Main Js -->
+    <script src="js/app.js"></script>
+
+    <script>
+                                    const handleChange = () => {
+                                        const fileUploader = document.querySelector('#input-file');
+                                        const getFile = fileUploader.files
+                                        if (getFile.length !== 0) {
+                                            const uploadedFile = getFile[0];
+                                            readFile(uploadedFile);
                                         }
+                                    }
 
-                                        const readFile = (uploadedFile) => {
-                                            if (uploadedFile) {
-                                                const reader = new FileReader();
-                                                reader.onload = () => {
-                                                    const parent = document.querySelector('.preview-box');
-                                                    parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
-                                                };
+                                    const readFile = (uploadedFile) => {
+                                        if (uploadedFile) {
+                                            const reader = new FileReader();
+                                            reader.onload = () => {
+                                                const parent = document.querySelector('.preview-box');
+                                                parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
+                                            };
 
-                                                reader.readAsDataURL(uploadedFile);
-                                            }
-                                        };
-        </script>
-        <script>
-            function confirmDelete(event, blogID) {
-                event.preventDefault(); // Ngăn trang chuyển hướng ngay lập tức
-                let confirmation = confirm("Are you sure you want to delete this blog post?");
-                if (confirmation) {
-                    window.location.href = "AdminDeleteBlog?bid=" + blogID; // Chuyển hướng nếu xác nhận
-                }
+                                            reader.readAsDataURL(uploadedFile);
+                                        }
+                                    };
+    </script>
+    <script>
+        function confirmDelete(event, blogID) {
+            event.preventDefault(); // Ngăn trang chuyển hướng ngay lập tức
+            let confirmation = confirm("Are you sure you want to delete this blog post?");
+            if (confirmation) {
+                window.location.href = "AdminDeleteBlog?bid=" + blogID; // Chuyển hướng nếu xác nhận
             }
-        </script>
-        <script>
-            function previewImage() {
-                var imageUrl = document.getElementById("images").value; // Lấy giá trị URL từ input
-                var imgPreview = document.getElementById("imagePreview"); // Lấy thẻ img
+        }
+    </script>
+    <script>
+        function previewImage() {
+            var imageUrl = document.getElementById("images").value; // Lấy giá trị URL từ input
+            var imgPreview = document.getElementById("imagePreview"); // Lấy thẻ img
 
-                if (imageUrl.trim() !== "") {
-                    imgPreview.src = imageUrl; // Gán URL vào src của img
-                    imgPreview.style.display = "block"; // Hiển thị ảnh
-                } else {
-                    imgPreview.style.display = "none"; // Ẩn ảnh nếu không có URL
-                }
+            if (imageUrl.trim() !== "") {
+                imgPreview.src = imageUrl; // Gán URL vào src của img
+                imgPreview.style.display = "block"; // Hiển thị ảnh
+            } else {
+                imgPreview.style.display = "none"; // Ẩn ảnh nếu không có URL
             }
-        </script>
+        }
+    </script>
 
-    </body>
+</body>
 
 </html>
