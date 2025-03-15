@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -165,6 +166,23 @@ public class DAOProducts extends DBConnection {
             Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
         return product;
+    }
+
+    public List<Products> getProductByCategory(String cid) {
+        List<Products> list = new ArrayList<>();
+        String sql = "select * from Products\n"
+                + "where CategoryID=? ";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, cid);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                list.add(new Products(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9), rs.getString(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     public int countProducts() {

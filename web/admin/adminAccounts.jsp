@@ -179,9 +179,9 @@
                             </a>
                             <div class="search-bar p-0 d-none d-lg-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <form role="search" method="get" id="searchform" class="searchform">
+                                    <form role="search" method="get" id="searchform" class="searchform" action="SearchAccount">
                                         <div>
-                                            <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
+                                            <input type="text" class="form-control border rounded-pill" name="txt" id="txt" placeholder="Search Keywords...">
                                             <input type="submit" id="searchsubmit" value="Search">
                                         </div>
                                     </form>
@@ -318,10 +318,13 @@
 
                             <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
                                 <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-<!--                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Patients</li>-->
+                                    <!--                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+                                                                        <li class="breadcrumb-item active" aria-current="page">Patients</li>-->
                                 </ul>
                             </nav>
+                            <div class="mt-4 mt-sm-0">
+                                <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Account</a>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -332,7 +335,7 @@
                                             <tr>
                                                 <th class="border-bottom p-3" style="min-width: 50px;">Id</th>
                                                 <th class="border-bottom p-3" style="min-width: 180px;">Username</th>
-                                                <th class="border-bottom p-3">RoleID</th>
+                                                <th class="border-bottom p-3">Role</th>
                                                 <th class="border-bottom p-3">Password</th>
                                                 <th class="border-bottom p-3">Email</th>
                                                 <th class="border-bottom p-3">Status</th>
@@ -348,13 +351,13 @@
                                                     <td class="py-3">
                                                         <a href="#" class="text-dark">
                                                             <div class="d-flex align-items-center">
-                                                                <img src="images/client/01.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+                                                                
                                                                 <span class="ms-2">${a.userName}</span>
                                                             </div>
                                                         </a>
                                                     </td>
                                                     <td class="p-3">
-                                                        ${a.roleID == 1 ? 'Admin' : (a.roleID == 2 ? 'User' : (a.roleID == 3 ? 'Editor' : 'Unknown'))}
+                                                        ${a.roleID == 1 ? 'Admin' : (a.roleID == 2 ? 'Customer' : (a.roleID == 3 ? 'Editor' : 'Unknown'))}
                                                     </td>
 
                                                     <td class="p-3">${a.password}</td>
@@ -767,7 +770,60 @@
             </div>
         </div>
         <!-- Profile Settings End -->
+        <div class="modal fade" id="newblogadd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <form action="AdminAddAccount" method="post">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom p-3">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Account</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
+                        <div class="modal-body p-3 pt-4">
+
+                            <div class="row"><!--end col-->
+
+                                <div class="col-md-8 mt-4 mt-sm-0">
+                                    <div class="ms-md-4">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="col-md-6">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"> Username </label>
+                                                            <p><input type="text" name="username" value="" />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Password <span class="text-danger">*</span></label>
+                                                            <input name="password" id="password" type="text" class="form-control" placeholder="Title :">
+                                                        </div>
+                                                          <div class="mb-3">
+                                                            <label class="form-label">Email <span class="text-danger">*</span></label>
+                                                            <input name="email" id="email" type="text" class="form-control" placeholder="Title :">
+                                                        </div>
+
+                                                    </div><!--end col-->
+
+                                                </div><!--end col-->
+              <!--end col-->
+                                                <div class="col-lg-12 text-end">
+                                                    <button type="submit" class="btn btn-primary">Add Blog</button>
+                                                </div><!--end col-->
+                                            </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div>
+                            <!--end row-->
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </form>
+        </div>
         <!-- Profile Start -->
         <div class="modal fade" id="viewprofile" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

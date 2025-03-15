@@ -41,6 +41,7 @@ public class DAOGoogleLogin {
         return accessToken;
 
     }
+
     public static String getTokenSignUp(String code) throws ClientProtocolException, IOException {
 
         String response = Request.Post(Iconstant.GOOGLE_LINK_GET_TOKEN)
@@ -62,6 +63,7 @@ public class DAOGoogleLogin {
         return accessToken;
 
     }
+
     public static GoogleAccount getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
 
         String link = Iconstant.GOOGLE_LINK_GET_USER_INFO + accessToken;
@@ -73,6 +75,5 @@ public class DAOGoogleLogin {
         return googlePojo;
 
     }
-
 
 }

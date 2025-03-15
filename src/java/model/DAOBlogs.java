@@ -159,24 +159,66 @@ public class DAOBlogs extends DBConnection {
         return list;
     }
 
-    public void insertBlog(String id, String name, String date, String description, String image, Boolean status) {
-        String query = "INSERT INTO [dbo].[Blogs] (CustomerID, PostTime, Title, Content, Image, Status) VALUES (?, ?, ?, ?, ?, ?)";
+    public void insertBlog(String postime, String title, String description, String image, Boolean status) {
+        String query = "INSERT INTO [dbo].[Blogs] (PostTime, Title, Content, Image, Status) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement preState = conn.prepareStatement(query);
-            preState.setString(1, id);
-            preState.setString(2, name);
+            preState.setString(1, postime);
+            preState.setString(2, title);
+            preState.setString(3, description);
+            preState.setString(4, image);
+            preState.setBoolean(5, true);
+            preState.executeQuery();
 
-            // Chuyển đổi String date thành LocalDate rồi sang java.sql.Date
-            LocalDate localDate = LocalDate.parse(date); // Giả sử date có định dạng YYYY-MM-DD
-            java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
-            preState.setDate(3, sqlDate);
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 
-            preState.setString(4, description);
-            preState.setString(5, (image != null && !image.isEmpty()) ? image : "default.jpg");
-            preState.setBoolean(6, true); // Published (true = 1, false = 0)
+    public Blogs getBlogsByID(String id) {
+        String sql = "select * from Blogs\n"
+                + "where BlogID = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
 
-            preState.executeUpdate();
-            conn.commit();
+                return new Blogs(
+                        rs.getInt("BlogID"),
+                        rs.getInt("CustomerID"), // Thêm CustomerID nếu cần
+                        rs.getDate("PostTime").toLocalDate(),
+                        rs.getString("Title"),
+                        rs.getString("Content"),
+                        rs.getString("Image"),
+                        rs.getBoolean("Status")
+                );
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+
+    public void editBlog(String blogID, String postime, String title, String description, String image, Boolean status) {
+        String query = "UPDATE [dbo].[Blogs]\n"
+                + "    SET \n"
+                + "        [PostTime] =?,\n"
+                + "        [Title] = ?,\n"
+                + "        [Content] =?,\n"
+                + "        [Image] = ?,\n"
+                + "        [Status] =?\n"
+                + "    WHERE [BlogID] = ?";
+        try {
+            PreparedStatement preState = conn.prepareStatement(query);
+            preState.setString(6, blogID);
+            preState.setString(1, postime);
+            preState.setString(2, title);
+            preState.setString(3, description);
+            preState.setString(4, image);
+            preState.setBoolean(5, true);
+            preState.executeQuery();
+
         } catch (SQLException e) {
             Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -210,6 +252,7 @@ public class DAOBlogs extends DBConnection {
 
         return count;
     }
+
     public static void main(String[] args) {
         DAOBlogs dao = new DAOBlogs();
         Vector<Blogs> vector = dao.getBlogs("select * from blogs");

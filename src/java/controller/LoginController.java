@@ -5,11 +5,14 @@
 package controller;
 
 import entity.Account;
+import entity.Blogs;
 import entity.CartItems;
+import entity.Categories;
 
 import entity.Customers;
 
 import entity.GoogleAccount;
+import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,10 +24,13 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Random;
 import java.util.Vector;
 import model.DAOAccount;
+import model.DAOBlogs;
+import model.DAOCategories;
 
 import model.DAOCustomer;
 
 import model.DAOGoogleLogin;
+import model.DAOProducts;
 
 /**
  *
@@ -143,7 +149,7 @@ public class LoginController extends HttpServlet {
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             session.setAttribute("dataCustomer", cus);
                             session.setAttribute("dataUser", account);
-                            request.getRequestDispatcher("index.jsp").forward(request, response);
+                            request.getRequestDispatcher("HomePageURL").forward(request, response);
                         } else if (account.getRoleID() == 3) {
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             session.setAttribute("dataCustomer", cus);

@@ -89,6 +89,11 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Manage</a>
+                            <div class="sidebar-submenu">
+                            </div>
+                        </li>
 
                         <li class="sidebar-dropdown">
                             <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>

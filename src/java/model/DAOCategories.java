@@ -4,6 +4,7 @@
  */
 package model;
 
+import entity.Blogs;
 import entity.Categories;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -72,13 +73,55 @@ public class DAOCategories extends DBConnection {
             while (rs.next()) {
                 int CategoryID = rs.getInt("CategoryID");
                 String CategoryName = rs.getString("CategoryName");
-                Categories categories = new Categories(CategoryID, CategoryName);
+                String image = rs.getString("image");
+                Categories categories = new Categories(CategoryID, CategoryName, image);
                 vector.add(categories);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+
+    public Categories getCategoryByID(String id) {
+        String sql = "select * from Categories\n"
+                + "where CategoryID = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                return new Categories(rs.getInt("CategoryID"), rs.getString("CategoryName"), rs.getString("image"));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+
+    public void deleteCategories1(String id) {
+        String query = "delete from Categories \n"
+                + "where CategoryID=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void inserCategories(String name, String image) {
+        String sql = "INSERT INTO [dbo].[Categories] (CategoryName,image) VALUES (?, ?)";
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setString(1, name);
+            preState.setString(2, image);
+            preState.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void main(String[] args) {
@@ -113,6 +156,22 @@ public class DAOCategories extends DBConnection {
             Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
         }
         return category;
+    }
+
+    public void editCategory(String id,String name, String image) {
+        String sql = "Update Categories \n"
+                + "Set CategoryName=?,\n"
+                + "image=?\n"
+                + "where CategoryID=?";
+        try {
+             PreparedStatement preState = conn.prepareStatement(sql);
+             preState.setString(3, id);
+             preState.setString(1, name);
+             preState.setString(2, image);
+             preState.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

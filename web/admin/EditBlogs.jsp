@@ -309,7 +309,7 @@
                 <div class="container-fluid">
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
-                            <h5 class="mb-0">Add New Patient</h5>
+                            <h5 class="mb-0">Edit Blogs</h5>
 
                             <!--                            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
                                                             <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
@@ -324,106 +324,63 @@
                             <div class="col-lg-8 mt-4">
 
                                 <div class="card border-0 p-4 rounded shadow">
-                                    <form action="EditAccount" method="post">
-<!--                                        <div class="row align-items-center">
-                                            <div class="col-lg-2 col-md-4">
-                                                <img src="images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
-                                            </div>end col
-
-                                            <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
-                                                <h5 class="">Upload your picture</h5>
-                                                <p class="text-muted mb-0">For best results, use an image at least 600px by 600px in either .jpg or .png format</p>
-                                            </div>end col
-
-                                            <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
-                                                <a href="#" class="btn btn-primary">Upload</a>
-                                                <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
-                                            </div>end col
-                                        </div>end row-->
-
-                                        <form class="mt-4">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">ID</label>
-                                                        <input value="${account.accountID}" name="id" type="text" class="form-control" readonly required>
-                                                    </div>
-                                                </div><!--end col-->
-
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Username</label>
-                                                        <input value="${account.userName}" name="username" id="username" type="text" class="form-control"readonly required >
-                                                    </div>
-                                                </div><!--end col-->
-
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Password</label>
-                                                        <input value="${account.password}" name="password" id="password" type="text" class="form-control"readonly required>
-                                                    </div> 
-                                                </div><!--end col-->
-                                                <div class="col-md-6">
-                                                    <label>Role</label>
-                                                    <select class="form-control" name="roleID" disabled>
-                                                        <option value="1"
-                                                                <c:if test="${account.roleID == 1}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Admin</option>
-                                                        <option value="2"
-                                                                <c:if test="${account.roleID == 2}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Customer</option>
-                                                        <option value="3"
-                                                                <c:if test="${account.roleID == 3}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Editor</option>
-                                                    </select>
-                                                    <input value="${account.roleID}" name="roleID" type="text" hidden>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label>Status</label>
-                                                    <select class="form-control" name="active">
-                                                        <option value="true"
-                                                                <c:if test="${account.active}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Active</option>
-                                                        <option value="false"
-                                                                <c:if test="${!account.active}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Block</option>
-                                                    </select> 
-                                                </div>
+                                    <form action="AdminEditBlog" method="post">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Blog ID</label>
+                                                <input value="${blog.blogID}" name="id" id="id" type="text" class="form-control" style="width: 750px" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Title</label>
+                                                <input value="${blog.title}" name="title" id="title" type="text" class="form-control" style="width: 750px">
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Description</label>
+                                                <textarea name="description" id="description:" rows="4" class="form-control" style="width: 750px">${blog.content}</textarea>
+                                                  <!--<input value="${blog.content}" name="description" id="description" type="text" class="form-control" rows="4">-->
+                                            </div> 
+                                        </div><!--end col-->
 
 
 
 
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Post Time</label>
+                                                <input type="date" name="date" value="${blog.postTime}" class="form-control" />
+                                            </div>
+                                        </div><!--end col-->
 
-                                                <!--                                            <div class="col-md-6">
-                                                                                                <div class="mb-3">
-                                                                                                    <label class="form-label">Departments</label>
-                                                                                                    <select class="form-control department-name select2input">
-                                                                                                        <option value="EY">Eye Care</option>
-                                                                                                        <option value="GY">Gynecologist</option>
-                                                                                                        <option value="PS">Psychotherapist</option>
-                                                                                                        <option value="OR">Orthopedic</option>
-                                                                                                        <option value="DE">Dentist</option>
-                                                                                                        <option value="GA">Gastrologist</option>
-                                                                                                        <option value="UR">Urologist</option>
-                                                                                                        <option value="NE">Neurologist</option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>end col-->
-                                            </div><!--end row-->
 
+
+
+                                        <!--end row-->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Image URL:</label>
+                                                <input value="${blog.image}" type="text" name="image" id="image" 
+                                                       class="form-control" placeholder="Enter image URL"
+                                                       oninput="previewImage()"> 
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Image Preview:</label>
+                                                <img id="imagePreview" src="${blog.image}" alt="Preview Image" 
+                                                     style="max-width: 100%; height: auto; display: block; border: 1px solid #ddd; padding: 5px;">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
                                             <button type="submit" class="btn btn-primary">Edit Account</button>
-                                        </form>
+                                        </div>
+                                    </form>
                                 </div>
+
 
                             </div><!--end col-->
 
@@ -604,6 +561,18 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
+        <script>
+                                        function previewImage() {
+                                            var imageUrl = document.getElementById("loadImage").value;
+                                            var imagePreview = document.getElementById("imagePreview");
+
+                                            if (imageUrl) {
+                                                imagePreview.src = imageUrl;
+                                            } else {
+                                                imagePreview.src = "";
+                                            }
+                                        }
+        </script>
 
     </body>
 

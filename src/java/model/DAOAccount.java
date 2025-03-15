@@ -5,6 +5,7 @@
 package model;
 
 import entity.Account;
+import entity.Blogs;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -113,8 +114,7 @@ public class DAOAccount extends DBConnection {
                 String Email = rs.getString("Email");
                 boolean Active = (rs.getInt("Active") == 1 ? true : false);
 
-                Account account = new Account(AccountID,UserName, RoleID, Password, Email, Active);
-
+                Account account = new Account(AccountID, UserName, RoleID, Password, Email, Active);
 
                 vector.add(account);
             }
@@ -193,7 +193,6 @@ public class DAOAccount extends DBConnection {
         return listEmail;
     }
 
-
     public List<Account> getAllAccounts() {
         List<Account> list = new ArrayList<>();
         String query = "select * from Accounts where RoleID!=1";
@@ -270,6 +269,39 @@ public class DAOAccount extends DBConnection {
         return null;
     }
 
+    public void insertAccount(String username, String role, String password, String email, boolean active) {
+        String sql = "INSERT INTO [dbo].[Accounts] (username, roleID, password, email, active) VALUES (?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setString(1, username);
+            preState.setString(2, role);
+            preState.setString(3, password);
+            preState.setString(4, email);
+            preState.setBoolean(5, true);
+            preState.executeQuery();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public List<Account> getAccountByName(String txtSearch) {
+        List<Account> list = new ArrayList<>();
+        String query = "select * from Accounts where username like ?";
+        try {
+            PreparedStatement preState = conn.prepareStatement(query);
+            preState.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = preState.executeQuery();
+            while (rs.next()) {
+                list.add(new Account(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getBoolean(6)));
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return list;
+    }
+
     public void EditAccount(Account account) {
 
         try {
@@ -285,7 +317,7 @@ public class DAOAccount extends DBConnection {
         }
 
     }
-    
+
     public int countAccounts() {
         int count = 0;
         String query = "SELECT COUNT(*) FROM Accounts";
@@ -308,23 +340,22 @@ public class DAOAccount extends DBConnection {
 //        Account accountAdd = new Account("Tainguyenduc", 2, "abcd123");
 
 //        int n = dao.addAccount(accountAdd);
-
 //    int n = dao.deleteAccount(1);
 //          Account accountUpdate = new Account(2, "TaiNguye", 1, "cde123");
 //          int n = dao.updateAccount(accountUpdate);
 //        System.out.println(n);
         Vector<Account> vector = dao.getAccount("SELECT *  FROM [dbo].[Accounts] ");
-        if(!vector.isEmpty()){
-        for (Account account : vector) {
-            System.out.println(account);
-        }}
+        if (!vector.isEmpty()) {
+            for (Account account : vector) {
+                System.out.println(account);
+            }
+        }
         System.out.println("-------------");
         Account acc = dao.getLogin("DungTien", "123456");
 
         System.out.println(acc);
-        
-        
+
         int n = dao.changePassword("taindhe181162@fpt.edu.vn", "abc");
-        System.out.println(n); 
+        System.out.println(n);
     }
 }

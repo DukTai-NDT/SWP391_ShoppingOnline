@@ -301,18 +301,18 @@
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
                             <div>
-                                <h5 class="mb-0">Blogs</h5>
+                                <h5 class="mb-0">Categories</h5>
 
-                                <nav aria-label="breadcrumb" class="d-inline-block mt-1">
+<!--                                <nav aria-label="breadcrumb" class="d-inline-block mt-1">
                                     <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
                                         <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Blogs</li>
                                     </ul>
-                                </nav>
+                                </nav>-->
                             </div>
 
                             <div class="mt-4 mt-sm-0">
-                                <a href="adminaddblog" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Blog</a>
+                                <a href="adminaddblog" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Categories</a>
                             </div>
                         </div>
                         <div class="row">
@@ -321,51 +321,33 @@
                                     <table class="table table-center bg-white mb-0">
                                         <thead>
                                             <tr>
-                                                <th class="border-bottom p-3" style="min-width: 180px;">BlogID</th>
-                                                <th class="border-bottom p-3" style="max-width: 180px;">Title</th>
-                                                <th class="border-bottom p-3"style="min-width: 180px;">Post Time</th>
+                                                <th class="border-bottom p-3" style="min-width: 180px;">Category ID</th>
+                                                <th class="border-bottom p-3" style="max-width: 180px;">Category Name</th>
                                                 <th class="border-bottom p-3" style="min-width: 180px;">Image</th>
-
-
                                                 <th class="border-bottom p-3" style="min-width: 150px;"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${bloglist}" var="b">
-                                                <tr>
+                                        <c:forEach items="${vcategory}" var="c">
+                                            <tr>
 
-                                                    <td class="p-3">${b.blogID}</td>
-                                                    <td class="p-3"><a href="AdminBlogsDetail?bid=${b.blogID}" class="text-dark product-name h6" >${b.title}</a></td>
-                                                    <td class="p-3">${b.postTime}</td>
-                                                    <td class="p-3"><img src="${b.image}" alt="Blog Image" style="max-width: 200px; height: auto;"></td>
+                                                <td class="p-3">${c.categoryID}</td>
+                                                <td class="p-3"><a href="" class="text-dark product-name h6" >${c.categoryName}</a></td>
+                                                <td class="p-3"><img src="${c.image}" alt="Blog Image" style="max-width: 200px; height: auto;"></td>
 
-                                                    <td class="text-end p-3"> 
-                                                        <a href="LoadBlog?bid=${b.blogID}" 
-                                                           class="btn btn-icon btn-pills btn-soft-primary">
-                                                            <i class="uil uil-edit"></i>
-                                                        </a>
-                                                        <a href="AdminDeleteBlog?bid=${b.blogID}" 
-                                                           class="btn btn-icon btn-pills btn-soft-danger"
-                                                           onclick="return confirmDelete(event, '${b.blogID}')">
-                                                            <i class="uil uil-trash"></i>
-                                                        </a>
-
-
-                                                    </td>
-
-
-
-
-
-
-<!--<a href="loadAccount?aid=${a.accountID}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
-
-
-
-                                                    </td>
-
-                                                </tr>
-                                            </c:forEach>
+                                                <td class="text-end p-3"> 
+                                                    <a href="LoadCategory?cid=${c.categoryID}" 
+                                                       class="btn btn-icon btn-pills btn-soft-primary">
+                                                        <i class="uil uil-edit"></i>
+                                                    </a>
+                                                    <a href="DeleteCategories?cid=${c.categoryID}" 
+                                                       class="btn btn-icon btn-pills btn-soft-danger"
+                                                       onclick="return confirmDelete(event, '${c.categoryID}')">
+                                                        <i class="uil uil-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
 
                                         </tbody>
                                     </table>
@@ -482,11 +464,11 @@
 
         <!-- Start Modal -->
         <div class="modal fade" id="newblogadd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <form action="adminaddblog" method="post" enctype="multipart/form-data">
+            <form action="AddCategory" method="post">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header border-bottom p-3">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Blog</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
@@ -496,7 +478,7 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">Image URL:</label>
-                                        <input type="text" name="images" id="images" class="form-control" placeholder="Enter image URL" oninput="previewImage()">
+                                        <input type="text" name="image" id="image" class="form-control" placeholder="Enter image URL" oninput="previewImage()">
                                     </div>
                                 </div><!--end col-->
 
@@ -509,23 +491,15 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label class="form-label"> Date : </label>
-                                                            <p><input type="date" name="date" value="" />
+                                                            <label class="form-label"> Category Name : </label>
+                                                            <p><input type="text" name="categoryname" value="" />
                                                         </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Blog Title <span class="text-danger">*</span></label>
-                                                            <input name="title" id="title" type="text" class="form-control" placeholder="Title :">
-                                                        </div>
+                                                 
 
                                                     </div><!--end col-->
 
                                                 </div><!--end col-->
-                                                <div class="col-lg-12">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Description: <span class="text-danger">*</span></label>
-                                                        <textarea name="description:" id="description:" rows="4" class="form-control" placeholder="Blog description :"></textarea>
-                                                    </div>
-                                                </div><!--end col-->
+                                               
                                                 <div class="col-lg-12 text-end">
                                                     <button type="submit" class="btn btn-primary">Add Blog</button>
                                                 </div><!--end col-->
@@ -576,11 +550,11 @@
                                         };
         </script>
         <script>
-            function confirmDelete(event, blogID) {
+            function confirmDelete(event, categoryID) {
                 event.preventDefault(); // Ngăn trang chuyển hướng ngay lập tức
                 let confirmation = confirm("Are you sure you want to delete this blog post?");
                 if (confirmation) {
-                    window.location.href = "AdminDeleteBlog?bid=" + blogID; // Chuyển hướng nếu xác nhận
+                    window.location.href = "DeleteCategories?cid=" + categoryID; // Chuyển hướng nếu xác nhận
                 }
             }
         </script>
