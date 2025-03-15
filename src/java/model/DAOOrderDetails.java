@@ -105,4 +105,23 @@ public class DAOOrderDetails extends DBConnection {
         }
         return vector;
     }
+    public double getTotalPriceOrder(int orderId){
+        double total = 0;
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery("select * from OrderDetails where OrderID ="+orderId);
+            while (rs.next()) {
+                
+                float Price = rs.getFloat("Price");
+                total += Price;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrderDetails.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return total;
+    }
 }

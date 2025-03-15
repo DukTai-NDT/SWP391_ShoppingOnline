@@ -162,12 +162,13 @@
                                 <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
                             </ul>
                         </li>-->
-
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
+                        <%if(account != null){%>
+                            <li class="has-submenu parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="ProductURL" class="sub-menu-item">Shop</a></li>
+
+                                <li><a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a></li>
 
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
                                 <li><a href="CartURL?service=showCart" class="sub-menu-item">Shop Cart</a></li>
@@ -181,10 +182,32 @@
                                 <li><a href="aboutus.jsp" class="sub-menu-item"> About Us</a></li>
                                 <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li><a href="BlogsURL" class="sub-menu-item">Blogs</a></li>  
+                                <li><a href="BlogsURL" class="sub-menu-item">Blogs</a></li>
+                                
+                                
                             </ul>
                         </li>
-                           <li><a href="Dashboard" class="sub-menu-item">Manager</a></li>
+<!--                           <li><a href="ProductManager" class="sub-menu-item">Manager</a></li>      -->
+                            <%}else{%>
+                           
+                          <li class="has-submenu parent-menu-item">
+                           <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
+                            
+                        </li>
+
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <li><a href="aboutus.jsp" class="sub-menu-item"> About Us</a></li>
+                                <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
+                                <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
+                                <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
+                                
+                                
+                            </ul>
+                        </li>
+                          
+                            <%}%>
+
 <!--                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>-->
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
@@ -1207,8 +1230,6 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-       <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
 

@@ -210,5 +210,12 @@ public class DAOBlogs extends DBConnection {
 
         return count;
     }
+    public static void main(String[] args) {
+        DAOBlogs dao = new DAOBlogs();
+        Vector<Blogs> vector = dao.getBlogs("select * from blogs");
+        for (Blogs blogs : vector) {
+            System.out.println(blogs);
+        }
+    }
 
 }

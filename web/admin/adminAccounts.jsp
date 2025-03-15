@@ -256,12 +256,12 @@
                 <div class="container-fluid">
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
-                            <h5 class="mb-0">Patients List</h5>
+                            <h5 class="mb-0">Account List</h5>
 
                             <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
                                 <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Patients</li>
+<!--                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Patients</li>-->
                                 </ul>
                             </nav>
                         </div>

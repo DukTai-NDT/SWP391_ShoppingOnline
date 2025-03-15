@@ -27,11 +27,7 @@
     </head>
     <%
                 Account account = (Account)session.getAttribute("dataUser");
-<<<<<<< HEAD
-                Vector<CartItems> vectorCartItems = (Vector<CartItems>)request.getAttribute("dataCartItem"); 
-=======
                 Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("selectedCartItems"); 
->>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889
                 
               
                 String message = (String)request.getAttribute("message"); 
@@ -213,71 +209,38 @@
                                 <span class="badge bg-primary rounded-pill">3</span>
                             </div>
                             <ul class="list-group mb-3 border">
-<<<<<<< HEAD
-                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
-                                    <div>
-                                        <h6 class="my-0">Product name</h6>
-                                        <small class="text-muted">Brief description</small>
-                                    </div>
-                                    <span class="text-muted">$12</span>
-                                </li>
-                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
-                                    <div>
-                                        <h6 class="my-0">Second product</h6>
-                                        <small class="text-muted">Brief description</small>
-                                    </div>
-                                    <span class="text-muted">$8</span>
-                                </li>
-                                <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
-                                    <div>
-                                        <h6 class="my-0">Third item</h6>
-                                        <small class="text-muted">Brief description</small>
-                                    </div>
-                                    <span class="text-muted">$5</span>
-                                </li>
-                                <li class="d-flex justify-content-between bg-light p-3 border-bottom">
-                                    <div class="text-success">
-                                        <h6 class="my-0">Promo code</h6>
-                                        <small>EXAMPLECODE</small>
-                                    </div>
-                                    <span class="text-success">?$5</span>
-                                </li>
-                                <li class="d-flex justify-content-between p-3">
-                                    <span>Total (USD)</span>
-                                    <strong>$20</strong>
-                                </li>
-                            </ul>
 
-                            <form>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Promo code">
-                                    <button type="submit" class="btn btn-secondary">Redeem</button>
-                                </div>
-                            </form>
-=======
-                                 <% 
-                                            float totalPriceCart = 0;
+
+                                <%  if (vectorCartItems != null && !vectorCartItems.isEmpty()) {
+                                           float totalPriceCart = 0;
                                             
-                                            for (CartItems vectorCartItem : vectorCartItems) {
-                                              float total = vectorCartItem.getQuantity() * vectorCartItem.getPrice();
-                                              totalPriceCart += total;
-                                        %>
+                                           for (CartItems vectorCartItem : vectorCartItems) {
+                                             float total = vectorCartItem.getQuantity() * vectorCartItem.getPrice();
+                                             totalPriceCart += total;
+                                %>
                                 <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
                                     <div>
                                         <h6 class="my-0"><%=vectorCartItem.getProductName()%></h6>
                                         <small class="text-muted">Quantity:<%=vectorCartItem.getQuantity()%></small>
                                     </div>
-                                        <span class="text-muted">VND:<%=total%></span>
+                                    <span class="text-muted">VND:<%=total%></span>
                                 </li>
                                 <%}%>
                                 <li class="d-flex justify-content-between p-3">
                                     <span>Total (VND)</span>
                                     <strong>VND:<%=totalPriceCart%></strong>
+                                    <input type="hidden" name="totalprice" value="<%= totalPriceCart %>">
                                 </li>
+                                <%}else{%>
+                                <h5 style="color: red;">
+                                    You haven't selected any products, so you can't checkout. Please return to  
+                                    <a href="ProductURL?service=listAllProducts" style="color: blue; text-decoration: underline;">shop</a>.
+                                </h5>
+
+                                <%}%>
                             </ul>
 
-                            
->>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889
+
                         </div>
                     </div><!--end col-->
 
@@ -300,7 +263,7 @@
                                         <%for (Provinces province : provinces) { %>
                                         <option value="<%= province.getProvinceID()%>"><%= province.getProvinceName() %></option>
                                         <% } %>
-                                      
+
                                     </select>
                                     <div class="invalid-feedback">
                                         Please select a valid country.
@@ -323,7 +286,7 @@
                                         <%for (Districts district : districts) { %>
                                         <option value="<%= district.getDistrictID()%>"><%= district.getDistrictName() %></option>
                                         <% } %>
-                                       
+
                                     </select>
                                     <div class="invalid-feedback">
                                         Please provide a valid state.
@@ -409,8 +372,9 @@
                                 </div>
 
 
-
+                                   <%  if(!vectorCartItems.isEmpty()){%>
                                 <button class="w-100 btn btn-primary" type="submit">Continue to checkout</button>
+                                <%}%>
                             </form>
                         </div>
                     </div><!--end col-->

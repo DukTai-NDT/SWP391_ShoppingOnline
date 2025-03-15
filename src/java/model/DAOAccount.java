@@ -88,7 +88,7 @@ public class DAOAccount extends DBConnection {
         int n = 0;
         String sql = "UPDATE [dbo].[Accounts]\n"
                 + "   SET [Password] = ?\n"
-                + " WHERE Account.Email = ?";
+                + " WHERE Accounts.Email = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, password);
@@ -112,7 +112,10 @@ public class DAOAccount extends DBConnection {
                 String Password = rs.getString("Password");
                 String Email = rs.getString("Email");
                 boolean Active = (rs.getInt("Active") == 1 ? true : false);
-                Account account = new Account(UserName, RoleID, Password, Email, Active);
+
+                Account account = new Account(AccountID,UserName, RoleID, Password, Email, Active);
+
+
                 vector.add(account);
             }
         } catch (SQLException ex) {
@@ -303,7 +306,21 @@ public class DAOAccount extends DBConnection {
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
 //        Account accountAdd = new Account("Tainguyenduc", 2, "abcd123");
-       Account acc = dao.getLogin("quang", "123");
+
+//        int n = dao.addAccount(accountAdd);
+
+//    int n = dao.deleteAccount(1);
+//          Account accountUpdate = new Account(2, "TaiNguye", 1, "cde123");
+//          int n = dao.updateAccount(accountUpdate);
+//        System.out.println(n);
+        Vector<Account> vector = dao.getAccount("SELECT *  FROM [dbo].[Accounts] ");
+        if(!vector.isEmpty()){
+        for (Account account : vector) {
+            System.out.println(account);
+        }}
+        System.out.println("-------------");
+        Account acc = dao.getLogin("DungTien", "123456");
+
         System.out.println(acc);
         
         
