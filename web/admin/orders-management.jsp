@@ -135,10 +135,9 @@
                             </a>
                             <div class="search-bar p-0 d-none d-lg-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <form role="search" method="get" id="searchform" class="searchform" action="ProductManager">
+                                    <form role="search" method="get" id="searchform" class="searchform">
                                         <div>
-                                            <input type="text" class="form-control border rounded-pill" name="search" id="s" 
-                                                   placeholder="Search Keywords..." value="${searchQuery}">
+                                            <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
                                             <input type="submit" id="searchsubmit" value="Search">
                                         </div>
                                     </form>
@@ -276,42 +275,42 @@
 
                                 <nav aria-label="breadcrumb" class="d-inline-block mt-1">
                                     <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
-                                        <li class="breadcrumb-item"><a href="#">Products Manager</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">All Products</li>
+                                        <li class="breadcrumb-item"><a href="#">Doctris</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Orders Management</li>
                                     </ul>
                                 </nav>
                             </div>
 
-                            <div class="mt-4 mt-sm-0">
+<!--                            <div class="mt-4 mt-sm-0">
                                 <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-product">Add Product</a>
-                            </div>
+                            </div>-->
                         </div>
 
-                        <h6 class="mt-4 mb-0">Products</h6>
+                        <h6 class="mt-4 mb-0">Orders</h6>
                         <br>
 
                         <table class="table align-middle shadow-lg rounded-4 overflow-hidden bg-white">
                             <thead class="bg-primary text-white rounded-top-4">
                                 <tr class="fw-bold text-center">
-                                    <th class="p-3">#</th>
-                                    <th class="p-3">Image</th>
-                                    <th class="p-3 text-start">Product Name</th>
-                                    <th class="p-3">Price</th>
-                                    <th class="p-3">Action</th>
+                                    <th class="p-3">Order ID</th>
+                                    <th class="p-3">Username</th>
+                                    <th class="p-3 text-start">Total Money</th>
+                                    <th class="p-3">Order Date</th>
+                                    <th class="p-3">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="p" items="${pList}" varStatus="status">
                                     <tr class="border-bottom">
+                                        <td class="p-3 text-center">${status.index + 1}</td>
                                         <td class="p-3 text-center">
-                                            ${((currentPage - 1) * 10) + status.index + 1}
+                                            <a href="ProductManagerDetail?pid=${p.productID}">
+                                                <img src="${p.image}" class="rounded-5 shadow" alt="${p.productName}" 
+                                                     style="width: 80px; height: 80px; object-fit: cover;">
+                                            </a>
                                         </td>
-                                        <td class="p-3 text-center">
-                                            <img src="${p.image}" class="rounded-5 shadow" alt="${p.productName}" 
-                                                 style="width: 90px; height: 90px; object-fit: cover;">
-                                        </td>
-                                        <td class="p-3 text-start fw-semibold text-dark">
-                                            ${p.productName}
+                                        <td class="p-3 text-start">
+                                            <a href="ProductManagerDetail?pid=${p.productID}" class="text-dark fw-semibold text-decoration-none">${p.productName}</a>
                                         </td>
                                         <td class="p-3 text-success fw-bold text-center">${p.price}</td>
                                         <td class="p-3 text-center">
@@ -328,30 +327,14 @@
                     <div class="row">
                         <div class="col-12 mt-4">
                             <ul class="pagination justify-content-end mb-0 list-unstyled">
-                                <% int currentPage = (int) request.getAttribute("currentPage");
-                                    int totalPages = (int) request.getAttribute("totalPages");
-                                %>
-
-                                <!-- Nút Prev -->
-                                <li class="page-item <%= (currentPage == 1) ? "disabled" : ""%>">
-                                    <a class="page-link" href="?page=<%= currentPage - 1%>" aria-label="Previous">Prev</a>
-                                </li>
-
-                                <!-- Số trang -->
-                                <% for (int i = 1; i <= totalPages; i++) {%>
-                                <li class="page-item <%= (i == currentPage) ? "active" : ""%>">
-                                    <a class="page-link" href="?page=<%= i%>"><%= i%></a>
-                                </li>
-                                <% }%>
-
-                                <!-- Nút Next -->
-                                <li class="page-item <%= (currentPage == totalPages) ? "disabled" : ""%>">
-                                    <a class="page-link" href="?page=<%= currentPage + 1%>" aria-label="Next">Next</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--end row-->
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Previous">Prev</a></li>
+                                <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next">Next</a></li>
+                            </ul><!--end pagination-->
+                        </div><!--end col-->
+                    </div><!--end row-->
                 </div>
                 <br>
                 <!-- Footer Start -->
@@ -578,5 +561,7 @@
                     };
 </script>
 </body>
+
+</html>
 
 </html>
