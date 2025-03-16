@@ -129,6 +129,102 @@ public class DAOOrders extends DBConnection {
         return n;
     }
 
+
+    public int getTotalSearchOrders(String searchQuery) {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM Orders WHERE OrderID LIKE ? OR CustomerID LIKE ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + searchQuery + "%");
+            ps.setString(2, "%" + searchQuery + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    // Lấy danh sách đơn hàng theo trang + từ khóa tìm kiếm
+    public Vector<Orders> searchOrdersByPage(String searchQuery, int page, int pageSize) {
+        Vector<Orders> ordersList = new Vector<>();
+        int start = (page - 1) * pageSize;
+        String sql = "SELECT * FROM Orders WHERE OrderID LIKE ? OR CustomerID LIKE ? ORDER BY OrderTime DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + searchQuery + "%");
+            ps.setString(2, "%" + searchQuery + "%");
+            ps.setInt(3, start);
+            ps.setInt(4, pageSize);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Orders order = new Orders(
+                        rs.getInt("OrderID"),
+                        rs.getString("Status"),
+                        rs.getInt("CustomerID"),
+                        rs.getTimestamp("OrderTime").toLocalDateTime().toLocalDate(),
+                        rs.getTimestamp("DeliveryETA") != null ? rs.getTimestamp("DeliveryETA").toLocalDateTime().toLocalDate() : null,
+                        rs.getInt("PaymentID")
+                );
+                ;
+                ordersList.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordersList;
+    }
+
+    // Lấy tổng số đơn hàng trong bảng Orders
+    public int getTotalOrders() {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM Orders";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    // Lấy danh sách đơn hàng theo trang (không có tìm kiếm)
+    public Vector<Orders> getOrdersByPage(int page, int pageSize) {
+        Vector<Orders> ordersList = new Vector<>();
+        int start = (page - 1) * pageSize;
+        String sql = "SELECT * FROM Orders ORDER BY OrderTime DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, start);
+            ps.setInt(2, pageSize);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Orders order = new Orders(
+                        rs.getInt("OrderID"),
+                        rs.getString("Status"),
+                        rs.getInt("CustomerID"),
+                        rs.getTimestamp("OrderTime").toLocalDateTime().toLocalDate(),
+                        rs.getTimestamp("DeliveryETA") != null ? rs.getTimestamp("DeliveryETA").toLocalDateTime().toLocalDate() : null,
+                        rs.getInt("PaymentID")
+                );
+                ordersList.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordersList;
+    }
+    
+
     public int updateStatusOrder(String newStatus, int orderID) {
         int n = 0;
         String sql = "UPDATE [dbo].[Orders]\n"

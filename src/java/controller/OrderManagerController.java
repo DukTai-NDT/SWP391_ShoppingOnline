@@ -4,9 +4,9 @@
  */
 package controller;
 
-import entity.Brand;
-import entity.Categories;
-import entity.Products;
+import com.google.gson.Gson;
+import entity.OrderDetails;
+import entity.Orders;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,17 +14,20 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
-import model.DAOBrand;
-import model.DAOCategories;
-import model.DAOProducts;
+import model.DAOCustomer;
+import model.DAOOrderDetails;
+import model.DAOOrders;
+import model.DAOPayments;
 
 /**
  *
  * @author whyth
  */
-@WebServlet(name = "ProductManagerController", urlPatterns = {"/ProductManager"})
-public class ProductManagerController extends HttpServlet {
+@WebServlet(name = "OrderManagerController", urlPatterns = {"/OrderManager"})
+public class OrderManagerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,51 +39,40 @@ public class ProductManagerController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        DAOProducts pDAO = new DAOProducts();
-        DAOCategories cDAO = new DAOCategories();
-        DAOBrand bDAO = new DAOBrand();
-
-        String searchQuery = request.getParameter("search");
-        int page = 1;
-        int productsPerPage = 10; // Mỗi trang tối đa 10 sản phẩm
-
-        String pageStr = request.getParameter("page");
-        if (pageStr != null) {
-            try {
-                page = Integer.parseInt(pageStr);
-            } catch (NumberFormatException e) {
-                page = 1;
-            }
+        throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    DAOOrders oDAO = new DAOOrders();
+    DAOOrderDetails odDAO = new DAOOrderDetails();
+    DAOCustomer cDAO = new DAOCustomer();
+    DAOPayments pDAO = new DAOPayments(); // Add DAOPayments
+    
+    // Lấy danh sách tất cả orders & order details
+    Vector<Orders> oList = oDAO.getOrders("SELECT * FROM Orders");
+    Vector<OrderDetails> odList = odDAO.getOrderDetails("SELECT * FROM dbo.OrderDetails");
+    
+    // Tạo Map để lưu customerID -> username
+    Map<Integer, String> customerUsernames = new HashMap<>();
+    // Tạo Map để lưu paymentID -> method
+    Map<Integer, String> paymentMethods = new HashMap<>();
+    
+    for (Orders order : oList) {
+        int customerID = order.getCustomerID();
+        if (!customerUsernames.containsKey(customerID)) {
+            customerUsernames.put(customerID, cDAO.getUsernameByCustomerID(customerID));
         }
-
-        Vector<Products> pList;
-        int totalProducts;
-
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            totalProducts = pDAO.getTotalSearchProducts(searchQuery);
-            pList = pDAO.searchProductByPage(searchQuery, page, productsPerPage);
-        } else {
-            totalProducts = pDAO.getTotalProducts();
-            pList = pDAO.getProductsByPage(page, productsPerPage);
+        
+        int paymentID = order.getPaymentID();
+        if (!paymentMethods.containsKey(paymentID)) {
+            paymentMethods.put(paymentID, pDAO.getMethodByPaymentID(paymentID));
         }
-
-        int totalPages = (int) Math.ceil((double) totalProducts / productsPerPage);
-
-        Vector<Categories> cList = cDAO.getCategories("SELECT * FROM dbo.Categories");
-        Vector<Brand> bList = bDAO.getBrand("SELECT * FROM dbo.Brand");
-
-        request.setAttribute("pList", pList);
-        request.setAttribute("cList", cList);
-        request.setAttribute("bList", bList);
-        request.setAttribute("searchQuery", searchQuery);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-
-        request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
     }
+    
+    request.setAttribute("oList", oList);
+    request.setAttribute("customerUsernames", customerUsernames);
+    request.setAttribute("paymentMethods", paymentMethods);
+    request.setAttribute("odList", odList);
+    request.getRequestDispatcher("admin/orders-management.jsp").forward(request, response);
+}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

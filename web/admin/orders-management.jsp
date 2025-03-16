@@ -135,10 +135,9 @@
                             </a>
                             <div class="search-bar p-0 d-none d-lg-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <form role="search" method="get" id="searchform" class="searchform" action="ProductManager">
+                                    <form role="search" method="get" id="searchform" class="searchform">
                                         <div>
-                                            <input type="text" class="form-control border rounded-pill" name="search" id="s" 
-                                                   placeholder="Search Keywords..." value="${searchQuery}">
+                                            <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
                                             <input type="submit" id="searchsubmit" value="Search">
                                         </div>
                                     </form>
@@ -276,82 +275,130 @@
 
                                 <nav aria-label="breadcrumb" class="d-inline-block mt-1">
                                     <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
-                                        <li class="breadcrumb-item"><a href="#">Products Manager</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">All Products</li>
+                                        <li class="breadcrumb-item"><a href="#">Doctris</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Orders Management</li>
                                     </ul>
                                 </nav>
                             </div>
 
-                            <div class="mt-4 mt-sm-0">
-                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-product">Add Product</a>
-                            </div>
+                            <!--                            <div class="mt-4 mt-sm-0">
+                                                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-product">Add Product</a>
+                                                        </div>-->
                         </div>
 
-                        <h6 class="mt-4 mb-0">Products</h6>
+                        <h6 class="mt-4 mb-0">Orders</h6>
                         <br>
 
                         <table class="table align-middle shadow-lg rounded-4 overflow-hidden bg-white">
                             <thead class="bg-primary text-white rounded-top-4">
                                 <tr class="fw-bold text-center">
                                     <th class="p-3">#</th>
-                                    <th class="p-3">Image</th>
-                                    <th class="p-3 text-start ps-5">Product Name</th>
-                                    <th class="p-3">Price</th>
+                                    <th class="p-3">Username</th>
+                                    <th class="p-3">Payment ID</th>
+                                    <th class="p-3">Order Time</th>
+                                    <th class="p-3">ETA</th>
+                                    <th class="p-3">Status</th>
                                     <th class="p-3">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="p" items="${pList}" varStatus="status">
+                                <c:forEach var="o" items="${oList}" varStatus="loop">
                                     <tr class="border-bottom">
+                                        <td class="p-3 text-center">${loop.index + 1}</td>
+                                        <td class="p-3 text-center">${customerUsernames[o.customerID]}</td>
+                                        <td class="p-3 text-center">${paymentMethods[o.paymentID]}</td>
+                                        <td class="p-3 text-center">${o.orderTime}</td>
+                                        <td class="p-3 text-center">${o.deliveryETA != null ? o.deliveryETA : 'N/A'}</td>
                                         <td class="p-3 text-center">
-                                            ${((currentPage - 1) * 10) + status.index + 1}
+                                            <c:choose>
+                                                <c:when test="${o.status == 'Done'}">
+                                                    <div style="min-width: 100px; display: inline-block; text-align: center;">Done</div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div style="min-width: 100px; display: inline-block; text-align: center;" id="status-${o.orderID}">
+                                                        <a href="javascript:void(0);" 
+                                                           style="display: inline-block; width: 100%; text-align: center; white-space: nowrap;"
+                                                           onmouseover="this.innerText = 'Change'" 
+                                                           onmouseout="this.innerText = '${o.status}'"
+                                                           onclick="changeStatus(${o.orderID}, '${o.status}')">
+                                                            ${o.status}
+                                                        </a>
+                                                    </div>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                         <td class="p-3 text-center">
-                                            <img src="${p.image}" class="rounded-5 shadow" alt="${p.productName}" 
-                                                 style="width: 90px; height: 90px; object-fit: cover;">
-                                        </td>
-                                        <td class="p-3 text-start fw-semibold text-dark ps-5">
-                                            ${p.productName}
-                                        </td>
-                                        <td class="p-3 text-success fw-bold text-center">${p.price}</td>
-                                        <td class="p-3 text-center">
-                                            <a href="ProductManagerDetail?pid=${p.productID}" class="btn btn-outline-primary btn-sm">
-                                                <i class="uil uil-eye"></i> Detail
-                                            </a>
+                                            <c:forEach var="od" items="${odList}">
+                                                <c:if test="${od.orderID == o.orderID}">
+                                                    <button type="button" class="btn btn-outline-primary btn-sm"
+                                                            data-bs-toggle="modal" data-bs-target="#orderDetailModal"
+                                                            onclick="loadOrderDetail('${od.orderID}', '${od.productID}', '${od.price}', '${od.quantity}')">
+                                                        <i class="uil uil-eye"></i> Detail
+                                                    </button>
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="margin-left: auto; margin-right: 25%;">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="orderDetailLabel">Order Detail</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label class="form-label">Order ID:</label>
+                                                <input type="text" id="modalOrderID" class="form-control" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Product ID:</label>
+                                                <input type="text" id="modalProductID" class="form-control" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Price:</label>
+                                                <input type="text" id="modalPrice" class="form-control" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Quantity:</label>
+                                                <input type="text" id="modalQuantity" class="form-control" readonly>
+                                            </div>                                   
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- JavaScript để load dữ liệu vào modal -->
+                        <script>
+                            function loadOrderDetail(orderID, productID, price, quantity) {
+                                document.getElementById("modalOrderID").value = orderID;
+                                document.getElementById("modalProductID").value = productID;
+                                document.getElementById("modalPrice").value = price;
+                                document.getElementById("modalQuantity").value = quantity;
+                            }
+                        </script>
+
+
                     </div><!--end row-->
 
                     <div class="row">
                         <div class="col-12 mt-4">
                             <ul class="pagination justify-content-end mb-0 list-unstyled">
-                                <% int currentPage = (int) request.getAttribute("currentPage");
-                                    int totalPages = (int) request.getAttribute("totalPages");
-                                %>
-
-                                <!-- Nút Prev -->
-                                <li class="page-item <%= (currentPage == 1) ? "disabled" : ""%>">
-                                    <a class="page-link" href="?page=<%= currentPage - 1%>" aria-label="Previous">Prev</a>
-                                </li>
-
-                                <!-- Số trang -->
-                                <% for (int i = 1; i <= totalPages; i++) {%>
-                                <li class="page-item <%= (i == currentPage) ? "active" : ""%>">
-                                    <a class="page-link" href="?page=<%= i%>"><%= i%></a>
-                                </li>
-                                <% }%>
-
-                                <!-- Nút Next -->
-                                <li class="page-item <%= (currentPage == totalPages) ? "disabled" : ""%>">
-                                    <a class="page-link" href="?page=<%= currentPage + 1%>" aria-label="Next">Next</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--end row-->
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Previous">Prev</a></li>
+                                <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next">Next</a></li>
+                            </ul><!--end pagination-->
+                        </div><!--end col-->
+                    </div><!--end row-->
                 </div>
                 <br>
                 <!-- Footer Start -->
@@ -555,30 +602,103 @@
 <!-- Main Js -->
 <script src="js/app.js"></script>
 
+<!-- JavaScript để thay đổi trạng thái -->
 <script>
-                    const handleChange = () => {
-                        const fileUploader = document.querySelector('#input-file');
-                        const getFile = fileUploader.files
-                        if (getFile.length !== 0) {
-                            const uploadedFile = getFile[0];
-                            readFile(uploadedFile);
-                        }
-                    }
+function changeStatus(orderID, currentStatus) {
+// Xác định trạng thái tiếp theo dựa trên trạng thái hiện tại
+let nextStatus;
 
-                    const readFile = (uploadedFile) => {
-                        if (uploadedFile) {
-                            const reader = new FileReader();
-                            reader.onload = () => {
-                                const parent = document.querySelector('.preview-box');
-                                parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
-                            };
+switch (currentStatus) {
+    case "On-prepared":
+        nextStatus = "Delivery";
+        break;
+    case "Delivery":
+        nextStatus = "Done";
+        break;
+    default:
+        nextStatus = "On-prepared"; // Trường hợp mặc định nếu không xác định được
+}
 
-                            reader.readAsDataURL(uploadedFile);
-                        }
-                    };
+// Hiển thị hộp thoại xác nhận
+if (confirm(`Confirm to change status ?`)) {
+    // Nếu người dùng xác nhận, tiếp tục thực hiện thay đổi
+    const timestamp = new Date().getTime();
+    const url = "StatusChange?action=updateStatus&orderID=" + orderID + "&status=" + currentStatus + "&timestamp=" + timestamp;
+
+    fetch(url)
+            .then(response => {
+                if (!response.ok)
+                    throw new Error("Network response was not ok");
+                return response.text();
+            })
+            .then(newStatus => {
+                console.log("New status:", newStatus);
+
+                const statusElement = document.getElementById("status-" + orderID);
+                const linkElement = statusElement.querySelector("a");
+
+                // Cập nhật trạng thái mới lên giao diện
+                linkElement.innerText = newStatus;
+
+                // Cập nhật các sự kiện onmouseover và onmouseout
+                linkElement.onmouseover = function () {
+                    this.innerText = 'Change';
+                };
+                linkElement.onmouseout = function () {
+                    this.innerText = newStatus;
+                };
+
+                // Cập nhật sự kiện onclick để sử dụng trạng thái mới
+                linkElement.onclick = function () {
+                    changeStatus(orderID, newStatus);
+                };
+
+                // Nếu trạng thái là "Done", vô hiệu hóa các sự kiện
+                if (newStatus === "Done") {
+                    linkElement.onmouseover = null;
+                    linkElement.onmouseout = null;
+                    linkElement.onclick = null;
+
+                    // Thay thế phần tử a bằng div đơn giản
+                    const divElement = document.createElement('div');
+                    divElement.innerText = 'Done';
+                    divElement.style.minWidth = '100px';
+                    divElement.style.display = 'inline-block';
+                    divElement.style.textAlign = 'center';
+
+                    statusElement.innerHTML = '';
+                    statusElement.appendChild(divElement);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+}
+}
+</script>
+
+<script>
+    const handleChange = () => {
+        const fileUploader = document.querySelector('#input-file');
+        const getFile = fileUploader.files
+        if (getFile.length !== 0) {
+            const uploadedFile = getFile[0];
+            readFile(uploadedFile);
+        }
+    }
+
+    const readFile = (uploadedFile) => {
+        if (uploadedFile) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const parent = document.querySelector('.preview-box');
+                parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
+            };
+
+            reader.readAsDataURL(uploadedFile);
+        }
+    };
 </script>
 </body>
 
 </html>
 
-
+</html>

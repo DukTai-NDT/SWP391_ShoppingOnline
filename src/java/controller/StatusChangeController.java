@@ -4,9 +4,6 @@
  */
 package controller;
 
-import entity.Brand;
-import entity.Categories;
-import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,17 +11,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Vector;
-import model.DAOBrand;
-import model.DAOCategories;
-import model.DAOProducts;
+import model.DAOOrders;
 
 /**
  *
  * @author whyth
  */
-@WebServlet(name = "ProductManagerController", urlPatterns = {"/ProductManager"})
-public class ProductManagerController extends HttpServlet {
+@WebServlet(name = "StatusChangeController", urlPatterns = {"/StatusChange"})
+public class StatusChangeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,49 +31,37 @@ public class ProductManagerController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/plain;charset=UTF-8");
 
-        DAOProducts pDAO = new DAOProducts();
-        DAOCategories cDAO = new DAOCategories();
-        DAOBrand bDAO = new DAOBrand();
+        String action = request.getParameter("action");
+        if ("updateStatus".equals(action)) {
+            int orderID = Integer.parseInt(request.getParameter("orderID"));
+            String currentStatus = request.getParameter("status");
+            String newStatus = getNextStatus(currentStatus);
 
-        String searchQuery = request.getParameter("search");
-        int page = 1;
-        int productsPerPage = 10; // Mỗi trang tối đa 10 sản phẩm
-
-        String pageStr = request.getParameter("page");
-        if (pageStr != null) {
-            try {
-                page = Integer.parseInt(pageStr);
-            } catch (NumberFormatException e) {
-                page = 1;
+            DAOOrders dao = new DAOOrders();
+            int n = dao.updateStatusOrder(newStatus, orderID);
+            try (PrintWriter out = response.getWriter()) {
+                if (n > 0) {
+                    System.out.println("Cập nhật trạng thái thành công: " + newStatus);  // Log kiểm tra
+                    out.write(newStatus);  // Trả về trạng thái mới
+                } else {
+                    System.out.println("Không thể cập nhật trạng thái: " + currentStatus);  // Log kiểm tra
+                    out.write(currentStatus);  // Không thay đổi
+                }
             }
         }
+    }
 
-        Vector<Products> pList;
-        int totalProducts;
-
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            totalProducts = pDAO.getTotalSearchProducts(searchQuery);
-            pList = pDAO.searchProductByPage(searchQuery, page, productsPerPage);
-        } else {
-            totalProducts = pDAO.getTotalProducts();
-            pList = pDAO.getProductsByPage(page, productsPerPage);
+    private String getNextStatus(String currentStatus) {
+        switch (currentStatus) {
+            case "On-prepared":
+                return "Delivering";
+            case "Delivering":
+                return "Done";
+            default:
+                return currentStatus;
         }
-
-        int totalPages = (int) Math.ceil((double) totalProducts / productsPerPage);
-
-        Vector<Categories> cList = cDAO.getCategories("SELECT * FROM dbo.Categories");
-        Vector<Brand> bList = bDAO.getBrand("SELECT * FROM dbo.Brand");
-
-        request.setAttribute("pList", pList);
-        request.setAttribute("cList", cList);
-        request.setAttribute("bList", bList);
-        request.setAttribute("searchQuery", searchQuery);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-
-        request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

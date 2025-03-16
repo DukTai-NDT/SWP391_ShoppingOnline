@@ -18,26 +18,26 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class DAOCustomer extends DBConnection {
-    
-public Customers getCustomerByAccountId(int accountId) {
+
+    public Customers getCustomerByAccountId(int accountId) {
         Customers customer = null;
         String sql = "SELECT * FROM Customers WHERE AccountID = ?";
-        
+
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setInt(1, accountId);
             ResultSet rs = preState.executeQuery();
-            
+
             if (rs.next()) {
                 customer = new Customers(
-                    rs.getInt("CustomerID"),
-                    rs.getString("FirstName"),
-                    rs.getString("LastName"),
-                    rs.getString("Email"),
-                    rs.getString("Address"),
-                    rs.getString("Gender"),
-                    rs.getString("Phone"),
-                    rs.getInt("AccountID")
+                        rs.getInt("CustomerID"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Address"),
+                        rs.getString("Gender"),
+                        rs.getString("Phone"),
+                        rs.getInt("AccountID")
                 );
             }
         } catch (SQLException ex) {
@@ -49,22 +49,22 @@ public Customers getCustomerByAccountId(int accountId) {
     public Customers getCustomerByUsername(String username) {
         Customers customer = null;
         String sql = "SELECT c.* FROM Customers c JOIN Accounts a ON c.AccountID = a.AccountID WHERE a.UserName = ?";
-        
+
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, username);
             ResultSet rs = preState.executeQuery();
-            
+
             if (rs.next()) {
                 customer = new Customers(
-                    rs.getInt("CustomerID"),
-                    rs.getString("FirstName"),
-                    rs.getString("LastName"),
-                    rs.getString("Email"),
-                    rs.getString("Address"),
-                    rs.getString("Gender"),
-                    rs.getString("Phone"),
-                    rs.getInt("AccountID")
+                        rs.getInt("CustomerID"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Address"),
+                        rs.getString("Gender"),
+                        rs.getString("Phone"),
+                        rs.getInt("AccountID")
                 );
             }
         } catch (SQLException ex) {
@@ -163,24 +163,40 @@ public Customers getCustomerByAccountId(int accountId) {
         }
         return vector;
     }
-    
-    public String getNameByID(int id){
+
+    public String getNameByID(int id) {
         String name = "";
-        String sql ="select LastName from customers where customerID ="+id; 
+        String sql = "select LastName from customers where customerID =" + id;
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-               
-               
+
                 name = rs.getString("LastName");
-               
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return name;
     }
-    
+
+    public String getUsernameByCustomerID(int customerID) {
+        String username = null;
+        String sql = "SELECT a.UserName FROM Customers c JOIN Accounts a ON c.AccountID = a.AccountID WHERE c.CustomerID = ?";
+
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, customerID);
+            ResultSet rs = preState.executeQuery();
+
+            if (rs.next()) {
+                username = rs.getString("UserName");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return username;
+    }
+
 }

@@ -55,44 +55,25 @@
                     </div>
 
                     <ul class="sidebar-menu pt-3">
-                        <li><a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
-
                         <li class="sidebar-dropdown">
-                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
-                            <!--                                                    <div class="sidebar-submenu">
-                                                                                    <ul>
-                                                                                        <li><a href="AdminAccounts">All Accounts</a></li>
-                                                                                        <li><a href="add-patient.html">Add Patients</a></li>
-                                                                                        <li><a href="patient-profile.html">Profile</a></li>
-                                                                                    </ul>
-                                                                                </div>-->
+                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Manager</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="ProductManager">All Products</a></li>
-                                    <li><a href="product-detail.html">Dermatological drugs</a></li>
-                                    <li><a href="shopcart.html">Musculoskeletal</a></li>
-                                    <li><a href="checkout.html">Supplements and vitamins</a></li>
-                                    <li><a href="checkout.html">Cancer drugs</a></li>
-                                </ul>
-                            </div>
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="admin">Blogs</a></li>
-                                </ul>
-                            </div>
+                            <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                            <div class="sidebar-submenu">
+                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+<!--                            <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="faqs.html">FAQs</a></li>
                                     <li><a href="review.html">Reviews</a></li>
@@ -103,8 +84,9 @@
                                     <li><a href="error.html">404 !</a></li>
                                     <li><a href="blank-page.html">Blank Page</a></li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </li>
+                        <br>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>

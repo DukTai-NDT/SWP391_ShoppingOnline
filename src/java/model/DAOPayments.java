@@ -93,35 +93,45 @@ public class DAOPayments extends DBConnection {
         }
         return vector;
     }
+
     public int getLastPaymentID() {
-       int n = 0;
+        int n = 0;
         String sql = "SELECT top(1) * FROM Payments ORDER BY PaymentID DESC";
-         try {
+        try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
-            while (rs.next()) {                
+            while (rs.next()) {
                 n = rs.getInt("PaymentID");
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOPayments.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
     }
+
+    public String getMethodByPaymentID(int paymentID) {
+        String method = null;
+        String sql = "SELECT Method FROM Payments WHERE PaymentID = ?"; // Sửa MethodID -> Method
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, paymentID);
+            ResultSet rs = pre.executeQuery();
+
+            if (rs.next()) {
+                method = rs.getString("Method");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOPayments.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return method;
+    }
+
     public static void main(String[] args) {
         DAOPayments dao = new DAOPayments();
-        int n = dao.getLastPaymentID();
-        System.out.println(n);
-          Vector<Payments> vector = dao.getPayment("select * from Payments");
-          for (Payments payments : vector) {
-              System.out.println(payments);
-        }
-          int x = dao.updatePayment(new Payments(2013, 1, true));
-          System.out.println(x);
-          
-          Vector<Payments> vector1 = dao.getPayment("select * from Payments");
-          for (Payments payments : vector1) {
-              System.out.println(payments);
-        }
+        int paymentID = 11;
+        String method = dao.getMethodByPaymentID(paymentID);
+        System.out.println(method);
     }
 }

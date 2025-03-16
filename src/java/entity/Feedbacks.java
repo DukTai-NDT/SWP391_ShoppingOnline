@@ -14,23 +14,23 @@ public class Feedbacks {
     private int FeedbackID;
     private String Comment;
     private LocalDate Time;
-    private int OrderID;
+    private int Rating;
     private int AccountID;
     private int ProductID;
 
-    public Feedbacks(int FeedbackID, String Comment, LocalDate Time, int OrderID, int AccountID, int ProductID) {
+    public Feedbacks(int FeedbackID, String Comment, LocalDate Time, int Rating, int AccountID, int ProductID) {
         this.FeedbackID = FeedbackID;
         this.Comment = Comment;
         this.Time = Time;
-        this.OrderID = OrderID;
+        this.Rating = Rating;
         this.AccountID = AccountID;
         this.ProductID = ProductID;
     }
 
-    public Feedbacks(String Comment, LocalDate Time, int OrderID, int AccountID, int ProductID) {
+    public Feedbacks(String Comment, LocalDate Time, int Rating, int AccountID, int ProductID) {
         this.Comment = Comment;
         this.Time = Time;
-        this.OrderID = OrderID;
+        this.Rating = Rating;
         this.AccountID = AccountID;
         this.ProductID = ProductID;
     }
@@ -59,12 +59,12 @@ public class Feedbacks {
         this.Time = Time;
     }
 
-    public int getOrderID() {
-        return OrderID;
+    public int getRating() {
+        return Rating;
     }
 
-    public void setOrderID(int OrderID) {
-        this.OrderID = OrderID;
+    public void setRating(int Rating) {
+        this.Rating = Rating;
     }
 
     public int getAccountID() {
@@ -85,7 +85,7 @@ public class Feedbacks {
 
     @Override
     public String toString() {
-        return "Feedbacks{" + "FeedbackID=" + FeedbackID + ", Comment=" + Comment + ", Time=" + Time + ", OrderID=" + OrderID + ", AccountID=" + AccountID + ", ProductID=" + ProductID + '}';
+        return "Feedbacks{" + "FeedbackID=" + FeedbackID + ", Comment=" + Comment + ", Time=" + Time + ", Rating=" + Rating + ", AccountID=" + AccountID + ", ProductID=" + ProductID + '}';
     }
     
     

@@ -5,6 +5,7 @@
 package model;
 
 import entity.OrderDetails;
+import entity.Orders;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -94,7 +95,7 @@ public class DAOOrderDetails extends DBConnection {
                 int Quantity = rs.getInt("Quantity");
                 int ProductID = rs.getInt("ProductID");
                 int OrderID = rs.getInt("OrderID");
-                
+
                 OrderDetails orderdetails = new OrderDetails(OrderDetailID, Price, Quantity, ProductID, OrderID);
                 vector.add(orderdetails);
             }
@@ -105,14 +106,15 @@ public class DAOOrderDetails extends DBConnection {
         }
         return vector;
     }
-    public double getTotalPriceOrder(int orderId){
+
+    public double getTotalPriceOrder(int orderId) {
         double total = 0;
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = state.executeQuery("select * from OrderDetails where OrderID ="+orderId);
+            ResultSet rs = state.executeQuery("select * from OrderDetails where OrderID =" + orderId);
             while (rs.next()) {
-                
+
                 float Price = rs.getFloat("Price");
                 total += Price;
             }
@@ -121,9 +123,10 @@ public class DAOOrderDetails extends DBConnection {
             Logger.getLogger(DAOOrderDetails.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return total;
     }
+
     public String getStatusOrder(int orderID){
         String status = "";
         String sql = "select Status from OrderDetails od join Orders o on od.OrderID = o.OrderID where  OrderDetailID =" + orderID;
@@ -158,4 +161,31 @@ public class DAOOrderDetails extends DBConnection {
              };
         }
     }
+
+
+    public OrderDetails getOrderDetailsByIDs(int orderDetailID, int orderID) {
+        OrderDetails orderDetails = null;
+        try {
+            String sql = "SELECT ProductID, Price, Quantity FROM OrderDetails WHERE OrderDetailID = ? AND OrderID = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderDetailID);
+            ps.setInt(2, orderID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                float price = rs.getFloat("Price");
+                int quantity = rs.getInt("Quantity");
+                int productID = rs.getInt("ProductID");
+
+                orderDetails = new OrderDetails(orderDetailID, price, quantity, productID, orderID);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrderDetails.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return orderDetails;
+    }
+
+   
+
+
 }

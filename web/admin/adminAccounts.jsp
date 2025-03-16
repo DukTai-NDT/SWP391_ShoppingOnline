@@ -58,67 +58,25 @@
                     </div>
 
                     <ul class="sidebar-menu pt-3">
-                        <li><a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li><!--
-                        <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>
-
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-user me-2 d-inline-block"></i>Doctors</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="doctors.html">Doctors</a></li>
-                                    <li><a href="add-doctor.html">Add Doctor</a></li>
-                                    <li><a href="dr-profile.html">Profile</a></li>
-                                </ul>
-                            </div>
-                        </li>-->
-
-                        <li class="sidebar-dropdown">
-                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
-                            <div class="sidebar-submenu">
-                                <!--                                <ul>
-                                                                    <li><a href="patients.html" class="active">All Accounts</a></li>
-                                                                  
-                                                                </ul>-->
-                            </div>
+                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
-
-                        <!--                        <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="chat.html">Chat</a></li>
-                                                            <li><a href="email.html">Email</a></li>
-                                                            <li><a href="calendar.html">Calendar</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>-->
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Manager</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="ProductManager">All Products</a></li>
-                                    <li><a href="product-detail.html">Dermatological drugs</a></li>
-                                    <li><a href="shopcart.html">Musculoskeletal</a></li>
-                                    <li><a href="checkout.html">Supplements and vitamins</a></li>
-                                    <li><a href="checkout.html">Cancer drugs</a></li>
-                                </ul>
-                            </div>
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="admin">Blogs</a></li>
-                                    <!--                                    <li><a href="blog-detail.html">Blog Detail</a></li>-->
-                                </ul>
-                            </div>
+                            <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                            <div class="sidebar-submenu">
+                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+<!--                            <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="faqs.html">FAQs</a></li>
                                     <li><a href="review.html">Reviews</a></li>
@@ -129,25 +87,9 @@
                                     <li><a href="error.html">404 !</a></li>
                                     <li><a href="blank-page.html">Blank Page</a></li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </li>
-
-                        <!--                        <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="jsp/login.jsp">Login</a></li>
-                                                            <li><a href="jsp/signup.jsp">Signup</a></li>
-                                                            <li><a href="forgot-password.html">Forgot Password</a></li>
-                                                            <li><a href="jsp/login.jsp">Lock Screen</a></li>
-                                                            <li><a href="thankyou.html">Thank you...!</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>-->
-
-                        <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>-->
-
-                        <!--                        <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
+                        <br>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
