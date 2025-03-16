@@ -6,6 +6,7 @@ package controller;
 
 import entity.Blogs;
 import entity.Comment;
+import entity.Customers;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,16 +43,21 @@ public class CommentController extends HttpServlet {
             HttpSession session = request.getSession();
             DAOBlogs daoBlog = new DAOBlogs();
             DAOComment daoComment = new DAOComment();
-            Integer customerId = (Integer) session.getAttribute("customerId");
+             Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
-            if (customerId == null) {
-                response.sendRedirect("LoginURL?service=login");
-                return;
-            }
+            
             String service = request.getParameter("service");
             if (service == null) {
                 service = "listAllBlogs";
             }
+            if (service.equals("addComment") || service.equals("deleteComment")) {
+              if(currentCustomer == null){
+                  response.sendRedirect("LoginURL?service=login");
+                  return;
+              }
+            }
+            
+            
 
             if (service.equals("listAllComment")) {
                 String sql = "SELECT * FROM Blogs";
@@ -69,6 +75,11 @@ public class CommentController extends HttpServlet {
                 RequestDispatcher dispatch = request.getRequestDispatcher("blogDetail.jsp");
                 dispatch.forward(request, response);
             }
+            
+            
+            
+            
+            
 
             if (service.equals("addComment")) {
                 String CommentText = request.getParameter("CommentText");
@@ -83,7 +94,7 @@ public class CommentController extends HttpServlet {
 
                 LocalDate postDate = LocalDate.now();
 
-                Comment com = new Comment(0, blogID, customerId, CommentText, postDate);
+                Comment com = new Comment(0, blogID, currentCustomer.getCustomerID(), CommentText, postDate);
 
                 daoComment.addComment(com);
 
@@ -120,7 +131,7 @@ public class CommentController extends HttpServlet {
                 }
 
                
-                if (comment.getCustomerID() != customerId) {
+                if (comment.getCustomerID() != currentCustomer.getCustomerID()) {
                     response.sendRedirect("blogDetail.jsp?error=Unauthorized+to+delete+this+comment");
                     return;
                 }
@@ -137,6 +148,8 @@ public class CommentController extends HttpServlet {
               
                 response.sendRedirect("BlogsURL?service=detailBlog&blog=" + blogId);
             }
+            
+            
         }
     }
 

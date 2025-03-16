@@ -18,8 +18,9 @@ public class Customers {
 	private String Gender;
 	private String Phone;
 	private int AccountID;
+        private String ProfileImg;
 
-    public Customers(int CustomerID, String FirstName, String LastName, String Email, String Address, String Gender, String Phone, int AccountID) {
+    public Customers(int CustomerID, String FirstName, String LastName, String Email, String Address, String Gender, String Phone, int AccountID,String ProfileImg) {
         this.CustomerID = CustomerID;
         this.FirstName = FirstName;
         this.LastName = LastName;
@@ -28,6 +29,18 @@ public class Customers {
         this.Gender = Gender;
         this.Phone = Phone;
         this.AccountID = AccountID;
+        this.ProfileImg=ProfileImg;
+    }
+
+    public Customers(int CustomerID, String FirstName, String LastName, String Email, String Address, String Gender, String Phone, String ProfileImg) {
+        this.CustomerID = CustomerID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Address = Address;
+        this.Gender = Gender;
+        this.Phone = Phone;
+        this.ProfileImg = ProfileImg;
     }
 
     public Customers(int CustomerID, String FirstName, String LastName, String Email, String Address, String Gender, String Phone) {
@@ -40,7 +53,7 @@ public class Customers {
         this.Phone = Phone;
     }
 
-    public Customers(String FirstName, String LastName, String Email, String Address, String Gender, String Phone, int AccountID) {
+    public Customers(String FirstName, String LastName, String Email, String Address, String Gender, String Phone, int AccountID,String ProfileImg) {
         this.FirstName = FirstName;
         this.LastName = LastName;
         this.Email = Email;
@@ -48,6 +61,15 @@ public class Customers {
         this.Gender = Gender;
         this.Phone = Phone;
         this.AccountID = AccountID;
+        this.ProfileImg =ProfileImg;
+    }
+
+    public String getProfileImg() {
+        return ProfileImg;
+    }
+
+    public void setProfileImg(String ProfileImg) {
+        this.ProfileImg = ProfileImg;
     }
 
     public Customers() {
@@ -119,7 +141,9 @@ public class Customers {
 
     @Override
     public String toString() {
-        return "Customers{" + "CustomerID=" + CustomerID + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Email=" + Email + ", Address=" + Address + ", Gender=" + Gender + ", Phone=" + Phone + ", AccountID=" + AccountID + '}';
+        return "Customers{" + "CustomerID=" + CustomerID + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Email=" + Email + ", Address=" + Address + ", Gender=" + Gender + ", Phone=" + Phone + ", AccountID=" + AccountID + ", ProfileImg=" + ProfileImg + '}';
     }
+
+   
         
 }

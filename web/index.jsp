@@ -173,7 +173,7 @@
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
                                 <li><a href="CartURL?service=showCart" class="sub-menu-item">Shop Cart</a></li>
                                 <li><a href="DeliveryAddressURL?service=first" class="sub-menu-item">Checkout</a></li>
-                                <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
+                                <li><a href="CustomerURL" class="sub-menu-item">Account</a></li>
                             </ul>
                         </li>
 

@@ -29,6 +29,62 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class DAOBlogs extends DBConnection {
+    
+    public int countTotalBlogs(){
+        int totalItems= 0;
+        String sql ="Select COUNT(*) AS total From Blogs";
+        try {
+            Statement state = conn.createStatement();
+            ResultSet rs = state.executeQuery(sql);
+            if(rs.next()){
+                totalItems = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        return totalItems;
+    }
+    
+    public Vector<Blogs> getBlogsByPage(int offset , int limit){
+        Vector<Blogs> vector = new Vector<>();
+        String sql = "Select * from Blogs Order By BlogID OFFSET ? ROW FETCH NEXT ?  ROWS ONLY";
+        
+        
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            
+            pre.setInt(1, offset);
+            pre.setInt(2, limit);
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()){
+          int BlogID = rs.getInt("BlogID");
+          int CustomerID = rs.getInt("CustomerID");
+	  LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
+	  String Title = rs.getString("Title");
+	  String Content = rs.getString("Content");
+	  String Image = rs.getString("Image");
+	  boolean Status = (rs.getInt("Status") == 1 ? true : false);
+          
+          Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
+          vector.add(blog);
+                
+                
+            }
+            
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        
+        return vector;
+    }
 
     public int addBlog(Blogs other) {
         int n = 0;

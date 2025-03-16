@@ -85,6 +85,23 @@ public class DAOAccount extends DBConnection {
         return n;
 
     }
+    public boolean checkPassword(String email, String oldPassword) {
+    boolean isValid = false;
+    String sql = "SELECT * FROM Accounts WHERE CustomerID = ? AND Password = ?";
+    try {
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, email);
+        stmt.setString(2, oldPassword);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            isValid = true; 
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return isValid;
+}
+  
 
     public int changePassword(String email, String password) {
         int n = 0;
