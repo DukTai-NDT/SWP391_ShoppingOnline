@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -158,17 +160,34 @@ public class DAOCategories extends DBConnection {
         return category;
     }
 
-    public void editCategory(String id,String name, String image) {
+    public List<Categories> getCategoriesesByName(String txtSearch) {
+        List<Categories> list = new ArrayList<>();
+        String query = "select * from blogs where Title like ?";
+        try {
+            PreparedStatement preState = conn.prepareStatement(query);
+            preState.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = preState.executeQuery();
+            while (rs.next()) {
+              list.add(new Categories(rs.getInt(1), rs.getString(2), rs.getString(3)));
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return list;
+    }
+
+    public void editCategory(String id, String name, String image) {
         String sql = "Update Categories \n"
                 + "Set CategoryName=?,\n"
                 + "image=?\n"
                 + "where CategoryID=?";
         try {
-             PreparedStatement preState = conn.prepareStatement(sql);
-             preState.setString(3, id);
-             preState.setString(1, name);
-             preState.setString(2, image);
-             preState.executeQuery();
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setString(3, id);
+            preState.setString(1, name);
+            preState.setString(2, image);
+            preState.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
         }

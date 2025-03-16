@@ -4,6 +4,7 @@
  */
 package model;
 
+import entity.Blogs;
 import entity.Brand;
 import entity.Products;
 import entity.Role;
@@ -336,6 +337,23 @@ public class DAOProducts extends DBConnection {
             Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+
+    public List<Products> getProductsByName(String txtSearch) {
+        List<Products> list = new ArrayList<>();
+        String query = "select * from Products where ProductName like ?";
+        try {
+            PreparedStatement preState = conn.prepareStatement(query);
+            preState.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = preState.executeQuery();
+            while (rs.next()) {
+                list.add(new Products(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9), rs.getString(10)));
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return list;
     }
 
 }

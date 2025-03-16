@@ -203,8 +203,8 @@
                 <div>
                     <a class="logo" href="index.jsp">
                         <span class="logo-light-mode">
-                            <img src="images/logo-icon.png" height="30" alt="">
-                            <span>Online Medicine Selling</span>
+                            <img src="images/logo-dark.png" class="l-dark" height="24" alt="">
+                            <img src="images/logo-light.png" class="l-light" height="24" alt="">
                         </span>
                         <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt=""style="color: black">
                     </a>
@@ -500,20 +500,20 @@
                 <!-- Swiper Container -->
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
-                         <%for (Products p : vproduct) {%>
-                            <div class="swiper-slide">
-                                <div class="card1 features feature-primary border-0">
-                                    <img src="<%=p.getImage()%>" alt="Product Image" style="max-width: 200px; height: auto;">
-                                    <div class="card-body1 p-0 mt-3 text-center">
-                                        <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
-                                        <div class="buttons mt-2">
-                                            <a class="btn btn-primary" href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>">Buy</a>
-                                            <button class="btn btn-primary">Tuyp</button>
-                                        </div>
+                        <%for (Products p : vproduct) {%>
+                        <div class="swiper-slide">
+                            <div class="card1 features feature-primary border-0">
+                                <img src="<%=p.getImage()%>" alt="Product Image" style="max-width: 200px; height: auto;">
+                                <div class="card-body1 p-0 mt-3 text-center">
+                                    <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
+                                    <div class="buttons mt-2">
+                                        <a class="btn btn-primary" href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>">Buy</a>
+                                        <button class="btn btn-primary">Tuyp</button>
                                     </div>
                                 </div>
                             </div>
-                       <%}%>
+                        </div>
+                        <%}%>
                     </div>
 
                     <!-- Pagination (d?u ch?m) -->
@@ -566,29 +566,29 @@
                 </div><!--end row-->
 
                 <div class="row">
-                   <%for (Products p : vproductspecial) {%>
-                        <div class="col-xl-3 col-md-4 col-12 mt-5">
+                    <%for (Products p : vproductspecial) {%>
+                    <div class="col-xl-3 col-md-4 col-12 mt-5">
 
-                            <div class="card1 features feature-primary border-0">
+                        <div class="card1 features feature-primary border-0">
 
 
-                                <img src="<%=p.getImage()%>" alt="Blog Image" style="max-width: 200px; height: auto;">
+                            <img src="<%=p.getImage()%>" alt="Blog Image" style="max-width: 200px; height: auto;">
 
-                                <div class="card-body1 p-0 mt-3">
-                                    <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
-                                    <!--                                    <p class="text-muted mt-3">There is now an abundance of readable dummy texts required purely to fill a space.</p>-->
-                                    <div class="buttons1">
+                            <div class="card-body1 p-0 mt-3">
+                                <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
+                                <!--                                    <p class="text-muted mt-3">There is now an abundance of readable dummy texts required purely to fill a space.</p>-->
+                                <div class="buttons1">
 
-                                        <a class="btn btn-primary" href="">Buy</a>
+                                    <a class="btn btn-primary" href="">Buy</a>
 
-                                        <button class="btn btn-primary">Tuyp</button>
-                                    </div>
+                                    <button class="btn btn-primary">Tuyp</button>
                                 </div>
-
                             </div>
 
-                        </div><!--end col-->
-                   <%}%>
+                        </div>
+
+                    </div><!--end col-->
+                    <%}%>
                 </div><!--end row-->
             </div><!--end container-->
         </section><!--end section-->
@@ -833,10 +833,10 @@
                     <div class="text-center">
                         <h4>Search now.....</h4>
                         <div class="subcribe-form mt-4">
-                            <form>
+                            <form action="ProductURL">
                                 <div class="mb-0">
-                                    <input type="text" id="help" name="name" class="border bg-white rounded-pill" required="" placeholder="Search">
-                                    <button type="submit" class="btn btn-pills btn-primary">Search</button>
+                                    <input type="text" id="help" name="ProductName" class="border bg-white rounded-pill" required="" placeholder="Search">
+                                    <button type="submit" class="btn btn-pills btn-primary" name="submit">Search</button>
                                 </div>
                             </form>
                         </div>

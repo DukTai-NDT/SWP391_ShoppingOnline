@@ -335,6 +335,21 @@ public class DAOAccount extends DBConnection {
         return count;
     }
 
+    public Account checkAccountExist(String username) {
+        String sql = "SELECT * FROM accounts WHERE username = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Account(rs.getInt("id"), rs.getString("username"), rs.getInt("roleid"), rs.getString("password"), rs.getString("email"), rs.getBoolean("status"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
 //        Account accountAdd = new Account("Tainguyenduc", 2, "abcd123");

@@ -36,6 +36,12 @@ public class Account {
 
     }
 
+    public Account(String UserName, String Email) {
+        this.UserName = UserName;
+        this.Email = Email;
+    }
+    
+
     public Account() {
     }
 

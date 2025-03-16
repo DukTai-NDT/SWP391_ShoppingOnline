@@ -54,7 +54,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="HomePageURL">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -62,60 +62,46 @@
 
                     <ul class="sidebar-menu pt-3">
 
-
                         <li class="sidebar-dropdown">
-                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
+                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
                             <div class="sidebar-submenu">
                             </div>
                         </li>
 
-                        <!--                        <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="chat.html">Chat</a></li>
-                                                            <li><a href="email.html">Email</a></li>
-                                                            <li><a href="calendar.html">Calendar</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>-->
+                        <br>
 
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Pharmacy</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="product-detail.html">Shop Detail</a></li>
-                                    <li><a href="shopcart.html">Shopcart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                </ul>
-                            </div>
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="blogs.html">Blogs</a></li>
-                                    <!--                                    <li><a href="blog-detail.html">Blog Detail</a></li>-->
-                                </ul>
-                            </div>
+                            <a href="OrdersManagement"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+                            <!--                            <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li><a href="faqs.html">FAQs</a></li>
+                                                                <li><a href="review.html">Reviews</a></li>
+                                                                <li><a href="invoice-list.html">Invoice List</a></li>
+                                                                <li><a href="invoice.html">Invoice</a></li>
+                                                                <li><a href="terms.html">Terms & Policy</a></li>
+                                                                <li><a href="privacy.html">Privacy Policy</a></li>
+                                                                <li><a href="error.html">404 !</a></li>
+                                                                <li><a href="blank-page.html">Blank Page</a></li>
+                                                            </ul>
+                                                        </div>-->
                         </li>
-
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="faqs.html">FAQs</a></li>
-                                    <li><a href="review.html">Reviews</a></li>
-                                    <li><a href="invoice-list.html">Invoice List</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="terms.html">Terms & Policy</a></li>
-                                    <li><a href="privacy.html">Privacy Policy</a></li>
-                                    <li><a href="error.html">404 !</a></li>
-                                    <li><a href="blank-page.html">Blank Page</a></li>
-                                </ul>
-                            </div>
+                        <br>
                         </li>
 
                         <!--                        <li class="sidebar-dropdown">
@@ -165,7 +151,7 @@
                             </a>
                             <div class="search-bar p-0 d-none d-lg-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <form action="adminsearchblog" role="search" method="get" id="searchform" class="searchform">
+                                    <form action="SearchCategories" role="search" method="get" id="searchform" class="searchform">
                                         <div>
                                             <input type="text" class="form-control border rounded-pill" name="txt" id="s" placeholder="Search Keywords...">
                                             <input type="submit" id="searchsubmit" value="Search">
@@ -303,12 +289,12 @@
                             <div>
                                 <h5 class="mb-0">Categories</h5>
 
-<!--                                <nav aria-label="breadcrumb" class="d-inline-block mt-1">
-                                    <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
-                                        <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Blogs</li>
-                                    </ul>
-                                </nav>-->
+                                <!--                                <nav aria-label="breadcrumb" class="d-inline-block mt-1">
+                                                                    <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
+                                                                        <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+                                                                        <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+                                                                    </ul>
+                                                                </nav>-->
                             </div>
 
                             <div class="mt-4 mt-sm-0">
@@ -328,62 +314,32 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${vcategory}" var="c">
-                                            <tr>
+                                            <c:forEach items="${vcategory}" var="c">
+                                                <tr>
 
-                                                <td class="p-3">${c.categoryID}</td>
-                                                <td class="p-3"><a href="" class="text-dark product-name h6" >${c.categoryName}</a></td>
-                                                <td class="p-3"><img src="${c.image}" alt="Blog Image" style="max-width: 200px; height: auto;"></td>
+                                                    <td class="p-3">${c.categoryID}</td>
+                                                    <td class="p-3"><a href="" class="text-dark product-name h6" >${c.categoryName}</a></td>
+                                                    <td class="p-3"><img src="${c.image}" alt="Blog Image" style="max-width: 200px; height: auto;"></td>
 
-                                                <td class="text-end p-3"> 
-                                                    <a href="LoadCategory?cid=${c.categoryID}" 
-                                                       class="btn btn-icon btn-pills btn-soft-primary">
-                                                        <i class="uil uil-edit"></i>
-                                                    </a>
-                                                    <a href="DeleteCategories?cid=${c.categoryID}" 
-                                                       class="btn btn-icon btn-pills btn-soft-danger"
-                                                       onclick="return confirmDelete(event, '${c.categoryID}')">
-                                                        <i class="uil uil-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
+                                                    <td class="text-end p-3"> 
+                                                        <a href="LoadCategory?cid=${c.categoryID}" 
+                                                           class="btn btn-icon btn-pills btn-soft-primary">
+                                                            <i class="uil uil-edit"></i>
+                                                        </a>
+                                                        <a href="DeleteCategories?cid=${c.categoryID}" 
+                                                           class="btn btn-icon btn-pills btn-soft-danger"
+                                                           onclick="return confirmDelete(event, '${c.categoryID}')">
+                                                            <i class="uil uil-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
 
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div><!--end row-->
-                        <!--                        <div class="row">
-                        
-                        <c:forEach items="${bloglist}" var="b">
-                            <div class="card blog blog-primary border-0 shadow rounded overflow-hidden">
-                                <img src="" class="img-fluid" alt="">
-                                <div class="card-body p-4">
-                                    <ul class="list-unstyled mb-2">
-                                        <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>${b.postTime}</li>
-                                        <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
-                                    </ul>
-                                    <a href="AdminBlogsDetail?bid=${b.blogID}" class="text-dark title h5">${b.title}</a>
-                                    <div class="post-meta d-flex justify-content-between mt-3">
-                                        <ul class="list-unstyled mb-0">
-                                            <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
-                                            <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
-                                        </ul>
-                                        <table>
-                                            <td class="text-end p-3">
-                                                <a href="AdminDeleteBlog?bid=${b.blogID}" class="btn btn-icon btn-pills btn-soft-danger"  ><i class="uil uil-times-circle"></i></a>
-                                            </td></table>
-
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                        </c:forEach>
-
-                    </div>end row-->
 
                         <div class="row">
                             <div class="col-12 mt-4">
@@ -494,12 +450,12 @@
                                                             <label class="form-label"> Category Name : </label>
                                                             <p><input type="text" name="categoryname" value="" />
                                                         </div>
-                                                 
+
 
                                                     </div><!--end col-->
 
                                                 </div><!--end col-->
-                                               
+
                                                 <div class="col-lg-12 text-end">
                                                     <button type="submit" class="btn btn-primary">Add Blog</button>
                                                 </div><!--end col-->

@@ -4,7 +4,7 @@
  */
 package controller;
 
-import entity.Account;
+import entity.Categories;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +12,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Vector;
-import model.DAOAccount;
+import model.DAOCategories;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "AdminAddAccountController", urlPatterns = {"/AdminAddAccount"})
-public class AdminAddAccountController extends HttpServlet {
+@WebServlet(name = "SearchCategoriesController", urlPatterns = {"/SearchCategories"})
+public class SearchCategoriesController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,6 +35,7 @@ public class AdminAddAccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,6 +51,12 @@ public class AdminAddAccountController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        String txt = request.getParameter("txt");
+        DAOCategories daocategories = new DAOCategories();
+        String sql ="select * from Categories where CategoryName like N'%"+txt+"%'";
+        Vector<Categories> vcategory = daocategories.getCategories(sql);
+        request.setAttribute("vcategory", vcategory);
+        request.getRequestDispatcher("admin/adminCategories.jsp").forward(request, response);
     }
 
     /**
@@ -63,22 +71,6 @@ public class AdminAddAccountController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        String message = "";
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        DAOAccount daoaccount = new DAOAccount();
-        Account existingAccount = daoaccount.checkAccountExist(username);
-
-        if (existingAccount != null) {
-            request.setAttribute("errorUsername", "Username already exists, please choose another!");
-            request.getRequestDispatcher("admin/adminAccounts.jsp").forward(request, response);
-
-        } else {
-            daoaccount.insertAccount(username, "2", password, email, true);
-            response.sendRedirect("AdminAccounts");
-        }
-
     }
 
     /**

@@ -54,7 +54,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="HomePageURL">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -76,7 +76,7 @@
                                                     </div>
                                                 </li>-->
 
-
+                        <br>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
@@ -87,7 +87,14 @@
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
-                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
+                            <div class="sidebar-submenu">
+                            </div>
+                        </li>
+
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
@@ -485,7 +492,7 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">Image URL:</label>
-                                        <input type="text" name="images" id="images" class="form-control" placeholder="Enter image URL" oninput="previewImage()">
+                                        <input type="text" name="images" id="images" class="form-control" placeholder="Enter image URL" oninput="previewImage()"required>
                                     </div>
                                 </div><!--end col-->
 
@@ -503,7 +510,7 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Blog Title <span class="text-danger">*</span></label>
-                                                            <input name="title" id="title" type="text" class="form-control" placeholder="Title :">
+                                                            <input name="title" id="title" type="text" class="form-control" placeholder="Title :" required>
                                                         </div>
 
                                                     </div><!--end col-->
@@ -512,7 +519,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="mb-3">
                                                         <label class="form-label">Description: <span class="text-danger">*</span></label>
-                                                        <textarea name="description:" id="description:" rows="4" class="form-control" placeholder="Blog description :"></textarea>
+                                                        <textarea name="description:" id="description:" rows="4" class="form-control" placeholder="Blog description :"required></textarea>
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-lg-12 text-end">
@@ -543,26 +550,26 @@
     <script src="js/app.js"></script>
 
     <script>
-                                    const handleChange = () => {
-                                        const fileUploader = document.querySelector('#input-file');
-                                        const getFile = fileUploader.files
-                                        if (getFile.length !== 0) {
-                                            const uploadedFile = getFile[0];
-                                            readFile(uploadedFile);
+                                        const handleChange = () => {
+                                            const fileUploader = document.querySelector('#input-file');
+                                            const getFile = fileUploader.files
+                                            if (getFile.length !== 0) {
+                                                const uploadedFile = getFile[0];
+                                                readFile(uploadedFile);
+                                            }
                                         }
-                                    }
 
-                                    const readFile = (uploadedFile) => {
-                                        if (uploadedFile) {
-                                            const reader = new FileReader();
-                                            reader.onload = () => {
-                                                const parent = document.querySelector('.preview-box');
-                                                parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
-                                            };
+                                        const readFile = (uploadedFile) => {
+                                            if (uploadedFile) {
+                                                const reader = new FileReader();
+                                                reader.onload = () => {
+                                                    const parent = document.querySelector('.preview-box');
+                                                    parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
+                                                };
 
-                                            reader.readAsDataURL(uploadedFile);
-                                        }
-                                    };
+                                                reader.readAsDataURL(uploadedFile);
+                                            }
+                                        };
     </script>
     <script>
         function confirmDelete(event, blogID) {
