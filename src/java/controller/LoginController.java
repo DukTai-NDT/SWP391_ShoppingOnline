@@ -90,19 +90,32 @@ public class LoginController extends HttpServlet {
                     Vector<Customers> customerList = daoCus.getCustomer(
                             "select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID "
                             + "from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = "
-                            + accountExists.getAccountID()
-                    );
+                            + accountExists.getAccountID());
                     System.out.println("null" + accountExists);
                     for (Customers customers : customerList) {
                         System.out.println("ok" + customers);
                     }
+                    if (accountExists.isActive() == false) {
+                        request.setAttribute("message", "Account is block can not login");
+                        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
 
+                    }
                     // Kiểm tra xem Vector có rỗng không
                     if (customerList != null && !customerList.isEmpty()) {
                         session.setAttribute("selectedCartItems", new Vector<CartItems>());
                         Customers cus = customerList.get(0);
                         session.setAttribute("dataCustomer", cus);
-                        request.getRequestDispatcher("index.jsp").forward(request, response);
+                          if (accountExists.getRoleID() == 2) {
+
+                            
+                            request.getRequestDispatcher("index.jsp").forward(request, response);
+                        } else if (accountExists.getRoleID() == 3) {
+                            
+                            response.sendRedirect("ProductManager");
+
+                        }
+                        
+                    
                     } else {
                         // Xử lý trường hợp không tìm thấy khách hàng
                         request.setAttribute("message", "Không tìm thấy thông tin khách hàng cho tài khoản này.");
@@ -126,15 +139,20 @@ public class LoginController extends HttpServlet {
                     request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
                 } else {
                     Account account = dao.getLogin(request.getParameter("username"), request.getParameter("password"));
+                    System.out.println("ok+"+account);
+                    
+                    if (account == null) {
+                        request.setAttribute("message", "Username or password is incorrect");
+                        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+                        
+                        
                     if (account.isActive() == false) {
                         request.setAttribute("message", "Account is block can not login");
                         request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
 
                     }
 
-                    if (account == null) {
-                        request.setAttribute("message", "Username or password is incorrect");
-                        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+                    
 
                     } else if (account != null) {
 

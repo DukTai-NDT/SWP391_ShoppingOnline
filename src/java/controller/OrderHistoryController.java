@@ -4,8 +4,8 @@
  */
 package controller;
 
-import entity.Account;
-import entity.TokenForgetPassword;
+import entity.Customers;
+import entity.OrderDetails;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,17 +13,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
+import jakarta.servlet.http.HttpSession;
 import java.util.Vector;
-import model.DAOAccount;
-import model.DAOTokenForget;
+import model.DAOOrderDetails;
+import model.DAOProducts;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ForgotPassword", urlPatterns = {"/ForgotPasswordURL"})
-public class ForgotPassword extends HttpServlet {
+@WebServlet(name = "OrderHistoryController", urlPatterns = {"/OrderHistoryURL"})
+public class OrderHistoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,43 +37,30 @@ public class ForgotPassword extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAOAccount dao = new DAOAccount();
+        HttpSession session = request.getSession();
+        DAOOrderDetails daoOrderDetail = new DAOOrderDetails();
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("service");
             if (service == null) {
-                service = "forgot";
+                service = "show";
             }
-            if (service.equals("forgot")) {
-                String email = request.getParameter("email");
+            if (service.equals("show")) {
+                Customers customer = (Customers) session.getAttribute("dataCustomer");
+                Vector<OrderDetails> vectorOrderDetail = daoOrderDetail.getOrderDetails(" SELECT  MIN(od.OrderDetailID) AS OrderDetailID, \n"
+                        + "       MIN(od.Price) AS Price,\n"
+                        + "	   MIN(od.Quantity) AS Quantity, \n"
+                        + "	   od.ProductID,\n"
+                        + "       MIN(od.OrderID) AS OrderID\n"
+                        + "FROM OrderDetails od JOIN Orders o ON od.OrderID = o.OrderID\n"
+                        + "WHERE o.CustomerID = "+customer.getCustomerID()+"\n"
+                        + "GROUP BY od.ProductID,o.Status;");
 
-                Account acc = dao.getAAccount(email);
+                request.setAttribute("dataOrderHistory", vectorOrderDetail);
+                for (OrderDetails orderDetails : vectorOrderDetail) {
 
-                if (acc == null) {
-                    //request.setAttribute("message", "Account invalid !!!");
-                    request.getRequestDispatcher("jsp/forgot-password.jsp").forward(request, response);
-                    return;
                 }
-                resetService resetservice = new resetService();
-                String token = "http://localhost:8080/SWP391/ResetPasswordURL?token=" + resetservice.generateToken();
-                TokenForgetPassword newTokenForget = new TokenForgetPassword(token,
-                        resetservice.expireDateTime(), false,
-                        acc.getAccountID());
-                System.out.println(token+"abc123");
-
-                //send link 
-                DAOTokenForget daoforget = new DAOTokenForget();
-
-                int n = daoforget.insertTokenForget(newTokenForget);
-                boolean ok = resetservice.sendEmail(email, token, acc.getUserName());
-               if(n == 0 || !ok){
-                request.setAttribute("message", "send request not success");
-                request.getRequestDispatcher("jsp/forgot-password.jsp").forward(request, response);
-
             }
-               request.setAttribute("message", "Send request success. Check your email");
-                request.getRequestDispatcher("jsp/forgot-password.jsp").forward(request, response);
-
-            }
+            request.getRequestDispatcher("jsp/order-history.jsp").forward(request, response);
         }
     }
 

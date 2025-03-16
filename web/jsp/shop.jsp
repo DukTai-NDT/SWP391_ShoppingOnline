@@ -493,7 +493,7 @@
                     <%for (Products pro : vector) {%>
                     <!-- Sản phẩm 1 -->
                     <div class="product-card">
-                        <a href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><img src="https://via.placeholder.com/150" alt="Product 1"></a>
+                        <a href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><img src="images/products/<%=pro.getImage()%>" alt="Product 1"></a>
                         <h3><%=pro.getProductName()%></h3>
                         <p class="price"><%=pro.getPrice()%>/ Túyp</p>
                         <div class="buttons">

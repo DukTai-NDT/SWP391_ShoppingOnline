@@ -93,11 +93,11 @@ public class CheckoutController extends HttpServlet {
 
                     // Add Order
 
-                    int orderID = daoOrder.addOrder(new Orders("Pending Confirmation", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID()));
+                    int orderID = daoOrder.addOrder(new Orders("Đang chuẩn bị hàng", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID()));
 
 
                     if (orderID == 0) {
-                        request.setAttribute("message", "Order processing failed");
+                        request.setAttribute("message", "Tạo mới đơn hàng thất bại");
                         request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
                         return;
 
@@ -106,7 +106,7 @@ public class CheckoutController extends HttpServlet {
                     // Add Delivery Address
                     int addressID = daoDeliAddress.addDeliveryAddress(new DeliveryAddress(address, daoOrder.getLastOrderID(), Integer.parseInt(provinceId), Integer.parseInt(districtId)));
                     if (addressID == 0) {
-                        request.setAttribute("message", "Address saving failed");
+                        request.setAttribute("message", "Địa chỉ không hợp lệ");
                         request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
                         return;
 
@@ -130,7 +130,7 @@ public class CheckoutController extends HttpServlet {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    request.setAttribute("message", "Checkout Failler");
+                    request.setAttribute("message", "Thanh toán thất bại");
                     request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
                 }
             }

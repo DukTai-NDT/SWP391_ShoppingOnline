@@ -1,9 +1,12 @@
 <%@ page import=" entity.Account" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="utf-8" />
+        
         <title>Doctris - Doctor Appointment Booking System</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
@@ -25,29 +28,29 @@
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
         <style>
-    .auth-links {
-      
-        padding: 10px 15px;
-        text-align: center;
-    }
+            .auth-links {
 
-    .auth-links a {
-        color: white; /* M�u ch? tr?ng */
-    opacity: 0.6; /* Gi?m ?? trong su?t */
-    text-decoration: none;
-    font-weight: bold;
-    transition: opacity 0.3s ease-in-out;
-    }
+                padding: 10px 15px;
+                text-align: center;
+            }
 
-    .auth-links span {
-        color: white;
-        margin: 0 8px;
-    }
+            .auth-links a {
+                color: white; /* Màu ch? tr?ng */
+                opacity: 0.6; /* Gi?m ?? trong su?t */
+                text-decoration: none;
+                font-weight: bold;
+                transition: opacity 0.3s ease-in-out;
+            }
 
-    .auth-links a:hover {
-       opacity: 1;
-    }
-</style>
+            .auth-links span {
+                color: white;
+                margin: 0 8px;
+            }
+
+            .auth-links a:hover {
+                opacity: 1;
+            }
+        </style>
     </head>
     <%
         Account account = (Account)session.getAttribute("dataUser");
@@ -97,18 +100,7 @@
 
                 <!-- Start Dropdown -->
                 <ul class="dropdowns list-inline mb-0">
-<!--                    <li class="list-inline-item mb-0">
-                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
-                        </a>
-                    </li>
-
-                    <li class="list-inline-item mb-0 ms-1">
-                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-                            <i class="uil uil-search"></i>
-                        </a>
-                    </li>-->
-
+                   
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
 
@@ -120,10 +112,10 @@
                                     <img src="" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                                     <div class="flex-1 ms-2">
                                         <span class="d-block mb-1"><%=account.getUserName()%></span>
-                                        
+
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
+                                <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Đơn mua</a>
                                 <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
@@ -145,25 +137,25 @@
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left nav-light">
-<!--                        <li class="has-submenu parent-menu-item">
-                            <a href="index.jsp">Home</a><span class="sub-menu-item"></span>
+                        <!--                        <li class="has-submenu parent-menu-item">
+                                                    <a href="index.jsp">Home</a><span class="sub-menu-item"></span>
+                        
+                        
+                                                </li>-->
 
 
-                        </li>-->
 
-
-
-<!--                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Patients</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="patient-dashboard.html" class="sub-menu-item">Dashboard</a></li>
-                                <li><a href="patient-profile.html" class="sub-menu-item">Profile</a></li>
-                                <li><a href="booking-appointment.html" class="sub-menu-item">Book Appointment</a></li>
-                                <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
-                            </ul>
-                        </li>-->
+                        <!--                        <li class="has-submenu parent-menu-item">
+                                                    <a href="javascript:void(0)">Patients</a><span class="menu-arrow"></span>
+                                                    <ul class="submenu">
+                                                        <li><a href="patient-dashboard.html" class="sub-menu-item">Dashboard</a></li>
+                                                        <li><a href="patient-profile.html" class="sub-menu-item">Profile</a></li>
+                                                        <li><a href="booking-appointment.html" class="sub-menu-item">Book Appointment</a></li>
+                                                        <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
+                                                    </ul>
+                                                </li>-->
                         <%if(account != null){%>
-                            <li class="has-submenu parent-menu-item">
+                        <li class="has-submenu parent-menu-item">
                             <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
@@ -183,16 +175,16 @@
                                 <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
                                 <li><a href="BlogsURL" class="sub-menu-item">Blogs</a></li>
-                                
-                                
+
+
                             </ul>
                         </li>
-<!--                           <li><a href="ProductManager" class="sub-menu-item">Manager</a></li>      -->
-                            <%}else{%>
-                           
-                          <li class="has-submenu parent-menu-item">
-                           <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
-                            
+                        <!--                           <li><a href="ProductManager" class="sub-menu-item">Manager</a></li>      -->
+                        <%}else{%>
+
+                        <li class="has-submenu parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
+
                         </li>
 
                         <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
@@ -201,14 +193,14 @@
                                 <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
                                 <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
-                                
-                                
+
+
                             </ul>
                         </li>
-                          
-                            <%}%>
 
-<!--                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>-->
+                        <%}%>
+
+                        <!--                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>-->
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -1104,7 +1096,7 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="text-sm-start text-center">
-                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> � Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
                             </div>
                         </div><!--end col-->
 

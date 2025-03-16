@@ -73,7 +73,7 @@ public class DAOOrders extends DBConnection {
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            
+
             pre.setString(1, o.getStatus());
             pre.setInt(2, o.getCustomerID());
             pre.setDate(3, java.sql.Date.valueOf(o.getOrderTime()));
@@ -95,14 +95,14 @@ public class DAOOrders extends DBConnection {
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 int OrderID = rs.getInt("OrderID");
-               
+
                 String Status = rs.getString("Status");
                 int CustomerID = rs.getInt("CustomerID");
                 LocalDate OrderTime = rs.getDate("OrderTime").toLocalDate();
                 LocalDate DeliveryETA = rs.getDate("DeliveryETA").toLocalDate();
                 int PaymentID = rs.getInt("PaymentID");
 
-                Orders order = new Orders(OrderID, Status, CustomerID, OrderTime, DeliveryETA,PaymentID);
+                Orders order = new Orders(OrderID, Status, CustomerID, OrderTime, DeliveryETA, PaymentID);
                 vector.add(order);
             }
         } catch (SQLException ex) {
@@ -112,29 +112,51 @@ public class DAOOrders extends DBConnection {
         return vector;
 
     }
-    public int getLastOrderID(){
+
+    public int getLastOrderID() {
         int n = 0;
         String sql = "SELECT top(1) * FROM Orders ORDER BY OrderID DESC ";
-         try {
+        try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
-            while (rs.next()) {                
+            while (rs.next()) {
                 n = rs.getInt("OrderID");
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
     }
-    
+
+    public int updateStatusOrder(String newStatus, int orderID) {
+        int n = 0;
+        String sql = "UPDATE [dbo].[Orders]\n"
+                + "   SET [Status] = ?\n"
+                + " WHERE OrderID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            pre.setString(1, newStatus);
+            pre.setInt(2, orderID);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+
     public static void main(String[] args) {
         DAOOrders dao = new DAOOrders();
+
+      int n = dao.updateStatusOrder("Hoàn thành", 1);
+        System.out.println(n);
         Vector<Orders> vector = dao.getOrders("select * from Orders");
         for (Orders orders : vector) {
             System.out.println(orders);
         }
-        int n = dao.getLastOrderID();
-        System.out.println(n);
+        
+        
+
     }
 }

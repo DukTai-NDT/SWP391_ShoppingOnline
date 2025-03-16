@@ -1,6 +1,7 @@
 
-<%@page import="entity.Account, entity.Products, java.util.Vector,entity.Cart,entity.CartItems,entity.Provinces,entity.Districts" %>
+<%@page import="entity.Account, entity.Products,entity.Customers ,java.util.Vector,entity.Cart,entity.CartItems,entity.Provinces,entity.Districts" %>
 <!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
 
     <head>
@@ -27,6 +28,8 @@
     </head>
     <%
                 Account account = (Account)session.getAttribute("dataUser");
+                
+                Customers customer = (Customers)session.getAttribute("dataCustomer");
                 Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("selectedCartItems"); 
                 
               
@@ -206,7 +209,7 @@
                         <div class="card rounded shadow p-4 border-0">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="h5 mb-0">Your cart</span>
-                                <span class="badge bg-primary rounded-pill">3</span>
+                                
                             </div>
                             <ul class="list-group mb-3 border">
 
@@ -233,8 +236,8 @@
                                 </li>
                                 <%}else{%>
                                 <h5 style="color: red;">
-                                    You haven't selected any products, so you can't checkout. Please return to  
-                                    <a href="ProductURL?service=listAllProducts" style="color: blue; text-decoration: underline;">shop</a>.
+                                    Bạn chưa có sản phẩm nào trong giỏ hàng. Vì vậy không thể thanh toán. Hãy quay trở lại   
+                                    <a href="ProductURL?service=listAllProducts" style="color: blue; text-decoration: underline;">Cửa Hàng</a>.
                                 </h5>
 
                                 <%}%>
@@ -320,21 +323,31 @@
                                             Valid last name is required.
                                         </div>
                                     </div>
-
+                                    <%if(customer.getPhone() != null){%>
                                     <div class="col-12">
                                         <label for="phone" class="form-label">Phone number</label>
                                         <div class="input-group has-validation">
 
                                             <input type="text" class="form-control" id="phone" placeholder="Phone number"
-                                                   name="phone"  required>
+                                                   name="phone" value="<%=customer.getPhone()%>"  readonly>
                                         </div>
                                     </div>
+                                        <%}else{%>
+                                        <div class="col-12">
+                                            <label  for="phone" class="form-label" style="color: red" >Bạn chưa cập nhật số điện thoại. Ấn vào đây để cập nhật trang cá nhân <a href="#">Cập nhật tài khoản</a></label>
+                                        <label for="phone" class="form-label" >Phone number</label>
+                                        <div class="input-group has-validation">
+                                               <input type="text" class="form-control" id="phone" placeholder="Phone number"
+                                                   name="phone" value="<%=customer.getPhone()%>"  readonly>
+                                        </div>
+                                    </div>
+                                        <%}%>
 
                                     <div class="col-12">
                                         <label for="email" class="form-label">Email <span
                                                 class="text-muted">(Optional)</span></label>
                                         <input type="email" class="form-control" id="email" placeholder="you@example.com"
-                                               name="email">
+                                               name="email" value="<%=account.getEmail()%>" readonly>
                                         <div class="invalid-feedback">
                                             Please enter a valid email address for shipping updates.
                                         </div>
@@ -361,7 +374,7 @@
                                     <div class="form-check">
                                         <input id="credit" value="COD" type="radio" class="form-check-input"
                                                name="paymentMethod"  checked required>
-                                        <label class="form-check-label" for="credit">Cash on Delivery (COD)</label>
+                                        <label class="form-check-label" for="credit">Thanh toán khi nhận hàng(COD)</label>
                                     </div>
                                     <div class="form-check">
                                         <input id="debit" value="VNPAY"  type="radio" class="form-check-input"
@@ -457,7 +470,7 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="text-sm-start text-center">
-                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> � Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
                             </div>
                         </div><!--end col-->
 

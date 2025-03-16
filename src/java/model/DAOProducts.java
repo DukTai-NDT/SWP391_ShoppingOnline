@@ -181,5 +181,32 @@ public class DAOProducts extends DBConnection {
         }
         return count;
     }
+    public String getProductImg(int id){
+         String img = null;
+        String sql = "SELECT * FROM dbo.Products WHERE ProductID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, id);
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                
+                    img=    rs.getString("Image");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return img;
+    }
+    
+    public static void main(String[] args) {
+        DAOProducts dao = new DAOProducts();
+        
+        Vector<Products> vector = dao.getProducts("select * from Products");
+        for (Products products : vector) {
+            System.out.println(products);
+        }
+        String img = dao.getProductImg(1);
+        System.out.println(img);
+    }
 
 }

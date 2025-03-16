@@ -137,7 +137,7 @@ public class CartController extends HttpServlet {
             }
             if (service.equals("checkout")) {
                 // Xử lý checkout
-                String[] selectedItems = request.getParameterValues("selectedItems");
+               String[] selectedItems = request.getParameterValues("selectedItems");
                Vector<CartItems> vectorCartItems= (Vector<CartItems>)  session.getAttribute("dataCartItem");
                 if (selectedItems != null && selectedItems.length > 0) {
                     Vector<CartItems> selectedCartItems = new Vector<>();

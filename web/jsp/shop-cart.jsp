@@ -1,4 +1,4 @@
-<%@page import="entity.Account, entity.Products, java.util.Vector,entity.Cart,entity.CartItems" %>
+<%@page import="entity.Account,model.DAOProducts, entity.Products, java.util.Vector,entity.Cart,entity.CartItems" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,6 +43,8 @@
             Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
     %>
     <% String message = (String)request.getAttribute("message"); 
+DAOProducts dao = new DAOProducts();
+
     %>
     <body>
         <!-- Loader -->
@@ -243,7 +245,7 @@
                                             <td class="h5 p-3 text-center"><a href="CartURL?service=deleteCart&cartItemID=<%=vectorCartItem.getCartItemID()%>" class="text-danger"><i class="uil uil-times"></i></a></td>
                                             <td class="p-3">
                                                 <div class="d-flex align-items-center">
-                                                    <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
+                                                    <img src="images/products/<%=dao.getProductImg(vectorCartItem.getProductID())%>" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
                                                     <h6 class="mb-0 ms-3"><%=vectorCartItem.getProductName()%></h6>
                                                 </div>
                                             </td>
@@ -466,7 +468,7 @@
                     <div id="style-switcher">
                         <div>
                             <ul class="text-center list-unstyled mb-0">
-                                <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="images/layouts/landing-light-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
+                                <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="images/layouts/landing-light-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Cart</span></a></li>
                                 <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
                                 <li class="d-grid"><a href="javascript:void(0)" class="dark-rtl-version t-rtl-dark" onclick="setTheme('style-dark-rtl')"><img src="images/layouts/landing-dark-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
                                 <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>

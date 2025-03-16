@@ -124,4 +124,38 @@ public class DAOOrderDetails extends DBConnection {
         
         return total;
     }
+    public String getStatusOrder(int orderID){
+        String status = "";
+        String sql = "select Status from OrderDetails od join Orders o on od.OrderID = o.OrderID where  OrderDetailID =" + orderID;
+         try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                status = rs.getString("Status");
+              
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrderDetails.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
+    public static void main(String[] args) {
+        DAOOrderDetails dao = new DAOOrderDetails();
+        int n = 1002;
+         Vector<OrderDetails> vector = dao.getOrderDetails(" select od.[OrderDetailID]\n"
+                        + "      ,od.[Price]\n"
+                        + "      ,od.[Quantity]\n"
+                        + "      ,od.[ProductID]\n"
+                        + "      ,od.[OrderID] from OrderDetails od join Orders o on od.OrderID = o.OrderID where o.CustomerID = "+n);
+                
+         for (OrderDetails orderDetails : vector) {
+             System.out.println(orderDetails.getQuantity());
+             if(dao.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang vận chuyển")){
+                 System.out.println("\n"+dao.getStatusOrder(orderDetails.getOrderDetailID()));
+             };
+        }
+    }
 }

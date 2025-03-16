@@ -40,9 +40,14 @@ public class DBConnection {
         }
     }
 
-    public DBConnection() {
-        this("jdbc:sqlserver://localhost:1433;databaseName=ECommerceDB", "sa", "123456");
-    }
+   public DBConnection() {
+    this("jdbc:sqlserver://localhost:1433;databaseName=ECommerceDB;"
+            + "encrypt=true;trustServerCertificate=true;"
+            + "useUnicode=true;characterEncoding=UTF-8",
+         "sa", 
+         "123456"); // Lấy mật khẩu từ biến môi trường
+}
+
 
     public ResultSet getData(String sql) {
         ResultSet rs = null;
