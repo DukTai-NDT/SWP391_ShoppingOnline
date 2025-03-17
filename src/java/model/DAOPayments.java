@@ -111,8 +111,8 @@ public class DAOPayments extends DBConnection {
     }
 
     public String getMethodByPaymentID(int paymentID) {
-        String method = null;
-        String sql = "SELECT Method FROM Payments WHERE PaymentID = ?"; // Sửa MethodID -> Method
+        String method = "";
+        String sql = "SELECT MethodID FROM Payments WHERE PaymentID = ?"; // Sửa MethodID -> Method
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -120,7 +120,7 @@ public class DAOPayments extends DBConnection {
             ResultSet rs = pre.executeQuery();
 
             if (rs.next()) {
-                method = rs.getString("Method");
+                method = rs.getString("MethodID");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOPayments.class.getName()).log(Level.SEVERE, null, ex);

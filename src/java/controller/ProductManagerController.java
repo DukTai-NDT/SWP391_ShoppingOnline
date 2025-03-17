@@ -45,7 +45,7 @@ public class ProductManagerController extends HttpServlet {
 
         String searchQuery = request.getParameter("search");
         int page = 1;
-        int productsPerPage = 10; // Mỗi trang tối đa 10 sản phẩm
+        int productsPerPage = 10;
 
         String pageStr = request.getParameter("page");
         if (pageStr != null) {
@@ -75,8 +75,7 @@ public class ProductManagerController extends HttpServlet {
         request.setAttribute("pList", pList);
         request.setAttribute("cList", cList);
         request.setAttribute("bList", bList);
-        request.setAttribute("searchQuery", searchQuery); // Giữ giá trị search để hiển thị lại trong input
-
+        request.setAttribute("searchQuery", searchQuery);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
 
@@ -123,3 +122,5 @@ public class ProductManagerController extends HttpServlet {
     }// </editor-fold>
 
 }
+
+

@@ -243,6 +243,25 @@ public class DAOCustomer extends DBConnection {
         return customer;
 
     }
+    public String getCustomerNameByID(int customerID) {
+        String customerName = null;
+        String sql = "SELECT FirstName, LastName FROM Customers WHERE CustomerID = ?";
+
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, customerID);
+            ResultSet rs = preState.executeQuery();
+
+            if (rs.next()) {
+                customerName = rs.getString("FirstName") + " " + rs.getString("LastName");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return customerName;
+    }
+
     
     
 

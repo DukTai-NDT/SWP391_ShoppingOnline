@@ -717,13 +717,9 @@
                     <!-- Phần hình ảnh -->
                     <div class="product-images">
                         <div class="main-image">
-                            <img src="images/product-image.jpg" alt="Ultra Brain Lab Well">
+                            <img src="images/products/<%=product.getImage()%>" alt="Ultra Brain Lab Well">
                         </div>
-                        <div class="thumbnail-gallery">
-                            <img src="images/thumbnail1.jpg" alt="Thumbnail 1">
-                            <img src="images/thumbnail2.jpg" alt="Thumbnail 2">
-                            <img src="images/thumbnail3.jpg" alt="Thumbnail 3">
-                        </div>
+                        
                     </div>
 
                     <!-- Phần thông tin -->

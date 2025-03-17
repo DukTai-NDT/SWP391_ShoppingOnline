@@ -322,7 +322,7 @@
                                             ${((currentPage - 1) * 10) + status.index + 1}
                                         </td>
                                         <td class="p-3 text-center">
-                                            <img src="${p.image}" class="rounded-5 shadow" alt="${p.productName}" 
+                                            <img src="images/products/${p.image}" class="rounded-5 shadow" alt="${p.productName}" 
                                                  style="width: 90px; height: 90px; object-fit: cover;">
                                         </td>
 
@@ -447,13 +447,13 @@
             </div>
 
             <div class="modal-body p-3 pt-4">
-                <form action="AddProductController" method="post">
+                <form action="AddProductController" method="post"  enctype="multipart/form-data">
                     <div class="row">
                         <!-- Trường nhập ảnh -->
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Image URL:</label>
-                                <input type="text" name="image" id="image" class="form-control" placeholder="Enter image URL">
+                                <input type="file" name="image" id="image" class="form-control" placeholder=" image file">
                             </div>
                             <div class="preview-box d-flex justify-content-center align-items-center rounded shadow overflow-hidden bg-light p-1"
                                  style="width: 200px; height: 200px; margin-left: 70px;">
