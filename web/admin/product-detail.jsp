@@ -125,7 +125,9 @@
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
+
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+
 <!--                            <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="faqs.html">FAQs</a></li>

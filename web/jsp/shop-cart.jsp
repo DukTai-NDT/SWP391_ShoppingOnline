@@ -1,10 +1,15 @@
-<%@page import="entity.Account,model.DAOProducts, entity.Products, java.util.Vector,entity.Cart,entity.CartItems" %>
+
+<%@page import="entity.Account, entity.Products,entity.Customers, java.util.Vector,entity.Cart,entity.CartItems" %>
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+ <%@ page import="java.util.HashSet" %>
+<%@ page import="java.util.Set" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="utf-8" />
-        <title>Doctris - Doctor Appointment Booking System</title>
+        <title>Shop Carts</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
         <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health" />
@@ -22,30 +27,21 @@
         <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
-        <style>
-
-            .view-more {
-                text-align: center;
-                padding: 10px;
-                cursor: pointer;
-                color: #007bff;
-                margin-top: 10px;
-            }
-
-            .view-more:hover {
-                text-decoration: underline;
-            }
-        </style>
+   
+        
 
     </head>
     <%
-            Account account = (Account)session.getAttribute("dataUser");
-            Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
-    %>
-    <% String message = (String)request.getAttribute("message"); 
-DAOProducts dao = new DAOProducts();
+
+        
+ Account account = (Account)session.getAttribute("dataUser");
+ Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+       
+ Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+ String message = (String)request.getAttribute("message"); 
 
     %>
+    
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -85,8 +81,11 @@ DAOProducts dao = new DAOProducts();
                 <!-- End Mobile Toggle -->
 
                 <!-- Start Dropdown -->
-                <ul class="dropdowns list-inline mb-0">
-                    <li class="list-inline-item mb-0">
+               <ul class="dropdowns list-inline mb-0">
+                <%
+                if(currentCustomer != null){
+                %>
+                 <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                         </a>
@@ -97,60 +96,38 @@ DAOProducts dao = new DAOProducts();
                             <i class="uil uil-search"></i>
                         </a>
                     </li>
-
-                    <li class="list-inline-item mb-0 ms-1">
-                        <div class="dropdown dropdown-primary">
-
-
-                            <%if(account != null){%>
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
-                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                                <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
-                                    <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1"><%=account.getUserName()%></span>
-
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                                <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
-                            </div>        
-                            <%}else{%>
-
-                            <div class="auth-links">
+                <li class="list-inline-item mb-0 ms-1">
+                    <div class="dropdown dropdown-primary">
+                        <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                        </button>
+                        <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
+                            <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
+                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+                                <div class="flex-1 ms-2">
+                                    <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                            <div class="dropdown-divider border-top"></div>
+                            <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                        </div>
+                    </div>
+                </li>
+                <%} else{%>
+                <div class="auth-links">
                                 <a href="SignUpURL?service=signup">Sign up</a>
                                 <span>|</span>
                                 <a href="LoginURL?service=login">Log in</a>
                             </div>
-                            <%}%>
-
-                        </div>
-                    </li>
-                </ul>
+                <%}%>
+            </ul>
                 <!-- Start Dropdown -->
 
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left nav-light">
-                        <!--                        <li class="has-submenu parent-menu-item">
-                                                    <a href="index.jsp">Home</a><span class="sub-menu-item"></span>
-                        
-                        
-                                                </li>-->
-
-
-
-                        <!--                        <li class="has-submenu parent-menu-item">
-                                                    <a href="javascript:void(0)">Patients</a><span class="menu-arrow"></span>
-                                                    <ul class="submenu">
-                                                        <li><a href="patient-dashboard.html" class="sub-menu-item">Dashboard</a></li>
-                                                        <li><a href="patient-profile.html" class="sub-menu-item">Profile</a></li>
-                                                        <li><a href="booking-appointment.html" class="sub-menu-item">Book Appointment</a></li>
-                                                        <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
-                                                    </ul>
-                                                </li>-->
+             
 
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
@@ -171,12 +148,12 @@ DAOProducts dao = new DAOProducts();
                                 <li><a href="aboutus.jsp" class="sub-menu-item"> About Us</a></li>
                                 <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
+                                <li><a href="BlogsURL" class="sub-menu-item">Blogs</a></li>
 
 
                             </ul>
                         </li>
-                        <!--                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>-->
+                        
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -190,11 +167,10 @@ DAOProducts dao = new DAOProducts();
                     <div class="col-12">
                         <div class="section-title text-center">
                             <h3 class="sub-title mb-4">Shop Cart</h3>
-                            <p class="para-desc mx-auto text-muted">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
-
+                           
                             <nav aria-label="breadcrumb" class="d-inline-block mt-3">
                                 <ul class="breadcrumb bg-light rounded mb-0 bg-transparent">
-                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+                                    <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
                                     <li class="breadcrumb-item"><a href="pharmacy.html">Pharmacy</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Shop Cart</li>
                                 </ul>
@@ -214,121 +190,110 @@ DAOProducts dao = new DAOProducts();
         <!-- Hero End -->
 
         <!-- Start -->
-        <section class="section">
-            <div class="container">
-                <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-                <form action="CartURL" method="POST">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-responsive bg-white shadow rounded">
-                                <table class="table table-center table-padding mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-bottom p-3"></th>
-                                            <th class="border-bottom p-3">Product</th>
-                                            <th class="border-bottom text-center p-3">Price</th>
-                                            <th class="border-bottom text-center p-3">Qty</th>
-                                            <th class="border-bottom text-end p-3">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% 
-                                            float totalPriceCart = 0;
-                                            int index = 0;
-                                            for (CartItems vectorCartItem : vectorCartItems) {
-                                                if(index <= 3) {
-                                        %>
-                                        <tr>
-                                            <td class="p-3 text-center">
-                                                <input type="checkbox" name="selectedItems" value="<%=vectorCartItem.getCartItemID()%>" class="item-checkbox">
-                                            </td>
-                                            <td class="h5 p-3 text-center"><a href="CartURL?service=deleteCart&cartItemID=<%=vectorCartItem.getCartItemID()%>" class="text-danger"><i class="uil uil-times"></i></a></td>
-                                            <td class="p-3">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="images/products/<%=dao.getProductImg(vectorCartItem.getProductID())%>" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
-                                                    <h6 class="mb-0 ms-3"><%=vectorCartItem.getProductName()%></h6>
-                                                </div>
-                                            </td>
-                                            <td class="text-center p-3"><%=vectorCartItem.getPrice()%></td>
-                                            <td class="text-center shop-list p-3">
-                                                <div class="qty-icons">
-                                                    <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-icon btn-primary minus">-</button>
-                                                    <input min="1" name="quantity_<%=vectorCartItem.getCartItemID()%>" id="quantity_<%=vectorCartItem.getCartItemID()%>" value="<%=vectorCartItem.getQuantity()%>" type="number" class="btn btn-icon btn-primary qty-btn quantity">
-                                                    <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </td>
-                                            <% 
-                                                float totalPrice = vectorCartItem.getPrice() * vectorCartItem.getQuantity();
-                                                totalPriceCart += totalPrice;
-                                            %>
-                                            <td class="text-end font-weight-bold p-3"><%=totalPrice%></td>
-                                        </tr>
-                                        <% } else { %>
-                                        <tr class="hidden-item">
-                                            <td class="p-3 text-center">
-                                                <input type="checkbox" name="selectedItems" value="<%=vectorCartItem.getCartItemID()%>" class="item-checkbox">
-                                            </td>
-                                            <td class="h5 p-3 text-center"><a href="CartURL?service=deleteCart&cartItemID=<%=vectorCartItem.getCartItemID()%>" class="text-danger"><i class="uil uil-times"></i></a></td>
-                                            <td class="p-3">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height:auto;" alt="">
-                                                    <h6 class="mb-0 ms-3"><%=vectorCartItem.getProductName()%></h6>
-                                                </div>
-                                            </td>
-                                            <td class="text-center p-3"><%=vectorCartItem.getPrice()%></td>
-                                            <td class="text-center shop-list p-3">
-                                                <div class="qty-icons">
-                                                    <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-icon btn-primary minus">-</button>
-                                                    <input min="1" name="quantity_<%=vectorCartItem.getCartItemID()%>" id="quantity_<%=vectorCartItem.getCartItemID()%>" value="<%=vectorCartItem.getQuantity()%>" type="number" class="btn btn-icon btn-primary qty-btn quantity">
-                                                    <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </td>
-                                            <% 
-                                                float totalPrice = vectorCartItem.getPrice() * vectorCartItem.getQuantity();
-                                                totalPriceCart += totalPrice;
-                                            %>
-                                            <td class="text-end font-weight-bold p-3"><%=totalPrice%></td>
-                                        </tr>
-                                        <% }
-                                            index++; 
-                                        } %>
-                                    </tbody>
-                                </table>
-                                <div class="view-more" id="viewMoreBtn">
-                                    View More
-                                </div>
-                            </div>
-                        </div><!--end col-->
-                    </div><!--end row-->
 
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6 mt-4 pt-2">
-                            <a href="ProductURL?service=listAllProducts" class="btn btn-primary">Shop More</a>
-                            <button type="submit" name="service" value="updateCart" class="btn btn-primary">Update Cart</button>
-                        </div>
-                        <div class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
-                            <div class="table-responsive bg-white rounded shadow">
-                                <table class="table table-center table-padding mb-0">
-                                    <tbody>
-                                        <tr class="bg-light">
-                                            <td class="h6 p-3">Total</td>
-                                            <td class="text-end font-weight-bold p-3"><%=totalPriceCart%></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <p style="color: red;"><%=(message!=null?message:"")%></p>
-                            <div class="mt-4 pt-2 text-end">
-                                <button type="submit" name="service" value="checkout" class="btn btn-primary">Proceed to checkout</button>
-                            </div>
-                        </div><!--end col-->
+       <!-- Start -->
+<!-- Start -->
+<!-- Start -->
+<!-- Start -->
+<!-- Start -->
+<section class="section">
+    <div class="container">
+        <form action="CartURL" method="POST">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="bg-white shadow rounded">
+                        <table class="table table-center table-padding mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="border-bottom p-3 text-center">
+                                        <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)" checked>
+                                    </th>
+                                    <th class="border-bottom p-3">Product</th>
+                                    <th class="border-bottom text-center p-3">Price</th>
+                                    <th class="border-bottom text-center p-3">Quantity</th>
+                                    <th class="border-bottom text-end p-3">Total</th>
+                                    <th class="border-bottom p-3 text-center">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% 
+                                    float totalPriceCart = 0;
+                                    int index = 0;
+                                 
+                                    Set<Integer> unselectedItems = (Set<Integer>) session.getAttribute("unselectedItems");
+                                    if (unselectedItems == null) {
+                                        unselectedItems = new HashSet<>();
+                                    }
+
+
+                                    for (CartItems vectorCartItem : vectorCartItems) {
+                                        float totalPrice = vectorCartItem.getPrice() * vectorCartItem.getQuantity();
+                                        boolean isChecked = !unselectedItems.contains(vectorCartItem.getCartItemID());
+                                        if (isChecked) {
+                                            totalPriceCart += totalPrice;
+                                        }
+                                %>
+                                <tr>
+                                    <td class="p-3 text-center">
+                                        <input type="checkbox" name="selectedItems" value="<%=vectorCartItem.getCartItemID()%>" 
+                                               class="item-checkbox" <%=isChecked ? "checked" : ""%>>
+                                    </td>
+                                    <td class="p-3">
+                                        <div class="d-flex align-items-center">
+                                            <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height: 50px; width: 50px;" alt="">
+                                            <h6 class="mb-0 ms-3"><%=vectorCartItem.getProductName()%></h6>
+                                        </div>
+                                    </td>
+                                    <td class="text-center p-3"><%=vectorCartItem.getPrice()%></td>
+                                    <td class="text-center shop-list p-3">
+                                        <div class="qty-icons">
+                                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown(); updateTotal();" class="btn btn-icon btn-primary minus">-</button>
+                                            <input min="1" name="quantity_<%=vectorCartItem.getCartItemID()%>" id="quantity_<%=vectorCartItem.getCartItemID()%>" value="<%=vectorCartItem.getQuantity()%>" type="number" class="btn btn-icon btn-primary qty-btn quantity" onchange="updateTotal()">
+                                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp(); updateTotal();" class="btn btn-icon btn-primary plus">+</button>
+                                        </div>
+                                    </td>
+                                    <td class="text-end font-weight-bold p-3 total-per-item"><%=totalPrice%></td>
+                                    <td class="p-3 text-center">
+                                        <a href="CartURL?service=deleteCart&cartItemID=<%=vectorCartItem.getCartItemID()%>" class="text-danger"><i class="uil uil-times"></i></a>
+                                    </td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
                     </div>
-                </form>
+                </div>
+            </div>
 
-
-            </div><!--end row-->
-        </div><!--end container-->
-    </section><!--end section-->
+            <div class="row">
+                <div class="col-lg-8 col-md-6 mt-4 pt-2">
+                    <a href="ProductURL?service=listAllProducts" class="btn btn-primary">Shop More</a>
+                    <button type="submit" name="service" value="updateCart" class="btn btn-primary">Update Cart</button>
+                </div>
+                <div class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
+                    <div class="table-responsive bg-white rounded shadow">
+                        <table class="table table-center table-padding mb-0">
+                            <tbody>
+                                <tr class="bg-light">
+                                    <td class="h6 p-3">Total</td>
+                                    <td class="text-end font-weight-bold p-3" id="cart-total"><%=totalPriceCart%></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="color: red;"><%=(request.getAttribute("message") != null ? request.getAttribute("message") : "")%></p>
+                    <div class="mt-4 pt-2 text-end">
+                        <button type="submit" name="service" value="checkout" class="btn btn-primary">Proceed to checkout</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- End -->
+<!-- End -->
+<!-- End --><!--end section-->
+<!-- End --><!--end section-->
+<!-- End --><!--end section-->
     <!-- End -->
     <!-- End -->
 
@@ -453,48 +418,47 @@ DAOProducts dao = new DAOProducts();
     <!-- Offcanvas End -->
 
     <!-- Offcanvas Start -->
-    <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header p-4 border-bottom">
-            <h5 id="offcanvasRightLabel" class="mb-0">
-                <img src="images/logo-dark.png" height="24" class="light-version" alt="">
-                <img src="images/logo-light.png" height="24" class="dark-version" alt="">
-            </h5>
-            <button type="button" class="btn-close d-flex align-items-center text-dark" data-bs-dismiss="offcanvas" aria-label="Close"><i class="uil uil-times fs-4"></i></button>
-        </div>
-        <div class="offcanvas-body p-4 px-md-5">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Style switcher -->
-                    <div id="style-switcher">
-                        <div>
-                            <ul class="text-center list-unstyled mb-0">
-                                <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="images/layouts/landing-light-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Cart</span></a></li>
-                                <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
-                                <li class="d-grid"><a href="javascript:void(0)" class="dark-rtl-version t-rtl-dark" onclick="setTheme('style-dark-rtl')"><img src="images/layouts/landing-dark-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
-                                <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
-                                <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
-                                <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
-                                <li class="d-grid"><a href="indexAdmin.jsp" target="_blank" class="mt-4"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- end Style switcher -->
-                </div><!--end col-->
-            </div><!--end row-->
-        </div>
 
-        <div class="offcanvas-footer p-4 border-top text-center">
-            <ul class="list-unstyled social-icon mb-0">
-                <li class="list-inline-item mb-0"><a href="https://1.envato.market/doctris-template" target="_blank" class="rounded"><i class="uil uil-shopping-cart align-middle" title="Buy Now"></i></a></li>
-                <li class="list-inline-item mb-0"><a href="https://dribbble.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-dribbble align-middle" title="dribbble"></i></a></li>
-                <li class="list-inline-item mb-0"><a href="https://www.facebook.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-facebook-f align-middle" title="facebook"></i></a></li>
-                <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
-                <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
-                <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-                <li class="list-inline-item mb-0"><a href="../../../index.jsp" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
-            </ul><!--end icon-->
+   <!-- Offcanvas Start -->
+<div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header p-4 border-bottom">
+        <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
+        <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-4">
+        <% 
+           
+            if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
+               
+               
+              for(CartItems vectorCartItem : vectorCartItems) {
+        %>
+        <div class="cart-item">
+            <div class="d-flex align-items-center mb-3">
+                <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
+                <div class="ms-3 flex-1">
+                    <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
+                    <div class="d-flex justify-content-between">
+                        <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
+                        <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%
+            } }else {
+        %>
+        <p class="text-muted text-center " >No Products In Cart...</p>
+        <%
+            }
+        %>
+        <div class="mt-4 text-center">
+            <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
         </div>
     </div>
+</div>
+<!-- Offcanvas End -->
     <!-- Offcanvas End -->
 
     <!-- javascript -->
@@ -505,6 +469,7 @@ DAOProducts dao = new DAOProducts();
     <script src="js/app.js"></script>
     <!-- View more Js -->
     <script src="js/viewMore.js"></script>
+    <script src="js/cart.js"></script>
     <!-- JavaScript ?? x? lý "Ch?n t?t c?" -->
     <script>
                                     function toggleSelectAll(source) {
@@ -513,7 +478,15 @@ DAOProducts dao = new DAOProducts();
                                             checkbox.checked = source.checked;
                                         });
                                     }
+
+
     </script>
+   
+    
 </body>
 
+
 </html>
+
+
+

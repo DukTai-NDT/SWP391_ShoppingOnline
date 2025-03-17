@@ -21,6 +21,62 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class DAOBlogs extends DBConnection {
+    
+    public int countTotalBlogs(){
+        int totalItems= 0;
+        String sql ="Select COUNT(*) AS total From Blogs";
+        try {
+            Statement state = conn.createStatement();
+            ResultSet rs = state.executeQuery(sql);
+            if(rs.next()){
+                totalItems = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        return totalItems;
+    }
+    
+    public Vector<Blogs> getBlogsByPage(int offset , int limit){
+        Vector<Blogs> vector = new Vector<>();
+        String sql = "Select * from Blogs Order By BlogID OFFSET ? ROW FETCH NEXT ?  ROWS ONLY";
+        
+        
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            
+            pre.setInt(1, offset);
+            pre.setInt(2, limit);
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()){
+          int BlogID = rs.getInt("BlogID");
+          int CustomerID = rs.getInt("CustomerID");
+	  LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
+	  String Title = rs.getString("Title");
+	  String Content = rs.getString("Content");
+	  String Image = rs.getString("Image");
+	  boolean Status = (rs.getInt("Status") == 1 ? true : false);
+          
+          Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
+          vector.add(blog);
+                
+                
+            }
+            
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        
+        return vector;
+    }
 
     public int addBlog(Blogs other) {
         int n = 0;
@@ -159,24 +215,66 @@ public class DAOBlogs extends DBConnection {
         return list;
     }
 
-    public void insertBlog(String id, String name, String date, String description, String image, Boolean status) {
-        String query = "INSERT INTO [dbo].[Blogs] (CustomerID, PostTime, Title, Content, Image, Status) VALUES (?, ?, ?, ?, ?, ?)";
+    public void insertBlog(String postime, String title, String description, String image, Boolean status) {
+        String query = "INSERT INTO [dbo].[Blogs] (PostTime, Title, Content, Image, Status) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement preState = conn.prepareStatement(query);
-            preState.setString(1, id);
-            preState.setString(2, name);
+            preState.setString(1, postime);
+            preState.setString(2, title);
+            preState.setString(3, description);
+            preState.setString(4, image);
+            preState.setBoolean(5, true);
+            preState.executeQuery();
 
-            // Chuyển đổi String date thành LocalDate rồi sang java.sql.Date
-            LocalDate localDate = LocalDate.parse(date); // Giả sử date có định dạng YYYY-MM-DD
-            java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
-            preState.setDate(3, sqlDate);
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 
-            preState.setString(4, description);
-            preState.setString(5, (image != null && !image.isEmpty()) ? image : "default.jpg");
-            preState.setBoolean(6, true); // Published (true = 1, false = 0)
+    public Blogs getBlogsByID(String id) {
+        String sql = "select * from Blogs\n"
+                + "where BlogID = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
 
-            preState.executeUpdate();
-            conn.commit();
+                return new Blogs(
+                        rs.getInt("BlogID"),
+                        rs.getInt("CustomerID"), // Thêm CustomerID nếu cần
+                        rs.getDate("PostTime").toLocalDate(),
+                        rs.getString("Title"),
+                        rs.getString("Content"),
+                        rs.getString("Image"),
+                        rs.getBoolean("Status")
+                );
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+
+    public void editBlog(String blogID, String postime, String title, String description, String image, Boolean status) {
+        String query = "UPDATE [dbo].[Blogs]\n"
+                + "    SET \n"
+                + "        [PostTime] =?,\n"
+                + "        [Title] = ?,\n"
+                + "        [Content] =?,\n"
+                + "        [Image] = ?,\n"
+                + "        [Status] =?\n"
+                + "    WHERE [BlogID] = ?";
+        try {
+            PreparedStatement preState = conn.prepareStatement(query);
+            preState.setString(6, blogID);
+            preState.setString(1, postime);
+            preState.setString(2, title);
+            preState.setString(3, description);
+            preState.setString(4, image);
+            preState.setBoolean(5, true);
+            preState.executeQuery();
+
         } catch (SQLException e) {
             Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
         }

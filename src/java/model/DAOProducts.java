@@ -4,6 +4,7 @@
  */
 package model;
 
+import entity.Blogs;
 import entity.Brand;
 import entity.Products;
 import entity.Role;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -167,6 +169,23 @@ public class DAOProducts extends DBConnection {
         return product;
     }
 
+    public List<Products> getProductByCategory(String cid) {
+        List<Products> list = new ArrayList<>();
+        String sql = "select * from Products\n"
+                + "where CategoryID=? ";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, cid);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                list.add(new Products(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9), rs.getString(10)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public int countProducts() {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM dbo.Products";
@@ -181,26 +200,27 @@ public class DAOProducts extends DBConnection {
         }
         return count;
     }
-    public String getProductImg(int id){
-         String img = null;
+
+    public String getProductImg(int id) {
+        String img = null;
         String sql = "SELECT * FROM dbo.Products WHERE ProductID = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, id);
             ResultSet rs = pre.executeQuery();
             if (rs.next()) {
-                
-                    img=    rs.getString("Image");
+
+                img = rs.getString("Image");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
         return img;
     }
-    
+
     public static void main(String[] args) {
         DAOProducts dao = new DAOProducts();
-        
+
         Vector<Products> vector = dao.getProducts("select * from Products");
         for (Products products : vector) {
             System.out.println(products);
@@ -345,6 +365,23 @@ public class DAOProducts extends DBConnection {
             Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+
+    public List<Products> getProductsByName(String txtSearch) {
+        List<Products> list = new ArrayList<>();
+        String query = "select * from Products where ProductName like ?";
+        try {
+            PreparedStatement preState = conn.prepareStatement(query);
+            preState.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = preState.executeQuery();
+            while (rs.next()) {
+                list.add(new Products(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9), rs.getString(10)));
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return list;
     }
 
 }

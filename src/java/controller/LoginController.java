@@ -88,8 +88,7 @@ public class LoginController extends HttpServlet {
 
                     // Lấy danh sách khách hàng
                     Vector<Customers> customerList = daoCus.getCustomer(
-                            "select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID "
-                            + "from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = "
+                            "select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = "
                             + accountExists.getAccountID());
                     System.out.println("null" + accountExists);
                     for (Customers customers : customerList) {
@@ -157,13 +156,14 @@ public class LoginController extends HttpServlet {
                     } else if (account != null) {
 
                         if (account.getRoleID() == 2) {
-
-                            Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
+                               System.out.println("OK123456789");
+                            Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
+                            System.out.println(cus);
                             session.setAttribute("dataCustomer", cus);
                             session.setAttribute("dataUser", account);
-                            request.getRequestDispatcher("index.jsp").forward(request, response);
+                            request.getRequestDispatcher("HomePageURL").forward(request, response);
                         } else if (account.getRoleID() == 3) {
-                            Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
+                            Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             session.setAttribute("dataCustomer", cus);
                             session.setAttribute("dataUser", account);
                             response.sendRedirect("ProductManager");

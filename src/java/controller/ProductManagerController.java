@@ -75,7 +75,8 @@ public class ProductManagerController extends HttpServlet {
         request.setAttribute("pList", pList);
         request.setAttribute("cList", cList);
         request.setAttribute("bList", bList);
-        request.setAttribute("searchQuery", searchQuery);
+        request.setAttribute("searchQuery", searchQuery); // Giữ giá trị search để hiển thị lại trong input
+
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
 

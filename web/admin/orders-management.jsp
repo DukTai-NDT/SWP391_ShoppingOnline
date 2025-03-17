@@ -65,7 +65,9 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+
+                        <a href="HomePageURL">
+
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -85,11 +87,20 @@
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
-                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
+                            <div class="sidebar-submenu">
+                            </div>
+                        </li>
+
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
-                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+                            <a href="OrdersManagement"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+
                             <!--                            <div class="sidebar-submenu">
                                                             <ul>
                                                                 <li><a href="faqs.html">FAQs</a></li>
@@ -259,7 +270,9 @@
                                         <a class="dropdown-item text-dark" href="index.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                         <a class="dropdown-item text-dark" href="dr-profile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                         <div class="dropdown-divider border-top"></div>
+
                                         <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+
                                     </div>
                                 </div>
                             </li>
@@ -292,6 +305,7 @@
                         <table class="table align-middle shadow-lg rounded-4 overflow-hidden bg-white">
                             <thead class="bg-primary text-white rounded-top-4">
                                 <tr class="fw-bold text-center">
+
                                     <th class="p-3">#</th>
                                     <th class="p-3">Username</th>
                                     <th class="p-3">Payment ID</th>
@@ -337,11 +351,13 @@
                                                     </button>
                                                 </c:if>
                                             </c:forEach>
+
                                         </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
+
 
                         <!-- Modal -->
                         <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailLabel" aria-hidden="true">
@@ -384,6 +400,7 @@
                                 document.getElementById("modalQuantity").value = quantity;
                             }
                         </script>
+
 
 
                     </div><!--end row-->
@@ -601,6 +618,7 @@
 <script src="js/feather.min.js"></script>
 <!-- Main Js -->
 <script src="js/app.js"></script>
+
 
 <!-- JavaScript để thay đổi trạng thái -->
 <script>

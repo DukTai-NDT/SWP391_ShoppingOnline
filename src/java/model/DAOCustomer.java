@@ -30,14 +30,15 @@ public class DAOCustomer extends DBConnection {
 
             if (rs.next()) {
                 customer = new Customers(
-                        rs.getInt("CustomerID"),
-                        rs.getString("FirstName"),
-                        rs.getString("LastName"),
-                        rs.getString("Email"),
-                        rs.getString("Address"),
-                        rs.getString("Gender"),
-                        rs.getString("Phone"),
-                        rs.getInt("AccountID")
+                    rs.getInt("CustomerID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getString("Email"),
+                    rs.getString("Address"),
+                    rs.getString("Gender"),
+                    rs.getString("Phone"),
+                    rs.getInt("AccountID"),
+                    rs.getString("ProfileImg")
                 );
             }
         } catch (SQLException ex) {
@@ -57,14 +58,16 @@ public class DAOCustomer extends DBConnection {
 
             if (rs.next()) {
                 customer = new Customers(
-                        rs.getInt("CustomerID"),
-                        rs.getString("FirstName"),
-                        rs.getString("LastName"),
-                        rs.getString("Email"),
-                        rs.getString("Address"),
-                        rs.getString("Gender"),
-                        rs.getString("Phone"),
-                        rs.getInt("AccountID")
+
+                    rs.getInt("CustomerID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getString("Email"),
+                    rs.getString("Address"),
+                    rs.getString("Gender"),
+                    rs.getString("Phone"),
+                    rs.getInt("AccountID"),
+                    rs.getString("ProfileImg")
                 );
             }
         } catch (SQLException ex) {
@@ -82,9 +85,10 @@ public class DAOCustomer extends DBConnection {
                 + "           ,[Address]\n"
                 + "           ,[Gender]\n"
                 + "           ,[Phone]\n"
-                + "           ,[AccountID])\n"
+                + "           ,[AccountID]\n"
+                + "           ,[ProfileImg])\n               "
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, other.getFirstName());
@@ -94,6 +98,7 @@ public class DAOCustomer extends DBConnection {
             preState.setString(5, other.getGender());
             preState.setString(6, other.getPhone());
             preState.setInt(7, other.getAccountID());
+            preState.setString(8, other.getProfileImg());
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,6 +129,7 @@ public class DAOCustomer extends DBConnection {
                 + "      ,[Address] = ?\n"
                 + "      ,[Gender] = ?\n"
                 + "      ,[Phone] = ?\n"
+                + "      ,[ProfileImg]=?\n"
                 + " WHERE CustomerID = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
@@ -132,8 +138,9 @@ public class DAOCustomer extends DBConnection {
             preState.setString(3, other.getEmail());
             preState.setString(4, other.getAddress());
             preState.setString(5, other.getGender());
-            preState.setString(6, other.getPhone());
-            preState.setInt(7, other.getCustomerID());
+            preState.setString(6, other.getPhone()); 
+            preState.setString(7, other.getProfileImg());
+            preState.setInt(8, other.getCustomerID());
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,7 +162,8 @@ public class DAOCustomer extends DBConnection {
                 String Gender = rs.getString("Gender");
                 String Phone = rs.getString("Phone");
                 int AccountID = rs.getInt("AccountID");
-                Customers cus = new Customers(CustomerID, FirstName, LastName, Email, Address, Gender, Phone, AccountID);
+                String ProfileImg= rs.getString("ProfileImg");
+                Customers cus = new Customers(CustomerID, FirstName, LastName, Email, Address, Gender, Phone, AccountID,ProfileImg);
                 vector.add(cus);
             }
         } catch (SQLException ex) {
@@ -163,24 +171,29 @@ public class DAOCustomer extends DBConnection {
         }
         return vector;
     }
-
-    public String getNameByID(int id) {
-        String name = "";
-        String sql = "select LastName from customers where customerID =" + id;
+    
+    
+    public String[] getCustomerByID(int CustomerID){
+        String[] result = new String[3] ;
+        result[0]="";
+        result[1]="";
+        result[2]="";
+        
+        String sql ="SELECT FirstName, LastName, ProfileImg FROM Customers WHERE CustomerID =?"; 
         try {
-            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = state.executeQuery(sql);
-            while (rs.next()) {
-
-                name = rs.getString("LastName");
-
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, CustomerID);
+            ResultSet rs = preState.executeQuery();
+            if (rs.next()) {
+                result[0]=rs.getString("FirstName");
+                result[1]=rs.getString("LastName");
+                result[2]=rs.getString("ProfileImg");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return name;
+        return result;
     }
-
     public String getUsernameByCustomerID(int customerID) {
         String username = null;
         String sql = "SELECT a.UserName FROM Customers c JOIN Accounts a ON c.AccountID = a.AccountID WHERE c.CustomerID = ?";
@@ -197,6 +210,12 @@ public class DAOCustomer extends DBConnection {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return username;
+    }
+    
+    public static void main(String[] args) {
+        DAOCustomer dao = new DAOCustomer();
+         Customers cus = dao.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID" ).get(0);
+             System.out.println(cus);               
     }
 
 }

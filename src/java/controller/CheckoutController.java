@@ -78,7 +78,9 @@ public class CheckoutController extends HttpServlet {
                     int paymentMethodID = 0;
                     int methodPayment = 0;
                     if (paymentMethod.equals("COD")) {
-                        paymentMethodID = daoPaymentMethod.getMethodPaymentID("Thanh toán khi nhận hàng");
+
+                        paymentMethodID = daoPaymentMethod.getMethodPaymentID("Cash on Delivery (COD)");
+
                         methodPayment++;
                     } else {
                         paymentMethodID = daoPaymentMethod.getMethodPaymentID("VNPay");
@@ -93,11 +95,13 @@ public class CheckoutController extends HttpServlet {
 
                     // Add Order
 
+
                     int orderID = daoOrder.addOrder(new Orders("On-prepared", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID()));
 
 
                     if (orderID == 0) {
-                        request.setAttribute("message", "Tạo mới đơn hàng thất bại");
+                        request.setAttribute("message", "Order processing failed");
+
                         request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
                         return;
 
@@ -106,7 +110,8 @@ public class CheckoutController extends HttpServlet {
                     // Add Delivery Address
                     int addressID = daoDeliAddress.addDeliveryAddress(new DeliveryAddress(address, daoOrder.getLastOrderID(), Integer.parseInt(provinceId), Integer.parseInt(districtId)));
                     if (addressID == 0) {
-                        request.setAttribute("message", "Địa chỉ không hợp lệ");
+                        request.setAttribute("message", "Address saving failed");
+
                         request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
                         return;
 
@@ -120,20 +125,22 @@ public class CheckoutController extends HttpServlet {
                         int y = daoCartItem.changeIsBuy(1, vectorCartItem.getCartItemID());
                     }
                     session.setAttribute("selectedCartItems", new Vector<CartItems>());
-                    System.out.println(methodPayment+"ok098");
+
                     if (methodPayment != 0) {
-                        System.out.println("tainguyen");
+
                         request.setAttribute("transResult", true);
                         request.getRequestDispatcher("jsp/paymentResult.jsp").forward(request, response);
 
                     } else {
-                        System.out.println("tainguyenelse");
+
                         response.sendRedirect("ajaxServletURL");
                     }
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    request.setAttribute("message", "Thanh toán thất bại");
+
+                    request.setAttribute("message", "Checkout Failler");
+
                     request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
                 }
             }

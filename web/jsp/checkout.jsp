@@ -236,8 +236,10 @@
                                 </li>
                                 <%}else{%>
                                 <h5 style="color: red;">
-                                    Bạn chưa có sản phẩm nào trong giỏ hàng. Vì vậy không thể thanh toán. Hãy quay trở lại   
-                                    <a href="ProductURL?service=listAllProducts" style="color: blue; text-decoration: underline;">Cửa Hàng</a>.
+
+                                    You haven't selected any products, so you can't checkout. Please return to  
+                                    <a href="ProductURL?service=listAllProducts" style="color: blue; text-decoration: underline;">shop</a>.
+
                                 </h5>
 
                                 <%}%>

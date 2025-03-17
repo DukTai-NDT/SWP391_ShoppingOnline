@@ -4,9 +4,7 @@
  */
 package controller;
 
-import entity.Blogs;
 import entity.Categories;
-import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,18 +12,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Vector;
-import model.DAOBlogs;
 import model.DAOCategories;
-import model.DAOProducts;
 
 /**
  *
- * @author quang
+ * @author Admin
  */
-@WebServlet(name = "HomePageController", urlPatterns = {"/HomePageURL"})
-public class HomePageController extends HttpServlet {
+@WebServlet(name = "AdminCategoriesController", urlPatterns = {"/AdminCategories"})
+public class AdminCategoriesController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,23 +35,10 @@ public class HomePageController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-            HttpSession session = request.getSession();
-            DAOCategories daocategories = new DAOCategories();
-            DAOProducts daoproduct = new DAOProducts();
-            DAOBlogs daoblog = new DAOBlogs();
-            Vector<Categories> vcategories = daocategories.getCategories("select * from Categories");
-            Vector<Products> vproduct = daoproduct.getProducts("select * from products");
-            Vector<Blogs> vblog = daoblog.getBlogs("select * from blogs");
-            Vector<Products> vproductspecial = daoproduct.getProducts("select * from Products\n"
-                    + "where Quantity >100");
-            session.setAttribute("vproductspecial", vproductspecial);
-            session.setAttribute("vblog", vblog);
-            session.setAttribute("vproduct", vproduct);
-            session.setAttribute("vcategories", vcategories);
-
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-            
+        DAOCategories daocategory = new DAOCategories();
+        Vector<Categories> vcategory = daocategory.getCategories("select * from categories");
+        request.setAttribute("vcategory", vcategory);
+        request.getRequestDispatcher("admin/adminCategories.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,6 +54,7 @@ public class HomePageController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**

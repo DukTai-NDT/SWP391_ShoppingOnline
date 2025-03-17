@@ -34,7 +34,7 @@
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
     </head>
-
+    <% String errorUsername = (String) request.getAttribute("errorUsername"); %>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -51,7 +51,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="HomePageURL">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -60,6 +60,7 @@
                     <ul class="sidebar-menu pt-3">
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
+
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
@@ -70,26 +71,21 @@
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
                         <br>
-                        <li class="sidebar-dropdown">
-                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                            <li class="sidebar-dropdown">
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
+                            <div class="sidebar-submenu">
+                            </div>
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
-                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
-<!--                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="faqs.html">FAQs</a></li>
-                                    <li><a href="review.html">Reviews</a></li>
-                                    <li><a href="invoice-list.html">Invoice List</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="terms.html">Terms & Policy</a></li>
-                                    <li><a href="privacy.html">Privacy Policy</a></li>
-                                    <li><a href="error.html">404 !</a></li>
-                                    <li><a href="blank-page.html">Blank Page</a></li>
-                                </ul>
-                            </div>-->
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
                         <br>
+                        <li class="sidebar-dropdown">
+                            <a href="OrdersManagement"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+                        </li>
+                        <br>
+
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -121,9 +117,9 @@
                             </a>
                             <div class="search-bar p-0 d-none d-lg-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <form role="search" method="get" id="searchform" class="searchform">
+                                    <form role="search" method="get" id="searchform" class="searchform" action="SearchAccount">
                                         <div>
-                                            <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
+                                            <input type="text" class="form-control border rounded-pill" name="txt" id="txt" placeholder="Search Keywords...">
                                             <input type="submit" id="searchsubmit" value="Search">
                                         </div>
                                     </form>
@@ -260,10 +256,13 @@
 
                             <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
                                 <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-<!--                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Patients</li>-->
+                                    <!--                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+                                                                        <li class="breadcrumb-item active" aria-current="page">Patients</li>-->
                                 </ul>
                             </nav>
+                            <div class="mt-4 mt-sm-0">
+                                <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Account</a>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -274,7 +273,7 @@
                                             <tr>
                                                 <th class="border-bottom p-3" style="min-width: 50px;">Id</th>
                                                 <th class="border-bottom p-3" style="min-width: 180px;">Username</th>
-                                                <th class="border-bottom p-3">RoleID</th>
+                                                <th class="border-bottom p-3">Role</th>
                                                 <th class="border-bottom p-3">Password</th>
                                                 <th class="border-bottom p-3">Email</th>
                                                 <th class="border-bottom p-3">Status</th>
@@ -290,13 +289,13 @@
                                                     <td class="py-3">
                                                         <a href="#" class="text-dark">
                                                             <div class="d-flex align-items-center">
-                                                                <img src="images/client/01.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
+
                                                                 <span class="ms-2">${a.userName}</span>
                                                             </div>
                                                         </a>
                                                     </td>
                                                     <td class="p-3">
-                                                        ${a.roleID == 1 ? 'Admin' : (a.roleID == 2 ? 'User' : (a.roleID == 3 ? 'Editor' : 'Unknown'))}
+                                                        ${a.roleID == 1 ? 'Admin' : (a.roleID == 2 ? 'Customer' : (a.roleID == 3 ? 'Editor' : 'Unknown'))}
                                                     </td>
 
                                                     <td class="p-3">${a.password}</td>
@@ -322,230 +321,6 @@
 
                                                 </tr>
                                             </c:forEach>
-                                            <!--                                            <tr>
-                                                                                            <th class="p-3">2</th>
-                                                                                            <td class="py-3">
-                                                                                                <a href="#" class="text-dark">
-                                                                                                    <div class="d-flex align-items-center">
-                                                                                                        <img src="images/client/02.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                                                                        <span class="ms-2">Wendy Filson</span>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="p-3">28</td>
-                                                                                            <td class="p-3">Female</td>
-                                                                                            <td class="p-3">1451 - ABC Street, NY</td>
-                                                                                            <td class="p-3">(+452) 8945 4568</td>
-                                                                                            <td class="p-3">Gynecology</td>
-                                                                                            <td class="p-3">20th Dec 2020</td>
-                                                                                            <td class="p-3">11:00AM</td>
-                                                                                            <td class="p-3"><span class="badge bg-soft-warning">Pending</span></td>
-                                                                                            <td class="text-end p-3">
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
-                                                                                            </td>
-                                                                                        </tr>
-                                            
-                                                                                        <tr>
-                                                                                            <th class="p-3">3</th>
-                                                                                            <td class="py-3">
-                                                                                                <a href="#" class="text-dark">
-                                                                                                    <div class="d-flex align-items-center">
-                                                                                                        <img src="images/client/03.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                                                                        <span class="ms-2">Faye Bridger</span>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="p-3">28</td>
-                                                                                            <td class="p-3">Female</td>
-                                                                                            <td class="p-3">1451 - ABC Street, NY</td>
-                                                                                            <td class="p-3">(+452) 8945 4568</td>
-                                                                                            <td class="p-3">Psychotherapy</td>
-                                                                                            <td class="p-3">20th Dec 2020</td>
-                                                                                            <td class="p-3">11:00AM</td>
-                                                                                            <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
-                                                                                            <td class="text-end p-3">
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
-                                                                                            </td>
-                                                                                        </tr>
-                                            
-                                                                                        <tr>
-                                                                                            <th class="p-3">4</th>
-                                                                                            <td class="py-3">
-                                                                                                <a href="#" class="text-dark">
-                                                                                                    <div class="d-flex align-items-center">
-                                                                                                        <img src="images/client/04.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                                                                        <span class="ms-2">Ronald Curtis</span>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="p-3">25</td>
-                                                                                            <td class="p-3">Male</td>
-                                                                                            <td class="p-3">1451 - ABC Street, NY</td>
-                                                                                            <td class="p-3">(+452) 8945 4568</td>
-                                                                                            <td class="p-3">Orthopedic</td>
-                                                                                            <td class="p-3">20th Dec 2020</td>
-                                                                                            <td class="p-3">11:00AM</td>
-                                                                                            <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
-                                                                                            <td class="text-end p-3">
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
-                                                                                            </td>
-                                                                                        </tr>
-                                            
-                                                                                        <tr>
-                                                                                            <th class="p-3">5</th>
-                                                                                            <td class="py-3">
-                                                                                                <a href="#" class="text-dark">
-                                                                                                    <div class="d-flex align-items-center">
-                                                                                                        <img src="images/client/05.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                                                                        <span class="ms-2">Melissa Hibner</span>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="p-3">28</td>
-                                                                                            <td class="p-3">Female</td>
-                                                                                            <td class="p-3">1451 - ABC Street, NY</td>
-                                                                                            <td class="p-3">(+452) 8945 4568</td>
-                                                                                            <td class="p-3">Dental</td>
-                                                                                            <td class="p-3">20th Dec 2020</td>
-                                                                                            <td class="p-3">11:00AM</td>
-                                                                                            <td class="p-3"><span class="badge bg-soft-warning">Pending</span></td>
-                                                                                            <td class="text-end p-3">
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
-                                                                                            </td>
-                                                                                        </tr>
-                                            
-                                                                                        <tr>
-                                                                                            <th class="p-3">6</th>
-                                                                                            <td class="py-3">
-                                                                                                <a href="#" class="text-dark">
-                                                                                                    <div class="d-flex align-items-center">
-                                                                                                        <img src="images/client/06.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                                                                        <span class="ms-2">Randall Case</span>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="p-3">25</td>
-                                                                                            <td class="p-3">Male</td>
-                                                                                            <td class="p-3">1451 - ABC Street, NY</td>
-                                                                                            <td class="p-3">(+452) 8945 4568</td>
-                                                                                            <td class="p-3">Orthopedic</td>
-                                                                                            <td class="p-3">20th Dec 2020</td>
-                                                                                            <td class="p-3">11:00AM</td>
-                                                                                            <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
-                                                                                            <td class="text-end p-3">
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
-                                                                                            </td>
-                                                                                        </tr>
-                                            
-                                                                                        <tr>
-                                                                                            <th class="p-3">7</th>
-                                                                                            <td class="py-3">
-                                                                                                <a href="#" class="text-dark">
-                                                                                                    <div class="d-flex align-items-center">
-                                                                                                        <img src="images/client/07.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                                                                        <span class="ms-2">Jerry Morena</span>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="p-3">25</td>
-                                                                                            <td class="p-3">Male</td>
-                                                                                            <td class="p-3">1451 - ABC Street, NY</td>
-                                                                                            <td class="p-3">(+452) 8945 4568</td>
-                                                                                            <td class="p-3">Dentist</td>
-                                                                                            <td class="p-3">20th Dec 2020</td>
-                                                                                            <td class="p-3">11:00AM</td>
-                                                                                            <td class="p-3"><span class="badge bg-soft-warning">Pending</span></td>
-                                                                                            <td class="text-end p-3">
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
-                                                                                            </td>
-                                                                                        </tr>
-                                            
-                                                                                        <tr>
-                                                                                            <th class="p-3">8</th>
-                                                                                            <td class="py-3">
-                                                                                                <a href="#" class="text-dark">
-                                                                                                    <div class="d-flex align-items-center">
-                                                                                                        <img src="images/client/08.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                                                                        <span class="ms-2">Lester McNally</span>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="p-3">25</td>
-                                                                                            <td class="p-3">Male</td>
-                                                                                            <td class="p-3">1451 - ABC Street, NY</td>
-                                                                                            <td class="p-3">(+452) 8945 4568</td>
-                                                                                            <td class="p-3">Gastrology</td>
-                                                                                            <td class="p-3">20th Dec 2020</td>
-                                                                                            <td class="p-3">11:00AM</td>
-                                                                                            <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
-                                                                                            <td class="text-end p-3">
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
-                                                                                            </td>
-                                                                                        </tr>
-                                            
-                                                                                        <tr>
-                                                                                            <th class="p-3">9</th>
-                                                                                            <td class="py-3">
-                                                                                                <a href="#" class="text-dark">
-                                                                                                    <div class="d-flex align-items-center">
-                                                                                                        <img src="images/client/09.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                                                                        <span class="ms-2">Christopher Burrell</span>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="p-3">28</td>
-                                                                                            <td class="p-3">Female</td>
-                                                                                            <td class="p-3">1451 - ABC Street, NY</td>
-                                                                                            <td class="p-3">(+452) 8945 4568</td>
-                                                                                            <td class="p-3">Urology</td>
-                                                                                            <td class="p-3">20th Dec 2020</td>
-                                                                                            <td class="p-3">11:00AM</td>
-                                                                                            <td class="p-3"><span class="badge bg-soft-success">Approved</span></td>
-                                                                                            <td class="text-end p-3">
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
-                                                                                            </td>
-                                                                                        </tr>
-                                            
-                                                                                        <tr>
-                                                                                            <th class="p-3">10</th>
-                                                                                            <td class="py-3">
-                                                                                                <a href="#" class="text-dark">
-                                                                                                    <div class="d-flex align-items-center">
-                                                                                                        <img src="images/client/10.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                                                                        <span class="ms-2">Mary Skeens</span>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="p-3">28</td>
-                                                                                            <td class="p-3">Female</td>
-                                                                                            <td class="p-3">1451 - ABC Street, NY</td>
-                                                                                            <td class="p-3">(+452) 8945 4568</td>
-                                                                                            <td class="p-3">Neurology</td>
-                                                                                            <td class="p-3">20th Dec 2020</td>
-                                                                                            <td class="p-3">11:00AM</td>
-                                                                                            <td class="p-3"><span class="badge bg-soft-warning">Pending</span></td>
-                                                                                            <td class="text-end p-3">
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-primary" data-bs-toggle="modal" data-bs-target="#viewprofile"><i class="uil uil-eye"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-success" data-bs-toggle="modal" data-bs-target="#editprofile"><i class="uil uil-pen"></i></a>
-                                                                                                <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i class="uil uil-trash"></i></a>
-                                                                                            </td>
-                                                                                        </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
@@ -619,137 +394,63 @@
                     </div><!--end col-->
                 </div><!--end row-->
             </div>
-
-            <div class="offcanvas-footer p-4 border-top text-center">
-                <ul class="list-unstyled social-icon mb-0">
-                    <li class="list-inline-item mb-0"><a href="https://1.envato.market/doctris-template" target="_blank" class="rounded"><i class="uil uil-shopping-cart align-middle" title="Buy Now"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="https://dribbble.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-dribbble align-middle" title="dribbble"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="https://www.facebook.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-facebook-f align-middle" title="facebook"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="../../../index.jsp" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
-                </ul><!--end icon-->
-            </div>
         </div>
-        <!-- Offcanvas End -->
-
-        <!-- Modal start -->
-        <!-- Profile Settings Start -->
-        <div class="modal fade" id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">Profile Settings</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body p-3 pt-4">
-                        <div class="row align-items-center">
-                            <div class="col-lg-2 col-md-4">
-                                <img src="images/doctors/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
-                            </div><!--end col-->
-
-                            <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
-                                <h6 class="">Upload your picture</h6>
-                                <p class="text-muted mb-0">For best results, use an image at least 256px by 256px in either .jpg or .png format</p>
-                            </div><!--end col-->
-
-                            <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
-                                <a href="#" class="btn btn-primary">Upload</a>
-                                <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
-                            </div><!--end col-->
-                        </div><!--end row-->
-
-                        <form class="mt-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">First Name</label>
-                                        <input name="name" id="name" type="text" class="form-control" placeholder="First Name :">
-                                    </div>
-                                </div><!--end col-->
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Last Name</label>
-                                        <input name="name" id="name2" type="text" class="form-control" placeholder="Last Name :">
-                                    </div>
-                                </div><!--end col-->
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Your Email</label>
-                                        <input name="email" id="email" type="email" class="form-control" placeholder="Your email :">
-                                    </div> 
-                                </div><!--end col-->
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Phone no.</label>
-                                        <input name="number" id="number" type="text" class="form-control" placeholder="Phone no. :">
-                                    </div>                                                                               
-                                </div><!--end col-->
-
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Your Bio Here</label>
-                                        <textarea name="comments" id="comments" rows="4" class="form-control" placeholder="Bio :"></textarea>
-                                    </div>
-                                </div>
-                            </div><!--end row-->
-
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <input type="submit" id="submit" name="send" class="btn btn-primary" value="Save changes">
-                                </div><!--end col-->
-                            </div><!--end row-->
-                        </form><!--end form-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Profile Settings End -->
-
-        <!-- Profile Start -->
-        <div class="modal fade" id="viewprofile" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom p-3">
-                        <h5 class="modal-title" id="exampleModalLabel1">Profile</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body p-3 pt-4">
-                        <div class="d-flex align-items-center">
-                            <img src="images/client/01.jpg" class="avatar avatar-small rounded-pill" alt="">
-                            <h5 class="mb-0 ms-3">${account.userName}</h5>
+        <div class="modal fade" id="newblogadd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <form action="AdminAddAccount" method="post">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom p-3">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Account</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <ul class="list-unstyled mb-0 d-md-flex justify-content-between mt-4">
-                            <li>
-                                <ul class="list-unstyled mb-0">
-                                    <li class="d-flex">
-                                        <h6>ROLE:</h6>
-                                        <p class="text-muted ms-2">${account.roleID}</p>
-                                    </li>
 
-                                    <li class="d-flex">
-                                        <h6>Password:</h6>
-                                        <p class="text-muted ms-2">${account.Password}</p>
-                                    </li>
+                        <div class="modal-body p-3 pt-4">
 
-                                    <li class="d-flex">
-                                        <h6 class="mb-0">EMAIL: </h6>
-                                        <p class="text-muted ms-2 mb-0">${account.Email}</p>
-                                    </li>
-                                </ul>
-                            </li>
+                            <div class="row"><!--end col-->
 
-                        </ul>
+                                <div class="col-md-8 mt-4 mt-sm-0">
+                                    <div class="ms-md-4">
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="col-md-6">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label"> Username </label>
+                                                        <p><input type="text" name="username" value="" placeholder="Username :"class="form-control" required/>
+
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Password <span class="text-danger">*</span></label>
+                                                        <input name="password" id="password" type="text" class="form-control" placeholder="Password :"required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Email <span class="text-danger">*</span></label>
+                                                        <input name="email" id="email" type="text" class="form-control" placeholder="Email :"required>
+                                                    </div>
+
+                                                </div><!--end col-->
+
+                                            </div><!--end col-->
+                                            <!--end col-->
+                                            <div class="col-lg-12 text-end">
+                                                <button type="submit" class="btn btn-primary">Add Accounts</button>
+                                            </div><!--end col-->
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div>
+                            <!--end row-->
+                        </div>
+
                     </div>
 
+
                 </div>
-            </div>
+            </form>
         </div>
+        <!-- Profile Start -->
         <!-- Profile End -->
         <!-- Modal end -->
 

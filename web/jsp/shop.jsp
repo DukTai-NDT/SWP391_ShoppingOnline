@@ -320,7 +320,7 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container-->
-                <a class="logo" href="index.jsp">
+                <a class="logo" href="HomePageURL">
                     <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
@@ -682,8 +682,4 @@
     </body>
 
 </html>
-<<<<<<< HEAD
-=======
 
-
->>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889

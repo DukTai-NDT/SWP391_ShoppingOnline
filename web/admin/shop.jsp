@@ -65,7 +65,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="HomePageURL">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -74,6 +74,7 @@
                     <ul class="sidebar-menu pt-3">
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
+
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
@@ -104,6 +105,7 @@
                                                         </div>-->
                         </li>
                         <br>
+
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -295,7 +297,9 @@
                                 <tr class="fw-bold text-center">
                                     <th class="p-3">#</th>
                                     <th class="p-3">Image</th>
+
                                     <th class="p-3 text-start ps-5">Product Name</th>
+
                                     <th class="p-3">Price</th>
                                     <th class="p-3">Action</th>
                                 </tr>
@@ -310,7 +314,9 @@
                                             <img src="${p.image}" class="rounded-5 shadow" alt="${p.productName}" 
                                                  style="width: 90px; height: 90px; object-fit: cover;">
                                         </td>
+
                                         <td class="p-3 text-start fw-semibold text-dark ps-5">
+
                                             ${p.productName}
                                         </td>
                                         <td class="p-3 text-success fw-bold text-center">${p.price}</td>

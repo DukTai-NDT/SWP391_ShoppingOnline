@@ -1,8 +1,20 @@
+<%-- 
+    Document   : admin-blog
+    Created on : Mar 3, 2025, 4:39:21 PM
+    Author     : Admin
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
 <html lang="en">
 
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8" />
         <title>Doctris - Doctor Appointment Booking System</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
@@ -17,10 +29,6 @@
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- simplebar -->
         <link href="css/simplebar.css" rel="stylesheet" type="text/css" />
-        <!-- Select2 -->
-        <link href="css/select2.min.css" rel="stylesheet" />
-        <!-- Date picker -->
-        <link rel="stylesheet" href="css/flatpickr.min.css">
         <!-- Icons -->
         <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
         <link href="css/remixicon.css" rel="stylesheet" type="text/css" />
@@ -46,17 +54,72 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="HomePageURL">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
                     </div>
 
-                  
+                    <ul class="sidebar-menu pt-3">
 
-                    <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>-->
+                        <li class="sidebar-dropdown">
+                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
+                            <div class="sidebar-submenu">
+                            </div>
+                        </li>
 
-                    <!--<li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
+                        <br>
+
+                        <li class="sidebar-dropdown">
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="OrdersManagement"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+                            <!--                            <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li><a href="faqs.html">FAQs</a></li>
+                                                                <li><a href="review.html">Reviews</a></li>
+                                                                <li><a href="invoice-list.html">Invoice List</a></li>
+                                                                <li><a href="invoice.html">Invoice</a></li>
+                                                                <li><a href="terms.html">Terms & Policy</a></li>
+                                                                <li><a href="privacy.html">Privacy Policy</a></li>
+                                                                <li><a href="error.html">404 !</a></li>
+                                                                <li><a href="blank-page.html">Blank Page</a></li>
+                                                            </ul>
+                                                        </div>-->
+                        </li>
+                        <br>
+                        </li>
+
+                        <!--                        <li class="sidebar-dropdown">
+                                                    <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
+                                                    <div class="sidebar-submenu">
+                                                        <ul>
+                                                            <li><a href="jsp/login.jsp">Login</a></li>
+                                                            <li><a href="jsp/signup.jsp">Signup</a></li>
+                                                            <li><a href="forgot-password.html">Forgot Password</a></li>
+                                                            <li><a href="jsp/login.jsp">Lock Screen</a></li>
+                                                            <li><a href="thankyou.html">Thank you...!</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>-->
+
+                        <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
+                        
+                                                <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -88,9 +151,9 @@
                             </a>
                             <div class="search-bar p-0 d-none d-lg-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <form role="search" method="get" id="searchform" class="searchform">
+                                    <form action="SearchCategories" role="search" method="get" id="searchform" class="searchform">
                                         <div>
-                                            <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
+                                            <input type="text" class="form-control border rounded-pill" name="txt" id="s" placeholder="Search Keywords...">
                                             <input type="submit" id="searchsubmit" value="Search">
                                         </div>
                                     </form>
@@ -223,123 +286,87 @@
                 <div class="container-fluid">
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
-                            <h5 class="mb-0">Add New Patient</h5>
+                            <div>
+                                <h5 class="mb-0">Categories</h5>
+
+                                <!--                                <nav aria-label="breadcrumb" class="d-inline-block mt-1">
+                                                                    <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
+                                                                        <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+                                                                        <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+                                                                    </ul>
+                                                                </nav>-->
+                            </div>
+
+                            <div class="mt-4 mt-sm-0">
+                                <a href="adminaddblog" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Categories</a>
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12 mt-4">
+                                <div class="table-responsive shadow rounded">
+                                    <table class="table table-center bg-white mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-bottom p-3" style="min-width: 180px;">Category ID</th>
+                                                <th class="border-bottom p-3" style="max-width: 180px;">Category Name</th>
+                                                <th class="border-bottom p-3" style="min-width: 180px;">Image</th>
+                                                <th class="border-bottom p-3" style="min-width: 150px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${vcategory}" var="c">
+                                                <tr>
+
+                                                    <td class="p-3">${c.categoryID}</td>
+                                                    <td class="p-3"><a href="" class="text-dark product-name h6" >${c.categoryName}</a></td>
+                                                    <td class="p-3"><img src="${c.image}" alt="Blog Image" style="max-width: 200px; height: auto;"></td>
+
+                                                    <td class="text-end p-3"> 
+                                                        <a href="LoadCategory?cid=${c.categoryID}" 
+                                                           class="btn btn-icon btn-pills btn-soft-primary">
+                                                            <i class="uil uil-edit"></i>
+                                                        </a>
+                                                        <a href="DeleteCategories?cid=${c.categoryID}" 
+                                                           class="btn btn-icon btn-pills btn-soft-danger"
+                                                           onclick="return confirmDelete(event, '${c.categoryID}')">
+                                                            <i class="uil uil-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!--end row-->
 
                         <div class="row">
-                            <div class="col-lg-8 mt-4">
-
-                                <div class="card border-0 p-4 rounded shadow">
-                                    <form action="EditAccount" method="post">
-<!--                                        <div class="row align-items-center">
-                                            <div class="col-lg-2 col-md-4">
-                                                <img src="images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
-                                            </div>end col
-
-                                            <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
-                                                <h5 class="">Upload your picture</h5>
-                                                <p class="text-muted mb-0">For best results, use an image at least 600px by 600px in either .jpg or .png format</p>
-                                            </div>end col
-
-                                            <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
-                                                <a href="#" class="btn btn-primary">Upload</a>
-                                                <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
-                                            </div>end col
-                                        </div>end row-->
-
-                                        <form class="mt-4">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">ID</label>
-                                                        <input value="${account.accountID}" name="id" type="text" class="form-control" readonly required>
-                                                    </div>
-                                                </div><!--end col-->
-
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Username</label>
-                                                        <input value="${account.userName}" name="username" id="username" type="text" class="form-control"readonly required >
-                                                    </div>
-                                                </div><!--end col-->
-
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Password</label>
-                                                        <input value="${account.password}" name="password" id="password" type="text" class="form-control"readonly required>
-                                                    </div> 
-                                                </div><!--end col-->
-                                                <div class="col-md-6">
-                                                    <label>Role</label>
-                                                    <select class="form-control" name="roleID" disabled>
-                                                        <option value="1"
-                                                                <c:if test="${account.roleID == 1}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Admin</option>
-                                                        <option value="2"
-                                                                <c:if test="${account.roleID == 2}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Customer</option>
-                                                        <option value="3"
-                                                                <c:if test="${account.roleID == 3}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Editor</option>
-                                                    </select>
-                                                    <input value="${account.roleID}" name="roleID" type="text" hidden>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label>Status</label>
-                                                    <select class="form-control" name="active">
-                                                        <option value="true"
-                                                                <c:if test="${account.active}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Active</option>
-                                                        <option value="false"
-                                                                <c:if test="${!account.active}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Block</option>
-                                                    </select> 
-                                                </div>
-
-
-
-
-
-                                                <!--                                            <div class="col-md-6">
-                                                                                                <div class="mb-3">
-                                                                                                    <label class="form-label">Departments</label>
-                                                                                                    <select class="form-control department-name select2input">
-                                                                                                        <option value="EY">Eye Care</option>
-                                                                                                        <option value="GY">Gynecologist</option>
-                                                                                                        <option value="PS">Psychotherapist</option>
-                                                                                                        <option value="OR">Orthopedic</option>
-                                                                                                        <option value="DE">Dentist</option>
-                                                                                                        <option value="GA">Gastrologist</option>
-                                                                                                        <option value="UR">Urologist</option>
-                                                                                                        <option value="NE">Neurologist</option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>end col-->
-                                            </div><!--end row-->
-
-                                            <button type="submit" class="btn btn-primary">Edit Account</button>
-                                        </form>
-                                </div>
-
+                            <div class="col-12 mt-4">
+                                <ul class="pagination justify-content-end mb-0 list-unstyled">
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Previous">Prev</a></li>
+                                    <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next">Next</a></li>
+                                </ul><!--end pagination-->
                             </div><!--end col-->
-
-
                         </div><!--end row-->
                     </div>
                 </div><!--end container-->
 
                 <!-- Footer Start -->
-
+                <footer class="bg-white shadow py-3">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="text-sm-start text-center">
+                                    <p class="mb-0 text-muted"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div><!--end container-->
+                </footer><!--end footer-->
                 <!-- End -->
             </main>
             <!--End page-content" -->
@@ -391,125 +418,115 @@
         </div>
         <!-- Offcanvas End -->
 
-        <!-- View Appintment Start -->
-        <div class="modal fade" id="viewappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">Appointment Detail</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body p-3 pt-4">
-                        <div class="d-flex align-items-center">
-                            <img src="images/client/01.jpg" class="avatar avatar-small rounded-pill" alt="">
-                            <h5 class="mb-0 ms-3">Howard Tanner</h5>
+        <!-- Start Modal -->
+        <div class="modal fade" id="newblogadd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <form action="AddCategory" method="post">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom p-3">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <ul class="list-unstyled mb-0 d-md-flex justify-content-between mt-4">
-                            <li>
-                                <ul class="list-unstyled mb-0">
-                                    <li class="d-flex">
-                                        <h6>Age:</h6>
-                                        <p class="text-muted ms-2">25 year old</p>
-                                    </li>
 
-                                    <li class="d-flex">
-                                        <h6>Gender:</h6>
-                                        <p class="text-muted ms-2">Male</p>
-                                    </li>
+                        <div class="modal-body p-3 pt-4">
 
-                                    <li class="d-flex">
-                                        <h6 class="mb-0">Department:</h6>
-                                        <p class="text-muted ms-2 mb-0">Cardiology</p>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="list-unstyled mb-0">
-                                    <li class="d-flex">
-                                        <h6>Date:</h6>
-                                        <p class="text-muted ms-2">20th Dec 2020</p>
-                                    </li>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Image URL:</label>
+                                        <input type="text" name="image" id="image" class="form-control" placeholder="Enter image URL" oninput="previewImage()">
+                                    </div>
+                                </div><!--end col-->
 
-                                    <li class="d-flex">
-                                        <h6>Time:</h6>
-                                        <p class="text-muted ms-2">11:00 AM</p>
-                                    </li>
+                                <div class="col-md-8 mt-4 mt-sm-0">
+                                    <div class="ms-md-4">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="col-md-6">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"> Category Name : </label>
+                                                            <p><input type="text" name="categoryname" value="" />
+                                                        </div>
 
-                                    <li class="d-flex">
-                                        <h6 class="mb-0">Doctor:</h6>
-                                        <p class="text-muted ms-2 mb-0">Dr. Calvin Carlo</p>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- View Appintment End -->
 
-        <!-- Accept Appointment Start -->
-        <div class="modal fade" id="acceptappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body py-5">
-                        <div class="text-center">
-                            <div class="icon d-flex align-items-center justify-content-center bg-soft-success rounded-circle mx-auto" style="height: 95px; width:95px;">
-                                <i class="uil uil-check-circle h1 mb-0"></i>
+                                                    </div><!--end col-->
+
+                                                </div><!--end col-->
+
+                                                <div class="col-lg-12 text-end">
+                                                    <button type="submit" class="btn btn-primary">Add Blog</button>
+                                                </div><!--end col-->
+                                            </div>
+                                    </div>
+                                </div><!--end col-->
                             </div>
-                            <div class="mt-4">
-                                <h4>Accept Appointment</h4>
-                                <p class="para-desc mx-auto text-muted mb-0">Great doctor if you need your family member to get immediate assistance, emergency treatment.</p>
-                                <div class="mt-4">
-                                    <a href="#" class="btn btn-soft-success">Accept</a>
-                                </div>
-                            </div>
+                            <!--end row-->
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Accept Appointment End -->
 
-        <!-- Cancel Appointment Start -->
-        <div class="modal fade" id="cancelappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body py-5">
-                        <div class="text-center">
-                            <div class="icon d-flex align-items-center justify-content-center bg-soft-danger rounded-circle mx-auto" style="height: 95px; width:95px;">
-                                <i class="uil uil-times-circle h1 mb-0"></i>
-                            </div>
-                            <div class="mt-4">
-                                <h4>Cancel Appointment</h4>
-                                <p class="para-desc mx-auto text-muted mb-0">Great doctor if you need your family member to get immediate assistance, emergency treatment.</p>
-                                <div class="mt-4">
-                                    <a href="#" class="btn btn-soft-danger">Cancel</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+
+
                 </div>
-            </div>
+            </form>
         </div>
-        <!-- Cancel Appointment End -->
-        <!-- Modal end -->
+        <!-- End modal -->
 
         <!-- javascript -->
-        <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <!-- simplebar -->
         <script src="js/simplebar.min.js"></script>
-        <!-- Select2 -->
-        <script src="js/select2.min.js"></script>
-        <script src="js/select2.init.js"></script>
-        <!-- Datepicker -->
-        <script src="js/flatpickr.min.js"></script>
-        <script src="js/flatpickr.init.js"></script>
         <!-- Icons -->
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
+
+        <script>
+                                        const handleChange = () => {
+                                            const fileUploader = document.querySelector('#input-file');
+                                            const getFile = fileUploader.files
+                                            if (getFile.length !== 0) {
+                                                const uploadedFile = getFile[0];
+                                                readFile(uploadedFile);
+                                            }
+                                        }
+
+                                        const readFile = (uploadedFile) => {
+                                            if (uploadedFile) {
+                                                const reader = new FileReader();
+                                                reader.onload = () => {
+                                                    const parent = document.querySelector('.preview-box');
+                                                    parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
+                                                };
+
+                                                reader.readAsDataURL(uploadedFile);
+                                            }
+                                        };
+        </script>
+        <script>
+            function confirmDelete(event, categoryID) {
+                event.preventDefault(); // Ngăn trang chuyển hướng ngay lập tức
+                let confirmation = confirm("Are you sure you want to delete this blog post?");
+                if (confirmation) {
+                    window.location.href = "DeleteCategories?cid=" + categoryID; // Chuyển hướng nếu xác nhận
+                }
+            }
+        </script>
+        <script>
+            function previewImage() {
+                var imageUrl = document.getElementById("images").value; // Lấy giá trị URL từ input
+                var imgPreview = document.getElementById("imagePreview"); // Lấy thẻ img
+
+                if (imageUrl.trim() !== "") {
+                    imgPreview.src = imageUrl; // Gán URL vào src của img
+                    imgPreview.style.display = "block"; // Hiển thị ảnh
+                } else {
+                    imgPreview.style.display = "none"; // Ẩn ảnh nếu không có URL
+                }
+            }
+        </script>
 
     </body>
 

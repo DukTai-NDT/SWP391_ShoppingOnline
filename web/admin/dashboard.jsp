@@ -68,11 +68,21 @@
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
-                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
+                            <div class="sidebar-submenu">
+                            </div>
+                        </li>
+
+                        <br>
+
+                        <li class="sidebar-dropdown">
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
-                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+                            <a href="OrdersManagement"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+
 <!--                            <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="faqs.html">FAQs</a></li>
