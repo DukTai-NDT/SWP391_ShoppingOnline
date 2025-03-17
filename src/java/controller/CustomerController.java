@@ -2,6 +2,7 @@ package controller;
 
 import entity.CartItems;
 import entity.Customers;
+import entity.Categories;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,6 +20,7 @@ import model.DAOCustomer;
 import java.io.File;
 import model.DAOCart;
 import model.DAOCartItem;
+import model.DAOCategories;
 
 @WebServlet(name = "CustomerController", urlPatterns = {"/CustomerURL"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
@@ -34,16 +36,19 @@ public class CustomerController extends HttpServlet {
         DAOAccount daoAcc = new DAOAccount();
         DAOCustomer daoCus = new DAOCustomer();
         DAOCartItem daoCartItem = new DAOCartItem();
+        DAOCategories daoCat = new DAOCategories();
         HttpSession session = request.getSession();
 
         // Lấy đối tượng Customers từ session với key "dataCustomer"
         Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
-       
+        
         if (currentCustomer != null) {
              Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy(
         "select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy " +
         "from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = " + currentCustomer.getCustomerID()
              );
+             Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
+             session.setAttribute("vectorCat", vectorCat);
           session.setAttribute("dataCartItem", vectorCartItems);
     
         }

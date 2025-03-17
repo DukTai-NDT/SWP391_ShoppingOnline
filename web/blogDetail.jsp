@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Vector,entity.Cart,entity.CartItems, entity.Customers, entity.Comment,entity.Blogs, jakarta.servlet.http.HttpSession, model.DAOCustomer"%>
+<%@page import="java.util.Vector,entity.Cart,entity.CartItems, entity.Customers, entity.Comment,entity.Blogs, jakarta.servlet.http.HttpSession, model.DAOCustomer, entity.Categories"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,8 +29,8 @@
     </head>
     <%  
         Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
-      
-        Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+        Vector<Categories> vectorCat = (Vector<Categories>) session.getAttribute("vectorCat");
+         Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
         Blogs blog = (Blogs) session.getAttribute("blog");
     
      
@@ -122,14 +122,18 @@
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left">
                         <li class="parent-menu-item">
-                            <a href="ProductURL?service=listAllProducts">Home</a><span class="menu-arrow"></span>
+                            <a href="ProductURL?service=listAllProducts">Shop</a><span class="menu-arrow"></span>
+                        </li>
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <%for (Categories cate : vectorCat){%>
+                                <li><a href="ProductURL?service=categories&cid=<%=cate.getCategoryID()%>" class="sub-menu-item"> <%=cate.getCategoryName()%></a></li>
+                                    <%}%>
+                            </ul>
                         </li>
 
-                        </li>
-                        <li class="has-submenu parent-menu-item">
-                            <a href="BlogsURL"> Blogs </a>
-                        </li>
-                        <li><a href="../admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
+                        <li><a href="BlogsURL" class="menu-item">Blogs</a></li>
+                        
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
