@@ -39,20 +39,30 @@ public class HomePageController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-            DAOCategories daocategories = new DAOCategories();
-            DAOProducts daoproduct = new DAOProducts();
-            DAOBlogs daoblog = new DAOBlogs();
-            Vector<Categories> vcategories = daocategories.getCategories("select * from Categories");
-            Vector<Products> vproduct = daoproduct.getProducts("select * from products");
-            Vector<Blogs> vblog = daoblog.getBlogs("select * from blogs");
-            Vector<Products> vproductspecial = daoproduct.getProducts("select * from Products\n"
-                    + "where Quantity >100");
-            request.setAttribute("vproductspecial", vproductspecial);
-            request.setAttribute("vblog", vblog);
-            request.setAttribute("vproduct", vproduct);
-            request.setAttribute("vcategories", vcategories);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-            
+        DAOCategories daocategories = new DAOCategories();
+        DAOProducts daoproduct = new DAOProducts();
+        DAOBlogs daoblog = new DAOBlogs();
+        Vector<Categories> vcategories = daocategories.getCategories("select * from Categories");
+        Vector<Products> vproduct = daoproduct.getProducts("SELECT TOP (10) [ProductID]\n"
+                + "      ,[ProductName]\n"
+                + "      ,[Price]\n"
+                + "      ,[Description]\n"
+                + "      ,[UnitPrice]\n"
+                + "      ,[CategoryID]\n"
+                + "      ,[BrandID]\n"
+                + "      ,[isPrescriptionDrug]\n"
+                + "      ,[Quantity]\n"
+                + "      ,[Image]\n"
+                + "  FROM [ECommerceDB].[dbo].[Products]");
+        Vector<Blogs> vblog = daoblog.getBlogs("select * from blogs");
+        Vector<Products> vproductspecial = daoproduct.getProducts("select * from Products\n"
+                + "where Quantity >100");
+        request.setAttribute("vproductspecial", vproductspecial);
+        request.setAttribute("vblog", vblog);
+        request.setAttribute("vproduct", vproduct);
+        request.setAttribute("vcategories", vcategories);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

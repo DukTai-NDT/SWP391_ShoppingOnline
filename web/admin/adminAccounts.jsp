@@ -35,6 +35,26 @@
 
     </head>
     <% String errorUsername = (String) request.getAttribute("errorUsername"); %>
+    <style>
+        .table {
+            background-color: #f8f9fa; /* Màu nền nhạt */
+            border-radius: 10px; /* Bo góc */
+        }
+
+        .table thead {
+            background-color: #215aee !important; /* Màu xanh cho header */
+            color: white;
+        }
+
+        .table tbody tr:hover {
+            background-color: #eef5ff; /* Hiệu ứng hover */
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px; /* Khoảng cách giữa các nút */
+        }
+    </style>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -70,7 +90,7 @@
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
                         <br>
-                            <li class="sidebar-dropdown">
+                        <li class="sidebar-dropdown">
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
                             <div class="sidebar-submenu">
                             </div>
@@ -126,104 +146,9 @@
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            <li class="list-inline-item mb-0">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/language/american.png" class="avatar avatar-ex-small rounded-circle p-2" alt=""></button>
-                                    <div class="dropdown-menu dd-menu drop-ups dropdown-menu-end bg-white shadow border-0 mt-3 p-2" data-simplebar style="height: 175px;">
-                                        <a href="javascript:void(0)" class="d-flex align-items-center">
-                                            <img src="images/language/chinese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Chinese</small>
-                                            </div>
-                                        </a>
 
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/european.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">European</small>
-                                            </div>
-                                        </a>
 
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/indian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Indian</small>
-                                            </div>
-                                        </a>
 
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/japanese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Japanese</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/russian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Russian</small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="list-inline-item mb-0 ms-1">
-                                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                    <div class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
-                                </a>
-                            </li>
-
-                            <li class="list-inline-item mb-0 ms-1">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-icon btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail" class="fea icon-sm"></i></button>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4 <span class="visually-hidden">unread mail</span></span>
-
-                                    <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2" data-simplebar style="height: 320px; width: 300px;">
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/02.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Janalia</b> <small class="text-muted fw-normal d-inline-block">1 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/Codepen.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>codepen</b>  <small class="text-muted fw-normal d-inline-block">4 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/03.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Cristina</b> <small class="text-muted fw-normal d-inline-block">5 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/dribbble.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Dribbble</b> <small class="text-muted fw-normal d-inline-block">24 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/06.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Donald Aghori</b> <small class="text-muted fw-normal d-inline-block">1 day ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/07.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Calvin</b> <small class="text-muted fw-normal d-inline-block">2 day ago</small></small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
 
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
@@ -257,9 +182,9 @@
                                                                         <li class="breadcrumb-item active" aria-current="page">Patients</li>-->
                                 </ul>
                             </nav>
-                            <div class="mt-4 mt-sm-0">
-                                <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Account</a>
-                            </div>
+                            <!--                            <div class="mt-4 mt-sm-0">
+                                                            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Account</a>
+                                                        </div>-->
                         </div>
 
                         <div class="row">
@@ -275,13 +200,12 @@
                                                 <th class="border-bottom p-3">Email</th>
                                                 <th class="border-bottom p-3">Status</th>
 
-                                                <th class="border-bottom p-3" style="min-width: 100px;"></th>
+                                                <th class="border-bottom p-3 text-end" style="min-width: 100px;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${lista}" var="a">
                                                 <tr>
-
                                                     <td class="p-3">${a.accountID}</td>
                                                     <td class="py-3">
                                                         <a href="#" class="text-dark">
@@ -416,7 +340,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label"> Username </label>
                                                         <p><input type="text" name="username" value="" placeholder="Username :"class="form-control" required/>
-
+                                                            <span class="text-danger">${errorUsername}</span>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Password <span class="text-danger">*</span></label>

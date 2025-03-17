@@ -332,7 +332,7 @@
                                 <li><a href="aboutus.jsp" class="sub-menu-item"> About Us</a></li>
                                 <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
+                                <li><a href="BlogsURL" class="sub-menu-item">Blogs</a></li>
 
 
                             </ul>
@@ -398,22 +398,22 @@
                 <!-- Swiper Container -->
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
-                        <%for (Categories c : vcategories){%>
+                        <% for (Categories c : vcategories) { %>
                         <div class="swiper-slide">
-                            <div class="card features feature-primary border-0">
-                                <div class="icon text-center rounded-md">
-                                    <img src="<%=c.getImage()%>" alt="Blog Image" style="width: 50px">
-                                </div>
-                                <div class="card-body p-0 mt-3">
-                                    <a href="ProductURL?service=categories&cid=<%=c.getCategoryID()%>" class="title text-dark h5"><%=c.getCategoryName()%></a><br>
-                                    <a href="departments.jsp" class="link">Shop Now <i class="ri-arrow-right-line align-middle"></i></a>
+                            <div class="card features feature-primary border-0 p-2">
+                                <div class="d-flex align-items-center"> 
+                                    <img src="<%= c.getImage() %>" alt="Blog Image" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                                    <a href="ProductURL?service=categories&cid=<%= c.getCategoryID() %>" class="title text-dark h5 mb-0">
+                                        <%= c.getCategoryName() %>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <%}%>
+                        <% } %>
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
+
             </div>
         </section>
 
@@ -438,51 +438,6 @@
             });
 
         </script>
-
-        <!-- End -->
-
-        <!-- Start -->
-        <!--        <section class="section">
-                    <div class="container mt-100 mt-60">
-                        <div class="row justify-content-center">
-                            <div class="col-12">
-                                <div class="section-title mb-4 pb-2 text-center">
-                                                                <span class="badge badge-pill badge-soft-primary mb-3">Departments</span>
-                                    <h4 class="title mb-4">Products</h4>
-                                    <p class="text-muted mx-auto para-desc mb-0">Quality Medicines, Trusted Care ? Your Health, Our Priority.</p>
-                                </div>
-                            </div>end col
-                        </div>end row
-        
-                        <div class="row">
-        <c:forEach items="${vproduct}" var="p">
-            
-            <div class="col-xl-3 col-md-4 col-12 mt-5">
-
-                <div class="card features feature-primary border-0">
-
-
-                    <img src="${p.image}" alt="Blog Image" style="max-width: 200px; height: auto;">
-
-                    <div class="card-body p-0 mt-3">
-                        <a href="departments.jsp" class="title text-dark h5">${p.productName}</a><br>
-                                                            <p class="text-muted mt-3">There is now an abundance of readable dummy texts required purely to fill a space.</p>
-                        <div class="buttons">
-
-                            <a class="btn btn-primary" href="">Buy</a>
-
-                            <button class="btn btn-primary">Tuyp</button>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>end col
-        </c:forEach>
-    </div>end row
-    <div class="swiper-pagination"></div>
-</div>end container
-</section>end section-->
         <section class="section">
             <div class="container mt-100 mt-60">
                 <div class="row justify-content-center">
@@ -502,16 +457,18 @@
                     <div class="swiper-wrapper">
                         <%for (Products p : vproduct) {%>
                         <div class="swiper-slide">
-                            <div class="card1 features feature-primary border-0">
-                                <img src="<%=p.getImage()%>" alt="Product Image" style="max-width: 200px; height: auto;">
-                                <div class="card-body1 p-0 mt-3 text-center">
-                                    <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
-                                    <div class="buttons mt-2">
-                                        <a class="btn btn-primary" href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>">Buy</a>
-                                        <button class="btn btn-primary">Tuyp</button>
+                            <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="text-decoration-none">
+                                <div class="card1 features feature-primary border-0">  
+                                    <img src="<%=p.getImage()%>" alt="Product Image" style="max-width: 200px; height: auto;">
+                                    <div class="card-body1 p-0 mt-3 text-center">
+                                        <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
+                                        <div class="buttons mt-2">
+                                            <a class="btn btn-primary" href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>">Buy</a>
+                                            <button class="btn btn-primary">Tuyp</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <%}%>
                     </div>
@@ -568,24 +525,25 @@
                 <div class="row">
                     <%for (Products p : vproductspecial) {%>
                     <div class="col-xl-3 col-md-4 col-12 mt-5">
+                        <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="text-decoration-none">
+                            <div class="card1 features feature-primary border-0">
 
-                        <div class="card1 features feature-primary border-0">
 
+                                <img src="<%=p.getImage()%>" alt="Blog Image" style="max-width: 200px; height: auto;">
 
-                            <img src="<%=p.getImage()%>" alt="Blog Image" style="max-width: 200px; height: auto;">
+                                <div class="card-body1 p-0 mt-3">
+                                    <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
+                                    <!--                                    <p class="text-muted mt-3">There is now an abundance of readable dummy texts required purely to fill a space.</p>-->
+                                    <div class="buttons1">
 
-                            <div class="card-body1 p-0 mt-3">
-                                <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
-                                <!--                                    <p class="text-muted mt-3">There is now an abundance of readable dummy texts required purely to fill a space.</p>-->
-                                <div class="buttons1">
+                                        <a class="btn btn-primary" href="">Buy</a>
 
-                                    <a class="btn btn-primary" href="">Buy</a>
-
-                                    <button class="btn btn-primary">Tuyp</button>
+                                        <button class="btn btn-primary">Tuyp</button>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
+                            </div>
+                        </a>
 
                     </div><!--end col-->
                     <%}%>
@@ -679,7 +637,7 @@
                                                 </ul>
 <!--                                                <a href="AdminBlogsDetail?bid=${b.blogID}" class="text-dark title h5">${b.title}</a>-->
                                                 <div class="post-meta d-flex justify-content-between mt-3">
-                                                    <a href="AdminBlogsDetail?bid=${b.blogID}" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
+                                                    <a href="BlogsURL?service=detailBlog&blog=${b.blogID}" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -748,7 +706,7 @@
                             <li><a href="departments.jsp" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Services</a></li>
                             <li><a href="doctor-team-two.html" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Team</a></li>
                             <li><a href="blog-detail.html" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Project</a></li>
-                            <li><a href="blogs.html" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Blog</a></li>
+                            <li><a href="BlogsURL" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Blog</a></li>
                             <li><a href="jsp/login.jsp" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Login</a></li>
                         </ul>
                     </div><!--end col-->

@@ -35,7 +35,7 @@ public class LogOutController extends HttpServlet {
             HttpSession session = request.getSession(true);
             
                  session.invalidate();
-                 request.getRequestDispatcher("index.jsp").forward(request, response);
+                 request.getRequestDispatcher("HomePageURL").forward(request, response);
         }
     } 
 

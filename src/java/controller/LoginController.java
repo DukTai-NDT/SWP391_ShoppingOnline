@@ -108,6 +108,7 @@ public class LoginController extends HttpServlet {
                         session.setAttribute("selectedCartItems", new Vector<CartItems>());
                         Customers cus = customerList.get(0);
                         session.setAttribute("dataCustomer", cus);
+                        session.setAttribute("customerId", cus.getCustomerID());
                         request.getRequestDispatcher("index.jsp").forward(request, response);
                     } else {
                         // Xử lý trường hợp không tìm thấy khách hàng
@@ -144,11 +145,13 @@ public class LoginController extends HttpServlet {
 
                     } else if (account != null) {
 
-                        if (account.getRoleID() == 1) {
+                        if (account.getRoleID() == 2) {
 
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             session.setAttribute("dataCustomer", cus);
                             session.setAttribute("dataUser", account);
+                                                    session.setAttribute("customerId", cus.getCustomerID());
+
                             request.getRequestDispatcher("HomePageURL").forward(request, response);
                         } else if (account.getRoleID() == 3) {
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);

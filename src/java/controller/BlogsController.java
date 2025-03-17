@@ -45,8 +45,8 @@ public class BlogsController extends HttpServlet {
         DAOCustomer daoCus = new DAOCustomer();
         DAOComment daoComments = new DAOComment();
         HttpSession session = request.getSession();
-      Customers customer = (Customers)  session.getAttribute("dataCustomer");
-        int  customerId = customer.getCustomerID();
+      Integer customerId = (Integer)  session.getAttribute("customerId");
+        
         if (customerId == 0) {
             response.sendRedirect("LoginURL?service=login");
             return;

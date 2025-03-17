@@ -37,6 +37,26 @@
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
     </head>
+    <style>
+        .table {
+            background-color: #f8f9fa; /* Màu nền nhạt */
+            border-radius: 10px; /* Bo góc */
+        }
+
+        .table thead {
+            background-color: #215aee !important; /* Màu xanh cho header */
+            color: white;
+        }
+
+        .table tbody tr:hover {
+            background-color: #eef5ff; /* Hiệu ứng hover */
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px; /* Khoảng cách giữa các nút */
+        }
+    </style>
 
     <body>
         <!-- Loader -->
@@ -172,103 +192,9 @@
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            <li class="list-inline-item mb-0">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/language/american.png" class="avatar avatar-ex-small rounded-circle p-2" alt=""></button>
-                                    <div class="dropdown-menu dd-menu drop-ups dropdown-menu-end bg-white shadow border-0 mt-3 p-2" data-simplebar style="height: 175px;">
-                                        <a href="javascript:void(0)" class="d-flex align-items-center">
-                                            <img src="images/language/chinese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Chinese</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/european.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">European</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/indian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Indian</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/japanese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Japanese</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/russian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Russian</small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
 
                             <li class="list-inline-item mb-0 ms-1">
-                                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                    <div class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
-                                </a>
-                            </li>
 
-                            <li class="list-inline-item mb-0 ms-1">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-icon btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail" class="fea icon-sm"></i></button>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4 <span class="visually-hidden">unread mail</span></span>
-
-                                    <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2" data-simplebar style="height: 320px; width: 300px;">
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/02.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Janalia</b> <small class="text-muted fw-normal d-inline-block">1 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/Codepen.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>codepen</b>  <small class="text-muted fw-normal d-inline-block">4 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/03.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Cristina</b> <small class="text-muted fw-normal d-inline-block">5 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/dribbble.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Dribbble</b> <small class="text-muted fw-normal d-inline-block">24 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/06.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Donald Aghori</b> <small class="text-muted fw-normal d-inline-block">1 day ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/07.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Calvin</b> <small class="text-muted fw-normal d-inline-block">2 day ago</small></small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
                             </li>
 
                             <li class="list-inline-item mb-0 ms-1">
@@ -308,22 +234,25 @@
                             </div>
 
                             <div class="mt-4 mt-sm-0">
+                                <button class="btn btn-outline-primary" id="sortButton" onclick="sortBlogs()">Sort by Date (Newest First)</button>
                                 <a href="adminaddblog" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Blog</a>
+
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 mt-4">
                                 <div class="table-responsive shadow rounded">
                                     <table class="table table-center bg-white mb-0">
+                                        
                                         <thead>
-                                            <tr>
+                                            <tr >
                                                 <th class="border-bottom p-3" style="min-width: 180px;">BlogID</th>
-                                                <th class="border-bottom p-3" style="max-width: 180px;">Title</th>
+                                                <th class="border-bottom p-3 text-center" style="max-width: 180px;">Title</th>
                                                 <th class="border-bottom p-3"style="min-width: 180px;">Post Time</th>
-                                                <th class="border-bottom p-3" style="min-width: 180px;">Image</th>
+                                                <th class="border-bottom p-3 text-center" style="min-width: 180px;">Image</th>
 
 
-                                                <th class="border-bottom p-3" style="min-width: 150px;"></th>
+                                                <th class="border-bottom p-3 text-end" style="min-width: 150px;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -331,7 +260,7 @@
                                                 <tr>
 
                                                     <td class="p-3">${b.blogID}</td>
-                                                    <td class="p-3"><a href="AdminBlogsDetail?bid=${b.blogID}" class="text-dark product-name h6" >${b.title}</a></td>
+                                                    <td class="p-3"><a href="BlogsURL?service=detailBlog&blog=${b.blogID}" class="text-dark product-name h6" >${b.title}</a></td>
                                                     <td class="p-3">${b.postTime}</td>
                                                     <td class="p-3"><img src="${b.image}" alt="Blog Image" style="max-width: 200px; height: auto;"></td>
 
@@ -349,15 +278,6 @@
 
                                                     </td>
 
-
-
-
-
-
-<!--<a href="loadAccount?aid=${a.accountID}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
-
-
-
                                                     </td>
 
                                                 </tr>
@@ -367,38 +287,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div><!--end row-->
-                        <!--                        <div class="row">
-                        
-                        <c:forEach items="${bloglist}" var="b">
-                            <div class="card blog blog-primary border-0 shadow rounded overflow-hidden">
-                                <img src="" class="img-fluid" alt="">
-                                <div class="card-body p-4">
-                                    <ul class="list-unstyled mb-2">
-                                        <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>${b.postTime}</li>
-                                        <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
-                                    </ul>
-                                    <a href="AdminBlogsDetail?bid=${b.blogID}" class="text-dark title h5">${b.title}</a>
-                                    <div class="post-meta d-flex justify-content-between mt-3">
-                                        <ul class="list-unstyled mb-0">
-                                            <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
-                                            <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
-                                        </ul>
-                                        <table>
-                                            <td class="text-end p-3">
-                                                <a href="AdminDeleteBlog?bid=${b.blogID}" class="btn btn-icon btn-pills btn-soft-danger"  ><i class="uil uil-times-circle"></i></a>
-                                            </td></table>
-
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                        </c:forEach>
-
-                    </div>end row-->
-
+                        </div>              
                         <div class="row">
                             <div class="col-12 mt-4">
                                 <ul class="pagination justify-content-end mb-0 list-unstyled">
@@ -593,6 +482,34 @@
             }
         }
     </script>
+    <script>
+        let newestFirst = true; // Trạng thái mặc định: Mới nhất trước
+
+        function sortBlogs() {
+            let table = document.querySelector("table tbody");
+            let rows = Array.from(table.querySelectorAll("tr"));
+
+            // Sắp xếp theo ngày
+            rows.sort((a, b) => {
+                let dateA = new Date(a.cells[2].innerText.trim());
+                let dateB = new Date(b.cells[2].innerText.trim());
+                return newestFirst ? dateB - dateA : dateA - dateB;
+            });
+
+            // Cập nhật thứ tự hiển thị trong bảng
+            table.innerHTML = "";
+            rows.forEach(row => table.appendChild(row));
+
+            // Đổi trạng thái sắp xếp
+            newestFirst = !newestFirst;
+
+            // Cập nhật văn bản của nút
+            document.getElementById("sortButton").textContent = newestFirst
+                    ? "Sort by Date (Newest First)"
+                    : "Sort by Date (Oldest First)";
+        }
+    </script>
+
 
 </body>
 

@@ -306,11 +306,13 @@ public class DAOAccount extends DBConnection {
 
         try {
             String sql = "UPDATE [Accounts]\n"
-                    + "   SET [active] = ?\n"
+                    + "   SET [active] = ?,\n"
+                    + "[RoleID] = ?\n"
                     + " WHERE AccountID = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setBoolean(1, account.isActive());
-            stm.setInt(2, account.getAccountID());
+            stm.setInt(2, account.getRoleID());
+            stm.setInt(3, account.getAccountID());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
