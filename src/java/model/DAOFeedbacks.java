@@ -105,7 +105,7 @@ public class DAOFeedbacks extends DBConnection {
                 int AccountID = rs.getInt("AccountID");
                 int ProductID = rs.getInt("ProductID");
                 
-                Feedbacks feed = new Feedbacks(Comment, Time, Rating, AccountID, ProductID);
+                Feedbacks feed = new Feedbacks(FeedbackID,Comment, Time, Rating, AccountID, ProductID);
                 vector.add(feed);
             }
         } catch (SQLException ex) {

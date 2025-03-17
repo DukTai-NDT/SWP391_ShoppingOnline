@@ -366,10 +366,10 @@
 
     <!-- Offcanvas Settings -->
     <!-- Offcanvas Start -->
-    <%if(currentCustomer != null){ %>
-    <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <% if (currentCustomer != null) { %>
+<div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header p-4 border-bottom">
-        <h5 class="mb-0" id="offcanvasRightLabel">Sản phẩm mới thêm</h5>
+        <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
         <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body p-4">
@@ -386,8 +386,9 @@
                 <div class="ms-3 flex-1">
                     <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
                     <div class="d-flex justify-content-between">
-                        <p class="text-muted mb-0">Số lượng: <%=vectorCartItem.getQuantity()%></p>
-                        <p class="text-muted mb-0">Giá: <%=vectorCartItem.getPrice()%> VND</p>
+                        <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
+                        <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
+
                     </div>
                 </div>
             </div>
@@ -395,17 +396,16 @@
         <%
             } }else {
         %>
-        <p class="text-muted text-center " >CHưa Có Sản Phẩm Trong Giỏ Hàng...</p>
+        <p class="text-muted text-center " >No Products In Cart...</p>
         <%
             }
         %>
         <div class="mt-4 text-center">
-            <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">Xem giỏ hàng</a>
+            <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
         </div>
     </div>
 </div>
-        <!-- Offcanvas End -->
-<%}%>
+        <% }%>
     <!-- JavaScript -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>

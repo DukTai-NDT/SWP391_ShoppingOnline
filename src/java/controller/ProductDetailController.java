@@ -34,6 +34,7 @@ import model.DAOProducts;
  *
  * @author quang
  */
+
 @WebServlet(name = "ProductDetailController", urlPatterns = {"/ProductDetailURL"})
 public class ProductDetailController extends HttpServlet {
 
@@ -59,6 +60,10 @@ public class ProductDetailController extends HttpServlet {
         DAOCustomer daoCus = new DAOCustomer();
         Vector<Brand> vectorBrand = new Vector<Brand>();
         Account account = (Account) session.getAttribute("dataUser");
+        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+        Vector<Feedbacks> vectorFeed = new Vector<Feedbacks>();
+        
+        
         try (PrintWriter out = response.getWriter()) {
 
             /* TODO output your page here. You may use following sample code. */
@@ -66,7 +71,9 @@ public class ProductDetailController extends HttpServlet {
             String pid = request.getParameter("pid");
             String service = request.getParameter("service");
             String submit = request.getParameter("submit");
+            
 
+            
             if (submit != null) {
                 String rating = request.getParameter("rating");
                 int rate = Integer.parseInt(rating);
@@ -90,12 +97,15 @@ public class ProductDetailController extends HttpServlet {
             Vector<Categories> category = daoCat.getCategories("select * from Categories c join Products p on c.CategoryID = p.CategoryID\n"
                     + "where p.ProductID = " + pid);
             Categories cat = category.get(0);
-            Vector<Customers> vectorCus = daoCus.getCustomer("select * from Customers where AccountID =" + account.getAccountID());
-            Customers customer = vectorCus.get(0);
+            
+            
+            
+            
             Vector<Function> vectorf = daof.getFunction("select * from [Function] where ProductID = " + pid);
             Vector<Ingredient> vectorIngre = daoIngre.getIngredient("select * from Ingredient where ProductID = " + pid);
-            Vector<Feedbacks> vectorFeed = daoFeed.getFeedback("select * from Feedbacks where ProductID = " + pid);
-
+            vectorFeed = daoFeed.getFeedback("select * from Feedbacks where ProductID = " + pid);
+            
+//            
             double averageStar = 0.0;
             int totalRating = 0;
             int star5 = 0, star4 = 0, star3 = 0, star2 = 0, star1 = 0;
@@ -152,7 +162,6 @@ public class ProductDetailController extends HttpServlet {
             session.setAttribute("cat", cat);
             session.setAttribute("vectorf", vectorf);
             session.setAttribute("vectorIngre", vectorIngre);
-            session.setAttribute("customer", customer);
             request.getRequestDispatcher("/jsp/product-detail.jsp").forward(request, response);
 
         }
@@ -198,3 +207,5 @@ public class ProductDetailController extends HttpServlet {
     }// </editor-fold>
 
 }
+
+

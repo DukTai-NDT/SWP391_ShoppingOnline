@@ -216,7 +216,7 @@
             /* Lưới sản phẩm */
             .product-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: repeat(4, 1fr);
                 gap: 20px;
             }
 
@@ -226,6 +226,30 @@
                 padding: 15px;
                 text-align: center;
                 transition: box-shadow 0.3s ease;
+            }
+
+            .pagination {
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .pagination a {
+                display: inline-block;
+                padding: 8px 12px;
+                margin: 0 5px;
+                text-decoration: none;
+                background: #007bff;
+                color: white;
+                border-radius: 5px;
+            }
+
+            .pagination a.active {
+                background: #0056b3;
+                font-weight: bold;
+            }
+
+            .pagination a:hover {
+                background: #0056b3;
             }
 
             .product-card:hover {
@@ -320,7 +344,7 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container-->
-                <a class="logo" href="HomePageURL">
+                <a class="logo" href="index.jsp">
                     <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
@@ -365,7 +389,7 @@
                             <ul class="submenu">
                                 <%for (Categories cat : vectorCat){%>
                                 <li><a href="ProductURL?service=categories&cid=<%=cat.getCategoryID()%>" class="sub-menu-item"> <%=cat.getCategoryName()%></a></li>
-                                <%}%>
+                                    <%}%>
                             </ul>
                         </li>
                         <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Blog </a></li>
@@ -379,8 +403,8 @@
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                         </a>
 
-                        
-                        
+
+
 
                     </li>
 
@@ -429,16 +453,16 @@
         <div class="container">
             <!-- Sidebar (Bộ lọc) -->
             <div class="sidebar">
-                <h3>Bộ lọc</h3>
+                <h3>Filter</h3>
 
                 <!-- Bộ lọc giá bán -->
                 <div class="filter-section">
-                    <h4>Giá bán</h4>
+                    <h4>Price</h4>
                     <div class="price-filter">
-                        <a href="ProductURL?service=duoi100">Dưới 100.000đ</a>
-                        <a href="ProductURL?service=duoi300">100.000đ đến 300.000đ</a>
-                        <a href="ProductURL?service=duoi500">300.000đ đến 500.000đ</a>
-                        <a href="ProductURL?service=tren500">Trên 500.000đ</a>
+                        <a href="ProductURL?service=duoi100">Under 100.000đ</a>
+                        <a href="ProductURL?service=duoi300">100.000đ To 300.000đ</a>
+                        <a href="ProductURL?service=duoi500">300.000đ To 500.000đ</a>
+                        <a href="ProductURL?service=tren500">More than 500.000đ</a>
                     </div>
                 </div>
 
@@ -447,15 +471,15 @@
                 <div class="filter-section">
                     <div class="drug">
                         <input type="radio" id="html" name="fav_language" value="HTML" checked="">
-                        <label for="html"><a href="ProductURL?service=listAllProducts" >Tất cả</a></label><br>
+                        <label for="html"><a href="ProductURL?service=listAllProducts" >All</a></label><br>
                     </div>
                     <div class="drug">
                         <input type="radio" id="css" name="fav_language" value="CSS">
-                        <label for="css"><a href="ProductURL?service=isDrug">Thuốc kê đơn</a></label><br>
+                        <label for="css"><a href="ProductURL?service=isDrug">Prescription</a></label><br>
                     </div >
                     <div class="drug">
                         <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                        <label for="javascript"><a href="ProductURL?service=notIsDrug">Thuốc không kê đơn</a></label>
+                        <label for="javascript"><a href="ProductURL?service=notIsDrug">Non-prescription</a></label>
                     </div>
                 </div>
 
@@ -463,49 +487,83 @@
 
 
                 <!-- Bộ lọc nước sản xuất -->
-                <div class="filter-section">
-                    <h4>Nước sản xuất</h4>
+<!--                <div class="filter-section">
+                    <h4>Country</h4>
 
                     <select name="BrandID">
                         <%for (Brand b : vectorB){%>
                         <option value="<%=b.getBrandID()%>" ><%=b.getCountry()%></option>
                         <%}%>
                     </select>
-                </div>
+                </div>-->
 
             </div>
 
             <!-- Danh sách sản phẩm -->
+            <%if(vector != null && !vector.isEmpty()){%>
             <div class="main-content">
                 <div class="header">
-                    <h2>Danh sách sản phẩm</h2>
+                    <h2>Product List</h2>
                     <div class="sort-filter">
 
-                        <span><a href="ProductURL">Bán chạy</a></span>
-                        <span><a href="ProductURL?service=listAllProductsLowPrice">Giá thấp</a></span>
-                        <span><a href="ProductURL?service=listAllProductsHighPrice">Giá cao</a></span>
+                        <span><a href="ProductURL">Best Seller</a></span>
+                        <span><a href="ProductURL?service=listAllProductsLowPrice">Low price</a></span>
+                        <span><a href="ProductURL?service=listAllProductsHighPrice">High price</a></span>
 
                     </div>
 
                 </div>
+                <%
+                int pageSize = 12; // Số sản phẩm trên mỗi trang
+                int totalProducts = vector.size(); // Tổng số sản phẩm
+                int totalPages = (int) Math.ceil((double) totalProducts / pageSize); // Tổng số trang
+
+                // Xác định trang hiện tại từ URL (nếu không có, mặc định là trang 1)
+                String pageParam = request.getParameter("page");
+                int currentPage = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
+
+                // Tính vị trí bắt đầu và kết thúc của sản phẩm trong trang hiện tại
+                int startIndex = (currentPage - 1) * pageSize;
+                int endIndex = Math.min(startIndex + pageSize, totalProducts);
+                %>
 
                 <div class="product-grid">
-                    <%for (Products pro : vector) {%>
-                    <!-- Sản phẩm 1 -->
+                    <% for (int i = startIndex; i < endIndex; i++) { 
+                        Products pro = vector.get(i);
+                    %>
+                    <!-- Sản phẩm -->
                     <div class="product-card">
-                        <a href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><img src="images/products/<%=pro.getImage()%>" alt="Product 1"></a>
+                        <a href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><img src="https://via.placeholder.com/150" alt="Product"></a>
                         <h3><%=pro.getProductName()%></h3>
-                        <p class="price"><%=pro.getPrice()%>/ Túyp</p>
+                        <p class="price"><%=pro.getPrice()%>/ <%=pro.getUnitPrice()%></p>
                         <div class="buttons">
-
-                            <a class="no-buy-btn" href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><button >Chọn mua </button></a>
-                            <button class="pack-btn">Túyp</button>
+                            <a class="no-buy-btn" href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><button>Buy</button></a>
+                            <button class="pack-btn"><%=pro.getUnitPrice()%></button>
                         </div>
                     </div>
-
-                    <%}%>
+                    <% } %>
                 </div>
+
+                <!-- Phân trang -->
+                <div class="pagination">
+                    <% if (currentPage > 1) { %>
+                    <a href="?page=<%=currentPage - 1%>">Previous</a>
+                    <% } %>
+
+                    <% for (int i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%=i%>" class="<%= (i == currentPage) ? "active" : "" %>"><%=i%></a>
+                    <% } %>
+
+                    <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%=currentPage + 1%>">Next</a>
+                    <% } %>
+                </div>
+
+
             </div>
+            <%}else {%>
+            <h2 style="color:red;"> There are currently no products. </h2>
+            <%}%>
         </div>
 
         <!-- Start -->
@@ -682,4 +740,5 @@
     </body>
 
 </html>
+
 

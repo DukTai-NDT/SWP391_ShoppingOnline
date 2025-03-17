@@ -641,7 +641,7 @@
                                                 </ul>
 <!--                                                <a href="AdminBlogsDetail?bid=${b.blogID}" class="text-dark title h5">${b.title}</a>-->
                                                 <div class="post-meta d-flex justify-content-between mt-3">
-                                                    <a href="AdminBlogsDetail?bid=${b.blogID}" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
+                                                    <a href="BlogsURL?service=detailBlog&blog=${b.blogID}" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
                                                 </div>
                                             </div>
                                         </div>

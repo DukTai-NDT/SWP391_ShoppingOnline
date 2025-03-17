@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="entity.Products, java.util.Vector" %>
-<%@page import="entity.Account" %>
+<%@page import="entity.Account, model.DAOCustomer" %>
 
 <%@page import="entity.Products,entity.Brand, java.util.Vector, entity.Categories, entity.Function, entity.Ingredient,entity.Feedbacks,entity.Customers"%>
 
@@ -540,6 +540,34 @@
             .submit-review-form .cancel-btn:hover {
                 background-color: #e0e0e0;
             }
+            .hidden-review {
+                display: none;
+            }
+
+            .view-more-btn {
+                background: none;
+                border: none;
+                color: blue;
+                cursor: pointer;
+                font-size: 14px;
+                margin-left: 5px;
+            }
+
+            .load-more-reviews {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                font-size: 14px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+
+            .load-more-reviews:hover {
+                background-color: #0056b3;
+            }
+
+
         </style>
     </head>
 
@@ -550,7 +578,7 @@
     <%Vector<Ingredient> vectorIngre = (Vector<Ingredient>)session.getAttribute("vectorIngre");
     Vector<Feedbacks> vectorFeed = (Vector<Feedbacks>)session.getAttribute("vectorFeed");
     Account account = (Account)session.getAttribute("dataUser");
-    Customers customer = (Customers)session.getAttribute("customer");
+   DAOCustomer daoCus = new DAOCustomer();
     double with5 = (double)session.getAttribute("with5");
     double with4 = (double)session.getAttribute("with4");
     double with3 = (double)session.getAttribute("with3");
@@ -563,6 +591,8 @@
     int star2 = (int)session.getAttribute("star2");
     int star1 = (int)session.getAttribute("star1");
     int total = (int)session.getAttribute("total");
+    Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+        
     %>
     <body>
         <!-- Loader -->
@@ -717,19 +747,23 @@
                     <!-- Phần thông tin -->
                     <div class="product-info">
                         <div class="product-header">
-                            <div class="brand">Thương hiệu: <span><a href="ProductURL?service=brand&bid=<%=brand.getBrandID()%>"><%=brand.getBrandName()%></a></span></div>
+                            <div class="brand">Brand: <span><a href="ProductURL?service=brand&bid=<%=brand.getBrandID()%>"><%=brand.getBrandName()%></a></span></div>
                             <h1><%=product.getProductName()%></h1>
                             <div class="rating">
-                                
+
                                 <span class="rating"><%=averageStar%>★</span> • 
-                                <span class="reviews"><%=total%> đánh giá</span> • 
-                                
+                                <span class="reviews"><%=total%> comment</span> • 
+
                             </div>
 
 
                             <div class="mt-4 pt-2">
                                 <a href="#" class="btn btn-primary">Shop Now</a>
+                                <% if(product.getQuantity() > 0) { %>
                                 <a href="CartURL?service=add2cart&pid=<%=product.getProductID()%>" class="btn btn-soft-primary ms-2">Add to Cart</a>
+                                <% } else { %>
+                                <span class="btn btn-danger ms-2">Out of Stock</span>
+                                <% } %>
 
                                 <div class="price">
                                     <span class="current-price"><%=product.getPrice()%></span>
@@ -751,14 +785,14 @@
                 <div class="additional-info-container">
                     <!-- Mô tả sản phẩm -->
                     <div class="description-section">
-                        <h2>Mô tả sản phẩm</h2>
+                        <h2>Product Description</h2>
                         <p><%=product.getDescription()%></p>  
                     </div>
 
                     <!-- Thông tin bổ sung -->
                     <div class="additional-info-section">
-                        <h2>Thông tin bổ sung</h2>
-                        <h3>Công dụng:</h3>
+                        <h2>Additional information</h2>
+                        <h3>Uses:</h3>
 
                         <ul>
                             <%for(Function f : vectorf){%>
@@ -766,17 +800,17 @@
                                 <%}%>
                         </ul>
 
-                        <h3>Lưu ý:</h3>
-                        <p>- Không sử dụng cho người dị ứng với cá hoặc các thành phần của sản phẩm.<br>
-                            - Phụ nữ mang thai và cho con bú nên tham khảo ý kiến bác sĩ trước khi dùng.<br>
-                            - Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.</p>
+                        <h3>Note:</h3>
+                        <p>- Do not use for people allergic to fish or other ingredients of the product.<br>
+                            - Pregnant and lactating women should consult a doctor before use.<br>
+                            - Store in a cool, dry place, away from direct sunlight.</p>
                     </div>
 
                     <!-- Đánh giá khách hàng -->
                     <div class="reviews-section">
-                        <h2>Đánh giá khách hàng</h2>
+                        <h2>Customer Reviews</h2>
                         <div class="rating-summary">
-                            <h3>Đánh giá sản phẩm (<%=total%> đánh giá)</h3>
+                            <h3>Product Reviews (<%=total%> reviews)</h3>
                             <div class="rating-overview">
                                 <span class="average-rating"><%=averageStar%></span>
                                 <span class="stars">★</span>
@@ -818,45 +852,63 @@
                                     <span class="count"><%=star1%></span>
                                 </div>
                             </div>
-                            <button class="submit-review-btn">Gửi đánh giá</button>
+                            <%if(account != null){%>    
+                            <button class="submit-review-btn">Submit a review</button>
+                            <%}%>
                             <div class="filter-buttons">
-                                <h4>Lọc theo:</h4>
-                                <button class="filter-btn active">5 sao</button>
-                                <button class="filter-btn">4 sao</button>
-                                <button class="filter-btn">3 sao</button>
-                                <button class="filter-btn">2 sao</button>
-                                <button class="filter-btn">1 sao</button>
+
                             </div>
                         </div>
 
                         <!-- Danh sách đánh giá -->
 
-                        <% if (!vectorFeed.isEmpty()) { %> 
-                        <div class="review">
-                            <% for (Feedbacks feedbacks : vectorFeed) { %>
-                            <div class="review-header">
-                                <span class="reviewer-name"><%=customer.getLastName()%></span>
-                                <span class="review-rating">★★★★★ <%= feedbacks.getRating() %>/5</span>
+                        <% if (vectorFeed != null && !vectorFeed.isEmpty()) { %> 
+                        <div id="review-container" class="review">
+                            <% int count = 0;
+                            for (Feedbacks feedbacks : vectorFeed) { 
+                                Customers customer = daoCus.getCustomerByFeedbackID(feedbacks.getFeedbackID());
+                                String comment = feedbacks.getComment();
+                                boolean isHidden = count >= 5; // Ẩn comment nếu lớn hơn 5
+                            %>
+                            <div class="review-item <%= isHidden ? "hidden-review" : "" %>">
+                                <div class="review-header">
+                                    <span class="reviewer-name"><%= customer != null ? customer.getLastName() : "Unknown" %></span>
+                                    <span class="review-rating">★★★★★ <%= feedbacks.getRating() %>/5</span>
+                                </div>
+
+                                <p class="review-content">
+                                    <span class="short-comment">
+                                        <%= comment.length() > 100 ? comment.substring(0, 100) + "..." : comment %>
+                                    </span>
+                                    <% if (comment.length() > 100) { %>
+                                    <span class="full-comment" style="display: none;"><%= comment %></span>
+                                    <button class="view-more-btn">View More</button>
+                                    <% } %>
+                                </p>
+                                <span class="review-date">Ngày <%= feedbacks.getTime() %></span>
                             </div>
-                            <p class="review-content"><%= feedbacks.getComment() %></p>
-                            <span class="review-date">Ngày <%= feedbacks.getTime() %></span>
-                            <% } %>
+                            <% count++; } %>
                         </div>
 
-                        <button class="load-more-reviews">Xem thêm đánh giá</button>
-                        <% } else { %>
-                        <h1>Chưa có đánh giá</h1>
+                        <% if (vectorFeed.size() > 5) { %>
+                        <button id="toggle-reviews" class="load-more-reviews">View More</button>
                         <% } %>
+                        <% } else { %>
+                        <h1>No reviews yet</h1>
+                        <% } %>
+
+
+
 
 
                         <!-- Phần gửi đánh giá -->
                         <div class="submit-review-form" style="display: none;">
-                            <h3>Gửi đánh giá của bạn</h3>
+                            <h3>Submit your review</h3>
                             <form action="ProductDetailURL">
                                 <input type="hidden" name="pid" value="<%=product.getProductID()%>">
                                 <input type="hidden" name="service" value="detailProduct">
                                 <div class="rating-input">
-                                    <label>Đánh giá của bạn:</label>
+                                    <label>Your review:</label>
                                     <div class="star-rating">
                                         <input type="radio" name="rating" value="5" id="star5"><label for="star5">★</label>
                                         <input type="radio" name="rating" value="4" id="star4"><label for="star4">★</label>
@@ -866,39 +918,39 @@
                                     </div>
                                 </div>
                                 <div class="review-text">
-                                    <label for="review-content">Nội dung đánh giá:</label>
-                                    <textarea id="review-content" name="content" rows="5" placeholder="Viết đánh giá của bạn..." required></textarea>
+                                    <label for="review-content">Review content:</label>
+                                    <textarea id="review-content" name="content" rows="5" placeholder="Write your review..." required></textarea>
                                 </div>
-                                <button type="submit" name="submit" value="submit" class="submit-btn">Gửi</button>
-                                <button type="button" class="cancel-btn">Hủy</button>
+                                <button type="submit" name="submit" value="submit" class="submit-btn">Submit</button>
+                                <button type="button" class="cancel-btn">Cancel</button>
                             </form>
                         </div>
                     </div>
 
                     <!-- Sản phẩm liên quan -->
-<!--                    <div class="related-products-section">
-                        <h2>Sản phẩm liên quan</h2>
-                        <div class="related-products">
-                            <div class="related-product">
-                                <img src="images/related-product1.jpg" alt="Sản phẩm liên quan 1">
-                                <h3>Viên uống Omega-3 Fish Oil</h3>
-                                <p class="price">220.000đ</p>
-                                <button class="add-to-cart">Thêm vào giỏ hàng</button>
-                            </div>
-                            <div class="related-product">
-                                <img src="images/related-product2.jpg" alt="Sản phẩm liên quan 2">
-                                <h3>Viên uống bổ mắt Bright Eyes</h3>
-                                <p class="price">180.000đ</p>
-                                <button class="add-to-cart">Thêm vào giỏ hàng</button>
-                            </div>
-                            <div class="related-product">
-                                <img src="images/related-product3.jpg" alt="Sản phẩm liên quan 3">
-                                <h3>Viên uống hỗ trợ tim mạch Cardio Plus</h3>
-                                <p class="price">250.000đ</p>
-                                <button class="add-to-cart">Thêm vào giỏ hàng</button>
-                            </div>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="related-products-section">
+                                            <h2>Sản phẩm liên quan</h2>
+                                            <div class="related-products">
+                                                <div class="related-product">
+                                                    <img src="images/related-product1.jpg" alt="Sản phẩm liên quan 1">
+                                                    <h3>Viên uống Omega-3 Fish Oil</h3>
+                                                    <p class="price">220.000đ</p>
+                                                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                                                </div>
+                                                <div class="related-product">
+                                                    <img src="images/related-product2.jpg" alt="Sản phẩm liên quan 2">
+                                                    <h3>Viên uống bổ mắt Bright Eyes</h3>
+                                                    <p class="price">180.000đ</p>
+                                                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                                                </div>
+                                                <div class="related-product">
+                                                    <img src="images/related-product3.jpg" alt="Sản phẩm liên quan 3">
+                                                    <h3>Viên uống hỗ trợ tim mạch Cardio Plus</h3>
+                                                    <p class="price">250.000đ</p>
+                                                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                                                </div>
+                                            </div>
+                                        </div>-->
                 </div>
         </section><!--end section-->
 
@@ -1077,6 +1129,56 @@
                 document.querySelector('.submit-review-btn').style.display = 'block'; // Hiển thị lại nút "Gửi đánh giá"
             });
         </script>
+        <script>
+            // Lấy danh sách các nút
+            const buttons = document.querySelectorAll(".filter-btn");
+
+            // Thêm sự kiện click cho từng nút
+            buttons.forEach(button => {
+                button.addEventListener("click", () => {
+                    // Xóa lớp active khỏi tất cả các nút
+                    buttons.forEach(btn => btn.classList.remove("active"));
+
+                    // Thêm lớp active cho nút được nhấn
+                    button.classList.add("active");
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Mở rộng nội dung comment dài
+                const buttons = document.querySelectorAll(".view-more-btn");
+                buttons.forEach(button => {
+                    button.addEventListener("click", function () {
+                        const parent = this.parentElement;
+                        const shortComment = parent.querySelector(".short-comment");
+                        const fullComment = parent.querySelector(".full-comment");
+
+                        shortComment.style.display = "none";
+                        fullComment.style.display = "inline";
+                        this.style.display = "none"; // Ẩn nút sau khi mở rộng
+                    });
+                });
+
+                // Xử lý hiển thị/tắt comment khi bấm View More hoặc Show Less
+                const toggleBtn = document.getElementById("toggle-reviews");
+                if (toggleBtn) {
+                    toggleBtn.addEventListener("click", function () {
+                        const hiddenReviews = document.querySelectorAll(".hidden-review");
+                        let isExpanded = toggleBtn.textContent === "Show Less";
+
+                        hiddenReviews.forEach(review => {
+                            review.style.display = isExpanded ? "none" : "block";
+                        });
+
+                        // Đổi text của nút
+                        toggleBtn.textContent = isExpanded ? "View More" : "Show Less";
+                    });
+                }
+            });
+        </script>
+
+
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <!-- SLIDER -->
@@ -1090,3 +1192,4 @@
         <script src="js/app.js"></script>
     </body>
 </html>
+
