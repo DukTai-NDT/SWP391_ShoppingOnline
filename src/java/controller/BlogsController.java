@@ -8,6 +8,7 @@ import entity.Blogs;
 import entity.CartItems;
 import entity.Comment;
 import entity.Customers;
+import entity.Categories;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.util.Vector;
 import model.DAOBlogs;
 import model.DAOCartItem;
+import model.DAOCategories;
 import model.DAOComment;
 import model.DAOCustomer;
 
@@ -48,7 +50,7 @@ public class BlogsController extends HttpServlet {
         DAOComment daoComments = new DAOComment();
         DAOCartItem daoCartItem = new DAOCartItem(); 
         HttpSession session = request.getSession();
-
+        DAOCategories daoCat = new DAOCategories();
         Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
         if (currentCustomer != null) {
@@ -198,13 +200,13 @@ public class BlogsController extends HttpServlet {
                 vectorBlogs = dao.getBlogsByPage(offset, limit);
                 totalBlogs = dao.countTotalBlogs();
                 totalPages = (int)Math.ceil((double)totalBlogs /limit);
-               
+                
                 
                 }
                  
-                 
+                 Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
                 session.setAttribute("vectorBlogs", vectorBlogs);
-                
+                session.setAttribute("vectorCat", vectorCat);
                 request.setAttribute("currentPage", page);
                 request.setAttribute("totalPages", totalPages);
               

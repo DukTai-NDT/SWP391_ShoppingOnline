@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Vector,entity.Cart,entity.CartItems, entity.Customers, entity.Blogs ,jakarta.servlet.http.HttpSession"%>
+<%@page import="java.util.Vector,entity.Cart,entity.CartItems, entity.Customers, entity.Blogs ,jakarta.servlet.http.HttpSession, entity.Categories"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -36,7 +36,7 @@
         <!-- Loader -->
         <%
             Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
-
+            Vector<Categories> vectorCat = (Vector<Categories>) session.getAttribute("vectorCat");
              Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
 
         %>
@@ -119,35 +119,20 @@
 
                 <div id="navigation">
                     <ul class="navigation-menu nav-left nav-light">
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Home</a><span class="menu-arrow"></span>
+                        <li class="parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts">Shop</a><span class="menu-arrow"></span>
+                        </li>
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="index.html" class="sub-menu-item">Index One</a></li>
-                                <li><a href="index-two.html" class="sub-menu-item">Index Two</a></li>
-                                <li><a href="index-three.html" class="sub-menu-item">Index Three</a></li>
+                                <%for (Categories cate : vectorCat){%>
+                                <li><a href="ProductURL?service=categories&cid=<%=cate.getCategoryID()%>" class="sub-menu-item"> <%=cate.getCategoryName()%></a></li>
+                                    <%}%>
                             </ul>
                         </li>
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
-                                <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
-                                <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
-                                <li><a href="CustomerURL" class="sub-menu-item">Account</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="aboutus.html" class="sub-menu-item">About Us</a></li>
-                                <li><a href="departments.html" class="sub-menu-item">Departments</a></li>
-                                <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li class="has-submenu parent-menu-item">
-                                    <a href="BlogsURL" class="menu-item">Blogs</a>
-                                </li>
-                            </ul>
-                        </li>
+
+                        <li><a href="BlogsURL" class="menu-item">Blogs</a></li>
+
+
                     </ul>
 
                 </div>
@@ -357,44 +342,44 @@
             </div>
         </div>
         <% if (currentCustomer != null) { %>
-<div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header p-4 border-bottom">
-        <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
-        <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body p-4">
-        <% 
+        <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header p-4 border-bottom">
+                <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
+                <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <% 
            
-            if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
+                    if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
                
                
-              for(CartItems vectorCartItem : vectorCartItems) {
-        %>
-        <div class="cart-item">
-            <div class="d-flex align-items-center mb-3">
-                <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
-                <div class="ms-3 flex-1">
-                    <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
-                    <div class="d-flex justify-content-between">
-                        <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
-                        <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
+                      for(CartItems vectorCartItem : vectorCartItems) {
+                %>
+                <div class="cart-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
+                        <div class="ms-3 flex-1">
+                            <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
+                            <div class="d-flex justify-content-between">
+                                <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
+                                <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
 
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <%
+                    } }else {
+                %>
+                <p class="text-muted text-center " >No Products In Cart...</p>
+                <%
+                    }
+                %>
+                <div class="mt-4 text-center">
+                    <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
                 </div>
             </div>
         </div>
-        <%
-            } }else {
-        %>
-        <p class="text-muted text-center " >No Products In Cart...</p>
-        <%
-            }
-        %>
-        <div class="mt-4 text-center">
-            <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
-        </div>
-    </div>
-</div>
         <% }%>
 
 

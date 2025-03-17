@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Vector,entity.Cart,entity.CartItems, entity.Customers, entity.Comment,entity.Blogs, jakarta.servlet.http.HttpSession, model.DAOCustomer"%>
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
 
     <head>
         <meta charset="utf-8" />
@@ -27,14 +27,14 @@
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
     </head>
-<%  
-    Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    <%  
+        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
       
-    Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
-    Blogs blog = (Blogs) session.getAttribute("blog");
+        Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+        Blogs blog = (Blogs) session.getAttribute("blog");
     
      
-     %>
+    %>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -46,7 +46,7 @@
             </div>
         </div>
         <!-- Loader -->
-        
+
         <!-- Navbar STart -->
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
@@ -56,7 +56,7 @@
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
                 <!-- Logo End -->
-                
+
                 <!-- Start Mobile Toggle -->
                 <div class="menu-extras">
                     <div class="menu-item">
@@ -76,7 +76,7 @@
                 <!-- Start Dropdown -->
                 <ul class="dropdowns list-inline mb-0">
                     <% if (currentCustomer != null) { %>
-                     <li class="list-inline-item mb-0">
+                    <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                         </a>
@@ -87,76 +87,47 @@
                             <i class="uil uil-search"></i>
                         </a>
                     </li>
-                      <li class="list-inline-item mb-0 ms-1">
-                    <div class="dropdown dropdown-primary">
-                        <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="<%=currentCustomer.getProfileImg()%>" class="avatar avatar-ex-small rounded-circle" alt="">
-                        </button>
-                        <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                            <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                <img src="<%=currentCustomer.getProfileImg()%>" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
-                                <div class="flex-1 ms-2">
-                                    <span class="d-block mb-1"><%=currentCustomer.getFirstName()+" "+  currentCustomer.getLastName()%></span>
-                                    
-                                </div>
-                            </a>
-       
-                            <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                            <div class="dropdown-divider border-top"></div>
-                            <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
-                        </div>
-                    </div>
-                </li>
-                <%} else{%>
-                <div class="auth-links">
-                                <a href="SignUpURL?service=signup">Sign up</a>
-                                <span>|</span>
-                                <a href="LoginURL?service=login">Log in</a>
+                    <li class="list-inline-item mb-0 ms-1">
+                        <div class="dropdown dropdown-primary">
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="<%=currentCustomer.getProfileImg()%>" class="avatar avatar-ex-small rounded-circle" alt="">
+                            </button>
+                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
+                                <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
+                                    <img src="<%=currentCustomer.getProfileImg()%>" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <div class="flex-1 ms-2">
+                                        <span class="d-block mb-1"><%=currentCustomer.getFirstName()+" "+  currentCustomer.getLastName()%></span>
+
+                                    </div>
+                                </a>
+
+                                <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <div class="dropdown-divider border-top"></div>
+                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                             </div>
-                <%}%>
-                
+                        </div>
+                    </li>
+                    <%} else{%>
+                    <div class="auth-links">
+                        <a href="SignUpURL?service=signup">Sign up</a>
+                        <span>|</span>
+                        <a href="LoginURL?service=login">Log in</a>
+                    </div>
+                    <%}%>
+
                 </ul>
                 <!-- Start Dropdown -->
-        
+
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left">
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Home</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="index.html" class="sub-menu-item">Index One</a></li>
-                                <li><a href="index-two.html" class="sub-menu-item">Index Two</a></li>
-                                <li><a href="index-three.html" class="sub-menu-item">Index Three</a></li>
-                            </ul>
+                        <li class="parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts">Home</a><span class="menu-arrow"></span>
                         </li>
 
-                      
-
-                      
-
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="pharmacy-shop.html" class="sub-menu-item">Shop</a></li>
-                                <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
-                                <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
-                                <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
-                            </ul>
                         </li>
-        
-                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="aboutus.html" class="sub-menu-item"> About Us</a></li>
-                               
-                                <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li class="has-submenu parent-menu-item">
-                                    <a href="javascript:void(0)" class="menu-item"> Blogs </a>
-                                    
-                                </li>
-                              
-                            </ul>
+                        <li class="has-submenu parent-menu-item">
+                            <a href="BlogsURL"> Blogs </a>
                         </li>
                         <li><a href="../admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
                     </ul><!--end navigation menu-->
@@ -172,9 +143,9 @@
                     <div class="col-12">
                         <div class="section-title text-center">
                             <h3 class="sub-title mb-4"><%=blog.getTitle()%></h3>
-                          
+
                             <ul class="list-unstyled mt-4">
-<!--                                <li class="list-inline-item user text-muted me-2"><i class="mdi mdi-account"></i> Calvin Carlo</li>-->
+                                <!--                                <li class="list-inline-item user text-muted me-2"><i class="mdi mdi-account"></i> Calvin Carlo</li>-->
                                 <li class="list-inline-item date text-muted"><i class="mdi mdi-calendar-check"></i><%=blog.getPostTime()%></li>
                             </ul>
                         </div>
@@ -185,7 +156,7 @@
         <div class="position-relative">
             <div class="shape overflow-hidden text-white">
                 <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+                <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
                 </svg>
             </div>
         </div>
@@ -198,99 +169,99 @@
                     <div class="col-lg-8 col-lg-7">
                         <img src="images/blog/single.jpg" class="img-fluid rounded shadow" alt="">
 
-                        
 
-                       
+
+
                         <p class="text-muted mt-4"><%=blog.getContent()%></p>
-                    
+
                         <h5 class="card-title mt-4 mb-0">Comments :</h5>
-                        
-    
 
-<%
-    Vector<Comment> comments = (Vector<Comment>) session.getAttribute("comments" + blog.getBlogID());
-    DAOCustomer daoCus = new DAOCustomer();
-    if (comments == null) {
-        comments = new Vector<>(); 
-    }
 
-    int displayLimit = 3; 
-    int totalComments = comments.size();
-    boolean showAll = "true".equals(request.getParameter("showAll")); 
 
-    if (!comments.isEmpty()) { 
-        int limit = showAll ? totalComments : Math.min(displayLimit, totalComments); 
-        for (int i = 0; i < limit; i++) { 
-            Comment comment = comments.get(i);
-            String[] customerInfo = daoCus.getCustomerByID(comment.getCustomerID());
-            String customerName= customerInfo[0] + " "+customerInfo[1];
-            String profileImg= (customerInfo[2] != null && !customerInfo[2].isEmpty())
-            ? customerInfo[2] : "images/client/09.jpg";
+                        <%
+                            Vector<Comment> comments = (Vector<Comment>) session.getAttribute("comments" + blog.getBlogID());
+                            DAOCustomer daoCus = new DAOCustomer();
+                            if (comments == null) {
+                                comments = new Vector<>(); 
+                            }
+
+                            int displayLimit = 3; 
+                            int totalComments = comments.size();
+                            boolean showAll = "true".equals(request.getParameter("showAll")); 
+
+                            if (!comments.isEmpty()) { 
+                                int limit = showAll ? totalComments : Math.min(displayLimit, totalComments); 
+                                for (int i = 0; i < limit; i++) { 
+                                    Comment comment = comments.get(i);
+                                    String[] customerInfo = daoCus.getCustomerByID(comment.getCustomerID());
+                                    String customerName= customerInfo[0] + " "+customerInfo[1];
+                                    String profileImg= (customerInfo[2] != null && !customerInfo[2].isEmpty())
+                                    ? customerInfo[2] : "images/client/09.jpg";
             
 
 
-%>
+                        %>
 
-<ul class="media-list list-unstyled mb-0">
-    <li class="mt-4">
-        <div class="d-flex justify-content-between">
-            <div class="d-flex align-items-center">
-                <a class="pe-3" href="#">
-                    <img src="<%=profileImg%>" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
-                </a>
-                <div class="commentor-detail">
-                    <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading"><%=customerName%></a></h6>
-                    <small class="text-muted"><%=comment.getPostTime()%></small>
+                        <ul class="media-list list-unstyled mb-0">
+                            <li class="mt-4">
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <a class="pe-3" href="#">
+                                            <img src="<%=profileImg%>" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
+                                        </a>
+                                        <div class="commentor-detail">
+                                            <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading"><%=customerName%></a></h6>
+                                            <small class="text-muted"><%=comment.getPostTime()%></small>
 
-                </div>
-            </div>
-            <% 
-                if ( currentCustomer != null && comment.getCustomerID() == currentCustomer.getCustomerID()) { 
-            %>
-            <div class="dropdown">
-                <a href="#" class="text-muted" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="mdi mdi-dots-vertical"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="CommentURL?service=deleteComment&commentId=<%=comment.getCommentID()%>&blogId=<%=blog.getBlogID()%>">Delete</a></li>
-                </ul>
-            </div>
-            <% } %>
-        </div>
-        <div class="mt-3">
-            <p class="text-muted font-italic p-3 bg-light rounded"><%=comment.getCommentText()%></p>
-        </div>
-    </li>
-</ul>
-<%
-        }
-    } else {
-%>
-<p class="text-muted">No comments yet. Be the first to comment!</p>
-<% } %>
+                                        </div>
+                                    </div>
+                                    <% 
+                                        if ( currentCustomer != null && comment.getCustomerID() == currentCustomer.getCustomerID()) { 
+                                    %>
+                                    <div class="dropdown">
+                                        <a href="#" class="text-muted" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="mdi mdi-dots-vertical"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="CommentURL?service=deleteComment&commentId=<%=comment.getCommentID()%>&blogId=<%=blog.getBlogID()%>">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <% } %>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="text-muted font-italic p-3 bg-light rounded"><%=comment.getCommentText()%></p>
+                                </div>
+                            </li>
+                        </ul>
+                        <%
+                                }
+                            } else {
+                        %>
+                        <p class="text-muted">No comments yet. Be the first to comment!</p>
+                        <% } %>
 
-<% 
+                        <% 
    
-    if (totalComments > displayLimit && !showAll) { 
-%>
-<div class="mt-3">
-    <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>&showAll=true" class="btn btn-primary">All Comments (<%=totalComments%>)</a>
-</div>
-<% } %>
+                            if (totalComments > displayLimit && !showAll) { 
+                        %>
+                        <div class="mt-3">
+                            <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>&showAll=true" class="btn btn-primary">All Comments (<%=totalComments%>)</a>
+                        </div>
+                        <% } %>
 
-                    
+
                         <h5 class="card-title mt-4 mb-0">Leave A Comment :</h5>
                         <% if(currentCustomer !=null) {%>
 
                         <form class="mt-3" action="CommentURL" method="post">
-                             <input type="hidden" name="service" value="addComment">
-                             <input type="hidden" name="BlogID" value="<%= blog.getBlogID() %>">
-                              <input type="hidden" name="CommentID" value="0">
+                            <input type="hidden" name="service" value="addComment">
+                            <input type="hidden" name="BlogID" value="<%= blog.getBlogID() %>">
+                            <input type="hidden" name="CommentID" value="0">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">Your Comment</label>
-                                     
+
                                         <textarea id="message" name="CommentText" placeholder="Your Comment" rows="5"  class="form-control" required=""></textarea>
                                     </div>
                                 </div><!--end col-->
@@ -303,11 +274,11 @@
                                 </div><!--end col-->
                             </div><!--end row-->
                         </form><!--end form-->
-                        
+
                         <%} else{%>
                         <p class="mt-3">Please <a href="LoginURL?service=login">Login</a> to leave a comment.</p>
-                    <% } %>
-                        
+                        <% } %>
+
                     </div><!--end col-->
 
                     <div class="col-lg-4 col-md-5 mt-4 mt-sm-0 pt-2 pt-sm-0">
@@ -318,22 +289,22 @@
                                     <h5 class="widget-title">Search</h5>
                                     <div id="search2" class="widget-search mt-4 mb-0">
                                         <form role="search" method="get" action="BlogsURL" class="searchform">
-                                            
+
                                             <div>
-                                                 <input type="hidden" name="service" value="listAllBlogs">
+                                                <input type="hidden" name="service" value="listAllBlogs">
                                                 <input type="text" class="border rounded" name="title"  placeholder="Search Keywords...">
                                                 <input type="submit" name="submit" id="searchsubmit" value="Search">
-                                                
+
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                                 <!-- SEARCH -->
-    
-                                 
-                             
+
+
+
                                 <!-- TAG CLOUDS -->
-                                
+
                                 <!-- SOCIAL -->
                                 <div class="widget">
                                     <h5 class="widget-title">Follow us</h5>
@@ -366,14 +337,14 @@
                 <div class="row">
                     <div class="col-lg-12 mt-4 pt-2">
                         <div class="slider-range-three">
-                            
-                            
+
+
                             <%
                                
                 Vector<Blogs> blogs = (Vector<Blogs>) session.getAttribute("vectorBlogs");
      
                     for (Blogs currentBlog  : blogs) {%>
-                            
+
                             <div class="tiny-slide">
                                 <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
                                     <img src="images/blog/03.jpg" class="img-fluid" alt="">
@@ -393,14 +364,14 @@
                                     </div>
                                 </div>
                             </div>
-        
-                       <%}
-%>
-                 
-        
-                    
-        
-                        
+
+                            <%}
+                            %>
+
+
+
+
+
                         </div>
                     </div><!--end col-->
                 </div><!--end row-->
@@ -432,7 +403,7 @@
                                     <li><a href="#" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Login</a></li>
                                 </ul>
                             </div><!--end col-->
-                            
+
                             <div class="col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
                                 <h5 class="text-light title-dark footer-head">Departments</h5>
                                 <ul class="list-unstyled footer-list mt-4">
@@ -445,7 +416,7 @@
                                     <li><a href="#" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Neurology</a></li>
                                 </ul>
                             </div><!--end col-->
-                            
+
                             <div class="col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
                                 <h5 class="text-light title-dark footer-head">Contact us</h5>
                                 <ul class="list-unstyled footer-list mt-4">
@@ -485,7 +456,7 @@
                                 <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.html" target="_blank" class="text-reset">Shreethemes</a>.</p>
                             </div>
                         </div><!--end col-->
-    
+
                         <div class="col-sm-6 mt-4 mt-sm-0">
                             <ul class="list-unstyled footer-list text-sm-end text-center mb-0">
                                 <li class="list-inline-item"><a href="terms.html" class="text-foot me-2">Terms</a></li>
@@ -514,7 +485,7 @@
                                 <h4>Search now.....</h4>
                                 <div class="subcribe-form mt-4">
                                     <form action="BlogsURL" method="get">
-                                        
+
                                         <div class="mb-0">
                                             <input type="hidden" name="service" value="listAllBlogs">
                                             <input type="text" id="help" name="title" class="border bg-white rounded-pill" required="" placeholder="Search">
@@ -531,45 +502,45 @@
         <!-- Offcanvas End -->
 
         <!-- Offcanvas Start -->
-    <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header p-4 border-bottom">
-        <h5 class="mb-0" id="offcanvasRightLabel">Sản phẩm mới thêm</h5>
-        <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body p-4">
-        <% 
+        <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header p-4 border-bottom">
+                <h5 class="mb-0" id="offcanvasRightLabel">Sản phẩm mới thêm</h5>
+                <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <% 
            
-            if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
+                    if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
                
                
-              for(CartItems vectorCartItem : vectorCartItems) {
-        %>
-        <div class="cart-item">
-            <div class="d-flex align-items-center mb-3">
-                <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
-                <div class="ms-3 flex-1">
-                    <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
-                    <div class="d-flex justify-content-between">
-                        <p class="text-muted mb-0">Số lượng: <%=vectorCartItem.getQuantity()%></p>
-                        <p class="text-muted mb-0">Giá: <%=vectorCartItem.getPrice()%> VND</p>
+                      for(CartItems vectorCartItem : vectorCartItems) {
+                %>
+                <div class="cart-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
+                        <div class="ms-3 flex-1">
+                            <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
+                            <div class="d-flex justify-content-between">
+                                <p class="text-muted mb-0">Số lượng: <%=vectorCartItem.getQuantity()%></p>
+                                <p class="text-muted mb-0">Giá: <%=vectorCartItem.getPrice()%> VND</p>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <%
+                    } }else {
+                %>
+                <p class="text-muted text-center " >CHưa Có Sản Phẩm Trong Giỏ Hàng...</p>
+                <%
+                    }
+                %>
+                <div class="mt-4 text-center">
+                    <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">Xem giỏ hàng</a>
                 </div>
             </div>
         </div>
-        <%
-            } }else {
-        %>
-        <p class="text-muted text-center " >CHưa Có Sản Phẩm Trong Giỏ Hàng...</p>
-        <%
-            }
-        %>
-        <div class="mt-4 text-center">
-            <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">Xem giỏ hàng</a>
-        </div>
-    </div>
-</div>
         <!-- Offcanvas End -->
-        
+
         <!-- javascript -->
         <script src="js/bootstrap.bundle.min.js"></script>
         <!-- SLIDER -->
@@ -580,7 +551,7 @@
         <!-- Main Js -->
         <script src="js/app.js"></script>
         <script src="js/comment.js"></script>
-        
+
     </body>
 
 </html>
