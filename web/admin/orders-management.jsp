@@ -92,14 +92,18 @@
                             <div class="sidebar-submenu">
                             </div>
                         </li>
-
+                        <li class="sidebar-dropdown">
+                            <a href="AdminBrands">
+                                <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
+                            </a>
+                        </li>
                         <br>
                         <li class="sidebar-dropdown">
                             <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
-                            <a href="OrdersManagement"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
 
                             <!--                            <div class="sidebar-submenu">
                                                             <ul>
@@ -622,75 +626,75 @@
 
 <!-- JavaScript để thay đổi trạng thái -->
 <script>
-function changeStatus(orderID, currentStatus) {
+                    function changeStatus(orderID, currentStatus) {
 // Xác định trạng thái tiếp theo dựa trên trạng thái hiện tại
-let nextStatus;
+                        let nextStatus;
 
-switch (currentStatus) {
-    case "On-prepared":
-        nextStatus = "Delivery";
-        break;
-    case "Delivery":
-        nextStatus = "Done";
-        break;
-    default:
-        nextStatus = "On-prepared"; // Trường hợp mặc định nếu không xác định được
-}
+                        switch (currentStatus) {
+                            case "On-prepared":
+                                nextStatus = "Delivery";
+                                break;
+                            case "Delivery":
+                                nextStatus = "Done";
+                                break;
+                            default:
+                                nextStatus = "On-prepared"; // Trường hợp mặc định nếu không xác định được
+                        }
 
 // Hiển thị hộp thoại xác nhận
-if (confirm(`Confirm to change status ?`)) {
-    // Nếu người dùng xác nhận, tiếp tục thực hiện thay đổi
-    const timestamp = new Date().getTime();
-    const url = "StatusChange?action=updateStatus&orderID=" + orderID + "&status=" + currentStatus + "&timestamp=" + timestamp;
+                        if (confirm(`Confirm to change status ?`)) {
+                            // Nếu người dùng xác nhận, tiếp tục thực hiện thay đổi
+                            const timestamp = new Date().getTime();
+                            const url = "StatusChange?action=updateStatus&orderID=" + orderID + "&status=" + currentStatus + "&timestamp=" + timestamp;
 
-    fetch(url)
-            .then(response => {
-                if (!response.ok)
-                    throw new Error("Network response was not ok");
-                return response.text();
-            })
-            .then(newStatus => {
-                console.log("New status:", newStatus);
+                            fetch(url)
+                                    .then(response => {
+                                        if (!response.ok)
+                                            throw new Error("Network response was not ok");
+                                        return response.text();
+                                    })
+                                    .then(newStatus => {
+                                        console.log("New status:", newStatus);
 
-                const statusElement = document.getElementById("status-" + orderID);
-                const linkElement = statusElement.querySelector("a");
+                                        const statusElement = document.getElementById("status-" + orderID);
+                                        const linkElement = statusElement.querySelector("a");
 
-                // Cập nhật trạng thái mới lên giao diện
-                linkElement.innerText = newStatus;
+                                        // Cập nhật trạng thái mới lên giao diện
+                                        linkElement.innerText = newStatus;
 
-                // Cập nhật các sự kiện onmouseover và onmouseout
-                linkElement.onmouseover = function () {
-                    this.innerText = 'Change';
-                };
-                linkElement.onmouseout = function () {
-                    this.innerText = newStatus;
-                };
+                                        // Cập nhật các sự kiện onmouseover và onmouseout
+                                        linkElement.onmouseover = function () {
+                                            this.innerText = 'Change';
+                                        };
+                                        linkElement.onmouseout = function () {
+                                            this.innerText = newStatus;
+                                        };
 
-                // Cập nhật sự kiện onclick để sử dụng trạng thái mới
-                linkElement.onclick = function () {
-                    changeStatus(orderID, newStatus);
-                };
+                                        // Cập nhật sự kiện onclick để sử dụng trạng thái mới
+                                        linkElement.onclick = function () {
+                                            changeStatus(orderID, newStatus);
+                                        };
 
-                // Nếu trạng thái là "Done", vô hiệu hóa các sự kiện
-                if (newStatus === "Done") {
-                    linkElement.onmouseover = null;
-                    linkElement.onmouseout = null;
-                    linkElement.onclick = null;
+                                        // Nếu trạng thái là "Done", vô hiệu hóa các sự kiện
+                                        if (newStatus === "Done") {
+                                            linkElement.onmouseover = null;
+                                            linkElement.onmouseout = null;
+                                            linkElement.onclick = null;
 
-                    // Thay thế phần tử a bằng div đơn giản
-                    const divElement = document.createElement('div');
-                    divElement.innerText = 'Done';
-                    divElement.style.minWidth = '100px';
-                    divElement.style.display = 'inline-block';
-                    divElement.style.textAlign = 'center';
+                                            // Thay thế phần tử a bằng div đơn giản
+                                            const divElement = document.createElement('div');
+                                            divElement.innerText = 'Done';
+                                            divElement.style.minWidth = '100px';
+                                            divElement.style.display = 'inline-block';
+                                            divElement.style.textAlign = 'center';
 
-                    statusElement.innerHTML = '';
-                    statusElement.appendChild(divElement);
-                }
-            })
-            .catch(error => console.error("Error:", error));
-}
-}
+                                            statusElement.innerHTML = '';
+                                            statusElement.appendChild(divElement);
+                                        }
+                                    })
+                                    .catch(error => console.error("Error:", error));
+                        }
+                    }
 </script>
 
 <script>

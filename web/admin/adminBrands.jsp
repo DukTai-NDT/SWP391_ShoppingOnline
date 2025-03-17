@@ -1,3 +1,14 @@
+<%-- 
+    Document   : admin-blog
+    Created on : Mar 3, 2025, 4:39:21 PM
+    Author     : Admin
+--%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,103 +54,76 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="HomePageURL">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
                     </div>
-                    
+
                     <ul class="sidebar-menu pt-3">
-                        <li><a href="index.jsp"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
-                        <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>
 
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-user me-2 d-inline-block"></i>Doctors</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="doctors.html">Doctors</a></li>
-                                    <li><a href="add-doctor.html">Add Doctor</a></li>
-                                    <li><a href="dr-profile.html">Profile</a></li>
-                                </ul>
-                            </div>
+                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-wheelchair me-2 d-inline-block"></i>Patients</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="patients.html">All Patients</a></li>
-                                    <li><a href="add-patient.html">Add Patients</a></li>
-                                    <li><a href="patient-profile.html">Profile</a></li>
-                                </ul>
-                            </div>
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="chat.html">Chat</a></li>
-                                    <li><a href="email.html">Email</a></li>
-                                    <li><a href="calendar.html">Calendar</a></li>
-                                </ul>
-                            </div>
+                            <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Pharmacy</a>
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
                             <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="product-detail.html">Shop Detail</a></li>
-                                    <li><a href="shopcart.html">Shopcart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                </ul>
                             </div>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="blogs.html">Blogs</a></li>
-                                    <li><a href="blog-detail.html">Blog Detail</a></li>
-                                </ul>
-                            </div>
+                            <a href="AdminBrands">
+                                <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
+                            </a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="faqs.html">FAQs</a></li>
-                                    <li><a href="review.html">Reviews</a></li>
-                                    <li><a href="invoice-list.html">Invoice List</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="terms.html">Terms & Policy</a></li>
-                                    <li><a href="privacy.html">Privacy Policy</a></li>
-                                    <li><a href="error.html">404 !</a></li>
-                                    <li><a href="blank-page.html">Blank Page</a></li>
-                                </ul>
-                            </div>
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="jsp/login.jsp">Login</a></li>
-                                    <li><a href="jsp/signup.jsp">Signup</a></li>
-                                    <li><a href="forgot-password.html">Forgot Password</a></li>
-                                    <li><a href="jsp/login.jsp">Lock Screen</a></li>
-                                    <li><a href="thankyou.html">Thank you...!</a></li>
-                                </ul>
-                            </div>
+                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+                            <!--                            <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li><a href="faqs.html">FAQs</a></li>
+                                                                <li><a href="review.html">Reviews</a></li>
+                                                                <li><a href="invoice-list.html">Invoice List</a></li>
+                                                                <li><a href="invoice.html">Invoice</a></li>
+                                                                <li><a href="terms.html">Terms & Policy</a></li>
+                                                                <li><a href="privacy.html">Privacy Policy</a></li>
+                                                                <li><a href="error.html">404 !</a></li>
+                                                                <li><a href="blank-page.html">Blank Page</a></li>
+                                                            </ul>
+                                                        </div>-->
+                        </li>
+                        <br>
                         </li>
 
-                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
+                        <!--                        <li class="sidebar-dropdown">
+                                                    <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
+                                                    <div class="sidebar-submenu">
+                                                        <ul>
+                                                            <li><a href="jsp/login.jsp">Login</a></li>
+                                                            <li><a href="jsp/signup.jsp">Signup</a></li>
+                                                            <li><a href="forgot-password.html">Forgot Password</a></li>
+                                                            <li><a href="jsp/login.jsp">Lock Screen</a></li>
+                                                            <li><a href="thankyou.html">Thank you...!</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>-->
 
-                        <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>
+                        <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
+                        
+                                                <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -171,16 +155,16 @@
                             </a>
                             <div class="search-bar p-0 d-none d-lg-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <form role="search" method="get" id="searchform" class="searchform">
+                                    <form action="SearchCategories" role="search" method="get" id="searchform" class="searchform">
                                         <div>
-                                            <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
+                                            <input type="text" class="form-control border rounded-pill" name="txt" id="s" placeholder="Search Keywords...">
                                             <input type="submit" id="searchsubmit" value="Search">
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-        
+
                         <ul class="list-unstyled mb-0">
                             <li class="list-inline-item mb-0">
                                 <div class="dropdown dropdown-primary">
@@ -192,28 +176,28 @@
                                                 <small class="text-dark mb-0">Chinese</small>
                                             </div>
                                         </a>
-        
+
                                         <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
                                             <img src="images/language/european.png" class="avatar avatar-client rounded-circle shadow" alt="">
                                             <div class="flex-1 text-left ms-2 overflow-hidden">
                                                 <small class="text-dark mb-0">European</small>
                                             </div>
                                         </a>
-        
+
                                         <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
                                             <img src="images/language/indian.png" class="avatar avatar-client rounded-circle shadow" alt="">
                                             <div class="flex-1 text-left ms-2 overflow-hidden">
                                                 <small class="text-dark mb-0">Indian</small>
                                             </div>
                                         </a>
-        
+
                                         <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
                                             <img src="images/language/japanese.png" class="avatar avatar-client rounded-circle shadow" alt="">
                                             <div class="flex-1 text-left ms-2 overflow-hidden">
                                                 <small class="text-dark mb-0">Japanese</small>
                                             </div>
                                         </a>
-        
+
                                         <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
                                             <img src="images/language/russian.png" class="avatar avatar-client rounded-circle shadow" alt="">
                                             <div class="flex-1 text-left ms-2 overflow-hidden">
@@ -234,7 +218,7 @@
                                 <div class="dropdown dropdown-primary">
                                     <button type="button" class="btn btn-icon btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail" class="fea icon-sm"></i></button>
                                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4 <span class="visually-hidden">unread mail</span></span>
-                                    
+
                                     <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2" data-simplebar style="height: 320px; width: 300px;">
                                         <a href="#" class="d-flex align-items-center justify-content-between py-2">
                                             <div class="d-inline-flex position-relative overflow-hidden">
@@ -306,41 +290,70 @@
                 <div class="container-fluid">
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
-                            <h5 class="mb-0">Privacy Policy</h5>
+                            <div>
+                                <h5 class="mb-0">Brand</h5>
 
-                            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
-                                <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Privacy</li>
-                                </ul>
-                            </nav>
+                                <!--                                <nav aria-label="breadcrumb" class="d-inline-block mt-1">
+                                                                    <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
+                                                                        <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
+                                                                        <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+                                                                    </ul>
+                                                                </nav>-->
+                            </div>
+
+                            <div class="mt-4 mt-sm-0">
+                                <a href="adminaddblog" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Brand</a>
+                            </div>
                         </div>
-                        
-                        <div class="row justify-content-center">
-                            <div class="col-lg-7 mt-4">
-                                <div class="card shadow rounded border-0">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Overview :</h5>
-                                        <p class="text-muted">It seems that only fragments of the original text remain in the Lorem Ipsum texts used today. One may speculate that over the course of time certain letters were added or deleted at various positions within the text.</p>
-                                        <p class="text-muted">In the 1960s, the text suddenly became known beyond the professional circle of typesetters and layout designers when it was used for Letraset sheets (adhesive letters on transparent film, popular until the 1980s) Versions of the text were subsequently included in DTP programmes such as PageMaker etc.</p>
-                                        <p class="text-muted">There is now an abundance of readable dummy texts. These are usually used when a text is required purely to fill a space. These alternatives to the classic Lorem Ipsum texts are often amusing and tell short, funny or nonsensical stories.</p>
-                                    
-                                        <h5 class="card-title">We use your information to :</h5>
-                                        <ul class="list-unstyled text-muted">
-                                            <li><i data-feather="arrow-right" class="fea icon-sm me-2"></i>Digital Marketing Solutions for Tomorrow</li>
-                                            <li class="mt-2"><i data-feather="arrow-right" class="fea icon-sm me-2"></i>Our Talented & Experienced Marketing Agency</li>
-                                            <li class="mt-2"><i data-feather="arrow-right" class="fea icon-sm me-2"></i>Create your own skin to match your brand</li>
-                                            <li class="mt-2"><i data-feather="arrow-right" class="fea icon-sm me-2"></i>Digital Marketing Solutions for Tomorrow</li>
-                                            <li class="mt-2"><i data-feather="arrow-right" class="fea icon-sm me-2"></i>Our Talented & Experienced Marketing Agency</li>
-                                            <li class="mt-2"><i data-feather="arrow-right" class="fea icon-sm me-2"></i>Create your own skin to match your brand</li>
-                                        </ul>
-            
-                                        <h5 class="card-title">Information Provided Voluntarily :</h5>
-                                        <p class="text-muted">In the 1960s, the text suddenly became known beyond the professional circle of typesetters and layout designers when it was used for Letraset sheets (adhesive letters on transparent film, popular until the 1980s) Versions of the text were subsequently included in DTP programmes such as PageMaker etc.</p>
-            
-                                        <a href="javascript:window.print()" class="btn btn-soft-primary d-print-none"><i class="uil uil-print"></i> Print</a>
-                                    </div>
+                        <div class="row">
+                            <div class="col-12 mt-4">
+                                <div class="table-responsive shadow rounded">
+                                    <table class="table table-center bg-white mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-bottom p-3" style="min-width: 180px;">Brand ID</th>
+                                                <th class="border-bottom p-3" style="max-width: 180px;">Brand Name</th>
+                                                <th class="border-bottom p-3" style="min-width: 180px;">Country</th>
+                                                <th class="border-bottom p-3 text-end" style="min-width: 150px;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${vectorbrand}" var="brand">
+                                                <tr>
+
+                                                    <td class="p-3">${brand.brandID}</td>
+                                                    <td class="p-3"><a href="" class="text-dark product-name h6" >${brand.brandName}</a></td>
+                                                    <td class="p-3">${brand.country}</td>
+
+                                                    <td class="text-end p-3"> 
+                                                        <a href="LoadBrand?bid=${brand.brandID}" 
+                                                           class="btn btn-icon btn-pills btn-soft-primary">
+                                                            <i class="uil uil-edit"></i>
+                                                        </a>
+<!--                                                        <a href="DeleteCategories?cid=${c.categoryID}" 
+                                                           class="btn btn-icon btn-pills btn-soft-danger"
+                                                           onclick="return confirmDelete(event, '${c.categoryID}')">
+                                                            <i class="uil uil-trash"></i>
+                                                        </a>-->
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
+                        </div><!--end row-->
+
+                        <div class="row">
+                            <div class="col-12 mt-4">
+                                <ul class="pagination justify-content-end mb-0 list-unstyled">
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Previous">Prev</a></li>
+                                    <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next">Next</a></li>
+                                </ul><!--end pagination-->
                             </div><!--end col-->
                         </div><!--end row-->
                     </div>
@@ -409,6 +422,61 @@
         </div>
         <!-- Offcanvas End -->
 
+        <!-- Start Modal -->
+        <div class="modal fade" id="newblogadd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <form action="AddBrand" method="post">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom p-3">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Brand</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body p-3 pt-4">
+
+                            <div class="row">
+                                <div class="col-md-8 mt-4 mt-sm-0">
+                                    <div class="ms-md-4">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="col-md-6">
+                                                    </div>
+                                                    <div class="col-md-6 align-items-center">
+                                                        <div class="col-md-6">
+                                                           
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Brand Name</label>
+                                                                <input value="" name="brandName" id="brandname" type="text" class="form-control" style="width: 750px">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Country</label>
+                                                                <input value="" name="country" id="country" type="text" class="form-control" style="width: 750px">
+                                                            </div>
+                                                        </div><!--end col-->
+
+                                                    </div><!--end col-->
+
+                                                </div><!--end col-->
+
+                                                <div class="col-lg-12 text-end">
+                                                    <button type="submit" class="btn btn-primary">Add Brand</button>
+                                                </div><!--end col-->
+                                            </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div>
+                            <!--end row-->
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </form>
+        </div>
+        <!-- End modal -->
+
         <!-- javascript -->
         <script src="js/bootstrap.bundle.min.js"></script>
         <!-- simplebar -->
@@ -417,7 +485,52 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
-        
+
+        <script>
+                                        const handleChange = () => {
+                                            const fileUploader = document.querySelector('#input-file');
+                                            const getFile = fileUploader.files
+                                            if (getFile.length !== 0) {
+                                                const uploadedFile = getFile[0];
+                                                readFile(uploadedFile);
+                                            }
+                                        }
+
+                                        const readFile = (uploadedFile) => {
+                                            if (uploadedFile) {
+                                                const reader = new FileReader();
+                                                reader.onload = () => {
+                                                    const parent = document.querySelector('.preview-box');
+                                                    parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
+                                                };
+
+                                                reader.readAsDataURL(uploadedFile);
+                                            }
+                                        };
+        </script>
+        <script>
+            function confirmDelete(event, categoryID) {
+                event.preventDefault(); // Ngăn trang chuyển hướng ngay lập tức
+                let confirmation = confirm("Are you sure you want to delete this blog post?");
+                if (confirmation) {
+                    window.location.href = "DeleteCategories?cid=" + categoryID; // Chuyển hướng nếu xác nhận
+                }
+            }
+        </script>
+        <script>
+            function previewImage() {
+                var imageUrl = document.getElementById("images").value; // Lấy giá trị URL từ input
+                var imgPreview = document.getElementById("imagePreview"); // Lấy thẻ img
+
+                if (imageUrl.trim() !== "") {
+                    imgPreview.src = imageUrl; // Gán URL vào src của img
+                    imgPreview.style.display = "block"; // Hiển thị ảnh
+                } else {
+                    imgPreview.style.display = "none"; // Ẩn ảnh nếu không có URL
+                }
+            }
+        </script>
+
     </body>
 
 </html>

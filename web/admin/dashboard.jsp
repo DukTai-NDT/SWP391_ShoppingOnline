@@ -70,10 +70,13 @@
                         <li class="sidebar-dropdown">
 
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
-                            <div class="sidebar-submenu">
-                            </div>
-                        </li>
 
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminBrands">
+                                <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
+                            </a>
+                        </li>
                         <br>
 
                         <li class="sidebar-dropdown">
@@ -81,20 +84,20 @@
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
-                            <a href="OrdersManagement"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
 
-<!--                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="faqs.html">FAQs</a></li>
-                                    <li><a href="review.html">Reviews</a></li>
-                                    <li><a href="invoice-list.html">Invoice List</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="terms.html">Terms & Policy</a></li>
-                                    <li><a href="privacy.html">Privacy Policy</a></li>
-                                    <li><a href="error.html">404 !</a></li>
-                                    <li><a href="blank-page.html">Blank Page</a></li>
-                                </ul>
-                            </div>-->
+                            <!--                            <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li><a href="faqs.html">FAQs</a></li>
+                                                                <li><a href="review.html">Reviews</a></li>
+                                                                <li><a href="invoice-list.html">Invoice List</a></li>
+                                                                <li><a href="invoice.html">Invoice</a></li>
+                                                                <li><a href="terms.html">Terms & Policy</a></li>
+                                                                <li><a href="privacy.html">Privacy Policy</a></li>
+                                                                <li><a href="error.html">404 !</a></li>
+                                                                <li><a href="blank-page.html">Blank Page</a></li>
+                                                            </ul>
+                                                        </div>-->
                         </li>
                         <br>
                     </ul>

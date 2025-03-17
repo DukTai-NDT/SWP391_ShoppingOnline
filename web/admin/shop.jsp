@@ -84,9 +84,20 @@
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
+                        <li class="sidebar-dropdown">
+
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
+                            <div class="sidebar-submenu">
+                            </div>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminBrands">
+                                <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
+                            </a>
+                        </li>
                         <br>
                         <li class="sidebar-dropdown">
-                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
