@@ -533,7 +533,7 @@
                     %>
                     <!-- Sản phẩm -->
                     <div class="product-card">
-                        <a href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><img src="https://via.placeholder.com/150" alt="Product"></a>
+                        <a href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><img src="images/products/<%=pro.getImage()%>" alt="Product"></a>
                         <h3><%=pro.getProductName()%></h3>
                         <p class="price"><%=pro.getPrice()%>/ <%=pro.getUnitPrice()%></p>
                         <div class="buttons">

@@ -128,18 +128,18 @@
 
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
 
-<!--                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="faqs.html">FAQs</a></li>
-                                    <li><a href="review.html">Reviews</a></li>
-                                    <li><a href="invoice-list.html">Invoice List</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="terms.html">Terms & Policy</a></li>
-                                    <li><a href="privacy.html">Privacy Policy</a></li>
-                                    <li><a href="error.html">404 !</a></li>
-                                    <li><a href="blank-page.html">Blank Page</a></li>
-                                </ul>
-                            </div>-->
+                            <!--                            <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li><a href="faqs.html">FAQs</a></li>
+                                                                <li><a href="review.html">Reviews</a></li>
+                                                                <li><a href="invoice-list.html">Invoice List</a></li>
+                                                                <li><a href="invoice.html">Invoice</a></li>
+                                                                <li><a href="terms.html">Terms & Policy</a></li>
+                                                                <li><a href="privacy.html">Privacy Policy</a></li>
+                                                                <li><a href="error.html">404 !</a></li>
+                                                                <li><a href="blank-page.html">Blank Page</a></li>
+                                                            </ul>
+                                                        </div>-->
                         </li>
                         <br>
                     </ul>
@@ -333,7 +333,7 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-4 col-md-5">
                                     <div class="slider slider-for">
-                                        <div><img src="${pDetail.image}" class="img-fluid rounded" alt=""></div>
+                                        <div><img src="images/products/${pDetail.image}" class="img-fluid rounded" alt=""></div>
                                     </div>
                                 </div><!--end col-->
 
@@ -391,13 +391,13 @@
                                     </div>
 
                                     <div class="modal-body p-3 pt-4">
-                                        <form action="EditProduct" method="post">
+                                        <form action="EditProduct" method="post" enctype="multipart/form-data">
                                             <div class="row">
                                                 <!-- Trường nhập ảnh -->
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Image URL:</label>
-                                                        <input value="${pDetail.image}" type="text" name="loadImage" id="loadImage" class="form-control" placeholder="Enter image URL">
+                                                        <input type="file" name="image" id="image" class="form-control" placeholder=" image file">
                                                     </div>
                                                     <div class="preview-box d-flex justify-content-center align-items-center rounded shadow overflow-hidden bg-light p-1"
                                                          style="width: 200px; height: 200px; margin-left: 70px;">

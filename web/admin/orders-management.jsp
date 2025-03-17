@@ -5,6 +5,7 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="entity.PaymentMethod, entity.Brand, java.util.Vector, model.DAOPaymentMethod" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,9 +66,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-
-                        <a href="HomePageURL">
-
+                        <a href="index.jsp">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -92,12 +91,9 @@
                             <div class="sidebar-submenu">
                             </div>
                         </li>
-                        <li class="sidebar-dropdown">
-                            <a href="AdminBrands">
-                                <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
-                            </a>
-                        </li>
+
                         <br>
+
                         <li class="sidebar-dropdown">
                             <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
@@ -161,104 +157,6 @@
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            <li class="list-inline-item mb-0">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/language/american.png" class="avatar avatar-ex-small rounded-circle p-2" alt=""></button>
-                                    <div class="dropdown-menu dd-menu drop-ups dropdown-menu-end bg-white shadow border-0 mt-3 p-2" data-simplebar style="height: 175px;">
-                                        <a href="javascript:void(0)" class="d-flex align-items-center">
-                                            <img src="images/language/chinese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Chinese</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/european.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">European</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/indian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Indian</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/japanese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Japanese</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/russian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Russian</small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="list-inline-item mb-0 ms-1">
-                                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                    <div class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
-                                </a>
-                            </li>
-
-                            <li class="list-inline-item mb-0 ms-1">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-icon btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail" class="fea icon-sm"></i></button>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4 <span class="visually-hidden">unread mail</span></span>
-
-                                    <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2" data-simplebar style="height: 320px; width: 300px;">
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/02.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Janalia</b> <small class="text-muted fw-normal d-inline-block">1 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/Codepen.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>codepen</b>  <small class="text-muted fw-normal d-inline-block">4 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/03.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Cristina</b> <small class="text-muted fw-normal d-inline-block">5 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/dribbble.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Dribbble</b> <small class="text-muted fw-normal d-inline-block">24 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/06.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Donald Aghori</b> <small class="text-muted fw-normal d-inline-block">1 day ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/07.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Calvin</b> <small class="text-muted fw-normal d-inline-block">2 day ago</small></small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
 
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
@@ -274,9 +172,7 @@
                                         <a class="dropdown-item text-dark" href="index.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
                                         <a class="dropdown-item text-dark" href="dr-profile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                         <div class="dropdown-divider border-top"></div>
-
-                                        <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
-
+                                        <a class="dropdown-item text-dark" href="jsp/login.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                                     </div>
                                 </div>
                             </li>
@@ -309,22 +205,22 @@
                         <table class="table align-middle shadow-lg rounded-4 overflow-hidden bg-white">
                             <thead class="bg-primary text-white rounded-top-4">
                                 <tr class="fw-bold text-center">
-
                                     <th class="p-3">#</th>
                                     <th class="p-3">Username</th>
-                                    <th class="p-3">Payment ID</th>
+                                    <th class="p-3">Method</th>
                                     <th class="p-3">Order Time</th>
                                     <th class="p-3">ETA</th>
                                     <th class="p-3">Status</th>
                                     <th class="p-3">Action</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
                                 <c:forEach var="o" items="${oList}" varStatus="loop">
                                     <tr class="border-bottom">
                                         <td class="p-3 text-center">${loop.index + 1}</td>
                                         <td class="p-3 text-center">${customerUsernames[o.customerID]}</td>
-                                        <td class="p-3 text-center">${paymentMethods[o.paymentID]}</td>
+                                        <td class="p-3 text-center">${paymentMethods[o.getPaymentID()]}</td>
                                         <td class="p-3 text-center">${o.orderTime}</td>
                                         <td class="p-3 text-center">${o.deliveryETA != null ? o.deliveryETA : 'N/A'}</td>
                                         <td class="p-3 text-center">
@@ -346,65 +242,65 @@
                                             </c:choose>
                                         </td>
                                         <td class="p-3 text-center">
-                                            <c:forEach var="od" items="${odList}">
-                                                <c:if test="${od.orderID == o.orderID}">
-                                                    <button type="button" class="btn btn-outline-primary btn-sm"
-                                                            data-bs-toggle="modal" data-bs-target="#orderDetailModal"
-                                                            onclick="loadOrderDetail('${od.orderID}', '${od.productID}', '${od.price}', '${od.quantity}')">
-                                                        <i class="uil uil-eye"></i> Detail
-                                                    </button>
-                                                </c:if>
-                                            </c:forEach>
-
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#orderDetailModal-${o.orderID}">
+                                                <i class="uil uil-eye"></i> Detail
+                                            </button>
                                         </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
 
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailLabel" aria-hidden="true">
-                            <div class="modal-dialog" style="margin-left: auto; margin-right: 25%;">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="orderDetailLabel">Order Detail</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="mb-3">
-                                                <label class="form-label">Order ID:</label>
-                                                <input type="text" id="modalOrderID" class="form-control" readonly>
+                        <!-- Tạo modal cho từng đơn hàng -->
+                        <c:forEach var="o" items="${oList}">
+                            <div class="modal fade" id="orderDetailModal-${o.orderID}" tabindex="-1" aria-labelledby="orderDetailLabel-${o.orderID}" aria-hidden="true">
+                                <div class="modal-dialog mx-auto" style="max-width: 80%;">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center w-100 d-block">
+                                            <button type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <h5 class="modal-title" id="orderDetailLabel">Order Detail</h5>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <p class="fw-bold text-start">Customer Name: ${customerNames[o.customerID]}</p>
+                                            <p class="fw-bold text-start">Order ID: ${o.orderID}</p>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="table-responsive">
+                                                    <table class="table table-borderless text-center w-100">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Product ID</th>
+                                                                <th>Product Name</th>
+                                                                <th>Price</th>
+                                                                <th>Quantity</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:set var="grandTotal" value="0" />
+                                                            <c:forEach var="od" items="${odList}">
+                                                                <c:if test="${od.orderID == o.orderID}">
+                                                                    <c:set var="itemTotal" value="${od.price * od.quantity}" />
+                                                                    <c:set var="grandTotal" value="${grandTotal + itemTotal}" />
+                                                                    <tr>
+                                                                        <td>${od.productID}</td>
+                                                                        <td>${productDetails[od.productID].productName}</td>
+                                                                        <td>${od.price}</td>
+                                                                        <td>${od.quantity}</td>
+                                                                        <td>${itemTotal}</td>
+                                                                    </tr>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Product ID:</label>
-                                                <input type="text" id="modalProductID" class="form-control" readonly>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Price:</label>
-                                                <input type="text" id="modalPrice" class="form-control" readonly>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Quantity:</label>
-                                                <input type="text" id="modalQuantity" class="form-control" readonly>
-                                            </div>                                   
-                                        </form>
+                                            <p class="fw-bold" style="position: relative; left: -50px; text-align: right;">Grand Total: ${grandTotal}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- JavaScript để load dữ liệu vào modal -->
-                        <script>
-                            function loadOrderDetail(orderID, productID, price, quantity) {
-                                document.getElementById("modalOrderID").value = orderID;
-                                document.getElementById("modalProductID").value = productID;
-                                document.getElementById("modalPrice").value = price;
-                                document.getElementById("modalQuantity").value = quantity;
-                            }
-                        </script>
-
+                        </c:forEach>
 
 
                     </div><!--end row-->
@@ -412,14 +308,30 @@
                     <div class="row">
                         <div class="col-12 mt-4">
                             <ul class="pagination justify-content-end mb-0 list-unstyled">
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Previous">Prev</a></li>
-                                <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0)" aria-label="Next">Next</a></li>
-                            </ul><!--end pagination-->
-                        </div><!--end col-->
-                    </div><!--end row-->
+                                <% int currentPage = (int) request.getAttribute("currentPage");
+                                    int totalPages = (int) request.getAttribute("totalPages");
+                                %>
+
+                                <!-- Nút Prev -->
+                                <li class="page-item <%= (currentPage == 1) ? "disabled" : ""%>">
+                                    <a class="page-link" href="?page=<%= currentPage - 1%>" aria-label="Previous">Prev</a>
+                                </li>
+
+                                <!-- Số trang -->
+                                <% for (int i = 1; i <= totalPages; i++) {%>
+                                <li class="page-item <%= (i == currentPage) ? "active" : ""%>">
+                                    <a class="page-link" href="?page=<%= i%>"><%= i%></a>
+                                </li>
+                                <% }%>
+
+                                <!-- Nút Next -->
+                                <li class="page-item <%= (currentPage == totalPages) ? "disabled" : ""%>">
+                                    <a class="page-link" href="?page=<%= currentPage + 1%>" aria-label="Next">Next</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--end row-->
                 </div>
                 <br>
                 <!-- Footer Start -->
@@ -623,7 +535,6 @@
 <!-- Main Js -->
 <script src="js/app.js"></script>
 
-
 <!-- JavaScript để thay đổi trạng thái -->
 <script>
                     function changeStatus(orderID, currentStatus) {
@@ -724,3 +635,6 @@
 </html>
 
 </html>
+
+
+
