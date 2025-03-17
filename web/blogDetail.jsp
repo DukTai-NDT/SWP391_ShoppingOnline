@@ -133,7 +133,7 @@
                         </li>
 
                         <li><a href="BlogsURL" class="menu-item">Blogs</a></li>
-                        <li><a href="../admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
+                        
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
