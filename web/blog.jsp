@@ -77,7 +77,6 @@
                     if(currentCustomer != null){
                     %>
                     <li class="list-inline-item mb-0">
-
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                         </a>

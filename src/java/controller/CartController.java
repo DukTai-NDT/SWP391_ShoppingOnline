@@ -5,7 +5,7 @@ import entity.Cart;
 import entity.CartItems;
 import entity.Customers;
 import entity.Products;
-
+import entity.Categories;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.Vector;
 import model.DAOCart;
 import model.DAOCartItem;
+import model.DAOCategories;
 import model.DAOCustomer;
 import model.DAOProducts;
 
@@ -38,6 +39,7 @@ public class CartController extends HttpServlet {
         DAOCart daoCart = new DAOCart();
         DAOProducts daoPro = new DAOProducts();
         DAOCartItem daoCartItem = new DAOCartItem();
+        DAOCategories daoCat = new DAOCategories();
 
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("service");
@@ -49,8 +51,9 @@ public class CartController extends HttpServlet {
             if (service.equals("showCart")) {
                 Customers cus = (Customers) session.getAttribute("dataCustomer");
                 Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy("select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = " + cus.getCustomerID());
+                Vector<Categories> vcategories = daoCat.getCategories("select * from Categories");
                 session.setAttribute("dataCartItem", vectorCartItems);
-
+                session.setAttribute("vcategories", vcategories);
                 // Khôi phục trạng thái checkbox từ session
                 Set<Integer> unselectedItems = (Set<Integer>) session.getAttribute("unselectedItems");
                 if (unselectedItems == null) {

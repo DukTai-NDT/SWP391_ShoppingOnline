@@ -2,8 +2,7 @@
 
 <%@page import="entity.Products, java.util.Vector" %>
 <%@page import="entity.Account, model.DAOCustomer" %>
-
-<%@page import="entity.Products,entity.Brand, java.util.Vector, entity.Categories, entity.Function, entity.Ingredient,entity.Feedbacks,entity.Customers"%>
+<%@page import="entity.Products,entity.Brand, java.util.Vector, entity.Categories, entity.Function, entity.Ingredient,entity.Feedbacks,entity.Customers, entity.CartItems"%>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -577,7 +576,10 @@
     <%Vector<Function> vectorf = (Vector<Function>)session.getAttribute("vectorf");%>
     <%Vector<Ingredient> vectorIngre = (Vector<Ingredient>)session.getAttribute("vectorIngre");
     Vector<Feedbacks> vectorFeed = (Vector<Feedbacks>)session.getAttribute("vectorFeed");
-    Account account = (Account)session.getAttribute("dataUser");
+    Vector<Categories> vectorCat = (Vector<Categories>) session.getAttribute("vectorCat");
+     Account account = (Account)session.getAttribute("dataUser");
+    Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
    DAOCustomer daoCus = new DAOCustomer();
     double with5 = (double)session.getAttribute("with5");
     double with4 = (double)session.getAttribute("with4");
@@ -591,7 +593,7 @@
     int star2 = (int)session.getAttribute("star2");
     int star1 = (int)session.getAttribute("star1");
     int total = (int)session.getAttribute("total");
-    Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+   
         
     %>
     <body>
@@ -634,6 +636,9 @@
 
                 <!-- Start Dropdown -->
                 <ul class="dropdowns list-inline mb-0">
+                    <%
+                    if(currentCustomer != null){
+                    %>
                     <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
@@ -644,75 +649,52 @@
                         <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             <i class="uil uil-search"></i>
                         </a>
-                    </li>
 
+                    </li>
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-
-
-                            <%if(account != null){%>
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                            </button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
                                     <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1"><%=account.getUserName()%></span>
-
+                                        <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
-                            </div>        
-                            <%}else{%>
+                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
 
-                            <div class="auth-links">
-                                <a href="SignUpURL?service=signup">Sign up</a>
-                                <span>|</span>
-                                <a href="LoginURL?service=login">Log in</a>
                             </div>
-                            <%}%>
-
                         </div>
                     </li>
+                    <%} else{%>
+                    <div class="auth-links">
+                        <a href="SignUpURL?service=signup">Sign up</a>
+                        <span>|</span>
+                        <a href="LoginURL?service=login">Log in</a>
+                    </div>
+                    <%}%>
+
                 </ul>
                 <!-- Start Dropdown -->
 
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left">              
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
+                        <li class="parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts">Shop</a><span class="menu-arrow"></span> 
+                        </li>
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
-                                <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
-                                <li><a href="CheckoutURL" class="sub-menu-item">Checkout</a></li>
-                                <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
+                                <%for (Categories cate : vectorCat){%>
+                                <li><a href="ProductURL?service=categories&cid=<%=cate.getCategoryID()%>" class="sub-menu-item"> <%=cate.getCategoryName()%></a></li>
+                                    <%}%>
                             </ul>
                         </li>
-
-                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="aboutus.html" class="sub-menu-item"> About Us</a></li>
-                                <li><a href="departments.html" class="sub-menu-item">Departments</a></li>
-                                <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li class="has-submenu parent-menu-item">
-                                    <a href="javascript:void(0)" class="menu-item"> Blogs </a><span class="submenu-arrow"></span>
-                                    <ul class="submenu">
-                                        <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
-                                        <li><a href="blog-detail.html" class="sub-menu-item">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="terms.html" class="sub-menu-item">Terms & Policy</a></li>
-                                <li><a href="privacy.html" class="sub-menu-item">Privacy Policy</a></li>
-                                <li><a href="error.html" class="sub-menu-item">404 !</a></li>
-                                <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
+                        <li><a href="BlogsURL"">Blog</a></li>
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -754,12 +736,19 @@
 
 
                             <div class="mt-4 pt-2">
+                                <% if(account != null) { %>
                                 <a href="#" class="btn btn-primary">Shop Now</a>
+
+
                                 <% if(product.getQuantity() > 0) { %>
                                 <a href="CartURL?service=add2cart&pid=<%=product.getProductID()%>" class="btn btn-soft-primary ms-2">Add to Cart</a>
                                 <% } else { %>
                                 <span class="btn btn-danger ms-2">Out of Stock</span>
                                 <% } %>
+                                <% } else { %>
+                                <span class="btn btn-warning ms-2"><a href="LoginURL?service=login">You must Login to buy</a></span>
+                                <% } %>
+
 
                                 <div class="price">
                                     <span class="current-price"><%=product.getPrice()%></span>
@@ -869,7 +858,7 @@
                             <div class="review-item <%= isHidden ? "hidden-review" : "" %>">
                                 <div class="review-header">
                                     <span class="reviewer-name"><%= customer != null ? customer.getLastName() : "Unknown" %></span>
-                                    <span class="review-rating">★★★★★ <%= feedbacks.getRating() %>/5</span>
+                                    <span class="review-rating"> <%= feedbacks.getRating() %>/5★</span>
                                 </div>
 
                                 <p class="review-content">
@@ -1067,7 +1056,46 @@
             </div>
         </div>
         <!-- Offcanvas End -->
+        <% if (currentCustomer != null) { %>
+        <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header p-4 border-bottom">
+                <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
+                <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <% 
+           
+                    if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
+               
+               
+                      for(CartItems vectorCartItem : vectorCartItems) {
+                %>
+                <div class="cart-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
+                        <div class="ms-3 flex-1">
+                            <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
+                            <div class="d-flex justify-content-between">
+                                <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
+                                <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    } }else {
+                %>
+                <p class="text-muted text-center " >No Products In Cart...</p>
+                <%
+                    }
+                %>
+                <div class="mt-4 text-center">
+                    <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
+                </div>
+            </div>
+        </div>
+        <% }%>
         <!-- Offcanvas Start -->
         <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header p-4 border-bottom">
@@ -1186,6 +1214,15 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                console.log("Bootstrap JS loaded:", typeof bootstrap !== "undefined");
+                var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+                dropdownElementList.forEach(function (dropdownToggleEl) {
+                    new bootstrap.Dropdown(dropdownToggleEl);
+                });
+            });
+        </script>
     </body>
 </html>
 
