@@ -104,7 +104,7 @@ public class ProductDetailController extends HttpServlet {
             Vector<Function> vectorf = daof.getFunction("select * from [Function] where ProductID = " + pid);
             Vector<Ingredient> vectorIngre = daoIngre.getIngredient("select * from Ingredient where ProductID = " + pid);
             vectorFeed = daoFeed.getFeedback("select * from Feedbacks where ProductID = " + pid);
-            
+            Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
 //            
             double averageStar = 0.0;
             int totalRating = 0;
@@ -160,6 +160,7 @@ public class ProductDetailController extends HttpServlet {
             session.setAttribute("product", product);
             session.setAttribute("brand", brand);
             session.setAttribute("cat", cat);
+            session.setAttribute("vectorCat", vectorCat);
             session.setAttribute("vectorf", vectorf);
             session.setAttribute("vectorIngre", vectorIngre);
             request.getRequestDispatcher("/jsp/product-detail.jsp").forward(request, response);

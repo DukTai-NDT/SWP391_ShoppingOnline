@@ -10,6 +10,7 @@ import entity.DeliveryAddress;
 import entity.OrderDetails;
 import entity.Orders;
 import entity.Payments;
+import entity.Categories;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,6 +22,7 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.Vector;
 import model.DAOCartItem;
+import model.DAOCategories;
 import model.DAODeliveryAddress;
 import model.DAOOrderDetails;
 import model.DAOOrders;
@@ -45,12 +47,15 @@ public class CheckoutController extends HttpServlet {
             DAOOrderDetails daoOrderDetail = new DAOOrderDetails();
             DAODeliveryAddress daoDeliAddress = new DAODeliveryAddress();
             DAOCartItem daoCartItem = new DAOCartItem();
+            DAOCategories daoCat = new DAOCategories();
             Customers customer = (Customers) session.getAttribute("dataCustomer");
             String service = request.getParameter("service");
             if (service == null) {
                 response.sendRedirect("DeliveryAddressURL?service=first");
             }
             if (service.equals("theFirst")) {
+                Vector<Categories> vcategories = daoCat.getCategories("select * from Categories");
+                session.setAttribute("vcategories", vcategories);
                 response.sendRedirect("DeliveryAddressURL?service=first");
             }
             if (service.equals("checkout")) {
@@ -73,7 +78,7 @@ public class CheckoutController extends HttpServlet {
                 System.out.println(districtId);
                 System.out.println(orderDate);
                 System.out.println(deliveryDate);
-
+                
                 try {
                     int paymentMethodID = 0;
                     int methodPayment = 0;
