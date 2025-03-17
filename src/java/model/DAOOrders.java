@@ -245,12 +245,9 @@ public class DAOOrders extends DBConnection {
     public static void main(String[] args) {
         DAOOrders dao = new DAOOrders();
 
-      int n = dao.updateStatusOrder("Hoàn thành", 1);
-        System.out.println(n);
-        Vector<Orders> vector = dao.getOrders("select * from Orders");
-        for (Orders orders : vector) {
-            System.out.println(orders);
-        }
+     
+        Vector<Orders> vector = dao.getOrders("select * from Orders where OrderID = 3018");
+        System.out.println(vector.get(0).getPaymentID());
         
         
 

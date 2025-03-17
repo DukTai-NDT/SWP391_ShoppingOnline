@@ -110,7 +110,11 @@ public class DAOPaymentMethod extends DBConnection {
     
     public static void main(String[] args) {
        DAOPaymentMethod dao = new DAOPaymentMethod();
-          int n = dao.getMethodPaymentID("Cash on Delivery (COD)");
+          Vector<PaymentMethod> vector = dao.getPaymentMethod("select * from MethodPayment");
+          for (PaymentMethod paymentMethod : vector) {
+              System.out.println(paymentMethod);
+        }
+          int n = dao.getMethodPaymentID("VNPay");
           System.out.println(n);
     }
 }

@@ -126,6 +126,8 @@
       DAOProducts daoProduct = new DAOProducts();
       DAOOrderDetails daoOrderDetail = new DAOOrderDetails();
     %>
+    <% String message = (String)request.getAttribute("message"); 
+    %>
 
     <body>
         <!-- Loader -->
@@ -165,15 +167,13 @@
                 </div>
                 <!-- End Mobile Toggle -->
 
-                <!-- Start Dropdown --><%
-            Account account = (Account)session.getAttribute("dataUser");
+                <!-- Start Dropdown -->
+                <%
+                Account account = (Account)session.getAttribute("dataUser");
                 %>
                 <ul class="dropdowns list-inline mb-0">
-
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-
-
                             <%if(account != null){%>
                             <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/products/z5341925245712_e4a232314bec6b8096527cf5ad9a3d92.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
@@ -181,23 +181,20 @@
                                     <img src="images/products/z5341925245712_e4a232314bec6b8096527cf5ad9a3d92.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
                                     <div class="flex-1 ms-2">
                                         <span class="d-block mb-1"><%=account.getUserName()%></span>
-
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="OrderHistoryURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Đơn mua</a>
-                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <a class="dropdown-item text-dark" href="OrderHistoryURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
+                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span>Logout</a>
                             </div>        
                             <%}else{%>
-
                             <div class="auth-links">
                                 <a href="SignUpURL?service=signup">Sign up</a>
                                 <span>|</span>
                                 <a href="LoginURL?service=login">Log in</a>
                             </div>
                             <%}%>
-
                         </div>
                     </li>
                 </ul>
@@ -237,13 +234,13 @@
                 <div class="row mt-5 justify-content-center">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h3 class="sub-title mb-4">Lịch Sử Đơn Hàng</h3>
-                            <p class="para-desc mx-auto text-muted">Xem lại lịch sử mua hàng của bạn và theo dõi trạng thái đơn hàng một cách dễ dàng.</p>
+                            <h3 class="sub-title mb-4">Order History</h3>
+                            <p class="para-desc mx-auto text-muted">Review your purchase history and track order status easily.</p>
                             <nav aria-label="breadcrumb" class="d-inline-block mt-3">
                                 <ul class="breadcrumb bg-light rounded mb-0 bg-transparent">
                                     <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
                                     <li class="breadcrumb-item"><a href="pharmacy.html">Pharmacy</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Lịch Sử Đơn Hàng</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Order History</li>
                                 </ul>
                             </nav>
                         </div>
@@ -263,38 +260,37 @@
         <!-- Start -->
         <section class="section">
             <div class="container">
-
+                  <p style="color: red;"><%=(message!=null?message:"")%></p>
                 <form action="CartURL" method="POST">
                     <div class="row">
                         <div class="col-12">
                             <div class="table-container">
                                 <nav class="status-bar">
-                                    <a href="#" class="status" data-status="all" aria-current="page">Tất cả đơn hàng</a>
-                                    <a href="#" class="status" data-status="pending">Đang chờ duyệt</a>
-                                    <a href="#" class="status" data-status="shipping">Đang vận chuyển</a>
-                                    <a href="#" class="status" data-status="completed">Đã hoàn thành</a>
+                                    <a href="#" class="status" data-status="all" aria-current="page">All Orders</a>
+                                    <a href="#" class="status" data-status="pending">Pending</a>
+                                    <a href="#" class="status" data-status="shipping">Shipping</a>
+                                    <a href="#" class="status" data-status="completed">Completed</a>
                                 </nav>
                                 <table class="table table-hover table-striped mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Sản Phẩm</th>
-                                            <th>Giá</th>
-                                            <th>Số Lượng</th>
-                                            <th>Tổng Cộng</th>
-                                            <th>Trạng Thái</th>
-                                            <th>Hành Động</th>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <%
                                         for (OrderDetails orderDetails : vectorOrderDetail) {
-                    
-                                        if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Hoàn thành")){
+                                            if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){
                                         %>
                                         <tr data-status="completed">
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang vận chuyển")){%>
+                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Delivering")){%>
                                         <tr data-status="shipping">
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang chuẩn bị hàng")){%>
+                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
                                         <tr data-status="pending">
                                             <%}%>
                                             <td>
@@ -306,70 +302,30 @@
                                             <td>₫<%=orderDetails.getPrice()%></td>
                                             <td><%=orderDetails.getQuantity()%></td>
                                             <td>₫<%=orderDetails.getPrice() * orderDetails.getQuantity()%></td>
-                                            <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Hoàn thành")){
-                                            %>
+                                            <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){ %>
                                             <td><span class="badge bg-success"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
-                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang vận chuyển")){%>
+                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Delivering")){%>
                                             <td><span class="badge bg-info"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
-                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang chuẩn bị hàng")){%>
+                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
                                             <td><span class="badge bg-warning"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
                                                 <%}%>
-
                                             <td>
-                                                <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Hoàn thành")){
-                                                %>
+                                                <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){ %>
                                                 <div class="order-actions">
-                                                    <button class="btn btn-danger btn-sm me-2">Đánh Giá</button>
-                                                    <button class="btn btn-primary btn-sm">Mua Lại</button>
+                                                    <a href="cancer-page.html" class="btn btn-danger btn-sm me-2">Review</a>
+                                                    <a href="ProductDetailURL?service=detailProduct&pid=<%=orderDetails.getProductID()%>" class="btn btn-primary btn-sm">Buy Again</a>
                                                 </div>
-                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang chuẩn bị hàng")){%>
+                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
                                                 <div class="order-actions">
-                                                    <button class="btn btn-danger btn-sm">Hủy Đơn</button>
+                                                    <a href="OrderHistoryURL?service=cancerOrder&orderDetaiID=<%=orderDetails.getOrderDetailID()%>" class="btn btn-danger">Cancer</a>
+                                                    
                                                 </div>
-
                                                 <%}%>
-
                                             </td>
                                         </tr>
                                         <%}%>
-                                        <!--                                        
-                                                                                <tr data-status="pending">
-                                                                                    <td>
-                                                                                        <div class="product-info">
-                                                                                            <img src="https://via.placeholder.com/50" alt="Áo thun nam cao cấp" class="product-image">
-                                                                                            <span>Áo thun nam cao cấp</span>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>₫150,000</td>
-                                                                                    <td>2</td>
-                                                                                    <td>₫300,000</td>
-                                                                                    <td><span class="badge bg-warning">Đang chờ duyệt</span></td>
-                                                                                    <td>
-                                                                                        <div class="order-actions">
-                                                    <button class="btn btn-danger btn-sm">Hủy Đơn</button>
-                                                </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr data-status="shipping">
-                                                                                    <td>
-                                                                                        <div class="product-info">
-                                                                                            <img src="https://via.placeholder.com/50" alt="Tai nghe Bluetooth 5.0" class="product-image">
-                                                                                            <span>Tai nghe Bluetooth 5.0</span>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>₫200,000</td>
-                                                                                    <td>1</td>
-                                                                                    <td>₫200,000</td>
-                                                                                    <td><span class="badge bg-info">Đang vận chuyển</span></td>
-                                                                                    <td>
-                                                                                        <div class="order-actions">
-                                                                                            <button class="btn btn-primary btn-sm">Theo Dõi</button>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>-->
                                     </tbody>
                                 </table>
-                                
                             </div>
                         </div><!--end col-->
                     </div><!--end row-->

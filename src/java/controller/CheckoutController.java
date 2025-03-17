@@ -78,7 +78,7 @@ public class CheckoutController extends HttpServlet {
                     int paymentMethodID = 0;
                     int methodPayment = 0;
                     if (paymentMethod.equals("COD")) {
-                        paymentMethodID = daoPaymentMethod.getMethodPaymentID("Cash on Delivery (COD)");
+                        paymentMethodID = daoPaymentMethod.getMethodPaymentID("Thanh toán khi nhận hàng");
                         methodPayment++;
                     } else {
                         paymentMethodID = daoPaymentMethod.getMethodPaymentID("VNPay");
@@ -93,7 +93,7 @@ public class CheckoutController extends HttpServlet {
 
                     // Add Order
 
-                    int orderID = daoOrder.addOrder(new Orders("Đang chuẩn bị hàng", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID()));
+                    int orderID = daoOrder.addOrder(new Orders("On-prepared", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID()));
 
 
                     if (orderID == 0) {
@@ -120,11 +120,14 @@ public class CheckoutController extends HttpServlet {
                         int y = daoCartItem.changeIsBuy(1, vectorCartItem.getCartItemID());
                     }
                     session.setAttribute("selectedCartItems", new Vector<CartItems>());
+                    System.out.println(methodPayment+"ok098");
                     if (methodPayment != 0) {
+                        System.out.println("tainguyen");
                         request.setAttribute("transResult", true);
                         request.getRequestDispatcher("jsp/paymentResult.jsp").forward(request, response);
 
                     } else {
+                        System.out.println("tainguyenelse");
                         response.sendRedirect("ajaxServletURL");
                     }
 

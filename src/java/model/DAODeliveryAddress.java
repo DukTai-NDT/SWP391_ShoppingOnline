@@ -54,6 +54,17 @@ public class DAODeliveryAddress extends DBConnection {
         }
         return n;
     }
+    public int deleteDeliveryAddressByOrderID(int oid) {
+        int n = 0;
+        String sql = "delete DeliveryAddress where OrderID =" + oid;
+        try {
+            Statement state = conn.createStatement();
+            n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAODeliveryAddress.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
 
     public int updateDeliveryAddress(DeliveryAddress other) {
         int n = 0;
