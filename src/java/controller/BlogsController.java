@@ -221,9 +221,10 @@ public class BlogsController extends HttpServlet {
          Vector<Blogs> vectorBlogs = dao.getBlogs("select * from Blogs where BlogID = " + blogIdParam);
          Blogs blog = vectorBlogs.get(0);
          session.setAttribute("blog", blog);
-
+         Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
          Vector<Comment> comments = daoComments.getCommentsByBlogId(blog.getBlogID());
          session.setAttribute("comments" + blog.getBlogID(), comments);
+         session.setAttribute("vectorCat", vectorCat);
          request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
 }
 
