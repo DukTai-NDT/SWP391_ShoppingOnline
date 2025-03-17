@@ -70,17 +70,34 @@ public class DAOProducts extends DBConnection {
     }
 
     public int deleteProduct(int pid) {
-        int n = 0;
-        String sql = "DELETE FROM [dbo].[Products]\n"
-                + "      WHERE ProductID = " + pid;
-
+       int n = 0;
+//        cach xu ly khi khong xoa duoc do khoa ngoai
+//                case1: Xoa tai foreignt key truoc roi moi xoa o primarykey;
+//                case2: select foreign key --> IsExist ---> disable primary key
+        String sqlCheck = "Select * from [OrderDetails] where ProductID =" + pid;
+        ResultSet rs = getData(sqlCheck);
         try {
+            if (rs.next()) {//co khoa ngoai--> khong xoa, Doi Status (discontined)
+                changeDiscontinued(pid, 0);
+                return 0;
+            }
+            String sql = "delete from Products where ProductID =" + pid;
+
             Statement state = conn.createStatement();
             n = state.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
+    }
+    public void changeDiscontinued(int pid, int newValue) {
+        String sql = "  update Products set isAvailable = "+newValue+" where ProductID = " + pid;
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public int updateProduct(Products product) {

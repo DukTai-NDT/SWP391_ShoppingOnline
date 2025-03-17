@@ -110,7 +110,7 @@ public class LoginController extends HttpServlet {
                             request.getRequestDispatcher("index.jsp").forward(request, response);
                         } else if (accountExists.getRoleID() == 3) {
                             
-                            response.sendRedirect("ProductManager");
+                            response.sendRedirect("Dashboard");
 
                         }
                         
@@ -166,7 +166,7 @@ public class LoginController extends HttpServlet {
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             session.setAttribute("dataCustomer", cus);
                             session.setAttribute("dataUser", account);
-                            response.sendRedirect("ProductManager");
+                            response.sendRedirect("Dashboard");
 
                         }
 
