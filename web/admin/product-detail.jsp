@@ -377,6 +377,12 @@
                                             <h5 class="py-2 mb-0">Description :</h5>
                                             <p class="text-muted mb-0 ms-2">${pDetail.description}</p>
                                         </div>
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="py-2 mb-0">Status :</h5>
+                                            <p class="text-muted mb-0 ms-2">
+                                                ${pDetail.isAvailable ? "In Stock" : "Out of Stock"}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div><!--end col-->
                             </div><!--end row-->
@@ -397,7 +403,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Image URL:</label>
-                                                        <input type="file" name="image" id="image" class="form-control" placeholder=" image file">
+                                                        <input  type="file" name="image" id="image" class="form-control" value="${pDetail.image} placeholder=" image file">
                                                     </div>
                                                     <div class="preview-box d-flex justify-content-center align-items-center rounded shadow overflow-hidden bg-light p-1"
                                                          style="width: 200px; height: 200px; margin-left: 70px;">
@@ -493,6 +499,13 @@
                                                                 <input name="loadIsPrescriptionDrug" id="loadIsPrescriptionDrug" type="checkbox" class="form-check-input"
                                                                        value="true" ${pDetail.isPrescriptionDrug ? 'checked' : ''}>
                                                                 <label class="form-check-label" for="isPrescriptionDrug">Prescription Drug</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3 form-check">
+                                                                <input name="loadIsAvailable" id="loadIsAvailable" type="checkbox" class="form-check-input"
+                                                                       value="true" ${pDetail.isAvailable ? 'checked' : ''}>
+                                                                <label class="form-check-label" for="loadIsAvailable">Is Available</label>
                                                             </div>
                                                         </div>
 

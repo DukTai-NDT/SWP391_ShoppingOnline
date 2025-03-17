@@ -48,7 +48,7 @@ public class AddProductController extends HttpServlet {
 
             // Gọi DAO để thêm sản phẩm vào DB
             DAOProducts addDAO = new DAOProducts();
-            int result = addDAO.addProduct(new Products(productName, price, description, unitPrice, categoryID, brandID, isPrescriptionDrug, quantity, fileName));
+            int result = addDAO.addProduct(new Products(productName, price, description, unitPrice, categoryID, brandID, isPrescriptionDrug, quantity, fileName,true));
 
             if (result > 0) {
                 response.sendRedirect("ProductManager"); // Chuyển hướng nếu thêm thành công

@@ -740,7 +740,7 @@
                                 <a href="#" class="btn btn-primary">Shop Now</a>
 
 
-                                <% if(product.getQuantity() > 0) { %>
+                                <% if(product.getQuantity() > 0 && product.isIsAvailable() == true) { %>
                                 <a href="CartURL?service=add2cart&pid=<%=product.getProductID()%>" class="btn btn-soft-primary ms-2">Add to Cart</a>
                                 <% } else { %>
                                 <span class="btn btn-danger ms-2">Out of Stock</span>

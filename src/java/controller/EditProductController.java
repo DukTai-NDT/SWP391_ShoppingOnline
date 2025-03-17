@@ -56,6 +56,7 @@ public class EditProductController extends HttpServlet {
         int brandID = Integer.parseInt(request.getParameter("loadBrandID"));
         boolean isPrescriptionDrug = request.getParameter("loadIsPrescriptionDrug") != null;
         int quantity = Integer.parseInt(request.getParameter("loadQuantity"));
+        boolean isAvailable = request.getParameter("loadIsAvailable") != null;
         Part part = request.getPart("image");
         String fileName = part.getSubmittedFileName();
 
@@ -68,7 +69,7 @@ public class EditProductController extends HttpServlet {
         boolean test = uploadFile(is, path);
 
         DAOProducts pDAO = new DAOProducts();
-        pDAO.updateProduct(new Products(productID, productName, price, description, unitPrice, categoryID, brandID, isPrescriptionDrug, quantity, fileName));
+        pDAO.updateProduct(new Products(productID, productName, price, description, unitPrice, categoryID, brandID, isPrescriptionDrug, quantity, fileName,isAvailable));
         response.sendRedirect("ProductManagerDetail?pid=" + productID);
     }
 
