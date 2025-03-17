@@ -61,12 +61,10 @@ public class ResetPassword extends HttpServlet {
                     request.getRequestDispatcher("jsp/forgot-password.jsp").forward(request, response);
                     return;
                 }
-
                 Account account = daoAcc.getAccount("Select * from Accounts where AccountID = " + tokenForget.getAccountID()).get(0);
                 session.setAttribute("email", account.getEmail());
                 session.setAttribute("token", tokenForget.getToken());
                 request.getRequestDispatcher("jsp/reset-password.jsp").forward(request, response);
-
             } else {
                 request.getRequestDispatcher("jsp/forgot-password.jsp").forward(request, response);
                 return;
@@ -125,7 +123,7 @@ public class ResetPassword extends HttpServlet {
                 tokenForgetPassword.setisUsed(true);
                 daoAcc.changePassword(email, password);
                 dao.updateStatus(tokenForgetPassword);
-
+                 request.setAttribute("message", "Reset password successfully");
                 request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
                 return;
 

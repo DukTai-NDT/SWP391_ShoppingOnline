@@ -93,14 +93,14 @@ public class DAOPaymentMethod extends DBConnection {
     }
     public int getMethodPaymentID(String methodName){
         int n = 0;
-       String sql = "SELECT MethodID FROM MethodPayment WHERE MethodName = ?"; // Sử dụng = thay vì LIKE nếu tìm chính xác
+       String sql = "SELECT MethodID FROM MethodPayment WHERE MethodName = ?"; 
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, methodName); // Truyền tham số an toàn
+            pre.setString(1, methodName); 
             ResultSet rs = pre.executeQuery();
 
-            while (rs.next()) { // Kiểm tra xem có kết quả không
+            while (rs.next()) { 
                 n = rs.getInt("MethodID");
         }} catch (SQLException ex) {
             Logger.getLogger(DAOPaymentMethod.class.getName()).log(Level.SEVERE, null, ex);

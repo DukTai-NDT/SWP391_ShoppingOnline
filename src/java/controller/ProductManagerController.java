@@ -4,7 +4,6 @@
  */
 package controller;
 
-
 import entity.Brand;
 import entity.Categories;
 import entity.Products;
@@ -22,11 +21,7 @@ import model.DAOProducts;
 
 /**
  *
-<<<<<<< HEAD
- * @author Admin
-=======
  * @author whyth
->>>>>>> 41f71512c243bcf302b8cb9265c7f91eea6c51d7
  */
 @WebServlet(name = "ProductManagerController", urlPatterns = {"/ProductManager"})
 public class ProductManagerController extends HttpServlet {
@@ -43,18 +38,47 @@ public class ProductManagerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         DAOProducts pDAO = new DAOProducts();
         DAOCategories cDAO = new DAOCategories();
         DAOBrand bDAO = new DAOBrand();
-        
-        Vector<Products> pList = pDAO.getProducts("SELECT * FROM dbo.Products");
-        Vector<Categories> cList = cDAO.getCategories("SELECT * FROM dbo.Categories ");
+
+        String searchQuery = request.getParameter("search");
+        int page = 1;
+        int productsPerPage = 10; // Mỗi trang tối đa 10 sản phẩm
+
+        String pageStr = request.getParameter("page");
+        if (pageStr != null) {
+            try {
+                page = Integer.parseInt(pageStr);
+            } catch (NumberFormatException e) {
+                page = 1;
+            }
+        }
+
+        Vector<Products> pList;
+        int totalProducts;
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            totalProducts = pDAO.getTotalSearchProducts(searchQuery);
+            pList = pDAO.searchProductByPage(searchQuery, page, productsPerPage);
+        } else {
+            totalProducts = pDAO.getTotalProducts();
+            pList = pDAO.getProductsByPage(page, productsPerPage);
+        }
+
+        int totalPages = (int) Math.ceil((double) totalProducts / productsPerPage);
+
+        Vector<Categories> cList = cDAO.getCategories("SELECT * FROM dbo.Categories");
         Vector<Brand> bList = bDAO.getBrand("SELECT * FROM dbo.Brand");
-        
+
         request.setAttribute("pList", pList);
         request.setAttribute("cList", cList);
         request.setAttribute("bList", bList);
+        request.setAttribute("searchQuery", searchQuery); // Giữ giá trị search để hiển thị lại trong input
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+
         request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
     }
 

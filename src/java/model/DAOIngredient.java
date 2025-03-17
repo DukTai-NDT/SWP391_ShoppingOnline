@@ -89,4 +89,38 @@ public class DAOIngredient extends DBConnection {
         }
         return vector;
     }
+
+    public Vector<String> getIngredientsByProductID(int productID) {
+        Vector<String> ingredients = new Vector<>();
+        try {
+            String sql = "SELECT IngredientName FROM Ingredient WHERE ProductID = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, productID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ingredients.add(rs.getString("IngredientName"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOIngredient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ingredients;
+    }
+    
+    public static void main(String[] args) {
+        DAOIngredient dao = new DAOIngredient();
+
+//        Categories cateAdd = new Categories("Thuoc");
+//        int n = dao.addCategories(cateAdd);
+
+//        Categories cateUpdate = new Categories(1, "DungCuYTe");
+//        int n = dao.updateCategories(cateUpdate);
+
+//        int n = dao.deleteCategories("thuoc");
+//        System.out.println(n);
+
+        Vector<Ingredient> vector = dao.getIngredient("SELECT * FROM dbo.Ingredient");
+        for (Ingredient ingredient : vector) {
+            System.out.println(vector);
+        }
+    }
 }

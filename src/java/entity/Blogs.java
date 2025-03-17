@@ -11,7 +11,6 @@ import java.time.LocalDate;
  * @author Admin
  */
 public class Blogs {
-
     private int BlogID;
 	private int CustomerID;
 	private LocalDate PostTime;

@@ -48,7 +48,7 @@ public class BlogsController extends HttpServlet {
         DAOComment daoComments = new DAOComment();
         DAOCartItem daoCartItem = new DAOCartItem(); 
         HttpSession session = request.getSession();
-          Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
         if (currentCustomer != null) {
              Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy(

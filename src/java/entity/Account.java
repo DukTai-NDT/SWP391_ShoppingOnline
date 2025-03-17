@@ -19,31 +19,31 @@ public class Account {
     private boolean active;
 
     public Account(int AccountID, String UserName, int RoleID, String Password,String Email,boolean active) {
-
         this.AccountID = AccountID;
         this.UserName = UserName;
         this.RoleID = RoleID;
         this.Password = Password;
         this.Email = Email;
-
         this.active=active;
     }
 
     public Account(String UserName, int RoleID, String Password,String Email,boolean active) {
-
- 
         this.UserName = UserName;
         this.RoleID = RoleID;
         this.Password = Password;
         this.Email = Email;
-
         this.active=active;
 
     }
 
+    public Account(String UserName, String Email) {
+        this.UserName = UserName;
+        this.Email = Email;
+    }
+    
+
     public Account() {
     }
-
 
     public boolean isActive() {
         return active;
@@ -52,9 +52,6 @@ public class Account {
     public void setActive(boolean active) {
         this.active = active;
     }
-    
-
-
     public int getAccountID() {
         return AccountID;
     }
@@ -62,9 +59,7 @@ public class Account {
     public void setAccountID(int AccountID) {
         this.AccountID = AccountID;
     }
-
    
-
     public String getUserName() {
         return UserName;
     }
@@ -101,11 +96,5 @@ public class Account {
     public String toString() {
         return "Account{" + "AccountID=" + AccountID + ", UserName=" + UserName + ", RoleID=" + RoleID + ", Password=" + Password + ", Email=" + Email + ", active=" + active + '}';
     }
-
-  
-    
-    
-
-   
 
 }

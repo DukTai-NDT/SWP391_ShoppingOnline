@@ -11,24 +11,30 @@ package entity;
 public class Categories {
     private int CategoryID;
 	private String CategoryName;
+        private String image;
 
     public Categories(int CategoryID, String CategoryName) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
     }
 
-    public Categories(String CategoryName) {
+    public Categories(int CategoryID, String CategoryName, String image) {
+        this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
+        this.image = image;
     }
 
-    public Categories() {
+    public Categories(String CategoryName, String image) {
+        this.CategoryName = CategoryName;
+        this.image = image;
     }
+    
 
     public int getCategoryID() {
         return CategoryID;
     }
 
-    public void setCategoriesID(int CategoryID) {
+    public void setCategoryID(int CategoryID) {
         this.CategoryID = CategoryID;
     }
 
@@ -40,13 +46,19 @@ public class Categories {
         this.CategoryName = CategoryName;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
+
     @Override
     public String toString() {
         return "Categories{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + '}';
     }
-    
-    
+       
 }
-
-
 

@@ -176,7 +176,30 @@ public class CustomerController extends HttpServlet {
                 request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
             }
 
-           
+            if (service.equals("changePassword")) {
+                String submit = request.getParameter("submit");
+                if (submit == null) {
+                    request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
+                } else {
+                    String oldPassword = request.getParameter("OldPassword");
+                    String newPassword = request.getParameter("NewPassword");
+                    String retypePassword = request.getParameter("RetypeNewPassword");
+                    String email = request.getParameter("Email");
+
+                    if (newPassword.equals(retypePassword)) {
+                        if (daoAcc.checkPassword(email, oldPassword)) {
+                            daoAcc.changePassword(email, newPassword);
+                            response.sendRedirect("CustomerURL?service=listAllCustomer");
+                        } else {
+                            request.setAttribute("error", "Old password is incorrect.");
+                            request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
+                        }
+                    } else {
+                        request.setAttribute("error", "New password and retype password do not match.");
+                        request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
+                    }
+                }
+            }
         }
     }
 

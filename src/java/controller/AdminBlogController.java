@@ -19,7 +19,7 @@ import model.DAOBlogs;
  *
  * @author Admin
  */
-@WebServlet(name = "AdminBlogController", urlPatterns = {"/admin"})
+@WebServlet(name = "AdminBlogController", urlPatterns = {"/BlogManagement"})
 public class AdminBlogController extends HttpServlet {
 
     /**
@@ -53,6 +53,7 @@ public class AdminBlogController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**

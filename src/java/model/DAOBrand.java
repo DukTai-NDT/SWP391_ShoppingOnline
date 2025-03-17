@@ -5,9 +5,7 @@
 package model;
 
 import entity.Brand;
-
 import entity.Categories;
-
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -94,13 +92,32 @@ public class DAOBrand extends DBConnection {
         return vector;
     }
 
-
     public static void main(String[] args) {
         DAOBrand dao = new DAOBrand();
         Vector<Brand> vector = dao.getBrand("SELECT * FROM dbo.Brand");
         for (Brand brand : vector) {
             System.out.println(brand);
         }
+    }
+
+    public Brand getBrandByID(int brandID) {
+        Brand brand = null;
+        String sql = "SELECT * FROM dbo.Brands WHERE BrandID = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, brandID);
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                brand = new Brand(
+                        rs.getInt("BrandID"),
+                        rs.getString("BrandName"),
+                        rs.getString("Country")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBrand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return brand;
     }
 
 }

@@ -201,8 +201,6 @@ function topFunction() {
     document.documentElement.scrollTop = 0;
 }
 
-
-
 function updateQuantity(change, btn) {
     const quantityElement = btn.parentElement.querySelector('.quantity');
     let quantity = parseInt(quantityElement.textContent) + change;
@@ -244,7 +242,6 @@ function toggleViewMore() {
 
     updateTotals(); // Update totals when showing/hiding items
 }
-
 
 //Feather icon
 feather.replace();

@@ -45,10 +45,8 @@ public class Products {
         this.Image = Image;
     }
 
-
     public Products() {
     }
-
 
     public int getProductID() {
         return ProductID;
@@ -133,10 +131,6 @@ public class Products {
     @Override
     public String toString() {
         return "Products{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", Price=" + Price + ", Description=" + Description + ", UnitPrice=" + UnitPrice + ", CategoryID=" + CategoryID + ", BrandID=" + BrandID + ", isPrescriptionDrug=" + isPrescriptionDrug + ", Quantity=" + Quantity + ", Image=" + Image + '}';
-    }
-    
-    
-    
-    
+    } 
     
 }

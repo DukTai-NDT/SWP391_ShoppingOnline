@@ -209,28 +209,38 @@
                                 <span class="badge bg-primary rounded-pill">3</span>
                             </div>
                             <ul class="list-group mb-3 border">
-                                 <% 
-                                            float totalPriceCart = 0;
+
+
+                                <%  if (vectorCartItems != null && !vectorCartItems.isEmpty()) {
+                                           float totalPriceCart = 0;
                                             
-                                            for (CartItems vectorCartItem : vectorCartItems) {
-                                              float total = vectorCartItem.getQuantity() * vectorCartItem.getPrice();
-                                              totalPriceCart += total;
-                                        %>
+                                           for (CartItems vectorCartItem : vectorCartItems) {
+                                             float total = vectorCartItem.getQuantity() * vectorCartItem.getPrice();
+                                             totalPriceCart += total;
+                                %>
                                 <li class="d-flex justify-content-between lh-sm p-3 border-bottom">
                                     <div>
                                         <h6 class="my-0"><%=vectorCartItem.getProductName()%></h6>
                                         <small class="text-muted">Quantity:<%=vectorCartItem.getQuantity()%></small>
                                     </div>
-                                        <span class="text-muted">VND:<%=total%></span>
+                                    <span class="text-muted">VND:<%=total%></span>
                                 </li>
                                 <%}%>
                                 <li class="d-flex justify-content-between p-3">
                                     <span>Total (VND)</span>
                                     <strong>VND:<%=totalPriceCart%></strong>
+                                    <input type="hidden" name="totalprice" value="<%= totalPriceCart %>">
                                 </li>
+                                <%}else{%>
+                                <h5 style="color: red;">
+                                    You haven't selected any products, so you can't checkout. Please return to  
+                                    <a href="ProductURL?service=listAllProducts" style="color: blue; text-decoration: underline;">shop</a>.
+                                </h5>
+
+                                <%}%>
                             </ul>
 
-                            
+
                         </div>
                     </div><!--end col-->
 
@@ -253,7 +263,7 @@
                                         <%for (Provinces province : provinces) { %>
                                         <option value="<%= province.getProvinceID()%>"><%= province.getProvinceName() %></option>
                                         <% } %>
-                                      
+
                                     </select>
                                     <div class="invalid-feedback">
                                         Please select a valid country.
@@ -276,7 +286,7 @@
                                         <%for (Districts district : districts) { %>
                                         <option value="<%= district.getDistrictID()%>"><%= district.getDistrictName() %></option>
                                         <% } %>
-                                       
+
                                     </select>
                                     <div class="invalid-feedback">
                                         Please provide a valid state.
@@ -362,8 +372,9 @@
                                 </div>
 
 
-
+                                   <%  if(!vectorCartItems.isEmpty()){%>
                                 <button class="w-100 btn btn-primary" type="submit">Continue to checkout</button>
+                                <%}%>
                             </form>
                         </div>
                     </div><!--end col-->

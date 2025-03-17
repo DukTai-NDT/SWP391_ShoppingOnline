@@ -49,25 +49,37 @@
                 top: 10px;
                 right: 10px;
                 display: flex;
-                gap: 8px; /* Khoảng cách giữa các icon */
+                gap: 10px; /* Tăng khoảng cách để dễ click hơn */
             }
 
             .action-icons a {
-                width: 30px;  /* Kích thước nhỏ hơn */
-                height: 30px;
+                width: 36px;  /* Tăng kích thước vùng click */
+                height: 36px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background-color: #396cf2; /* Màu nền */
                 color: white;
-                border-radius: 50%; /* Làm tròn */
+                border-radius: 50%; /* Bo tròn */
                 text-decoration: none;
-                font-size: 14px; /* Giảm kích thước icon */
-                transition: 0.3s;
+                font-size: 16px; /* Tăng kích thước icon */
+                transition: background 0.3s ease, transform 0.2s ease;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Thêm bóng nhẹ */
             }
 
             .action-icons a:hover {
-                background-color: #f64747; /* Màu nổi bật khi hover */
+                background-color: #f64747; /* Đổi màu khi hover */
+                transform: scale(1.1); /* Hiệu ứng phóng to nhẹ */
+            }
+
+            .action-icons i {
+                pointer-events: none; /* Đảm bảo click vào được icon */
+            }
+
+            .ms-md-4 {
+                max-width: 70%;  /* Giới hạn độ rộng, có thể chỉnh % hoặc px */
+                overflow: hidden; /* Tránh tràn nội dung */
+                white-space: normal; /* Đảm bảo chữ xuống dòng khi cần */
             }
 
         </style>
@@ -96,67 +108,25 @@
                     </div>
 
                     <ul class="sidebar-menu pt-3">
-                        <!--                        <li><a href="index.jsp"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
-                                                <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>-->
-
-                        <!--                        <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-user me-2 d-inline-block"></i>Doctors</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="doctors.html">Doctors</a></li>
-                                                            <li><a href="add-doctor.html">Add Doctor</a></li>
-                                                            <li><a href="dr-profile.html">Profile</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                        
-                                                <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-wheelchair me-2 d-inline-block"></i>Patients</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="patients.html">All Patients</a></li>
-                                                            <li><a href="add-patient.html">Add Patients</a></li>
-                                                            <li><a href="patient-profile.html">Profile</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                        
-                                                <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="chat.html">Chat</a></li>
-                                                            <li><a href="email.html">Email</a></li>
-                                                            <li><a href="calendar.html">Calendar</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>-->
-
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Pharmacy</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="ProductManager" class="active">Product Manager</a></li>
-                                    <!--                                    <li><a href="product-detail.html">Shop Detail</a></li>
-                                                                        <li><a href="shopcart.html">Shopcart</a></li>
-                                                                        <li><a href="checkout.html">Checkout</a></li>-->
-                                </ul>
-                            </div>
+                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="blogs.html">Blogs</a></li>
-                                    <li><a href="blog-detail.html">Blog Detail</a></li>
-                                </ul>
-                            </div>
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
-
+                        <br>
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                            <div class="sidebar-submenu">
+                            <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                        </li>
+                        <br>
+                        <li class="sidebar-dropdown">
+                            <a href="OrdersManagement"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+<!--                            <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="faqs.html">FAQs</a></li>
                                     <li><a href="review.html">Reviews</a></li>
@@ -167,25 +137,9 @@
                                     <li><a href="error.html">404 !</a></li>
                                     <li><a href="blank-page.html">Blank Page</a></li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </li>
-
-                        <!--                        <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="jsp/login.jsp">Login</a></li>
-                                                            <li><a href="jsp/signup.jsp">Signup</a></li>
-                                                            <li><a href="forgot-password.html">Forgot Password</a></li>
-                                                            <li><a href="jsp/login.jsp">Lock Screen</a></li>
-                                                            <li><a href="thankyou.html">Thank you...!</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>-->
-
-                        <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
-                        
-                                                <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
+                        <br>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -365,7 +319,7 @@
 
                         <div class="card border-0 rounded shadow p-4 mt-4">
                             <div class="action-icons">
-                                <a href="#" id="edit-product-btn" class="edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
+                                <a href="LoadDetail?pid=${pDetail.productID}" id="edit-product-btn" class="edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="DeleteProduct?pid=${pDetail.productID}" class="delete-icon"
@@ -381,7 +335,7 @@
                                     </div>
                                 </div><!--end col-->
 
-                                <div class="col-lg-8 col-md-7 mt-0 pt-0">
+                                <div class="col-lg-7 col-md-6 mt-0 pt-0">
                                     <div class="ms-md-4">
                                         <h6 class="brand">Brand:
                                             <a href="#">
@@ -408,14 +362,14 @@
                                             </p>
                                         </div>
 
-                                        <div class="d-flex align-items-center">
-                                            <h5 class="py-2 mb-0">Ingredient :</h5>
-                                            <p class="text-muted mb-0 ms-2">
-                                                <c:forEach var="i" items="${iList}">
-                                                    ${i}<br/>
-                                                </c:forEach>
-                                            </p>
-                                        </div>
+                                        <!--                                        <div class="d-flex align-items-center">
+                                                                                    <h5 class="py-2 mb-0">Ingredient :</h5>
+                                                                                    <p class="text-muted mb-0 ms-2">
+                                        <c:forEach var="i" items="${iList}">
+                                            ${i}<br/>
+                                        </c:forEach>
+                                    </p>
+                                </div>-->
 
                                         <div class="d-flex align-items-center">
                                             <h5 class="py-2 mb-0">Description :</h5>
@@ -435,68 +389,33 @@
                                     </div>
 
                                     <div class="modal-body p-3 pt-4">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="d-grid me-md-4">
-                                                    <p class="text-muted">Upload your shop image here, Please click "Upload Image" Button.</p>
-
+                                        <form action="EditProduct" method="post">
+                                            <div class="row">
+                                                <!-- Trường nhập ảnh -->
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Image URL:</label>
+                                                        <input value="${pDetail.image}" type="text" name="loadImage" id="loadImage" class="form-control" placeholder="Enter image URL">
+                                                    </div>
                                                     <div class="preview-box d-flex justify-content-center align-items-center rounded shadow overflow-hidden bg-light p-1"
                                                          style="width: 200px; height: 200px; margin-left: 70px;">
                                                         <img id="preview-img" src="" alt="Preview Image" class="img-fluid d-none">
                                                     </div>
-
-                                                    <!-- Input file để chọn ảnh -->
-                                                    <input type="file" id="image" name="image" accept="image/*" hidden>
-
-                                                    <!-- Nút chọn ảnh -->
-                                                    <label class="btn-upload btn btn-primary mt-4" for="image">Upload Image</label>
                                                 </div>
-                                            </div>
 
-                                            <script>
-                                                document.getElementById("image").addEventListener("change", function (event) {
-                                                    const file = event.target.files[0];
-                                                    if (file) {
-                                                        const reader = new FileReader();
-                                                        reader.onload = function (e) {
-                                                            const imgElement = document.getElementById("preview-img");
-                                                            imgElement.src = e.target.result;
-                                                            imgElement.classList.remove("d-none");
-                                                        };
-                                                        reader.readAsDataURL(file);
-                                                    }
-                                                });
-                                            </script>
-
-                                            <div class="col-md-6 mt-4 mt-sm-0"> 
-                                                <form action="AddProductController" method="post">
+                                                <div class="col-md-6 mt-4 mt-sm-0">                                     
                                                     <div class="row">
-                                                        <div class="col-12">
+                                                        <div class="col-6" style="display: none;">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Product Name: <span class="text-danger">*</span></label>
-                                                                <input name="productName" id="productName" type="text" class="form-control" placeholder="Product Name" required>
-                                                            </div>
-                                                        </div><!--end col-->
-
-                                                        <div class="col-md-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Brand:</label>
-                                                                <select name="brandID" id="brandID" class="form-control">
-                                                                    <c:forEach var="b" items="${bList}">
-                                                                        <option value="${b.brandID}">${b.brandName}</option>
-                                                                    </c:forEach>
-                                                                </select>
+                                                                <label class="form-label">ID: <span class="text-danger">*</span></label>
+                                                                <input value="${pDetail.productID}" name="loadProductID" id="loadProductID" type="text" class="form-control" readonly placeholder="Product Name" required>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-6">
+                                                        <div class="col-6">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Category:</label>
-                                                                <select name="categoryID" id="categoryID" class="form-control">
-                                                                    <c:forEach var="c" items="${cList}">
-                                                                        <option value="${c.categoryID}">${c.categoryName}</option>
-                                                                    </c:forEach>
-                                                                </select>
+                                                                <label class="form-label">Product Name: <span class="text-danger">*</span></label>
+                                                                <input value="${pDetail.productName}" name="loadProductName" id="loadProductName" type="text" class="form-control" placeholder="Product Name" required>
                                                             </div>
                                                         </div><!--end col-->
 
@@ -505,55 +424,118 @@
                                                                 <label class="form-label">Price:</label>
                                                                 <div class="input-group mb-3">
                                                                     <span class="input-group-text border bg-transparent">$</span>
-                                                                    <input name="price" id="price" type="number" min="0" step="1000" class="form-control" placeholder="Price" required>
+                                                                    <input value="${pDetail.price}" name="loadPrice" id="loadPrice" type="number" min="0" step="1000" class="form-control" placeholder="Price" required>
                                                                 </div>
                                                             </div>
                                                         </div><!--end col-->
 
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Quantity:</label>
-                                                                <input name="quantity" id="quantity" type="number" min="0" step="1" class="form-control" placeholder="Quantity" required>
+                                                                <label class="form-label">Brand:</label>
+                                                                <select name="loadBrandID" id="loadBrandID" class="form-control">
+                                                                    <c:forEach var="b" items="${bLoadDetail}">
+                                                                        <option value="${b.brandID}" ${b.brandID == pDetail.brandID ? 'selected' : ''}>
+                                                                            ${b.brandName}
+                                                                        </option>
+                                                                    </c:forEach>
+                                                                </select>
                                                             </div>
-                                                        </div><!--end col-->
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Category:</label>
+                                                                <select name="loadCategoryID" id="loadCategoryID" class="form-control">
+                                                                    <c:forEach var="c" items="${cLoadDetail}">
+                                                                        <option value="${c.categoryID}" ${c.categoryID == pDetail.categoryID ? 'selected' : ''}>
+                                                                            ${c.categoryName}
+                                                                        </option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
+                                                        </div>
 
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Unit:</label>
-                                                                <input name="unitPrice" id="unitPrice" type="text" class="form-control" placeholder="Unit" required>
+                                                                <input value="${pDetail.unitPrice}" name="loadUnitPrice" id="loadUnitPrice" type="text" class="form-control" placeholder="Unit" required>
+
                                                             </div>
                                                         </div><!--end col-->
 
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Ingredient</label>
-                                                                <input name="ingredient" id="ingredient" type="text" class="form-control" placeholder="Ingredient" required>
+                                                                <label class="form-label">Quantity:</label>
+                                                                <input value="${pDetail.quantity}" name="loadQuantity" id="loadQuantity" type="number" min="0" step="1" class="form-control" placeholder="Quantity" required>
                                                             </div>
-                                                        </div>
+                                                        </div><!--end col-->
+
+
+                                                        <!--                                                        <div class="col-md-6">
+                                                                                                                    <div class="mb-3">
+                                                                                                                        <label class="form-label">Ingredient</label>
+                                                                                                                        <input name="ingredient" id="ingredient" type="text" class="form-control" placeholder="Ingredient" required>
+                                                                                                                    </div>
+                                                                                                                </div>-->
 
                                                         <div class="col-md-12">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Description:</label>
-                                                                <input name="description" id="description" type="text" class="form-control" placeholder="Description" required>
+                                                                <input value="${pDetail.description}" name="loadDescription" id="loadDescription" type="text" class="form-control" placeholder="Description" required>
                                                             </div>
                                                         </div><!--end col-->
 
                                                         <!-- Checkbox isPrescriptionDrug -->
                                                         <div class="col-md-6">
                                                             <div class="mb-3 form-check">
-                                                                <input name="isPrescriptionDrug" id="isPrescriptionDrug" type="checkbox" class="form-check-input" value="true">
+                                                                <input name="loadIsPrescriptionDrug" id="loadIsPrescriptionDrug" type="checkbox" class="form-check-input"
+                                                                       value="true" ${pDetail.isPrescriptionDrug ? 'checked' : ''}>
                                                                 <label class="form-check-label" for="isPrescriptionDrug">Prescription Drug</label>
                                                             </div>
                                                         </div>
 
                                                         <!-- Button Add -->
                                                         <div class="col-md-6 text-end">
-                                                            <button type="submit" class="btn btn-primary">Add</button>
+                                                            <button type="submit" class="btn btn-primary">Edit</button>
                                                         </div><!--end col-->
                                                     </div>
-                                                </form>
-                                            </div><!--end col-->
-                                        </div><!--end row-->
+                                                    </form>
+                                                    <!-- Script hiển thị ảnh xem trước -->
+                                                    <script>
+                                                        document.getElementById("loadImage").addEventListener("input", function () {
+                                                            const imgElement = document.getElementById("preview-img");
+                                                            const imageUrl = this.value.trim();
+
+                                                            if (imageUrl) {
+                                                                imgElement.src = imageUrl;
+                                                                imgElement.classList.remove("d-none");
+                                                            } else {
+                                                                imgElement.src = "";
+                                                                imgElement.classList.add("d-none");
+                                                            }
+                                                        });
+
+                                                        document.addEventListener("DOMContentLoaded", function () {
+                                                            const imgElement = document.getElementById("preview-img");
+                                                            const imageInput = document.getElementById("loadImage");
+
+                                                            function updatePreview() {
+                                                                const imageUrl = imageInput.value.trim();
+                                                                if (imageUrl) {
+                                                                    imgElement.src = imageUrl;
+                                                                    imgElement.classList.remove("d-none");
+                                                                } else {
+                                                                    imgElement.src = "";
+                                                                    imgElement.classList.add("d-none");
+                                                                }
+                                                            }
+
+                                                            imageInput.addEventListener("input", updatePreview);
+                                                            updatePreview(); // Gọi ngay khi modal mở để hiển thị ảnh có sẵn
+                                                        });
+                                                    </script>
+                                                </div><!--end col-->
+                                            </div><!--end row-->
                                     </div>
                                 </div>
                             </div>
@@ -570,22 +552,8 @@
                                 <div class="slider-range-four">
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <ul class="label list-unstyled mb-0">
-                                                <li><a href="javascript:void(0)" class="badge badge-pill badge-success">Featured</a></li>
-                                            </ul>
                                             <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/thermometer.jpg" class="img-fluid" alt=""></a>
-                                                <ul class="list-unstyled shop-icons">
-                                                    <li><a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i data-feather="heart" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="eye" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-warning"><i data-feather="shopping-cart" class="icons"></i></a></li>
-                                                </ul>                                
-
-                                                <div class="qty-icons">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-pills btn-icon btn-primary minus">-</button>
-                                                    <input min="0" name="quantity" value="0" type="number" class="btn btn-pills btn-icon btn-primary qty-btn quantity">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-pills btn-icon btn-primary plus">+</button>
-                                                </div>
+                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/thermometer.jpg" class="img-fluid" alt=""></a>                               
                                             </div>
                                             <div class="card-body content pt-4 border-top">
                                                 <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Thermometer</a>
@@ -913,5 +881,3 @@
     </body>
 
 </html>
-
-

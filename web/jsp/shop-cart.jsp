@@ -35,7 +35,7 @@
  Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
        
  Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
-String message = (String)request.getAttribute("message"); 
+ String message = (String)request.getAttribute("message"); 
     %>
     
     <body>
@@ -77,8 +77,11 @@ String message = (String)request.getAttribute("message");
                 <!-- End Mobile Toggle -->
 
                 <!-- Start Dropdown -->
-                <ul class="dropdowns list-inline mb-0">
-                    <li class="list-inline-item mb-0">
+               <ul class="dropdowns list-inline mb-0">
+                <%
+                if(currentCustomer != null){
+                %>
+                 <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                         </a>
@@ -89,38 +92,32 @@ String message = (String)request.getAttribute("message");
                             <i class="uil uil-search"></i>
                         </a>
                     </li>
-
-                    <li class="list-inline-item mb-0 ms-1">
-                        <div class="dropdown dropdown-primary">
-
-
-                            <%if(account != null){%>
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
-                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                                <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
-                                    <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1"><%=account.getUserName()%></span>
-
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                                <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
-                            </div>        
-                            <%}else{%>
-
-                            <div class="auth-links">
+                <li class="list-inline-item mb-0 ms-1">
+                    <div class="dropdown dropdown-primary">
+                        <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                        </button>
+                        <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
+                            <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
+                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+                                <div class="flex-1 ms-2">
+                                    <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                            <div class="dropdown-divider border-top"></div>
+                            <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                        </div>
+                    </div>
+                </li>
+                <%} else{%>
+                <div class="auth-links">
                                 <a href="SignUpURL?service=signup">Sign up</a>
                                 <span>|</span>
                                 <a href="LoginURL?service=login">Log in</a>
                             </div>
-                            <%}%>
-
-                        </div>
-                    </li>
-                </ul>
+                <%}%>
+            </ul>
                 <!-- Start Dropdown -->
 
                 <div id="navigation">
@@ -418,7 +415,7 @@ String message = (String)request.getAttribute("message");
    <!-- Offcanvas Start -->
 <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header p-4 border-bottom">
-        <h5 class="mb-0" id="offcanvasRightLabel">Sản phẩm mới thêm</h5>
+        <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
         <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body p-4">
@@ -435,8 +432,8 @@ String message = (String)request.getAttribute("message");
                 <div class="ms-3 flex-1">
                     <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
                     <div class="d-flex justify-content-between">
-                        <p class="text-muted mb-0">Số lượng: <%=vectorCartItem.getQuantity()%></p>
-                        <p class="text-muted mb-0">Giá: <%=vectorCartItem.getPrice()%> VND</p>
+                        <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
+                        <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
                     </div>
                 </div>
             </div>
@@ -444,12 +441,12 @@ String message = (String)request.getAttribute("message");
         <%
             } }else {
         %>
-        <p class="text-muted text-center " >CHưa Có Sản Phẩm Trong Giỏ Hàng...</p>
+        <p class="text-muted text-center " >No Products In Cart...</p>
         <%
             }
         %>
         <div class="mt-4 text-center">
-            <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">Xem giỏ hàng</a>
+            <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
         </div>
     </div>
 </div>

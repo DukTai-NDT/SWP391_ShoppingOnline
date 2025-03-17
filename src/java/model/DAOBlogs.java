@@ -9,17 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import java.time.LocalDate;
-import java.util.Date;
-
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -152,36 +144,28 @@ public class DAOBlogs extends DBConnection {
             preState.setInt(7, other.getBlogID());
             n = preState.executeUpdate();
 
-
-        
- 
-             
-
         } catch (SQLException ex) {
             Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
     }
 
-
-    
-    public Vector<Blogs> getBlogs(String sql){
+    public Vector<Blogs> getBlogs(String sql) {
         Vector<Blogs> vector = new Vector<>();
-        
+
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
-            while (rs.next()) { 
+            while (rs.next()) {
                 int BlogID = rs.getInt("BlogID");
                 int CustomerID = rs.getInt("CustomerID");
-	  LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
-	  String Title = rs.getString("Title");
-	  String Content = rs.getString("Content");
-	  String Image = rs.getString("Image");
-	  boolean Status = (rs.getInt("Status") == 1 ? true : false);
-          Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
-          vector.add(blog);
-
+                LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
+                String Title = rs.getString("Title");
+                String Content = rs.getString("Content");
+                String Image = rs.getString("Image");
+                boolean Status = (rs.getInt("Status") == 1 ? true : false);
+                Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
+                vector.add(blog);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, ex);
@@ -231,24 +215,66 @@ public class DAOBlogs extends DBConnection {
         return list;
     }
 
-    public void insertBlog(String id, String name, String date, String description, String image, Boolean status) {
-        String query = "INSERT INTO [dbo].[Blogs] (CustomerID, PostTime, Title, Content, Image, Status) VALUES (?, ?, ?, ?, ?, ?)";
+    public void insertBlog(String postime, String title, String description, String image, Boolean status) {
+        String query = "INSERT INTO [dbo].[Blogs] (PostTime, Title, Content, Image, Status) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement preState = conn.prepareStatement(query);
-            preState.setString(1, id);
-            preState.setString(2, name);
+            preState.setString(1, postime);
+            preState.setString(2, title);
+            preState.setString(3, description);
+            preState.setString(4, image);
+            preState.setBoolean(5, true);
+            preState.executeQuery();
 
-            // Chuyển đổi String date thành LocalDate rồi sang java.sql.Date
-            LocalDate localDate = LocalDate.parse(date); // Giả sử date có định dạng YYYY-MM-DD
-            java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
-            preState.setDate(3, sqlDate);
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 
-            preState.setString(4, description);
-            preState.setString(5, (image != null && !image.isEmpty()) ? image : "default.jpg");
-            preState.setBoolean(6, true); // Published (true = 1, false = 0)
+    public Blogs getBlogsByID(String id) {
+        String sql = "select * from Blogs\n"
+                + "where BlogID = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
 
-            preState.executeUpdate();
-            conn.commit();
+                return new Blogs(
+                        rs.getInt("BlogID"),
+                        rs.getInt("CustomerID"), // Thêm CustomerID nếu cần
+                        rs.getDate("PostTime").toLocalDate(),
+                        rs.getString("Title"),
+                        rs.getString("Content"),
+                        rs.getString("Image"),
+                        rs.getBoolean("Status")
+                );
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;
+    }
+
+    public void editBlog(String blogID, String postime, String title, String description, String image, Boolean status) {
+        String query = "UPDATE [dbo].[Blogs]\n"
+                + "    SET \n"
+                + "        [PostTime] =?,\n"
+                + "        [Title] = ?,\n"
+                + "        [Content] =?,\n"
+                + "        [Image] = ?,\n"
+                + "        [Status] =?\n"
+                + "    WHERE [BlogID] = ?";
+        try {
+            PreparedStatement preState = conn.prepareStatement(query);
+            preState.setString(6, blogID);
+            preState.setString(1, postime);
+            preState.setString(2, title);
+            preState.setString(3, description);
+            preState.setString(4, image);
+            preState.setBoolean(5, true);
+            preState.executeQuery();
+
         } catch (SQLException e) {
             Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -266,8 +292,29 @@ public class DAOBlogs extends DBConnection {
         }
     }
 
+    public int countBlogs() {
+        int count = 0;
+        String query = "SELECT COUNT(*) FROM Blogs";
 
-   
+        try {
+            Statement state = conn.createStatement();
+            ResultSet rs = state.executeQuery(query);
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        return count;
+    }
+
+    public static void main(String[] args) {
+        DAOBlogs dao = new DAOBlogs();
+        Vector<Blogs> vector = dao.getBlogs("select * from blogs");
+        for (Blogs blogs : vector) {
+            System.out.println(blogs);
+        }
+    }
+
 }
-
-

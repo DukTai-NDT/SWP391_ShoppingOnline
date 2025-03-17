@@ -1,13 +1,7 @@
-<%-- 
-    Document   : blog-detail
-    Created on : Mar 3, 2025, 10:15:24 PM
-    Author     : Admin
---%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
 
     <head>
         <meta charset="utf-8" />
@@ -45,7 +39,7 @@
             </div>
         </div>
         <!-- Loader -->
-        
+
         <!-- Navbar STart -->
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
@@ -55,7 +49,7 @@
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
                 <!-- Logo End -->
-                
+
                 <!-- Start Mobile Toggle -->
                 <div class="menu-extras">
                     <div class="menu-item">
@@ -77,6 +71,7 @@
                     <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
+                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                         </a>
                     </li>
 
@@ -106,20 +101,20 @@
                     </li>
                 </ul>
                 <!-- Start Dropdown -->
-        
+
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left">
-                        <li class="has-submenu parent-menu-item">
+<!--                        <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Home</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="index.jsp" class="sub-menu-item">Index One</a></li>
                                 <li><a href="index-two.html" class="sub-menu-item">Index Two</a></li>
                                 <li><a href="index-three.html" class="sub-menu-item">Index Three</a></li>
                             </ul>
-                        </li>
+                        </li>-->
 
-                        <li class="has-submenu parent-parent-menu-item">
+<!--                        <li class="has-submenu parent-parent-menu-item">
                             <a href="javascript:void(0)">Doctors</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li class="has-submenu parent-menu-item">
@@ -144,9 +139,9 @@
                                 <li><a href="doctor-team-two.html" class="sub-menu-item">Doctors Two</a></li>
                                 <li><a href="doctor-team-three.html" class="sub-menu-item">Doctors Three</a></li>
                             </ul>
-                        </li>
+                        </li>-->
 
-                        <li class="has-submenu parent-menu-item">
+<!--                        <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Patients</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="patient-dashboard.html" class="sub-menu-item">Dashboard</a></li>
@@ -154,36 +149,30 @@
                                 <li><a href="booking-appointment.html" class="sub-menu-item">Book Appointment</a></li>
                                 <li><a href="patient-invoice.html" class="sub-menu-item">Invoice</a></li>
                             </ul>
-                        </li>
+                        </li>-->
 
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
+                            <li class="has-submenu parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
+
+                                <li><a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a></li>
+
                                 <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="pharmacy-shop-cart.html" class="sub-menu-item">Shop Cart</a></li>
-                                <li><a href="pharmacy-checkout.html" class="sub-menu-item">Checkout</a></li>
+                                <li><a href="CartURL?service=showCart" class="sub-menu-item">Shop Cart</a></li>
+                                <li><a href="DeliveryAddressURL?service=first" class="sub-menu-item">Checkout</a></li>
                                 <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
                             </ul>
                         </li>
-        
+
                         <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="aboutus.html" class="sub-menu-item"> About Us</a></li>
-                                <li><a href="departments.html" class="sub-menu-item">Departments</a></li>
+                                <li><a href="aboutus.jsp" class="sub-menu-item"> About Us</a></li>
+                                <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
                                 <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li class="has-submenu parent-menu-item">
-                                    <a href="javascript:void(0)" class="menu-item"> Blogs </a><span class="submenu-arrow"></span>
-                                    <ul class="submenu">
-                                        <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
-                                        <li><a href="blog-detail.html" class="sub-menu-item">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="terms.html" class="sub-menu-item">Terms & Policy</a></li>
-                                <li><a href="privacy.html" class="sub-menu-item">Privacy Policy</a></li>
-                                <li><a href="error.html" class="sub-menu-item">404 !</a></li>
-                                <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
+                                <li><a href="BlogsURL" class="sub-menu-item">Blogs</a></li>
+                                
+                                
                             </ul>
                         </li>
                         <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
@@ -199,12 +188,12 @@
                 <div class="row mt-5 justify-content-center">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h3 class="sub-title mb-4">Lockdowns lead to fewer people seeking medical care</h3>
-                            <p class="para-desc mx-auto text-muted">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
-                        
+                            <h3 class="sub-title mb-4">${blogdetail.title}</h3>
+
+
                             <ul class="list-unstyled mt-4">
-                                <li class="list-inline-item user text-muted me-2"><i class="mdi mdi-account"></i> Calvin Carlo</li>
-                                <li class="list-inline-item date text-muted"><i class="mdi mdi-calendar-check"></i> 1st January, 2021</li>
+
+                                <li class="list-inline-item date text-muted"><i class="mdi mdi-calendar-check"></i>${blogdetail.postTime}</li>
                             </ul>
                         </div>
                     </div><!--end col-->
@@ -214,7 +203,7 @@
         <div class="position-relative">
             <div class="shape overflow-hidden text-white">
                 <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+                <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
                 </svg>
             </div>
         </div>
@@ -225,20 +214,19 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-lg-7">
-                        <img src="images/blog/single.jpg" class="img-fluid rounded shadow" alt="">
+                        <img src="${blogdetail.image}" class="img-fluid rounded shadow" alt="">
 
                         <!-- <ul class="list-unstyled mt-4">
                             <li class="list-inline-item user text-muted me-2"><i class="mdi mdi-account"></i> Calvin Carlo</li>
                             <li class="list-inline-item date text-muted"><i class="mdi mdi-calendar-check"></i> 1st January, 2021</li>
                         </ul> -->
 
-                        <p class="text-muted mt-4">This is required when, for example, the final text is not yet available. Dummy text is also known as 'fill text'. It is said that song composers of the past used dummy texts as lyrics when writing melodies in order to have a 'ready-made' text to sing with the melody. Dummy texts have been in use by typesetters since the 16th century.</p>
-                        <p class="text-muted">Due to its widespread use as filler text for layouts, non-readability is of great importance: human perception is tuned to recognize certain patterns and repetitions in texts.</p>
-                        <p class="text-muted mb-0">For this reason, dummy text usually consists of a more or less random series of words or syllables.</p>
-                    
+                        <p class="text-muted mt-4">${blogdetail.content}</p>
+
+
                         <h5 class="card-title mt-4 mb-0">Comments :</h5>
 
-                        <ul class="media-list list-unstyled mb-0">
+<!--                        <ul class="media-list list-unstyled mb-0">
                             <li class="mt-4">
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex align-items-center">
@@ -274,7 +262,7 @@
                                     <p class="text-muted font-italic p-3 bg-light rounded">" There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour "</p>
                                 </div>
                             </li>
-                            
+
                             <li class="mt-4">
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex align-items-center">
@@ -312,9 +300,9 @@
                                     </li>
                                 </ul>
                             </li>
-                        </ul>
-                    
-                        <h5 class="card-title mt-4 mb-0">Leave A Comment :</h5>
+                        </ul>-->
+
+<!--                        <h5 class="card-title mt-4 mb-0">Leave A Comment :</h5>-->
 
                         <form class="mt-3">
                             <div class="row">
@@ -355,67 +343,67 @@
                                 <div class="widget mb-4 pb-2">
                                     <h5 class="widget-title">Search</h5>
                                     <div id="search2" class="widget-search mt-4 mb-0">
-                                        <form role="search" method="get" id="searchform" class="searchform">
+                                        <form role="search" method="get" id="searchform" class="searchform" action="adminsearchblog">
                                             <div>
-                                                <input type="text" class="border rounded" name="s" id="s" placeholder="Search Keywords...">
+                                                <input type="text" class="border rounded" name="txt" id="s" placeholder="Search Keywords...">
                                                 <input type="submit" id="searchsubmit" value="Search">
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                                 <!-- SEARCH -->
-    
+
                                 <!-- RECENT POST -->
-                                <div class="widget mb-4 pb-2">
-                                    <h5 class="widget-title">Recent Post</h5>
-                                    <div class="mt-4">
-                                        <div class="clearfix post-recent">
-                                            <div class="post-recent-thumb float-start"> <a href="jvascript:void(0)"> <img alt="img" src="images/blog/07.jpg" class="img-fluid rounded"></a></div>
-                                            <div class="post-recent-content float-start"><a href="jvascript:void(0)">Consultant Business</a><span class="text-muted mt-2">15th June, 2019</span></div>
-                                        </div>
-                                        <div class="clearfix post-recent">
-                                            <div class="post-recent-thumb float-start"> <a href="jvascript:void(0)"> <img alt="img" src="images/blog/08.jpg" class="img-fluid rounded"></a></div>
-                                            <div class="post-recent-content float-start"><a href="jvascript:void(0)">Look On The Glorious Balance</a> <span class="text-muted mt-2">15th June, 2019</span></div>
-                                        </div>
-                                        <div class="clearfix post-recent">
-                                            <div class="post-recent-thumb float-start"> <a href="jvascript:void(0)"> <img alt="img" src="images/blog/01.jpg" class="img-fluid rounded"></a></div>
-                                            <div class="post-recent-content float-start"><a href="jvascript:void(0)">Research Financial.</a> <span class="text-muted mt-2">15th June, 2019</span></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--                                <div class="widget mb-4 pb-2">
+                                                                    <h5 class="widget-title">Recent Post</h5>
+                                                                    <div class="mt-4">
+                                                                        <div class="clearfix post-recent">
+                                                                            <div class="post-recent-thumb float-start"> <a href="jvascript:void(0)"> <img alt="img" src="images/blog/07.jpg" class="img-fluid rounded"></a></div>
+                                                                            <div class="post-recent-content float-start"><a href="jvascript:void(0)">Consultant Business</a><span class="text-muted mt-2">15th June, 2019</span></div>
+                                                                        </div>
+                                                                        <div class="clearfix post-recent">
+                                                                            <div class="post-recent-thumb float-start"> <a href="jvascript:void(0)"> <img alt="img" src="images/blog/08.jpg" class="img-fluid rounded"></a></div>
+                                                                            <div class="post-recent-content float-start"><a href="jvascript:void(0)">Look On The Glorious Balance</a> <span class="text-muted mt-2">15th June, 2019</span></div>
+                                                                        </div>
+                                                                        <div class="clearfix post-recent">
+                                                                            <div class="post-recent-thumb float-start"> <a href="jvascript:void(0)"> <img alt="img" src="images/blog/01.jpg" class="img-fluid rounded"></a></div>
+                                                                            <div class="post-recent-content float-start"><a href="jvascript:void(0)">Research Financial.</a> <span class="text-muted mt-2">15th June, 2019</span></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
                                 <!-- RECENT POST -->
-    
+
                                 <!-- TAG CLOUDS -->
-                                <div class="widget mb-4 pb-2">
-                                    <h5 class="widget-title">Tags Cloud</h5>
-                                    <div class="tagcloud mt-4">
-                                        <a href="jvascript:void(0)" class="rounded">Business</a>
-                                        <a href="jvascript:void(0)" class="rounded">Finance</a>
-                                        <a href="jvascript:void(0)" class="rounded">Marketing</a>
-                                        <a href="jvascript:void(0)" class="rounded">Fashion</a>
-                                        <a href="jvascript:void(0)" class="rounded">Bride</a>
-                                        <a href="jvascript:void(0)" class="rounded">Lifestyle</a>
-                                        <a href="jvascript:void(0)" class="rounded">Travel</a>
-                                        <a href="jvascript:void(0)" class="rounded">Beauty</a>
-                                        <a href="jvascript:void(0)" class="rounded">Video</a>
-                                        <a href="jvascript:void(0)" class="rounded">Audio</a>
-                                    </div>
-                                </div>
+                                <!--                                <div class="widget mb-4 pb-2">
+                                                                    <h5 class="widget-title">Tags Cloud</h5>
+                                                                    <div class="tagcloud mt-4">
+                                                                        <a href="jvascript:void(0)" class="rounded">Business</a>
+                                                                        <a href="jvascript:void(0)" class="rounded">Finance</a>
+                                                                        <a href="jvascript:void(0)" class="rounded">Marketing</a>
+                                                                        <a href="jvascript:void(0)" class="rounded">Fashion</a>
+                                                                        <a href="jvascript:void(0)" class="rounded">Bride</a>
+                                                                        <a href="jvascript:void(0)" class="rounded">Lifestyle</a>
+                                                                        <a href="jvascript:void(0)" class="rounded">Travel</a>
+                                                                        <a href="jvascript:void(0)" class="rounded">Beauty</a>
+                                                                        <a href="jvascript:void(0)" class="rounded">Video</a>
+                                                                        <a href="jvascript:void(0)" class="rounded">Audio</a>
+                                                                    </div>
+                                                                </div>-->
                                 <!-- TAG CLOUDS -->
-                                
+
                                 <!-- SOCIAL -->
-                                <div class="widget">
-                                    <h5 class="widget-title">Follow us</h5>
-                                    <ul class="list-unstyled social-icon mb-0 mt-4">
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="facebook" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="instagram" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="twitter" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="linkedin" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="github" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="youtube" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="gitlab" class="fea icon-sm fea-social"></i></a></li>
-                                    </ul><!--end icon-->
-                                </div>
+                                <!--                                <div class="widget">
+                                                                    <h5 class="widget-title">Follow us</h5>
+                                                                    <ul class="list-unstyled social-icon mb-0 mt-4">
+                                                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="facebook" class="fea icon-sm fea-social"></i></a></li>
+                                                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="instagram" class="fea icon-sm fea-social"></i></a></li>
+                                                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="twitter" class="fea icon-sm fea-social"></i></a></li>
+                                                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="linkedin" class="fea icon-sm fea-social"></i></a></li>
+                                                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="github" class="fea icon-sm fea-social"></i></a></li>
+                                                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="youtube" class="fea icon-sm fea-social"></i></a></li>
+                                                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="gitlab" class="fea icon-sm fea-social"></i></a></li>
+                                                                    </ul>end icon
+                                                                </div>-->
                                 <!-- SOCIAL -->
                             </div>
                         </div>
@@ -435,105 +423,23 @@
                 <div class="row">
                     <div class="col-lg-12 mt-4 pt-2">
                         <div class="slider-range-three">
-                            <div class="tiny-slide">
-                                <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
-                                    <img src="images/blog/03.jpg" class="img-fluid" alt="">
-                                    <div class="card-body p-4">
-                                        <ul class="list-unstyled mb-2">
-                                            <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>20th November, 2020</li>
-                                            <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
-                                        </ul>
-                                        <a href="blog-detail.html" class="text-dark title h5">medicine research course for doctors</a>
-                                        <div class="post-meta d-flex justify-content-between mt-3">
-                                            <ul class="list-unstyled mb-0">
-                                                <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
-                                                <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
+                            <c:forEach items="${list}" var="r">
+                                <div class="tiny-slide">
+                                    <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
+                                        <img src="${r.image}" class="img-fluid" alt="">
+                                        <div class="card-body p-4">
+                                            <ul class="list-unstyled mb-2">
+                                                <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>${r.postTime}</li>
+                                                <!--<li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>${r.blogID}</li>-->
                                             </ul>
-                                            <a href="blog-detail.html" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
+                                            <a href="AdminBlogsDetail?bid=${r.blogID}" class="text-dark title h5">${r.title}</a>
+                                            <div class="post-meta d-flex justify-content-between mt-3">
+                                                <a href="AdminBlogsDetail?bid=${r.blogID}" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-        
-                            <div class="tiny-slide">
-                                <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
-                                    <img src="images/blog/04.jpg" class="img-fluid" alt="">
-                                    <div class="card-body p-4">
-                                        <ul class="list-unstyled mb-2">
-                                            <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>20th November, 2020</li>
-                                            <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
-                                        </ul>
-                                        <a href="blog-detail.html" class="text-dark title h5">Comparing Nitrogen And Mechanical Freezers</a>
-                                        <div class="post-meta d-flex justify-content-between mt-3">
-                                            <ul class="list-unstyled mb-0">
-                                                <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
-                                                <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
-                                            </ul>
-                                            <a href="blog-detail.html" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-        
-                            <div class="tiny-slide">
-                                <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
-                                    <img src="images/blog/05.jpg" class="img-fluid" alt="">
-                                    <div class="card-body p-4">
-                                        <ul class="list-unstyled mb-2">
-                                            <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>20th November, 2020</li>
-                                            <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
-                                        </ul>
-                                        <a href="blog-detail.html" class="text-dark title h5">It Is Very Important To Wear Proper Clothing</a>
-                                        <div class="post-meta d-flex justify-content-between mt-3">
-                                            <ul class="list-unstyled mb-0">
-                                                <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
-                                                <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
-                                            </ul>
-                                            <a href="blog-detail.html" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-        
-                            <div class="tiny-slide">
-                                <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
-                                    <img src="images/blog/06.jpg" class="img-fluid" alt="">
-                                    <div class="card-body p-4">
-                                        <ul class="list-unstyled mb-2">
-                                            <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>20th November, 2020</li>
-                                            <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
-                                        </ul>
-                                        <a href="blog-detail.html" class="text-dark title h5">Hollowed-Out Faces More Cuts Amid Virus</a>
-                                        <div class="post-meta d-flex justify-content-between mt-3">
-                                            <ul class="list-unstyled mb-0">
-                                                <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
-                                                <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
-                                            </ul>
-                                            <a href="blog-detail.html" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-        
-                            <div class="tiny-slide">
-                                <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
-                                    <img src="images/blog/07.jpg" class="img-fluid" alt="">
-                                    <div class="card-body p-4">
-                                        <ul class="list-unstyled mb-2">
-                                            <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>20th November, 2020</li>
-                                            <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
-                                        </ul>
-                                        <a href="blog-detail.html" class="text-dark title h5">A Researcher Is Research On Coronavirus In Lab</a>
-                                        <div class="post-meta d-flex justify-content-between mt-3">
-                                            <ul class="list-unstyled mb-0">
-                                                <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
-                                                <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
-                                            </ul>
-                                            <a href="blog-detail.html" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div><!--end col-->
                 </div><!--end row-->
@@ -565,7 +471,7 @@
                                     <li><a href="#" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Login</a></li>
                                 </ul>
                             </div><!--end col-->
-                            
+
                             <div class="col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
                                 <h5 class="text-light title-dark footer-head">Departments</h5>
                                 <ul class="list-unstyled footer-list mt-4">
@@ -578,7 +484,7 @@
                                     <li><a href="#" class="text-foot"><i class="mdi mdi-chevron-right me-1"></i> Neurology</a></li>
                                 </ul>
                             </div><!--end col-->
-                            
+
                             <div class="col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
                                 <h5 class="text-light title-dark footer-head">Contact us</h5>
                                 <ul class="list-unstyled footer-list mt-4">
@@ -615,10 +521,10 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="text-sm-start text-center">
-                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> Â© Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
                             </div>
                         </div><!--end col-->
-    
+
                         <div class="col-sm-6 mt-4 mt-sm-0">
                             <ul class="list-unstyled footer-list text-sm-end text-center mb-0">
                                 <li class="list-inline-item"><a href="terms.html" class="text-foot me-2">Terms</a></li>
@@ -705,7 +611,7 @@
             </div>
         </div>
         <!-- Offcanvas End -->
-        
+
         <!-- javascript -->
         <script src="js/bootstrap.bundle.min.js"></script>
         <!-- SLIDER -->
@@ -715,7 +621,7 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
-        
+
     </body>
 
 </html>

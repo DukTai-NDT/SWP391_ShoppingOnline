@@ -5,6 +5,7 @@
 package controller;
 
 import entity.Account;
+import entity.Categories;
 
 
 import entity.Customers;
@@ -22,6 +23,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Random;
 import java.util.Vector;
 import model.DAOAccount;
+import model.DAOCategories;
 
 
 import model.DAOCustomer;
@@ -45,126 +47,116 @@ public class LoginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        DAOAccount dao = new DAOAccount();
+ protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    DAOAccount dao = new DAOAccount();
+    DAOCustomer daoCus = new DAOCustomer();
+  
+    HttpSession session = request.getSession();
 
-        DAOCustomer daoCus = new DAOCustomer();
-
-        HttpSession session = request.getSession();
-
-        try (PrintWriter out = response.getWriter()) {
-            String service = request.getParameter("service");
-            String code = request.getParameter("code");
-            if (service == null) {
-                service = "google";
-
-            }
-
-            if ("google".equals(service) && code != null) {
-    DAOGoogleLogin daoGoogle = new DAOGoogleLogin();
-
-    String accessToken = daoGoogle.getToken(code);
-    GoogleAccount acc = daoGoogle.getUserInfo(accessToken);
-    Vector<Account> vectorAcc = dao.getAccount("Select * from Accounts");
-    Account accountExists = new Account();
-    boolean userExists = false;
-    for (Account account : vectorAcc) {
-        System.out.println("123a");
-        if (acc.getEmail().equals(account.getEmail())) {
-            accountExists.setAccountID(account.getAccountID());
-            accountExists.setUserName(account.getUserName());
-            accountExists.setPassword(account.getPassword());
-            accountExists.setRoleID(account.getRoleID());
-            accountExists.setEmail(account.getEmail());
-            accountExists.setActive(account.isActive());
-            userExists = true;
-            System.out.println("123a"+account.getAccountID());
-            
-            break; // Thoát vòng lặp sớm nếu người dùng tồn tại
-        }
-    }
-
-    if (userExists) {
-        session.setAttribute("dataUser", accountExists);
-
-        // Lấy danh sách khách hàng
-        Vector<Customers> customerList = daoCus.getCustomer(
-            "select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg " +
-            "from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + 
-            accountExists.getAccountID()
-        );
-        System.out.println("null"+accountExists);
-        for (Customers customers : customerList) {
-            System.out.println("ok"+customers);
+    try (PrintWriter out = response.getWriter()) {
+        String service = request.getParameter("service");
+        String code = request.getParameter("code");
+        if (service == null) {
+            service = "google";
         }
 
-        // Kiểm tra xem Vector có rỗng không
-        if (customerList != null && !customerList.isEmpty()) {
-            Customers cus = customerList.get(0);
-            session.setAttribute("dataCustomer", cus);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        } else {
-            // Xử lý trường hợp không tìm thấy khách hàng
-            request.setAttribute("message", "Không tìm thấy thông tin khách hàng cho tài khoản này.");
-            request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-        }
-    } else {
-        response.sendRedirect(
-            "https://accounts.google.com/o/oauth2/auth?scope=email profile openid" +
-            "&redirect_uri=http://localhost:8080/SWP391/SignUpURL" +
-            "&response_type=code" +
-            "&client_id=585107335180-i8g585qjpvmq8rvslrel6lkgqv39fjt5.apps.googleusercontent.com" +
-            "&approval_prompt=force"
-        );
-    }
-}
+        if ("google".equals(service) && code != null) {
+            DAOGoogleLogin daoGoogle = new DAOGoogleLogin();
+            String accessToken = daoGoogle.getToken(code);
+            GoogleAccount acc = daoGoogle.getUserInfo(accessToken);
+            Vector<Account> vectorAcc = dao.getAccount("Select * from Accounts");
+            Account accountExists = new Account();
+            boolean userExists = false;
 
-            if (service.equals("login")) {
-                String submit = request.getParameter("submit");
-                if (submit == null) {
-                    request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-                } else {
-                    Account account = dao.getLogin(request.getParameter("username"), request.getParameter("password"));
-                    if(account.isActive() == false){
-                         request.setAttribute("message", "Account is block can not login");
-                        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-
-                    }
-
-                    if (account == null) {
-                        request.setAttribute("message", "Username or password is incorrect");
-                        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-
-                    } else if (account != null) {
-
-                        if (account.getRoleID() == 1) {
-                            Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
-                            session.setAttribute("dataCustomer", cus);
-                            session.setAttribute("dataUser", account);
-                            session.setAttribute("customerId", cus.getCustomerID());
-                            request.getRequestDispatcher("index.jsp").forward(request, response);
-                        } else if (account.getRoleID() == 1003) {
-                            Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
-                            session.setAttribute("dataCustomer", cus);
-                            session.setAttribute("dataUser", account);
-                            request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
-
-                        } else if (account.getRoleID() == 2) {
-                            Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
-                            session.setAttribute("dataCustomer", cus);
-                            session.setAttribute("dataUser", account);
-                            request.getRequestDispatcher("index.jsp").forward(request, response);
-                        } 
-
-
-                    }
+            for (Account account : vectorAcc) {
+                if (acc.getEmail().equals(account.getEmail())) {
+                    accountExists.setAccountID(account.getAccountID());
+                    accountExists.setUserName(account.getUserName());
+                    accountExists.setPassword(account.getPassword());
+                    accountExists.setRoleID(account.getRoleID());
+                    accountExists.setEmail(account.getEmail());
+                    accountExists.setActive(account.isActive());
+                    userExists = true;
+                    break;
                 }
             }
 
+            if (userExists) {
+                session.setAttribute("dataUser", accountExists);
+                Vector<Customers> customerList = daoCus.getCustomer(
+                    "select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg " +
+                    "from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + 
+                    accountExists.getAccountID()
+                );
+
+                if (customerList != null && !customerList.isEmpty()) {
+                    Customers cus = customerList.get(0);
+                    session.setAttribute("dataCustomer", cus);
+
+                 
+             
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("message", "No customer information found for this account.");
+                    request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+                }
+            } else {
+                response.sendRedirect(
+                    "https://accounts.google.com/o/oauth2/auth?scope=email profile openid" +
+                    "&redirect_uri=http://localhost:8080/SWP391/SignUpURL" +
+                    "&response_type=code" +
+                    "&client_id=585107335180-i8g585qjpvmq8rvslrel6lkgqv39fjt5.apps.googleusercontent.com" +
+                    "&approval_prompt=force"
+                );
+            }
+        }
+
+        if (service.equals("login")) {
+            String submit = request.getParameter("submit");
+            if (submit == null) {
+                request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+            } else {
+                Account account = dao.getLogin(request.getParameter("username"), request.getParameter("password"));
+                if (account != null && !account.isActive()) {
+                    request.setAttribute("message", "Account is blocked and cannot log in.");
+                    request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+                } else if (account == null) {
+                    request.setAttribute("message", "Username or password is incorrect.");
+                    request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+                } else {
+                    if (account.getRoleID() == 1 || account.getRoleID() == 2) {
+                        Customers cus = daoCus.getCustomer(
+                            "select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg " +
+                            "from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + 
+                            account.getAccountID()
+                        ).get(0);
+                        session.setAttribute("dataCustomer", cus);
+                        session.setAttribute("dataUser", account);
+                        session.setAttribute("customerId", cus.getCustomerID());
+
+                       
+
+                        request.getRequestDispatcher("index.jsp").forward(request, response);
+                    } else if (account.getRoleID() == 1003) {
+                        Customers cus = daoCus.getCustomer(
+                            "select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg " +
+                            "from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + 
+                            account.getAccountID()
+                        ).get(0);
+                        session.setAttribute("dataCustomer", cus);
+                        session.setAttribute("dataUser", account);
+
+                       
+
+                        request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
+                    }
+                }
+            }
         }
     }
+}
 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -52,93 +52,7 @@
                         </a>
                     </div>
 
-                    <!--                    <ul class="sidebar-menu pt-3">
-                                            <li><a href="index.jsp"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
-                                            <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>-->
-
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-user me-2 d-inline-block"></i>Doctors</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="doctors.html">Doctors</a></li>
-                                                        <li><a href="add-doctor.html">Add Doctor</a></li>
-                                                        <li><a href="dr-profile.html">Profile</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
-
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-wheelchair me-2 d-inline-block"></i>Patients</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="patients.html">All Patients</a></li>
-                                                        <li><a href="add-patient.html">Add Patients</a></li>
-                                                        <li><a href="patient-profile.html">Profile</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
-
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="chat.html">Chat</a></li>
-                                                        <li><a href="email.html">Email</a></li>
-                                                        <li><a href="calendar.html">Calendar</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
-
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Pharmacy</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="shop.html">Shop</a></li>
-                                                        <li><a href="product-detail.html">Shop Detail</a></li>
-                                                        <li><a href="shopcart.html">Shopcart</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
-
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="blogs.html">Blogs</a></li>
-                                                        <li><a href="blog-detail.html">Blog Detail</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
-
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="faqs.html">FAQs</a></li>
-                                                        <li><a href="review.html">Reviews</a></li>
-                                                        <li><a href="invoice-list.html">Invoice List</a></li>
-                                                        <li><a href="invoice.html">Invoice</a></li>
-                                                        <li><a href="terms.html">Terms & Policy</a></li>
-                                                        <li><a href="privacy.html">Privacy Policy</a></li>
-                                                        <li><a href="error.html">404 !</a></li>
-                                                        <li><a href="blank-page.html">Blank Page</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
-
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="jsp/login.jsp">Login</a></li>
-                                                        <li><a href="jsp/signup.jsp">Signup</a></li>
-                                                        <li><a href="forgot-password.html">Forgot Password</a></li>
-                                                        <li><a href="jsp/login.jsp">Lock Screen</a></li>
-                                                        <li><a href="thankyou.html">Thank you...!</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
+                  
 
                     <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>-->
 
@@ -310,14 +224,6 @@
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
                             <h5 class="mb-0">Add New Patient</h5>
-
-                            <!--                            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
-                                                            <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-                                                                <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                                                <li class="breadcrumb-item"><a href="patients.html">Patients</a></li>
-                                                                <li class="breadcrumb-item active" aria-current="page">Add Patient</li>
-                                                            </ul>
-                                                        </nav>-->
                         </div>
 
                         <div class="row">
@@ -353,14 +259,14 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Username</label>
-                                                        <input value="${account.userName}" name="username" id="username" type="text" class="form-control" >
+                                                        <input value="${account.userName}" name="username" id="username" type="text" class="form-control"readonly required >
                                                     </div>
                                                 </div><!--end col-->
 
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Password</label>
-                                                        <input value="${account.password}" name="password" id="password" type="text" class="form-control">
+                                                        <input value="${account.password}" name="password" id="password" type="text" class="form-control"readonly required>
                                                     </div> 
                                                 </div><!--end col-->
                                                 <div class="col-md-6">
@@ -375,7 +281,7 @@
                                                                 <c:if test="${account.roleID == 2}">
                                                                     selected
                                                                 </c:if>
-                                                                >User</option>
+                                                                >Customer</option>
                                                         <option value="3"
                                                                 <c:if test="${account.roleID == 3}">
                                                                     selected

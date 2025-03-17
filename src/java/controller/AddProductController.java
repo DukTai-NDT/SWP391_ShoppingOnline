@@ -11,7 +11,7 @@ import model.DAOProducts;
 
 @WebServlet(name = "AddProductController", urlPatterns = {"/AddProductController"})
 public class AddProductController extends HttpServlet {
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
@@ -49,3 +49,6 @@ public class AddProductController extends HttpServlet {
         processRequest(request, response);
     }
 }
+
+
+

@@ -59,7 +59,7 @@ public class DAOPayments extends DBConnection {
         String sql = "UPDATE [dbo].[Payments]\n"
                 + "   SET [MethodID] = ?\n"
                 + "      ,[Status] = ?\n"
-                + " WHERE PaymentID = ??";
+                + " WHERE PaymentID = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, pay.getMethodID());
@@ -116,7 +116,12 @@ public class DAOPayments extends DBConnection {
           for (Payments payments : vector) {
               System.out.println(payments);
         }
+          int x = dao.updatePayment(new Payments(2013, 1, true));
+          System.out.println(x);
+          
+          Vector<Payments> vector1 = dao.getPayment("select * from Payments");
+          for (Payments payments : vector1) {
+              System.out.println(payments);
+        }
     }
 }
-
-

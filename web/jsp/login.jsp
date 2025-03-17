@@ -72,10 +72,10 @@
                                         <div class="col-lg-12">
                                             <div class="d-flex justify-content-between">
                                                 <div class="mb-3">
-                                                    <div class="form-check">
+<!--                                                    <div class="form-check">
                                                         <input class="form-check-input align-middle" type="checkbox" value="" id="remember-check">
                                                         <label class="form-check-label" for="remember-check">Remember me</label>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                                 <a href="ForgotPasswordURL?service=forgot" class="text-dark h6 mb-0">Forgot password ?</a>
                                             </div>
