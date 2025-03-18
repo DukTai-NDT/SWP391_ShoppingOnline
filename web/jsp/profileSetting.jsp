@@ -75,7 +75,7 @@
         <!-- Navbar -->
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
-                <a class="logo" href="index.html">
+                <a class="logo" href="index.jsp">
                     <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="Logo" />
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="Logo" />
                 </a>
@@ -114,9 +114,14 @@
                                         <span class="d-block mb-1"><%=currentCustomer.getFirstName() + " " +  currentCustomer.getLastName()  %></span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="CustomerURL"><i class="uil uil-user align-middle h6"></i> Profile</a>
+                                <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
+
+                                <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                        <%if(account.getRoleID() != 2){%> 
+                                <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
+                                        <%}%>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="LogOutURL"><i class="uil uil-sign-out-alt align-middle h6"></i> Logout</a>
+                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                             </div>
                         </div>
                     </li>
@@ -233,7 +238,7 @@
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Your Email</label>
-                                                    <input name="Email" type="email" class="form-control" value="<%=currentCustomer.getEmail() != null ? currentCustomer.getEmail() : ""%>" placeholder="Your email" />
+                                                    <input name="Email" type="email" class="form-control" value="<%=currentCustomer.getEmail() != null ? currentCustomer.getEmail() : ""%>" placeholder="Your email"  readonly/>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">

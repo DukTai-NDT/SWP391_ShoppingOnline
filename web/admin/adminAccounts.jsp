@@ -58,7 +58,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="HomePageURL">
+                        <a href="Dashboard">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -70,9 +70,11 @@
 
                         </li>
                         <br>
+                         <%if(account.getRoleID()  == 3){%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
+                        <%}%>
                         <br>
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
@@ -225,7 +227,7 @@
                                                         </a>
                                                     </td>
                                                     <td class="p-3">
-                                                        ${a.roleID == 1 ? 'Admin' : (a.roleID == 2 ? 'Customer' : (a.roleID == 3 ? 'Editor' : 'Unknown'))}
+                                                        ${a.roleID == 1 ? 'Staff' : (a.roleID == 2 ? 'Customer' : (a.roleID == 3 ? 'Admin' : 'Unknown'))}
                                                     </td>
 
                                                     <td class="p-3">${a.password}</td>

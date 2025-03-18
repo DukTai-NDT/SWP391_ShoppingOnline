@@ -60,7 +60,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="HomePageURL">
+                        <a href="Dashboard">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -72,9 +72,11 @@
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
                         <br>
+                        <%if(account.getRoleID()  == 3){%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
+                        <%}%>
                         <br>
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
@@ -98,39 +100,10 @@
                         <br>
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
-                            <!--                            <div class="sidebar-submenu">
-                                                            <ul>
-                                                                <li><a href="faqs.html">FAQs</a></li>
-                                                                <li><a href="review.html">Reviews</a></li>
-                                                                <li><a href="invoice-list.html">Invoice List</a></li>
-                                                                <li><a href="invoice.html">Invoice</a></li>
-                                                                <li><a href="terms.html">Terms & Policy</a></li>
-                                                                <li><a href="privacy.html">Privacy Policy</a></li>
-                                                                <li><a href="error.html">404 !</a></li>
-                                                                <li><a href="blank-page.html">Blank Page</a></li>
-                                                            </ul>
-                                                        </div>-->
+
                         </li>
                         <br>
-                        </li>
-
-                        <!--                        <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="jsp/login.jsp">Login</a></li>
-                                                            <li><a href="jsp/signup.jsp">Signup</a></li>
-                                                            <li><a href="forgot-password.html">Forgot Password</a></li>
-                                                            <li><a href="jsp/login.jsp">Lock Screen</a></li>
-                                                            <li><a href="thankyou.html">Thank you...!</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>-->
-
-                        <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
-                        
-                                                <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
-                    </ul>
+                          </ul>
                     <!-- sidebar-menu  -->
                 </div>
                 <!-- sidebar-content  -->

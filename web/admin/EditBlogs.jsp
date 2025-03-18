@@ -53,7 +53,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="Dashboard">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -249,7 +249,7 @@
                             <div class="col-lg-8 mt-4">
 
                                 <div class="card border-0 p-4 rounded shadow">
-                                    <form action="AdminEditBlog" method="post">
+                                    <form action="AdminEditBlog" method="post"  enctype="multipart/form-data">
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Blog ID</label>
@@ -285,7 +285,7 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Image URL:</label>
-                                                <input value="${blog.image}" type="text" name="image" id="image" 
+                                                <input value="images/blogs/${blog.image}" type="file" name="image" id="image" 
                                                        class="form-control" placeholder="Enter image URL"
                                                        oninput="previewImage()"> 
                                             </div>

@@ -194,7 +194,7 @@
 
              Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
     %>
-    
+
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -273,7 +273,11 @@
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
+
                                 <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                        <%if(account.getRoleID() != 2){%> 
+                                <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
+                                        <%}%>
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
 
@@ -324,7 +328,7 @@
             <div class="col-12">
                 <div class="heading-title">
                     <img src="images/logo-icon.png" height="50" alt="">
-                    <h4 class="display-4 fw-bold text-white title-dark mt-3 mb-4">Online Medicine Selling</h4>
+                    <h4 class="display-4 fw-bold text-white title-dark mt-3 mb-4">Doctris</h4>
                     <h5 class="para-desc text-white-50 mb-0">Fast, Convenient, and Safe for Your Health!</h5>
 
                     <div class="mt-4 pt-2">
@@ -365,21 +369,38 @@
         </div>
 
         <!-- Swiper Container -->
+        <!--        <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+        <%for (Categories c : vcategories){%>
+        <div class="swiper-slide">
+            <div class="card features feature-primary border-0">
+                <div class="icon text-center rounded-md">
+                    <img src="images/category/<%=c.getImage()%>" alt="Blog Image" style="width: 50px">
+                </div>
+                <div class="card-body p-0 mt-3">
+                    <a href="ProductURL?service=categories&cid=<%=c.getCategoryID()%>" class="title text-dark h5"><%=c.getCategoryName()%></a><br>
+                    <a href="departments.jsp" class="link">Shop Now <i class="ri-arrow-right-line align-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <%}%>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>-->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-                <%for (Categories c : vcategories){%>
+                <% for (Categories c : vcategories) { %>
                 <div class="swiper-slide">
-                    <div class="card features feature-primary border-0">
-                        <div class="icon text-center rounded-md">
-                            <img src="<%=c.getImage()%>" alt="Blog Image" style="width: 50px">
-                        </div>
-                        <div class="card-body p-0 mt-3">
-                            <a href="ProductURL?service=categories&cid=<%=c.getCategoryID()%>" class="title text-dark h5"><%=c.getCategoryName()%></a><br>
-                            <a href="departments.jsp" class="link">Shop Now <i class="ri-arrow-right-line align-middle"></i></a>
+                    <div class="card features feature-primary border-0 p-2">
+                        <div class="d-flex align-items-center"> 
+                            <img src="images/category/<%= c.getImage() %>" alt="Blog Image" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                            <a href="ProductURL?service=categories&cid=<%= c.getCategoryID() %>" class="title text-dark h5 mb-0">
+                                <%= c.getCategoryName() %>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <%}%>
+                <% } %>
             </div>
             <div class="swiper-pagination"></div>
         </div>
@@ -472,7 +493,7 @@
                 <%for (Products p : vproduct) {%>
                 <div class="swiper-slide">
                     <div class="card1 features feature-primary border-0">
-                        <img src="<%=p.getImage()%>" alt="Product Image" style="max-width: 200px; height: auto;">
+                        <img src="images/products/<%=p.getImage()%>" alt="Product Image" style="max-width: 200px; height: auto;">
                         <div class="card-body1 p-0 mt-3 text-center">
                             <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
                             <div class="buttons mt-2">
@@ -541,7 +562,7 @@
                 <div class="card1 features feature-primary border-0">
 
 
-                    <img src="<%=p.getImage()%>" alt="Blog Image" style="max-width: 200px; height: auto;">
+                    <img src="images/products/<%=p.getImage()%>" alt="Blog Image" style="max-width: 200px; height: auto;">
 
                     <div class="card-body1 p-0 mt-3">
                         <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
@@ -770,6 +791,7 @@
     </div>
 </div>
 <!-- Offcanvas End -->
+
 <% if (currentCustomer != null) { %>
 <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header p-4 border-bottom">

@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.DAOProducts;
 import model.DAOAccount;
 import model.DAOBlogs;
+import model.DAOOrders;
 
 /**
  *
@@ -36,14 +37,17 @@ public class DashboardController extends HttpServlet {
         DAOProducts pDAO = new DAOProducts();
         DAOAccount aDAO = new DAOAccount();
         DAOBlogs bDAO = new DAOBlogs();
+        DAOOrders oDao = new DAOOrders();
         
         int productCount = pDAO.countProducts();
         int accountCount = aDAO.countAccounts();
         int blogCount = bDAO.countBlogs();
+        int orderCount = oDao.countAccounts();
 
         request.setAttribute("productCount", productCount);
         request.setAttribute("accountCount", accountCount);
         request.setAttribute("blogCount", blogCount);
+        request.setAttribute("orderCount", orderCount);
         request.getRequestDispatcher("admin/dashboard.jsp").forward(request, response);
     }
 

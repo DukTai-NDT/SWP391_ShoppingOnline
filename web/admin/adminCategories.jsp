@@ -60,7 +60,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="HomePageURL">
+                        <a href="Dashboard">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -72,9 +72,11 @@
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
                         <br>
+                        <%if(account.getRoleID()  == 3){%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
+                        <%}%>
                         <br>
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
@@ -247,18 +249,18 @@
 
                                                     <td class="p-3">${c.categoryID}</td>
                                                     <td class="p-3"><a href="" class="text-dark product-name h6" >${c.categoryName}</a></td>
-                                                    <td class="p-3"><img src="${c.image}" alt="Blog Image" style="max-width: 200px; height: auto;"></td>
+                                                    <td class="p-3"><img src="images/category/${c.image}" alt="Blog Image" style="max-width: 200px; height: auto;"></td>
 
                                                     <td class="text-end p-3"> 
                                                         <a href="LoadCategory?cid=${c.categoryID}" 
                                                            class="btn btn-icon btn-pills btn-soft-primary">
                                                             <i class="uil uil-edit"></i>
                                                         </a>
-                                                        <a href="DeleteCategories?cid=${c.categoryID}" 
+<!--                                                        <a href="DeleteCategories?cid=${c.categoryID}" 
                                                            class="btn btn-icon btn-pills btn-soft-danger"
                                                            onclick="return confirmDelete(event, '${c.categoryID}')">
                                                             <i class="uil uil-trash"></i>
-                                                        </a>
+                                                        </a>-->
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -348,7 +350,7 @@
 
         <!-- Start Modal -->
         <div class="modal fade" id="newblogadd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <form action="AddCategory" method="post">
+            <form action="AddCategory" method="post"  enctype="multipart/form-data">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header border-bottom p-3">
@@ -362,7 +364,7 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">Image URL:</label>
-                                        <input type="text" name="image" id="image" class="form-control" placeholder="Enter image URL" oninput="previewImage()">
+                                        <input type="file" name="image" id="image" class="form-control" placeholder="Upload image file" oninput="previewImage()">
                                     </div>
                                 </div><!--end col-->
 

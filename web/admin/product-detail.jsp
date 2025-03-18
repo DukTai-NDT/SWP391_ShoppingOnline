@@ -107,7 +107,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="Dashboard">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -118,12 +118,19 @@
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
                         <br>
+                        <%if(account.getRoleID() == 3){%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
+                        <%}%>
                         <br>
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminBrands">
+                                <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
+                            </a>
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
@@ -480,13 +487,13 @@
                             </div>
                         </div>
 
-                        <div class="row mt-4">
+<!--                        <div class="row mt-4">
                             <div class="col-12">
                                 <h5 class="mb-0">Related Products:</h5>
-                            </div><!--end col-->
-                        </div><!--end row-->
+                            </div>end col
+                        </div>end row-->
 
-                        <div class="row">
+<!--                        <div class="row">
                             <div class="col-lg-12 mt-4">
                                 <div class="slider-range-four">
                                     <div class="tiny-slide">
@@ -508,7 +515,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -540,7 +547,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -572,7 +579,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -604,7 +611,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -636,7 +643,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -668,7 +675,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -700,7 +707,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -734,8 +741,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><!--end col-->
-                        </div><!--end row-->
+                            </div>end col
+                        </div>end row-->
                     </div>
                 </div><!--end container-->
 

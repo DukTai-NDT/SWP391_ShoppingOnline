@@ -64,9 +64,12 @@
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
                         <br>
+                        
+                        <%if(account.getRoleID()  == 3){%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
+                        <%}%>
                         <br>
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
@@ -134,6 +137,7 @@
                             <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
                                 <i class="uil uil-bars"></i>
                             </a>
+                            <a style="margin: 0 10px 0 10px;" href="ProductURL?service=listAllProducts">View Shop</a>
                             <div class="search-bar p-0 d-none d-md-block ms-2">
                                 <div id="search" class="menu-search mb-0">
                                     <!--                                    <form role="search" method="get" id="searchform" class="searchform">
@@ -185,6 +189,16 @@
                         </ul>
                     </div>
                 </div>
+                          <div id="navigation">
+        <!-- Navigation Menu-->   
+        <ul class="navigation-menu nav-left nav-light">
+            <li class="parent-menu-item">
+                <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
+
+            </li>
+            
+        </ul><!--end navigation menu-->
+    </div><!--end navigation-->
 
                 <div class="container-fluid">
                     <div class="layout-specing">
@@ -204,21 +218,23 @@
                                     </div>
                                 </div>
                             </div><!--end col-->
-
+ <%if(account.getRoleID() == 3){%>
                             <div class="col-md-6 mt-4">
                                 <div class="card features feature-primary rounded border-0 shadow p-4">
                                     <div class="d-flex align-items-center">
                                         <div class="icon text-center rounded-md">
                                             <i class="uil uil-user h3 mb-0"></i>
                                         </div>
+                                        
                                         <div class="flex-1 ms-2">
                                             <h5 class="mb-0">${accountCount}</h5>
                                             <p class="text-muted mb-0">Users</p>
                                         </div>
+                                           
                                     </div>
                                 </div>
                             </div><!--end col-->
-
+                            <%}%> 
                             <div class="col-md-6 mt-4">
                                 <div class="card features feature-primary rounded border-0 shadow p-4">
                                     <div class="d-flex align-items-center">
@@ -226,7 +242,7 @@
                                             <i class="uil uil-shopping-cart h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
                                         </div>
                                         <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">...</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
+                                            <h5 class="mb-0">${orderCount}</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
                                             <p class="text-muted mb-0">Sold</p>
                                         </div>
                                     </div>

@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Vector,entity.Cart,entity.CartItems, entity.Customers, entity.Blogs ,jakarta.servlet.http.HttpSession, entity.Categories"%>
+<%@page import=" entity.Account,java.util.Vector,entity.Cart,entity.CartItems, entity.Customers, entity.Blogs ,jakarta.servlet.http.HttpSession, entity.Categories"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,7 +37,8 @@
         <%
             Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
             Vector<Categories> vectorCat = (Vector<Categories>) session.getAttribute("vectorCat");
-             Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+            Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+            Account account = (Account)session.getAttribute("dataUser");
 
         %>
         <!-- Navbar STart -->
@@ -45,7 +46,7 @@
             <div class="container">
                 <!-- Logo container-->
                 <div>
-                    <a class="logo" href="index.html">
+                    <a class="logo" href="index.jsp">
                         <span class="logo-light-mode">
                             <img src="${pageContext.request.contextPath}/images/logo-dark.png" class="l-dark" height="24" alt="">
                             <img src="${pageContext.request.contextPath}/images/logo-light.png" class="l-light" height="24" alt="">
@@ -100,7 +101,12 @@
                                         <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
                                     </div>
                                 </a>
+                                <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
+                               
                                 <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <%if(account.getRoleID() != 2){%> 
+                                <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
+                                <%}%>
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
 
@@ -180,7 +186,7 @@
                     %>
                     <div class="col-lg-4 col-md-6 col-12 mb-4 pb-2">
                         <div class="card blog blog-primary border-0 shadow rounded overflow-hidden">
-                            <img src="${pageContext.request.contextPath}/images/blog/01.jpg" class="img-fluid" alt="">
+                       <img src="images/blogs/<%=blog.getImage()%>" class="img-fluid" alt="">
                             <div class="card-body p-4">
                                 <ul class="list-unstyled mb-2">
                                     <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i><%=blog.getPostTime()%></li>

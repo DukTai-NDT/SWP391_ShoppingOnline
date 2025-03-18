@@ -70,7 +70,7 @@ public class EditAccountController extends HttpServlet {
         account.setEmail(request.getParameter("email"));
         account.setRoleID(Integer.parseInt(request.getParameter("roleID")));
        account.setActive(Boolean.parseBoolean(request.getParameter("active")));
-
+        System.out.println("ok123"+Integer.parseInt(request.getParameter("roleID")));
         DAOAccount daoAccount = new DAOAccount();
         daoAccount.EditAccount(account);
         response.sendRedirect("AdminAccounts");

@@ -53,7 +53,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="Dashboard">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -249,7 +249,7 @@
                             <div class="col-lg-8 mt-4">
 
                                 <div class="card border-0 p-4 rounded shadow">
-                                    <form action="EditCategory" method="post">
+                                    <form action="EditCategory" method="post"  enctype="multipart/form-data">
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Category ID</label>
@@ -265,7 +265,7 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Image URL:</label>
-                                                <input value="${category.image}" type="text" name="image" id="image" 
+                                                <input value="images/category/${category.image}" type="file" name="image" id="image" 
                                                        class="form-control" placeholder="Enter image URL"
                                                        oninput="previewImage()"> 
                                             </div>
@@ -275,13 +275,13 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Image Preview:</label>
-                                                <img id="imagePreview" src="${category.image}" alt="Preview Image" 
+                                                <img id="imagePreview" src="images/category/${category.image}" alt="Preview Image" 
                                                      style="max-width: 100%; height: auto; display: block; border: 1px solid #ddd; padding: 5px;">
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Edit Account</button>
+                                            <button type="submit" class="btn btn-primary">Edit Category</button>
                                         </div>
                                     </form>
                                 </div>

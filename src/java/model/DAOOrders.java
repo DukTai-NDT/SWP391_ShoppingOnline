@@ -241,13 +241,30 @@ public class DAOOrders extends DBConnection {
         }
         return n;
     }
+    public int countAccounts() {
+        int count = 0;
+        String query = "SELECT COUNT(*) FROM Orders";
+
+        try {
+            Statement state = conn.createStatement();
+            ResultSet rs = state.executeQuery(query);
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        return count;
+    }
 
     public static void main(String[] args) {
         DAOOrders dao = new DAOOrders();
 
      
-        Vector<Orders> vector = dao.getOrders("select * from Orders where OrderID = 3018");
-        System.out.println(vector.get(0).getPaymentID());
+        
+        int n = dao.countAccounts();
+        System.out.println(n);
         
         
 

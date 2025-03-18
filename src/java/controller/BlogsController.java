@@ -4,6 +4,7 @@
  */
 package controller;
 
+import entity.Account;
 import entity.Blogs;
 import entity.CartItems;
 import entity.Comment;
@@ -220,12 +221,20 @@ public class BlogsController extends HttpServlet {
          String blogIdParam = request.getParameter("blog");
          Vector<Blogs> vectorBlogs = dao.getBlogs("select * from Blogs where BlogID = " + blogIdParam);
          Blogs blog = vectorBlogs.get(0);
+         Vector<Blogs> vectorAllBlogs = dao.getBlogs("select * from Blogs" );
+         session.setAttribute("vectorBlogs", vectorAllBlogs);
          session.setAttribute("blog", blog);
          Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
          Vector<Comment> comments = daoComments.getCommentsByBlogId(blog.getBlogID());
          session.setAttribute("comments" + blog.getBlogID(), comments);
          session.setAttribute("vectorCat", vectorCat);
+         
+             Account account = (Account) session.getAttribute("dataUser");
+             if(account.getRoleID() == 2){
          request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
+             }else{
+                 request.getRequestDispatcher("admin/adminBlog-detail.jsp").forward(request, response);
+             }
 }
 
         }

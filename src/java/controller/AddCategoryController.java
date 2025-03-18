@@ -7,17 +7,31 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.DAOCategories;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Admin
  */
 @WebServlet(name = "AddCategoryController", urlPatterns = {"/AddCategory"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50 // 50MB
+)
+
 public class AddCategoryController extends HttpServlet {
 
     /**
@@ -63,10 +77,34 @@ public class AddCategoryController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         String categoryName = request.getParameter("categoryname");
-        String image = request.getParameter("image");
+        Part part = request.getPart("image");
+        String fileName = part.getSubmittedFileName();
+
+        String uploadDir = "D:\\FU_Learning\\SUM2024\\CSD201\\Code\\SWP391\\web\\images\\category";
+        File uploadFolder = new File(uploadDir);
+
+        String path = uploadDir + File.separator + fileName;
+        InputStream is = part.getInputStream();
+        boolean test = uploadFile(is, path);
+
         DAOCategories daocategories = new DAOCategories();
-        daocategories.inserCategories(categoryName, image);
+        daocategories.inserCategories(categoryName, fileName);
         response.sendRedirect("AdminCategories");
+    }
+
+    public boolean uploadFile(InputStream is, String path) {
+        boolean test = false;
+        try (FileOutputStream fops = new FileOutputStream(path)) {
+            byte[] buffer = new byte[1024]; // Đọc từng khối 1KB
+            int bytesRead;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                fops.write(buffer, 0, bytesRead);
+            }
+            test = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return test;
     }
 
     /**

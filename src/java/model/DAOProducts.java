@@ -35,19 +35,10 @@ public class DAOProducts extends DBConnection {
                 + "           ,[BrandID]\n"
                 + "           ,[isPrescriptionDrug]\n"
                 + "           ,[Quantity]\n"
-                + "           ,[Image])\n"
+                + "           ,[Image]\n"
                 + "           ,[isAvailable])\n"
                 + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -70,7 +61,7 @@ public class DAOProducts extends DBConnection {
     }
 
     public int deleteProduct(int pid) {
-       int n = 0;
+        int n = 0;
 //        cach xu ly khi khong xoa duoc do khoa ngoai
 //                case1: Xoa tai foreignt key truoc roi moi xoa o primarykey;
 //                case2: select foreign key --> IsExist ---> disable primary key
@@ -90,8 +81,9 @@ public class DAOProducts extends DBConnection {
         }
         return n;
     }
+
     public void changeDiscontinued(int pid, int newValue) {
-        String sql = "  update Products set isAvailable = "+newValue+" where ProductID = " + pid;
+        String sql = "  update Products set isAvailable = " + newValue + " where ProductID = " + pid;
         try {
             Statement state = conn.createStatement();
             state.executeUpdate(sql);
@@ -267,8 +259,8 @@ public class DAOProducts extends DBConnection {
                 int Quantity = rs.getInt("Quantity");
                 String Image = rs.getString("Image");
                 boolean isAvailable = rs.getInt("isAvailable") == 1;
-                
-                Products pro = new Products(ProductID, ProductName, Price, Description, UnitPrice, CategoryID, BrandID, isPrescriptionDrug, Quantity, Image,isAvailable);
+
+                Products pro = new Products(ProductID, ProductName, Price, Description, UnitPrice, CategoryID, BrandID, isPrescriptionDrug, Quantity, Image, isAvailable);
                 vector.add(pro);
             }
         } catch (SQLException ex) {
@@ -390,7 +382,7 @@ public class DAOProducts extends DBConnection {
             preState.setString(1, "%" + txtSearch + "%");
             ResultSet rs = preState.executeQuery();
             while (rs.next()) {
-                list.add(new Products(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9), rs.getString(10),rs.getBoolean(11)));
+                list.add(new Products(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9), rs.getString(10), rs.getBoolean(11)));
             }
 
         } catch (SQLException e) {
@@ -406,8 +398,8 @@ public class DAOProducts extends DBConnection {
         for (Products products : vector) {
             System.out.println(products);
         }
-        String img = dao.getProductImg(1);
-        System.out.println(img);
+        int n = dao.addProduct(new Products("product1", 10000, "ok", "Hop", 5, 3, true, 5, "abc.img", true));
+        System.out.println(n);
     }
 
 }

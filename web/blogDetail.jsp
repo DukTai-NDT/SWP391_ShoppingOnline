@@ -1,30 +1,58 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Vector,entity.Cart,entity.CartItems, entity.Customers, entity.Comment,entity.Blogs, jakarta.servlet.http.HttpSession, model.DAOCustomer, entity.Categories"%>
+<%@page import=" entity.Account,java.util.Vector,entity.Cart,entity.CartItems, entity.Customers, entity.Comment,entity.Blogs, jakarta.servlet.http.HttpSession, model.DAOCustomer, entity.Categories"%>
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
-        <meta charset="utf-8" />
-        <title>Blog Detail</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
-        <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health" />
-        <meta name="author" content="Shreethemes" />
-        <meta name="email" content="support@shreethemes.in" />
-        <meta name="website" content="https://shreethemes.in" />
-        <meta name="Version" content="v1.2.0" />
-        <!-- favicon -->
-        <link rel="shortcut icon" href="images/favicon.ico.png">
-        <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <!-- Icons -->
-        <link href="css/materialdesignicons.min.css" rel="stylesheet" type="t  ext/css" />
-        <link href="css/remixicon.css" rel="stylesheet" type="text/css" />
-        <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
-        <!-- SLIDER -->
-        <link rel="stylesheet" href="css/tiny-slider.css"/>
-        <!-- Css -->
-        <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+    <meta charset="utf-8" />
+    <title>Blog Detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
+    <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health" />
+    <meta name="author" content="Shreethemes" />
+    <meta name="email" content="support@shreethemes.in" />
+    <meta name="website" content="https://shreethemes.in" />
+    <meta name="Version" content="v1.2.0" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico.png">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons -->
+    <link href="https://cdn.materialdesignicons.com/5.9.55/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Thêm Bootstrap Icons để thay thế nếu MDI không hoạt động -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="css/remixicon.css" rel="stylesheet" type="text/css" />
+    <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css" rel="stylesheet">
+    <!-- SLIDER -->
+    <link rel="stylesheet" href="css/tiny-slider.css"/>
+    <!-- Css -->
+    <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+
+
+
+  <style>
+        .dropdown {
+            display: block !important;
+            width: 30px !important;
+            height: 30px !important;
+        }
+        .dropdown a {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+        .mdi, .bi {
+            font-size: 20px !important;
+            color: #000 !important;
+            display: inline-block !important;
+        }
+        .dropdown-menu {
+            z-index: 1000;
+            min-width: 100px;
+        }
+    </style>
+
 
     </head>
     <%  
@@ -32,7 +60,7 @@
         Vector<Categories> vectorCat = (Vector<Categories>) session.getAttribute("vectorCat");
          Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
         Blogs blog = (Blogs) session.getAttribute("blog");
-    
+     Account account = (Account)session.getAttribute("dataUser");
      
     %>
     <body>
@@ -51,7 +79,7 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container-->
-                <a class="logo" href="index.html">
+                <a class="logo" href="index.jsp">
                     <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
@@ -101,7 +129,12 @@
                                     </div>
                                 </a>
 
+                                <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
+                               
                                 <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <%if(account.getRoleID() != 2){%> 
+                                <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
+                                <%}%>
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                             </div>
@@ -168,219 +201,182 @@
 
         <!-- Start -->
         <section class="section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-7">
-                        <img src="images/blog/single.jpg" class="img-fluid rounded shadow" alt="">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-7">
+                    <img src="images/blog/single.jpg" class="img-fluid rounded shadow" alt="">
+                    <p class="text-muted mt-4"><%=blog.getContent()%></p>
+                
+                    <h5 class="card-title mt-4 mb-0">Comments:</h5>
 
+                    <%
+                    Vector<Comment> comments = (Vector<Comment>) session.getAttribute("comments" + blog.getBlogID());
+                    DAOCustomer daoCus = new DAOCustomer();
+                    if (comments == null) {
+                        comments = new Vector<>(); 
+                    }
 
+                    int displayLimit = 3; 
+                    int totalComments = comments.size();
+                    boolean showAll = "true".equals(request.getParameter("showAll")); 
 
-
-                        <p class="text-muted mt-4"><%=blog.getContent()%></p>
-
-                        <h5 class="card-title mt-4 mb-0">Comments :</h5>
-
-
-
-                        <%
-                            Vector<Comment> comments = (Vector<Comment>) session.getAttribute("comments" + blog.getBlogID());
-                            DAOCustomer daoCus = new DAOCustomer();
-                            if (comments == null) {
-                                comments = new Vector<>(); 
-                            }
-
-                            int displayLimit = 3; 
-                            int totalComments = comments.size();
-                            boolean showAll = "true".equals(request.getParameter("showAll")); 
-
-                            if (!comments.isEmpty()) { 
-                                int limit = showAll ? totalComments : Math.min(displayLimit, totalComments); 
-                                for (int i = 0; i < limit; i++) { 
-                                    Comment comment = comments.get(i);
-                                    String[] customerInfo = daoCus.getCustomerByID(comment.getCustomerID());
-                                    String customerName= customerInfo[0] + " "+customerInfo[1];
-                                    String profileImg= (customerInfo[2] != null && !customerInfo[2].isEmpty())
-                                    ? customerInfo[2] : "images/client/09.jpg";
-            
-
-
-                        %>
-
-                        <ul class="media-list list-unstyled mb-0">
-                            <li class="mt-4">
-                                <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <a class="pe-3" href="#">
-                                            <img src="<%=profileImg%>" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
-                                        </a>
-                                        <div class="commentor-detail">
-                                            <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading"><%=customerName%></a></h6>
-                                            <small class="text-muted"><%=comment.getPostTime()%></small>
-
-                                        </div>
-                                    </div>
-                                    <% 
-                                        if ( currentCustomer != null && comment.getCustomerID() == currentCustomer.getCustomerID()) { 
-                                    %>
-                                    <div class="dropdown">
-                                        <a href="#" class="text-muted" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical"></i>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="CommentURL?service=deleteComment&commentId=<%=comment.getCommentID()%>&blogId=<%=blog.getBlogID()%>">Delete</a></li>
-                                        </ul>
-                                    </div>
-                                    <% } %>
-                                </div>
-                                <div class="mt-3">
-                                    <p class="text-muted font-italic p-3 bg-light rounded"><%=comment.getCommentText()%></p>
-                                </div>
-                            </li>
-                        </ul>
-                        <%
-                                }
-                            } else {
-                        %>
-                        <p class="text-muted">No comments yet. Be the first to comment!</p>
-                        <% } %>
-
-                        <% 
-   
-                            if (totalComments > displayLimit && !showAll) { 
-                        %>
-                        <div class="mt-3">
-                            <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>&showAll=true" class="btn btn-primary">All Comments (<%=totalComments%>)</a>
-                        </div>
-                        <% } %>
-
-
-                        <h5 class="card-title mt-4 mb-0">Leave A Comment :</h5>
-                        <% if(currentCustomer !=null) {%>
-
-                        <form class="mt-3" action="CommentURL" method="post">
-                            <input type="hidden" name="service" value="addComment">
-                            <input type="hidden" name="BlogID" value="<%= blog.getBlogID() %>">
-                            <input type="hidden" name="CommentID" value="0">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Your Comment</label>
-
-                                        <textarea id="message" name="CommentText" placeholder="Your Comment" rows="5"  class="form-control" required=""></textarea>
-                                    </div>
-                                </div><!--end col-->
-
-
-                                <div class="col-md-12">
-                                    <div class="send d-grid">
-                                        <button name="submit" type="submit" class="btn btn-primary">Send Message</button>
-                                    </div>
-                                </div><!--end col-->
-                            </div><!--end row-->
-                        </form><!--end form-->
-
-                        <%} else{%>
-                        <p class="mt-3">Please <a href="LoginURL?service=login">Login</a> to leave a comment.</p>
-                        <% } %>
-
-                    </div><!--end col-->
-
-                    <div class="col-lg-4 col-md-5 mt-4 mt-sm-0 pt-2 pt-sm-0">
-                        <div class="card border-0 sidebar sticky-bar rounded shadow">
-                            <div class="card-body">
-                                <!-- SEARCH -->
-                                <div class="widget mb-4 pb-2">
-                                    <h5 class="widget-title">Search</h5>
-                                    <div id="search2" class="widget-search mt-4 mb-0">
-                                        <form role="search" method="get" action="BlogsURL" class="searchform">
-
-                                            <div>
-                                                <input type="hidden" name="service" value="listAllBlogs">
-                                                <input type="text" class="border rounded" name="title"  placeholder="Search Keywords...">
-                                                <input type="submit" name="submit" id="searchsubmit" value="Search">
-
-                                            </div>
-                                        </form>
+                    if (!comments.isEmpty()) { 
+                        int limit = showAll ? totalComments : Math.min(displayLimit, totalComments); 
+                        for (int i = 0; i < limit; i++) { 
+                            Comment comment = comments.get(i);
+                            String[] customerInfo = daoCus.getCustomerByID(comment.getCustomerID());
+                            String customerName = customerInfo[0] + " " + customerInfo[1];
+                            String profileImg = (customerInfo[2] != null && !customerInfo[2].isEmpty())
+                                ? customerInfo[2] : "images/client/09.jpg";
+                    %>
+                    <ul class="media-list list-unstyled mb-0">
+                        <li class="mt-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <a class="pe-3" href="#">
+                                        <img src="<%=profileImg%>" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
+                                    </a>
+                                    <div class="commentor-detail">
+                                        <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading"><%=customerName%></a></h6>
+                                        <small class="text-muted"><%=comment.getPostTime()%></small>
                                     </div>
                                 </div>
-                                <!-- SEARCH -->
-
-
-
-                                <!-- TAG CLOUDS -->
-
-                                <!-- SOCIAL -->
-                                <div class="widget">
-                                    <h5 class="widget-title">Follow us</h5>
-                                    <ul class="list-unstyled social-icon mb-0 mt-4">
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="facebook" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="instagram" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="twitter" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="linkedin" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="github" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="youtube" class="fea icon-sm fea-social"></i></a></li>
-                                        <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="gitlab" class="fea icon-sm fea-social"></i></a></li>
-                                    </ul><!--end icon-->
+                                <% if (currentCustomer != null && comment.getCustomerID() == currentCustomer.getCustomerID()) { %>
+                                <div class="dropdown">
+                                    <a href="#" class="text-muted" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <!-- Thay thế biểu tượng MDI bằng Bootstrap Icons nếu MDI không hoạt động -->
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="CommentURL?service=deleteComment&commentId=<%=comment.getCommentID()%>&blogId=<%=blog.getBlogID()%>">Delete</a></li>
+                                    </ul>
                                 </div>
-                                <!-- SOCIAL -->
+                                <% } %>
                             </div>
+                            <div class="mt-3">
+                                <p class="text-muted font-italic p-3 bg-light rounded"><%=comment.getCommentText()%></p>
+                            </div>
+                        </li>
+                    </ul>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <p class="text-muted">No comments yet. Be the first to comment!</p>
+                    <% } %>
+
+                    <% 
+                    if (totalComments > displayLimit && !showAll) { 
+                    %>
+                    <div class="mt-3">
+                        <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>&showAll=true" class="btn btn-primary">All Comments (<%=totalComments%>)</a>
+                    </div>
+                    <% } %>
+
+                    <h5 class="card-title mt-4 mb-0">Leave A Comment:</h5>
+                    <% if (currentCustomer != null) { %>
+                    <form class="mt-3" action="CommentURL" method="post">
+                        <input type="hidden" name="service" value="addComment">
+                        <input type="hidden" name="BlogID" value="<%= blog.getBlogID() %>">
+                        <input type="hidden" name="CommentID" value="0">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Your Comment</label>
+                                    <textarea id="message" name="CommentText" placeholder="Your Comment" rows="5" class="form-control" required=""></textarea>
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-md-12">
+                                <div class="send d-grid">
+                                    <button name="submit" type="submit" class="btn btn-primary">Send Message</button>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </form><!--end form-->
+                    <% } else { %>
+                    <p class="mt-3">Please <a href="LoginURL?service=login">Login</a> to leave a comment.</p>
+                    <% } %>
+                </div><!--end col-->
+
+                <div class="col-lg-4 col-md-5 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                    <div class="card border-0 sidebar sticky-bar rounded shadow">
+                        <div class="card-body">
+                            <!-- SEARCH -->
+                            <div class="widget mb-4 pb-2">
+                                <h5 class="widget-title">Search</h5>
+                                <div id="search2" class="widget-search mt-4 mb-0">
+                                    <form role="search" method="get" action="BlogsURL" class="searchform">
+                                        <div>
+                                            <input type="hidden" name="service" value="listAllBlogs">
+                                            <input type="text" class="border rounded" name="title" placeholder="Search Keywords...">
+                                            <input type="submit" name="submit" id="searchsubmit" value="Search">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- SEARCH -->
+                            <!-- SOCIAL -->
+                            <div class="widget">
+                                <h5 class="widget-title">Follow us</h5>
+                                <ul class="list-unstyled social-icon mb-0 mt-4">
+                                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="facebook" class="fea icon-sm fea-social"></i></a></li>
+                                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="instagram" class="fea icon-sm fea-social"></i></a></li>
+                                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="twitter" class="fea icon-sm fea-social"></i></a></li>
+                                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="linkedin" class="fea icon-sm fea-social"></i></a></li>
+                                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="github" class="fea icon-sm fea-social"></i></a></li>
+                                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="youtube" class="fea icon-sm fea-social"></i></a></li>
+                                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="gitlab" class="fea icon-sm fea-social"></i></a></li>
+                                </ul><!--end icon-->
+                            </div>
+                            <!-- SOCIAL -->
                         </div>
                     </div>
-                </div><!--end row-->
-            </div><!--end container-->
+                </div>
+            </div><!--end row-->
+        </div><!--end container-->
 
-            <div class="container mt-100 mt-60">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-title">
-                            <h4 class="title mb-0">Related Post:</h4>
-                        </div>
-                    </div><!--end col-->
-                </div><!--end row-->
+        <div class="container mt-100 mt-60">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h4 class="title mb-0">Related Post:</h4>
+                    </div>
+                </div><!--end col-->
+            </div><!--end row-->
 
-                <div class="row">
-                    <div class="col-lg-12 mt-4 pt-2">
-                        <div class="slider-range-three">
-
-
-                            <%
-                               
-                Vector<Blogs> blogs = (Vector<Blogs>) session.getAttribute("vectorBlogs");
-     
-                    for (Blogs currentBlog  : blogs) {%>
-
-                            <div class="tiny-slide">
-                                <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
-                                    <img src="images/blog/03.jpg" class="img-fluid" alt="">
-                                    <div class="card-body p-4">
-                                        <ul class="list-unstyled mb-2">
-                                            <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i><%=currentBlog.getPostTime()%></li>
-                                            <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
+            <div class="row">
+                <div class="col-lg-12 mt-4 pt-2">
+                    <div class="slider-range-three">
+                        <%
+                        Vector<Blogs> blogs = (Vector<Blogs>) session.getAttribute("vectorBlogs");
+                        for (Blogs currentBlog : blogs) {
+                        %>
+                        <div class="tiny-slide">
+                            <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
+                                <img src="images/blog/03.jpg" class="img-fluid" alt="">
+                                <div class="card-body p-4">
+                                    <ul class="list-unstyled mb-2">
+                                        <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i><%=currentBlog.getPostTime()%></li>
+                                        <li class="list-inline-item text-muted small"><i class="uil uil-clock text-dark h6 me-1"></i>5 min read</li>
+                                    </ul>
+                                    <a href="BlogsURL?service=detailBlog&blog=<%=currentBlog.getBlogID()%>" class="text-dark title h5"><%=currentBlog.getTitle()%></a>
+                                    <div class="post-meta d-flex justify-content-between mt-3">
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
+                                            <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
                                         </ul>
-                                        <a href="BlogsURL?service=detailBlog&blog=<%=currentBlog.getBlogID()%>" class="text-dark title h5"><%=currentBlog.getTitle()%></a>
-                                        <div class="post-meta d-flex justify-content-between mt-3">
-                                            <ul class="list-unstyled mb-0">
-                                                <li class="list-inline-item me-2 mb-0"><a href="#" class="text-muted like"><i class="mdi mdi-heart-outline me-1"></i>33</a></li>
-                                                <li class="list-inline-item"><a href="#" class="text-muted comments"><i class="mdi mdi-comment-outline me-1"></i>08</a></li>
-                                            </ul>
-                                            <a href="BlogsURL?service=detailBlog&blog=<%=currentBlog.getBlogID()%>" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
-                                        </div>
+                                        <a href="BlogsURL?service=detailBlog&blog=<%=currentBlog.getBlogID()%>" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
                                     </div>
                                 </div>
                             </div>
-
-                            <%}
-                            %>
-
-
-
-
-
                         </div>
-                    </div><!--end col-->
-                </div><!--end row-->
-            </div><!--end container-->
-        </section><!--end section-->
+                        <% } %>
+                    </div>
+                </div><!--end col-->
+            </div><!--end row-->
+        </div><!--end container-->
+    </section><!--end section-->
+
         <!-- End -->
 
         <!-- Start -->

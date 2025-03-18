@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
-    
+
 <html lang="en">
 
     <head>
@@ -31,9 +31,9 @@
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
     </head>
-<%
-            Account account = (Account)session.getAttribute("dataUser");
-           Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    <%
+                Account account = (Account)session.getAttribute("dataUser");
+               Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
            
     %>
@@ -53,13 +53,13 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="Dashboard">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
                     </div>
 
-                  
+
 
                     <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>-->
 
@@ -106,12 +106,12 @@
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            
-                           
+
+
                             <%
                              if(currentCustomer != null){
                             %>
-                            
+
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
 
@@ -156,21 +156,21 @@
 
                                 <div class="card border-0 p-4 rounded shadow">
                                     <form action="EditAccount" method="post">
-<!--                                        <div class="row align-items-center">
-                                            <div class="col-lg-2 col-md-4">
-                                                <img src="images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
-                                            </div>end col
-
-                                            <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
-                                                <h5 class="">Upload your picture</h5>
-                                                <p class="text-muted mb-0">For best results, use an image at least 600px by 600px in either .jpg or .png format</p>
-                                            </div>end col
-
-                                            <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
-                                                <a href="#" class="btn btn-primary">Upload</a>
-                                                <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
-                                            </div>end col
-                                        </div>end row-->
+                                        <!--                                        <div class="row align-items-center">
+                                                                                    <div class="col-lg-2 col-md-4">
+                                                                                        <img src="images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
+                                                                                    </div>end col
+                                        
+                                                                                    <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
+                                                                                        <h5 class="">Upload your picture</h5>
+                                                                                        <p class="text-muted mb-0">For best results, use an image at least 600px by 600px in either .jpg or .png format</p>
+                                                                                    </div>end col
+                                        
+                                                                                    <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
+                                                                                        <a href="#" class="btn btn-primary">Upload</a>
+                                                                                        <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
+                                                                                    </div>end col
+                                                                                </div>end row-->
 
                                         <form class="mt-4">
                                             <div class="row">
@@ -196,24 +196,11 @@
                                                 </div><!--end col-->
                                                 <div class="col-md-6">
                                                     <label>Role</label>
-                                                    <select class="form-control" name="roleID" disabled>
-                                                        <option value="1"
-                                                                <c:if test="${account.roleID == 1}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Admin</option>
-                                                        <option value="2"
-                                                                <c:if test="${account.roleID == 2}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Customer</option>
-                                                        <option value="3"
-                                                                <c:if test="${account.roleID == 3}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Editor</option>
+                                                    <select class="form-control" name="roleID">
+                                                        <option value="1" ${account.roleID == 1 ? 'selected' : ''}>Staff</option>
+                                                        <option value="2" ${account.roleID == 2 ? 'selected' : ''}>Customer</option>
+                                                        <option value="3" ${account.roleID == 3 ? 'selected' : ''}>Admin</option>
                                                     </select>
-                                                    <input value="${account.roleID}" name="roleID" type="text" hidden>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>Status</label>

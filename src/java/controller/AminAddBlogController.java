@@ -48,15 +48,23 @@ public class AminAddBlogController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String name = request.getParameter("title");
+         String title = request.getParameter("title");
         String date = request.getParameter("date");
-        String customerIDStr = request.getParameter("customerID");
+//        String customerIDStr = request.getParameter("customerID");
         String description = request.getParameter("description:");
-//        String image = request.getParameter("images");
-        boolean statusStr = Boolean.parseBoolean(request.getParameter("active"));
+        Part part = request.getPart("image");
+        String fileName = part.getSubmittedFileName();
+
+        String uploadDir = "D:\\FU_Learning\\SUM2024\\CSD201\\Code\\SWP391\\web\\images\\blogs";
+        File uploadFolder = new File(uploadDir);
+
+        String path = uploadDir + File.separator + fileName;
+        InputStream is = part.getInputStream();
+        boolean test = uploadFile(is, path);
+
         DAOBlogs dblogs = new DAOBlogs();
-        dblogs.insertBlog(customerIDStr, "", name, description, statusStr);
-        response.sendRedirect("admin");
+        dblogs.insertBlog(date, title, description, fileName, true);
+        response.sendRedirect("BlogManagement");
 
     }
 
@@ -86,15 +94,24 @@ public class AminAddBlogController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
         String title = request.getParameter("title");
         String date = request.getParameter("date");
 //        String customerIDStr = request.getParameter("customerID");
         String description = request.getParameter("description:");
-        String image = request.getParameter("images");
+        Part part = request.getPart("image");
+        String fileName = part.getSubmittedFileName();
+
+        String uploadDir = "D:\\FU_Learning\\SUM2024\\CSD201\\Code\\SWP391\\web\\images\\blogs";
+        File uploadFolder = new File(uploadDir);
+
+        String path = uploadDir + File.separator + fileName;
+        InputStream is = part.getInputStream();
+        boolean test = uploadFile(is, path);
+
         DAOBlogs dblogs = new DAOBlogs();
-        dblogs.insertBlog(date, title, description, image, true);
-        response.sendRedirect("admin");
+        dblogs.insertBlog(date, title, description, fileName, true);
+        response.sendRedirect("BlogManagement");
     }
 
     public boolean uploadFile(InputStream is, String path) {
