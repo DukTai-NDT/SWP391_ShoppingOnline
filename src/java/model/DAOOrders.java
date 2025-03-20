@@ -4,6 +4,7 @@
  */
 package model;
 
+import entity.OrderDetails;
 import entity.Orders;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -86,6 +87,25 @@ public class DAOOrders extends DBConnection {
         }
         return n;
     }
+    
+    public int updateIsReceived(int oid) {
+        int n = 0;
+        String sql = "UPDATE [dbo].[Orders]\n"
+                + "   SET [isReceived] = 1\n"
+                + " WHERE OrderID = ?";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            pre.setInt(1, oid);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
+    
+    
 
     public Vector<Orders> getOrders(String sql) {
         Vector<Orders> vector = new Vector<Orders>();
@@ -95,14 +115,13 @@ public class DAOOrders extends DBConnection {
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 int OrderID = rs.getInt("OrderID");
-
                 String Status = rs.getString("Status");
                 int CustomerID = rs.getInt("CustomerID");
                 LocalDate OrderTime = rs.getDate("OrderTime").toLocalDate();
                 LocalDate DeliveryETA = rs.getDate("DeliveryETA").toLocalDate();
                 int PaymentID = rs.getInt("PaymentID");
-
-                Orders order = new Orders(OrderID, Status, CustomerID, OrderTime, DeliveryETA, PaymentID);
+                boolean isReceived = (rs.getInt("isReceived") == 1 ? true : false);
+                Orders order = new Orders(OrderID, Status, CustomerID, OrderTime, DeliveryETA, PaymentID, isReceived);
                 vector.add(order);
             }
         } catch (SQLException ex) {
@@ -128,7 +147,6 @@ public class DAOOrders extends DBConnection {
         }
         return n;
     }
-
 
     public int getTotalSearchOrders(String searchQuery) {
         int total = 0;
@@ -168,7 +186,8 @@ public class DAOOrders extends DBConnection {
                         rs.getInt("CustomerID"),
                         rs.getTimestamp("OrderTime").toLocalDateTime().toLocalDate(),
                         rs.getTimestamp("DeliveryETA") != null ? rs.getTimestamp("DeliveryETA").toLocalDateTime().toLocalDate() : null,
-                        rs.getInt("PaymentID")
+                        rs.getInt("PaymentID"),
+                        (rs.getInt("isReceived") == 1 ? true : false)
                 );
                 ;
                 ordersList.add(order);
@@ -214,7 +233,8 @@ public class DAOOrders extends DBConnection {
                         rs.getInt("CustomerID"),
                         rs.getTimestamp("OrderTime").toLocalDateTime().toLocalDate(),
                         rs.getTimestamp("DeliveryETA") != null ? rs.getTimestamp("DeliveryETA").toLocalDateTime().toLocalDate() : null,
-                        rs.getInt("PaymentID")
+                        rs.getInt("PaymentID"),
+                        (rs.getInt("isReceived") == 1 ? true : false)
                 );
                 ordersList.add(order);
             }
@@ -223,7 +243,6 @@ public class DAOOrders extends DBConnection {
         }
         return ordersList;
     }
-    
 
     public int updateStatusOrder(String newStatus, int orderID) {
         int n = 0;
@@ -258,15 +277,66 @@ public class DAOOrders extends DBConnection {
         return count;
     }
 
+    public String getStatus(int orderID) {
+        String status = "";
+        String sql = "select Status from Orders  where  OrderID = " + orderID;
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                status = rs.getString("Status");
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrderDetails.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
+
+    public int getProductIDByOrderID(int orderID) {
+        int pid = 0;
+        String sql = "select ProductID from Orders o join OrderDetails od on o.OrderID = od.OrderID\n"
+                + "where o.OrderID = " + orderID;
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                pid = rs.getInt("ProductID");
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrderDetails.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return pid;
+    }
+
+    public double getTotalByOrderID(int orderID) {
+        double total = 0.0;
+        DAOOrderDetails daoOD = new DAOOrderDetails();
+        Vector<OrderDetails> vector = daoOD.getOrderDetails("Select * from OrderDetails where OrderID = " + orderID);
+        for (OrderDetails orderDetails : vector) {
+            total += orderDetails.getPrice();
+        }
+        return total;
+    }
+
     public static void main(String[] args) {
         DAOOrders dao = new DAOOrders();
-
-     
         
-        int n = dao.countAccounts();
-        System.out.println(n);
-        
-        
+//        Vector<Orders> vector = dao.getOrders("select * from Orders where Status = 'Prepared'");
+//        for (Orders orders : vector) {
+//            System.out.println(orders);
+//        }
+    int n = dao.updateIsReceived(9);
+    if(n > 0) {
+        System.out.println("oke");
+    } 
 
     }
 }

@@ -18,23 +18,27 @@ public class Orders {
     private LocalDate OrderTime;
     private LocalDate DeliveryETA;
     private int PaymentID;
+    private boolean isReceived;
 
-    public Orders(int OrderID, String Status, int CustomerID, LocalDate OrderTime, LocalDate DeliveryETA, int PaymentID) {
+    public Orders(int OrderID, String Status, int CustomerID, LocalDate OrderTime, LocalDate DeliveryETA, int PaymentID, boolean isReceived) {
         this.OrderID = OrderID;
         this.Status = Status;
         this.CustomerID = CustomerID;
         this.OrderTime = OrderTime;
         this.DeliveryETA = DeliveryETA;
         this.PaymentID = PaymentID;
+        this.isReceived = isReceived;
     }
 
-    public Orders(String Status, int CustomerID, LocalDate OrderTime, LocalDate DeliveryETA, int PaymentID) {
+    public Orders(String Status, int CustomerID, LocalDate OrderTime, LocalDate DeliveryETA, int PaymentID, boolean isReceived) {
         this.Status = Status;
         this.CustomerID = CustomerID;
         this.OrderTime = OrderTime;
         this.DeliveryETA = DeliveryETA;
         this.PaymentID = PaymentID;
+        this.isReceived = isReceived;
     }
+ 
 
     public Orders() {
     }
@@ -86,6 +90,18 @@ public class Orders {
     public void setPaymentID(int PaymentID) {
         this.PaymentID = PaymentID;
     }
+
+    public boolean isIsReceived() {
+        return isReceived;
+    }
+
+    public void setIsReceived(boolean isReceived) {
+        this.isReceived = isReceived;
+    }
+
+  
+    
+    
 
     @Override
     public String toString() {

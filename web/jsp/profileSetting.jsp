@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Vector,entity.Customers,entity.Cart,entity.CartItems, jakarta.servlet.http.HttpSession, entity.Categories"%>
+<%@page import="java.util.Vector,entity.Customers,entity.Cart,entity.CartItems, jakarta.servlet.http.HttpSession, entity.Categories, entity.Account"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -67,6 +67,7 @@
         </div>
 
         <% 
+            Account account = (Account) session.getAttribute("dataUser");
             Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
             Vector<Categories> vectorCat = (Vector<Categories>)session.getAttribute("vectorCat");
             Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 

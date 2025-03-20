@@ -742,7 +742,7 @@
 
                             <div class="mt-4 pt-2">
                                 <% if(account != null) { %>
-                                <a href="#" class="btn btn-primary">Shop Now</a>
+                                <a href="ProductURL?service=listAllProducts" class="btn btn-primary">Shop Now</a>
 
 
                                 <% if(product.getQuantity() > 0 && product.isIsAvailable() == true) { %>

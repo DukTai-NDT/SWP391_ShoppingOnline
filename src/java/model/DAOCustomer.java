@@ -267,7 +267,7 @@ public class DAOCustomer extends DBConnection {
 
     public static void main(String[] args) {
         DAOCustomer dao = new DAOCustomer();
-        Customers cus = dao.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID").get(0);
+        Customers cus = dao.getCustomer("select * from Customers where AccountID =  17 ").get(0);
         System.out.println(cus);
     }
 
