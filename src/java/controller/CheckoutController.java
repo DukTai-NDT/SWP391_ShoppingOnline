@@ -4,6 +4,7 @@
  */
 package controller;
 
+import entity.Account;
 import entity.CartItems;
 import entity.Customers;
 import entity.DeliveryAddress;
@@ -51,8 +52,8 @@ public class CheckoutController extends HttpServlet {
             DAOCartItem daoCartItem = new DAOCartItem();
             DAOCategories daoCat = new DAOCategories();
             DAOProducts daoPro = new DAOProducts();
-                    
-                    
+            Account account = (Account)session.getAttribute("dataUser");
+
             Customers customer = (Customers) session.getAttribute("dataCustomer");
             String service = request.getParameter("service");
             if (service == null) {
@@ -106,8 +107,10 @@ public class CheckoutController extends HttpServlet {
                     // Add Order
 
 
-                    int orderID = daoOrder.addOrder(new Orders("On-prepared", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID()));
-                    
+
+                    int orderID = daoOrder.addOrder(new Orders("On-prepared", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID(), false));
+
+
 
                     if (orderID == 0) {
                         request.setAttribute("message", "Order processing failed");

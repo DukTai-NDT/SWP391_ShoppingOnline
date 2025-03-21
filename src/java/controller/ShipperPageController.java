@@ -4,6 +4,12 @@
  */
 package controller;
 
+import entity.Blogs;
+import entity.Categories;
+import entity.Customers;
+import entity.OrderDetails;
+import entity.Orders;
+import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,14 +17,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.Vector;
+import model.DAOBlogs;
+import model.DAOCategories;
+import model.DAODeliveryAddress;
+import model.DAOOrderDetails;
 import model.DAOOrders;
+import model.DAOPayments;
+import model.DAOProducts;
 
 /**
  *
- * @author whyth
+ * @author quang
  */
-@WebServlet(name = "StatusChangeController", urlPatterns = {"/StatusChange"})
-public class StatusChangeController extends HttpServlet {
+@WebServlet(name = "ShipperPageController", urlPatterns = {"/ShipperPageURL"})
+public class ShipperPageController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,37 +45,11 @@ public class StatusChangeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/plain;charset=UTF-8");
-
-        String action = request.getParameter("action");
-        if ("updateStatus".equals(action)) {
-            int orderID = Integer.parseInt(request.getParameter("orderID"));
-            String currentStatus = request.getParameter("status");
-            String newStatus = getNextStatus(currentStatus);
-
-            DAOOrders dao = new DAOOrders();
-            int n = dao.updateStatusOrder(newStatus, orderID);
-            try (PrintWriter out = response.getWriter()) {
-                if (n > 0) {
-                    System.out.println("Cập nhật trạng thái thành công: " + newStatus);  // Log kiểm tra
-                    out.write(newStatus);  // Trả về trạng thái mới
-                } else {
-                    System.out.println("Không thể cập nhật trạng thái: " + currentStatus);  // Log kiểm tra
-                    out.write(currentStatus);  // Không thay đổi
-                }
-            }
-        }
-    }
-
-    private String getNextStatus(String currentStatus) {
-        switch (currentStatus) {
-            case "On-prepared":
-
-               return "Prepared";
-                                  
-
-            default:
-                return currentStatus;
+        response.setContentType("text/html;charset=UTF-8");
+        
+        try (PrintWriter out = response.getWriter()) {
+            request.getRequestDispatcher("/jsp/shipper-page.jsp").forward(request, response);
+                    
         }
     }
 

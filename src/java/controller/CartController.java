@@ -182,6 +182,7 @@ public class CartController extends HttpServlet {
                     Vector<String> overFlow = new Vector<>();
                    
                     for (CartItems selectedCartItem : selectedCartItems) {
+                        
                         DAOProducts dao = new DAOProducts();
                         Products pro = dao.getProductByID(selectedCartItem.getProductID());
                         if (pro.getQuantity() < selectedCartItem.getQuantity()) {

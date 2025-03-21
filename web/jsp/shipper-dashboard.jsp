@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <%@ page import=" entity.Account , entity.Customers,entity.OrderDetails,model.DAOProducts,model.DAOOrderDetails,java.util.Vector" %>
-<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems" %>
+<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Orders, model.DAOOrders" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <html lang="vi">
     <head>
         <meta charset="utf-8" />
-        <title>Doctris - Order History</title>
+        <title>Shipper Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Premium Bootstrap 4 Landing Page Template" />
         <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health" />
@@ -82,6 +82,7 @@
             .product-info {
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 gap: 15px;
             }
 
@@ -123,9 +124,9 @@
         </style>
     </head>
     <%
-       Vector<OrderDetails> vectorOrderDetail =  (Vector<OrderDetails>) request.getAttribute("dataOrderHistory");
+       Vector<Orders> vectorOrder =  (Vector<Orders>) request.getAttribute("vectorOrder");
       DAOProducts daoProduct = new DAOProducts();
-      DAOOrderDetails daoOrderDetail = new DAOOrderDetails();
+      DAOOrders daoOrder = new DAOOrders();
     %>
     <% String message = (String)request.getAttribute("message"); 
     %>
@@ -135,7 +136,7 @@
     <%
         Account account = (Account)session.getAttribute("dataUser");
        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
-
+       Customers shipper = (Customers) session.getAttribute("shipper");
              Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
     %>
     <body>
@@ -154,7 +155,7 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container -->
-                <a class="logo" href="index.jsp">
+                <a class="logo" href="ShipperPageURL">
                     <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                     <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>
@@ -177,23 +178,12 @@
                 <!-- End Mobile Toggle -->
 
                 <!-- Start Dropdown -->
-                
+
                 <ul class="dropdowns list-inline mb-0">
-                     <%
-            if(currentCustomer != null){
+                    <%
+           if(currentCustomer != null){
                     %>
-                    <li class="list-inline-item mb-0">
-                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
-                        </a>
-                    </li>
 
-                    <li class="list-inline-item mb-0 ms-1">
-                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-                            <i class="uil uil-search"></i>
-                        </a>
-
-                    </li>
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
 
@@ -208,7 +198,6 @@
                                         <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
                                 <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
@@ -226,23 +215,7 @@
                 </ul>
                 <!-- Start Dropdown -->
 
-                <div id="navigation">
-                    <!-- Navigation Menu-->   
-                    <ul class="navigation-menu nav-left nav-light">
-                        <li class="parent-menu-item">
-                            <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
 
-                        </li>
-                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <%for (Categories cat : vcategories){%>
-                                <li><a href="ProductURL?service=categories&cid=<%=cat.getCategoryID()%>" class="sub-menu-item"> <%=cat.getCategoryName()%></a></li>
-                                    <%}%>
-                            </ul>
-                        </li>
-                        <li><a href="BlogsURL">Blog </a></li>
-                    </ul><!--end navigation menu-->
-                </div><!--end navigation-->
             </div><!--end container-->
         </header><!--end header-->
         <!-- Navbar End -->
@@ -284,69 +257,63 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="table-container">
-                                <nav class="status-bar">
-                                    <a href="#" class="status" data-status="all" aria-current="page">All Orders</a>
-                                    <a href="#" class="status" data-status="pending">Pending</a>
-                                    <a href="#" class="status" data-status="shipping">Shipping</a>
-                                    <a href="#" class="status" data-status="completed">Completed</a>
-                                </nav>
+                               
                                 <table class="table table-hover table-striped mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
+                                            <th>OrderID</th>    
                                             <th>Total</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%
-                                        for (OrderDetails orderDetails : vectorOrderDetail) {
-                                            if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){
+                                        <% 
+                                            for (Orders order : vectorOrder) { 
+                                                String status = daoOrder.getStatus(order.getOrderID()); // Lưu trạng thái vào biến
+                                                String statusClass = ""; // Biến để lưu data-status
+
+                                                if(status.equals("Done")) {
+                                                    statusClass = "completed";
+                                                } else if(status.equals("Delivering")) {
+                                                    statusClass = "shipping";
+                                                } else if(status.equals("On-prepared")) {
+                                                    statusClass = "pending";
+                                                }
                                         %>
-                                        <tr data-status="completed">
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Delivering")){%>
-                                        <tr data-status="shipping">
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Prepared")){%>
-                                            <tr data-status="shipping">
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
-                                        <tr data-status="pending">
-                                            <%}%>
+                                        <tr data-status="<%=statusClass%>">
                                             <td>
-                                                <div class="product-info">
-                                                    <img src="images/products/<%=daoProduct.getProductImg(orderDetails.getProductID())%>" alt="Keo ngậm thơm miệng Keliquo" class="product-image">
-                                                    <span><%=daoProduct.getProductByID(orderDetails.getProductID()).getProductName()%></span>
+                                                <div class="">
+                                                    <a href=""><%=order.getOrderID()%></a>
                                                 </div>
                                             </td>
-                                            <td>₫<%=orderDetails.getPrice()%></td>
-                                            <td><%=orderDetails.getQuantity()%></td>
-                                            <td>₫<%=orderDetails.getPrice() * orderDetails.getQuantity()%></td>
-                                            <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){ %>
-                                            <td><span class="badge bg-success"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
-                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Delivering")){%>
-                                            <td><span class="badge bg-info"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Prepared")){%>
-                                            <td><span class="badge bg-info"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
-                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
-                                            <td><span class="badge bg-warning"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
-                                                <%}%>
-                                            <td>
-                                                <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){ %>
-                                                <div class="order-actions">
-                                                    <a href="ProductDetailURL?service=detailProduct&pid=<%=orderDetails.getProductID()%>" class="btn btn-danger btn-sm me-2">Review</a>
-                                                    <a href="ProductDetailURL?service=detailProduct&pid=<%=orderDetails.getProductID()%>" class="btn btn-primary btn-sm">Buy Again</a>
-                                                </div>
-                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
-                                                <div class="order-actions">
-                                                    <a href="OrderHistoryURL?service=cancerOrder&orderDetaiID=<%=orderDetails.getOrderDetailID()%>" class="btn btn-danger">Cancer</a>
 
+                                            <td>₫ <%=daoOrder.getTotalByOrderID(order.getOrderID())%></td>
+
+                                            <td>
+                                                <% if(status.equals("Done") || status.equals("Delivering")) { %>
+                                                <span class="badge bg-success"><%=status%></span>
+                                                <% } else if(status.equals("Prepared")) { %>
+                                                <span class="badge bg-info"><%=status%></span>
+                                                <% } else if(status.equals("On-prepared")) { %>
+                                                <span class="badge bg-warning"><%=status%></span>
+                                                <% } %>
+                                            </td>
+
+                                            <td>
+                                                <% if(order.isIsReceived()) { %>
+                                                <div class="order-actions">
+                                                    <a href="ShipperDashBoardURL?service=finshedTranspoted&orderid=<%=order.getOrderID()%>" class="btn btn-success">Transported by <%=account.getUserName()%></a>
                                                 </div>
-                                                <%}%>
+                                                <% } else { %>
+                                                <div class="order-actions">
+                                                    <a href="ShipperDashBoardURL?service=pickOrder&oid=<%=order.getOrderID()%>&aid=<%=account.getAccountID()%>" class="btn btn-danger">Choose</a>
+                                                </div>
+                                                <% } %>
                                             </td>
                                         </tr>
-                                        <%}%>
+                                        <% } %>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -608,5 +575,12 @@
                 });
             });
         </script>
+        <script>
+            function redirectToOrderDetail(orderID) {
+                window.location.href = "OrderDetailURL?orderID=" + orderID;
+            }
+        </script>
+
+
     </body>
 </html>

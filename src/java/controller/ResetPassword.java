@@ -114,7 +114,7 @@ public class ResetPassword extends HttpServlet {
                 String cfpassword = request.getParameter("CFPassword");
                 if (!password.equals(cfpassword)) {
                     request.setAttribute("message", "comfim password must be same new password");
-                    request.getRequestDispatcher("jsp//reset-password.jsp").forward(request, response);
+                    request.getRequestDispatcher("jsp/reset-password.jsp").forward(request, response);
 
                     return;
                 }

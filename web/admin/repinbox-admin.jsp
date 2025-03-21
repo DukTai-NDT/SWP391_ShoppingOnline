@@ -254,7 +254,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="Dashboard">
+                        <a href="AdminRepInboxURL?service=show">
                             <!--<a href="index.jsp">-->
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
@@ -262,9 +262,7 @@
                     </div>
 
                     <ul class="sidebar-menu pt-3">
-                        <li class="sidebar-dropdown">
-                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
-                        </li>
+                        
 
 
                     

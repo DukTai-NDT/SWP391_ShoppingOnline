@@ -4,6 +4,9 @@
  */
 package controller;
 
+import entity.Customers;
+import entity.OrderDetails;
+import entity.Orders;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,14 +14,20 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.Vector;
+import model.DAODeliveryAddress;
+import model.DAOOrderDetails;
 import model.DAOOrders;
+import model.DAOPayments;
+import model.DAOProducts;
 
 /**
  *
- * @author whyth
+ * @author Admin
  */
-@WebServlet(name = "StatusChangeController", urlPatterns = {"/StatusChange"})
-public class StatusChangeController extends HttpServlet {
+@WebServlet(name = "OrderDetailController", urlPatterns = {"/OrderDetailURL"})
+public class OrderDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,37 +40,26 @@ public class StatusChangeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/plain;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        DAOOrderDetails daoOrderDetail = new DAOOrderDetails();
+        try (PrintWriter out = response.getWriter()) {
+            String service = request.getParameter("service");
 
-        String action = request.getParameter("action");
-        if ("updateStatus".equals(action)) {
-            int orderID = Integer.parseInt(request.getParameter("orderID"));
-            String currentStatus = request.getParameter("status");
-            String newStatus = getNextStatus(currentStatus);
+            Customers customer = (Customers) session.getAttribute("dataCustomer");
+            Vector<OrderDetails> vectorOrderDetail = daoOrderDetail.getOrderDetails(" SELECT  MIN(od.OrderDetailID) AS OrderDetailID, \n"
+                    + "       MIN(od.Price) AS Price,\n"
+                    + "	   MIN(od.Quantity) AS Quantity, \n"
+                    + "	   od.ProductID,\n"
+                    + "       MIN(od.OrderID) AS OrderID\n"
+                    + "FROM OrderDetails od JOIN Orders o ON od.OrderID = o.OrderID\n"
+                    + "WHERE o.CustomerID = " + customer.getCustomerID() + "\n"
+                    + "GROUP BY od.ProductID,o.Status;");
+            String message = request.getParameter("message");
+            request.setAttribute("message", message);
+            request.setAttribute("dataOrderHistory", vectorOrderDetail);
+            request.getRequestDispatcher("jsp/order-detail.jsp").forward(request, response);
 
-            DAOOrders dao = new DAOOrders();
-            int n = dao.updateStatusOrder(newStatus, orderID);
-            try (PrintWriter out = response.getWriter()) {
-                if (n > 0) {
-                    System.out.println("Cập nhật trạng thái thành công: " + newStatus);  // Log kiểm tra
-                    out.write(newStatus);  // Trả về trạng thái mới
-                } else {
-                    System.out.println("Không thể cập nhật trạng thái: " + currentStatus);  // Log kiểm tra
-                    out.write(currentStatus);  // Không thay đổi
-                }
-            }
-        }
-    }
-
-    private String getNextStatus(String currentStatus) {
-        switch (currentStatus) {
-            case "On-prepared":
-
-               return "Prepared";
-                                  
-
-            default:
-                return currentStatus;
         }
     }
 

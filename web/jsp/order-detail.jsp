@@ -309,8 +309,6 @@
                                         <tr data-status="completed">
                                             <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Delivering")){%>
                                         <tr data-status="shipping">
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Prepared")){%>
-                                            <tr data-status="shipping">
                                             <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
                                         <tr data-status="pending">
                                             <%}%>
@@ -326,8 +324,6 @@
                                             <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){ %>
                                             <td><span class="badge bg-success"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
                                                 <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Delivering")){%>
-                                            <td><span class="badge bg-info"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Prepared")){%>
                                             <td><span class="badge bg-info"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
                                                 <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
                                             <td><span class="badge bg-warning"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>

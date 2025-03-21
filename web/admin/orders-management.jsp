@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entity.PaymentMethod, entity.Brand, java.util.Vector, model.DAOPaymentMethod" %>
 <%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
-    
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,9 +51,9 @@
             }
         </style>
     </head>
-<%
-            Account account = (Account)session.getAttribute("dataUser");
-           Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    <%
+                Account account = (Account)session.getAttribute("dataUser");
+               Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
            
     %>
@@ -166,12 +166,12 @@
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            
-                           
+
+
                             <%
                              if(currentCustomer != null){
                             %>
-                            
+
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
 
@@ -239,7 +239,7 @@
                                     <th class="p-3">Action</th>
                                 </tr>
                             </thead>
-                            
+
                             <tbody>
                                 <c:forEach var="o" items="${oList}" varStatus="loop">
                                     <tr class="border-bottom">
@@ -568,8 +568,13 @@
 
                         switch (currentStatus) {
                             case "On-prepared":
-                                nextStatus = "Delivery";
+
+                                nextStatus = "Prepared";
                                 break;
+//                            case "Prepared":
+//                                nextStatus = "Delivery";
+//                                break;
+
 //                            case "Delivery":
 //                                nextStatus = "Done";
 //                                break;

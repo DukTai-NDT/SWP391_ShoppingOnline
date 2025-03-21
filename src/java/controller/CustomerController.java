@@ -1,5 +1,6 @@
 package controller;
 
+import entity.Account;
 import entity.CartItems;
 import entity.Customers;
 import entity.Categories;
@@ -24,8 +25,8 @@ import model.DAOCategories;
 
 @WebServlet(name = "CustomerController", urlPatterns = {"/CustomerURL"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-                 maxFileSize = 1024 * 1024 * 10,      // 10MB
-                 maxRequestSize = 1024 * 1024 * 50)   // 50MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class CustomerController extends HttpServlet {
 
     private static final String UPLOAD_DIR = "uploads";
@@ -41,18 +42,17 @@ public class CustomerController extends HttpServlet {
 
         // Lấy đối tượng Customers từ session với key "dataCustomer"
         Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
-        
+
         if (currentCustomer != null) {
-             Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy(
-        "select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy " +
-        "from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = " + currentCustomer.getCustomerID()
-             );
-             Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
-             session.setAttribute("vectorCat", vectorCat);
-          session.setAttribute("dataCartItem", vectorCartItems);
-    
+            Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy(
+                    "select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy "
+                    + "from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = " + currentCustomer.getCustomerID()
+            );
+            Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
+            session.setAttribute("vectorCat", vectorCat);
+            session.setAttribute("dataCartItem", vectorCartItems);
+
         }
-        
 
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("service");
@@ -181,27 +181,30 @@ public class CustomerController extends HttpServlet {
                 request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
             }
 
-            if (service.equals("changePassword")) {
-                String submit = request.getParameter("submit");
-                if (submit == null) {
+            if (service.equals("updatePasswordCustomer")) {
+                String oldPassword = request.getParameter("oldpassword");
+                String newPassword = request.getParameter("newpassword");
+                String confimPassword = request.getParameter("cfPassword");
+                Account account = (Account) session.getAttribute("dataUser");
+                if (oldPassword.equals(newPassword)) {
+                    request.setAttribute("message", "New password must be different old password");
                     request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
-                } else {
-                    String oldPassword = request.getParameter("OldPassword");
-                    String newPassword = request.getParameter("NewPassword");
-                    String retypePassword = request.getParameter("RetypeNewPassword");
-                    String email = request.getParameter("Email");
 
-                    if (newPassword.equals(retypePassword)) {
-                        if (daoAcc.checkPassword(email, oldPassword)) {
-                            daoAcc.changePassword(email, newPassword);
-                            response.sendRedirect("CustomerURL?service=listAllCustomer");
-                        } else {
-                            request.setAttribute("error", "Old password is incorrect.");
-                            request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
-                        }
-                    } else {
-                        request.setAttribute("error", "New password and retype password do not match.");
+                } else if (!account.getPassword().equals(oldPassword)) {
+                    request.setAttribute("message", "Old password is not correct");
+                    request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
+
+                } else {
+                    if (!newPassword.equals(confimPassword)) {
+                        request.setAttribute("message", "comfim password must be same new password");
                         request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
+
+                        return;
+                    } else {
+                        daoAcc.changePassword(account.getEmail(), newPassword);
+                        request.setAttribute("message", "Change password succesfully");
+                        request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
+
                     }
                 }
             }
@@ -236,5 +239,3 @@ public class CustomerController extends HttpServlet {
         return "Short description";
     }
 }
-
-

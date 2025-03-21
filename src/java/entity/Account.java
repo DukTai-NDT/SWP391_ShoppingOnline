@@ -15,9 +15,9 @@ public class Account {
     private int RoleID;
     private String Password;
     private String Email;
-
     private boolean active;
 
+    
     public Account(int AccountID, String UserName, int RoleID, String Password,String Email,boolean active) {
         this.AccountID = AccountID;
         this.UserName = UserName;

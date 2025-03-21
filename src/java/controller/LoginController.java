@@ -104,17 +104,15 @@ public class LoginController extends HttpServlet {
                         session.setAttribute("selectedCartItems", new Vector<CartItems>());
                         Customers cus = customerList.get(0);
                         session.setAttribute("dataCustomer", cus);
-                          if (accountExists.getRoleID() == 2) {
+                        if (accountExists.getRoleID() == 2) {
 
-                            
                             request.getRequestDispatcher("index.jsp").forward(request, response);
-                        } else{
-                            
+                        } else {
+
                             response.sendRedirect("Dashboard");
 
                         }
-                        
-                    
+
                     } else {
                         // Xử lý trường hợp không tìm thấy khách hàng
                         request.setAttribute("message", "Không tìm thấy thông tin khách hàng cho tài khoản này.");
@@ -138,44 +136,53 @@ public class LoginController extends HttpServlet {
                     request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
                 } else {
                     Account account = dao.getLogin(request.getParameter("username"), request.getParameter("password"));
-                    System.out.println("ok+"+account);
-                    
+                    System.out.println("ok+" + account);
+
                     if (account == null) {
                         request.setAttribute("message", "Username or password is incorrect");
                         request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-                        
-                        
-                    if (account.isActive() == false) {
-                        request.setAttribute("message", "Account is block can not login");
-                        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
 
-                    }
+                        if (account.isActive() == false) {
+                            request.setAttribute("message", "Account is block can not login");
+                            request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
 
-                    
+                        }
 
                     } else if (account != null) {
 
-                        if (account.getRoleID() == 2) {
-                               System.out.println("OK123456789");
+                        if (account.getRoleID() == 2 ) {
+                            System.out.println("OK123456789");
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             System.out.println(cus);
                             session.setAttribute("dataCustomer", cus);
                             session.setAttribute("dataUser", account);
                             request.getRequestDispatcher("HomePageURL").forward(request, response);
-                        } else {
+                        } else if (account.getRoleID() == 3|| account.getRoleID() == 1) {
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             session.setAttribute("dataCustomer", cus);
                             session.setAttribute("dataUser", account);
                             response.sendRedirect("Dashboard");
 
+                        
+                         } else if (account.getRoleID() == 1003) {
+                            Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
+                            session.setAttribute("dataCustomer", cus);
+                            session.setAttribute("dataUser", account);
+                            response.sendRedirect("AdminRepInboxURL?service=show");
+
+                        }else if(account.getRoleID() == 2003){
+                            Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
+                            session.setAttribute("dataCustomer", cus);
+                            session.setAttribute("dataUser", account);
+                            request.getRequestDispatcher("ShipperPageURL").forward(request, response);
                         }
 
                     }
                 }
             }
-
         }
-    }
+        }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

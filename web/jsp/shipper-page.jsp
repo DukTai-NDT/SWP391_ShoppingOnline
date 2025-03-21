@@ -212,7 +212,7 @@
             <div class="container">
                 <!-- Logo container-->
                 <div>
-                    <a class="logo" href="index.jsp">
+                    <a class="logo" href="ShipperPageURL">
                         <span class="logo-light-mode">
                             <img src="images/logo-dark.png" class="l-dark" height="24" alt="">
                             <img src="images/logo-light.png" class="l-light" height="24" alt="">
@@ -246,11 +246,7 @@
                     <%
             if(currentCustomer != null){
                     %>
-                    <li class="list-inline-item mb-0">
-                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
-                        </a>
-                    </li>
+                   
 
                     <li class="list-inline-item mb-0 ms-1">
                         <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
@@ -272,16 +268,7 @@
                                         <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
-                                <a class="dropdown-item text-dark" href="ChatURL?service=show">
-                                    <span class="mb-0 d-inline-block me-1">
-                                        <i class="uil uil-comment-dots align-middle h6"></i>
-                                    </span>Chat
-                                </a>
                                 <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                                        <%if(account.getRoleID() != 2){%> 
-                                <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
-                                        <%}%>
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
 
@@ -306,18 +293,7 @@
     <div id="navigation">
         <!-- Navigation Menu-->   
         <ul class="navigation-menu nav-left nav-light">
-            <li class="parent-menu-item">
-                <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
-
-            </li>
-            <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
-                <ul class="submenu">
-                    <%for (Categories cat : vcategories){%>
-                    <li><a href="ProductURL?service=categories&cid=<%=cat.getCategoryID()%>" class="sub-menu-item"> <%=cat.getCategoryName()%></a></li>
-                        <%}%>
-                </ul>
-            </li>
-            <li><a href="BlogsURL">Blog </a></li>
+            <li><a href="ShipperDashBoardURL">Shipper </a></li>
         </ul><!--end navigation menu-->
     </div><!--end navigation-->
 </div><!--end container-->
@@ -325,19 +301,18 @@
 <!-- Navbar End -->
 
 <!-- Start Hero -->
-<section class="bg-half-260 d-table w-100" style="background: url('images/blog/pexels-artempodrez-4492065.jpg') center;">
+<section class="bg-half-260 d-table w-100" 
+         style="background: url('images/blog/pexels-artempodrez-4492065.jpg') center center no-repeat;
+         background-size: cover;
+         height: 100vh;">
     <div class="bg-overlay bg-overlay-dark"></div>
     <div class="container">
         <div class="row mt-5 mt-lg-0">
             <div class="col-12">
                 <div class="heading-title">
-                    <img src="images/logo-icon.png" height="50" alt="">
-                    <h4 class="display-4 fw-bold text-white title-dark mt-3 mb-4">Doctris</h4>
-                    <h5 class="para-desc text-white-50 mb-0">Fast, Convenient, and Safe for Your Health!</h5>
 
-                    <div class="mt-4 pt-2">
-                        <a href="ProductURL" class="btn btn-primary">Shop Now</a>
-                    </div>
+
+
                 </div>
             </div><!--end col-->
         </div><!--end row-->
@@ -345,337 +320,18 @@
 </section><!--end section-->
 <!-- End Hero -->
 
-<!-- Start -->
-<!--        <section class="section">
-            <div class="container mt-100 mt-60">
-                <div class="row justify-content-center">
-                    <div class="col-12">
-                        <div class="section-title mb-4 pb-2 text-center">
-                                                        <span class="badge badge-pill badge-soft-primary mb-3">Departments</span>
-                            <h4 class="title mb-4">Categories</h4>
-                                                        <p class="text-muted mx-auto para-desc mb-0">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
-                        </div>
-                    </div>end col
-                </div>end row
-
-                <div class="row">
-</div>end row
-</div>end container
-</section>end section-->
-<section class="section">
-    <div class="container mt-100 mt-60">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="section-title mb-4 pb-2 text-center">
-                    <h4 class="title mb-4">Categories</h4>
-                </div>
-            </div>
-        </div>
-
-        <!-- Swiper Container -->
-        <!--        <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-        <%for (Categories c : vcategories){%>
-        <div class="swiper-slide">
-            <div class="card features feature-primary border-0">
-                <div class="icon text-center rounded-md">
-                    <img src="images/category/<%=c.getImage()%>" alt="Blog Image" style="width: 50px">
-                </div>
-                <div class="card-body p-0 mt-3">
-                    <a href="ProductURL?service=categories&cid=<%=c.getCategoryID()%>" class="title text-dark h5"><%=c.getCategoryName()%></a><br>
-                    <a href="departments.jsp" class="link">Shop Now <i class="ri-arrow-right-line align-middle"></i></a>
-                </div>
-            </div>
-        </div>
-        <%}%>
-    </div>
-    <div class="swiper-pagination"></div>
-</div>-->
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <% for (Categories c : vcategories) { %>
-                <div class="swiper-slide">
-                    <div class="card features feature-primary border-0 p-2">
-                        <div class="d-flex align-items-center"> 
-                            <img src="images/category/<%= c.getImage() %>" alt="Blog Image" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
-                            <a href="ProductURL?service=categories&cid=<%= c.getCategoryID() %>" class="title text-dark h5 mb-0">
-                                <%= c.getCategoryName() %>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <% } %>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
-</section>
-
-<!-- Swiper Initialization -->
-<script>
-    var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 4,
-        spaceBetween: 20,
-        autoplay: {
-            delay: 3000, // Ch?y t? ??ng sau 3 gi?y
-            disableOnInteraction: false, // Kh?ng d?ng khi ng??i d?ng t??ng t?c
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true, // Cho ph?p b?m v?o pagination ?? chuy?n trang
-        },
-        breakpoints: {
-            1024: {slidesPerView: 4},
-            768: {slidesPerView: 2},
-            480: {slidesPerView: 1}
-        }
-    });
-
-</script>
-
-<!-- End -->
-
-<!-- Start -->
-<!--        <section class="section">
-            <div class="container mt-100 mt-60">
-                <div class="row justify-content-center">
-                    <div class="col-12">
-                        <div class="section-title mb-4 pb-2 text-center">
-                                                        <span class="badge badge-pill badge-soft-primary mb-3">Departments</span>
-                            <h4 class="title mb-4">Products</h4>
-                            <p class="text-muted mx-auto para-desc mb-0">Quality Medicines, Trusted Care ? Your Health, Our Priority.</p>
-                        </div>
-                    </div>end col
-                </div>end row
-
-                <div class="row">
-<c:forEach items="${vproduct}" var="p">
-    
-    <div class="col-xl-3 col-md-4 col-12 mt-5">
-
-        <div class="card features feature-primary border-0">
-
-
-            <img src="${p.image}" alt="Blog Image" style="max-width: 200px; height: auto;">
-
-            <div class="card-body p-0 mt-3">
-                <a href="departments.jsp" class="title text-dark h5">${p.productName}</a><br>
-                                                    <p class="text-muted mt-3">There is now an abundance of readable dummy texts required purely to fill a space.</p>
-                <div class="buttons">
-
-                    <a class="btn btn-primary" href="">Buy</a>
-
-                    <button class="btn btn-primary">Tuyp</button>
-                </div>
-            </div>
-
-        </div>
-
-    </div>end col
-</c:forEach>
-</div>end row
-<div class="swiper-pagination"></div>
-</div>end container
-</section>end section-->
-<section class="section">
-    <div class="container mt-100 mt-60">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="section-title mb-4 pb-2 text-center">
-                    <h4 class="title mb-4">Products</h4>
-                    <p class="text-muted mx-auto para-desc mb-0">Quality Medicines, Trusted Care ? Your Health, Our Priority.</p>
-
-                </div>
-
-            </div>
-            <a href="ProductURL" class="view-all">View All Products --></a>
-        </div>
-
-        <!-- Swiper Container -->
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <%for (Products p : vproduct) {%>
-                <div class="swiper-slide">
-                    <div class="card1 features feature-primary border-0">
-                        <img src="images/products/<%=p.getImage()%>" alt="Product Image" style="max-width: 200px; height: auto;">
-                        <div class="card-body1 p-0 mt-3 text-center">
-                            <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
-                            <div class="buttons mt-2">
-                                <a class="btn btn-primary" href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>">Buy</a>
-                                <button class="btn btn-primary">Tuyp</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%}%>
-            </div>
-
-            <!-- Pagination (d?u ch?m) -->
-            <div class="swiper-pagination"></div>
-
-            <!-- Navigation Buttons -->
-            <!--                    <div class="swiper-button-prev"></div>
-                                <div class="swiper-button-next"></div>-->
-        </div>
-    </div>
-</section>
-
-<!-- End -->
-<script>
-    var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 10, // Hi?n th? 4 s?n ph?m c?ng l?c
-        spaceBetween: 20,
-        autoplay: {
-            delay: 3000, // T? ??ng ch?y sau 3 gi?y
-            disableOnInteraction: false, // Kh?ng d?ng khi ng??i d?ng b?m v?o
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        breakpoints: {
-            1024: {slidesPerView: 4},
-            768: {slidesPerView: 2},
-            480: {slidesPerView: 1}
-        }
-    });
-
-
-</script>
-<!-- Start -->
-<section class="section">
-    <div class="container mt-100 mt-60">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="section-title mb-4 pb-2 text-center">
-                    <!--                            <span class="badge badge-pill badge-soft-primary mb-3">Departments</span>-->
-                    <h4 class="title mb-4">Best Selling Products</h4>
-                    <p class="text-muted mx-auto para-desc mb-0">Quality Medicines, Trusted Care ? Your Health, Our Priority.</p>
-                </div>
-            </div><!--end col-->
-        </div><!--end row-->
-
-        <div class="row">
-            <%for (Products p : vproductspecial) {%>
-            <div class="col-xl-3 col-md-4 col-12 mt-5">
-
-                <div class="card1 features feature-primary border-0">
-
-
-                    <img src="images/products/<%=p.getImage()%>" alt="Blog Image" style="max-width: 200px; height: auto;">
-
-                    <div class="card-body1 p-0 mt-3">
-                        <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
-                        <!--                                    <p class="text-muted mt-3">There is now an abundance of readable dummy texts required purely to fill a space.</p>-->
-                        <div class="buttons1">
-
-                            <a class="btn btn-primary" href="">Buy</a>
-
-                            <button class="btn btn-primary">Tuyp</button>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div><!--end col-->
-            <%}%>
-        </div><!--end row-->
-    </div><!--end container-->
-</section><!--end section-->
-<!-- End -->
 
 
 
 
-<!-- Start -->
-<section class="section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="section-title text-center mb-4 pb-2">
-                    <h4 class="title mb-4">Medical Blog</h4>
-                    <h5 class="text-muted mx-auto para-desc mb-0">Health Knowledge, Sharing for the Community!</h5>
-                </div>
-            </div><!--end col-->
-        </div><!--end row-->
 
-        <div class="container mt-100 mt-60">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!--                            <div class="section-title">
-                                                    <h4 class="title mb-0">Related Post:</h4>
-                                                </div>-->
-                </div><!--end col-->
-            </div><!--end row-->
 
-            <div class="row">
-                <div class="col-lg-12 mt-4 pt-2">
-                    <div class="slider-range-three">
-                        <c:forEach items="${vblog}" var="b">
-                            <div class="tiny-slide">
-                                <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
-                                    <img src="images/blogs/${b.image}" class="img-fluid" alt="">
-                                    <div class="card-body p-4">
-                                        <ul class="list-unstyled mb-2">
-                                            <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>${b.postTime}</li>
-                                            <!--<li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i>${b.blogID}</li>-->
-                                        </ul>
-<!--                                                <a href="AdminBlogsDetail?bid=${b.blogID}" class="text-dark title h5">${b.title}</a>-->
-                                        <div class="post-meta d-flex justify-content-between mt-3">
-                                            <a href="BlogsURL?service=detailBlog&blog=${b.blogID}" class="link">Read More <i class="mdi mdi-chevron-right align-middle"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div><!--end col-->
-            </div><!--end row-->
-        </div><!--end container-->
-    </div><!--end carousel-->
-</div><!--end col-->
-</div><!--end row-->
-</div><!--end container-->
-</section><!--end section-->
-<!-- End -->
 
-<!-- Partners start -->
-<!--<section class="py-4 bg-light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-2 col-md-2 col-6 text-center py-4">
-                <img src="images/client/amazon.png" class="avatar avatar-client" alt="">
-            </div>end col
 
-            <div class="col-lg-2 col-md-2 col-6 text-center py-4">
-                <img src="images/client/google.png" class="avatar avatar-client" alt="">
-            </div>end col
 
-            <div class="col-lg-2 col-md-2 col-6 text-center py-4">
-                <img src="images/client/lenovo.png" class="avatar avatar-client" alt="">
-            </div>end col
 
-            <div class="col-lg-2 col-md-2 col-6 text-center py-4">
-                <img src="images/client/paypal.png" class="avatar avatar-client" alt="">
-            </div>end col
 
-            <div class="col-lg-2 col-md-2 col-6 text-center py-4">
-                <img src="images/client/shopify.png" class="avatar avatar-client" alt="">
-            </div>end col
 
-            <div class="col-lg-2 col-md-2 col-6 text-center py-4">
-                <img src="images/client/spotify.png" class="avatar avatar-client" alt="">
-            </div>end col
-        </div>end row
-    </div>end container
-</section>end section-->
-<!-- Partners End -->
-
-<!-- Start -->
 <footer class="bg-footer">
     <div class="container">
         <div class="row">
@@ -916,15 +572,7 @@
 <script src="js/feather.min.js"></script>
 <!-- Main Js -->
 <script src="js/app.js"></script>
-<script>
-                                document.addEventListener("DOMContentLoaded", function () {
-                                    console.log("Bootstrap JS loaded:", typeof bootstrap !== "undefined");
-                                    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-                                    dropdownElementList.forEach(function (dropdownToggleEl) {
-                                        new bootstrap.Dropdown(dropdownToggleEl);
-                                    });
-                                });
-</script>
+
 </body>
 
 </html>

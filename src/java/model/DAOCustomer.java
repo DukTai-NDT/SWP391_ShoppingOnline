@@ -286,12 +286,14 @@ public class DAOCustomer extends DBConnection {
 
     public static void main(String[] args) {
         DAOCustomer dao = new DAOCustomer();
+
         Vector<Customers> cus = dao.getCustomer("select * from Customers");
         for (Customers cu : cus) {
             System.out.println(cu);
         }
         String img = dao.getCustomerImgByID(3);
         System.out.println(img);
+
 
     }
 

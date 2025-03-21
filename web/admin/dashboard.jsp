@@ -237,12 +237,14 @@
                                             <i class="uil uil-shopping-cart h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
                                         </div>
                                         <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">${orderCount}</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
+                                            <h5 class="mb-0">${orderDone}</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
                                             <p class="text-muted mb-0">Sold</p>
                                         </div>
                                     </div>
                                 </div>
                             </div><!--end col-->
+
+
 
 
                             <div class="col-md-6 mt-4">

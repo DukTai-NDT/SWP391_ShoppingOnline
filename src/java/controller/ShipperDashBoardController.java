@@ -4,6 +4,10 @@
  */
 package controller;
 
+import entity.Account;
+import entity.Customers;
+import entity.OrderDetails;
+import entity.Orders;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,14 +15,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.Vector;
+import model.DAOCustomer;
+import model.DAODeliveryAddress;
+import model.DAOOrderDetails;
 import model.DAOOrders;
+import model.DAOPayments;
+import model.DAOProducts;
 
 /**
  *
- * @author whyth
+ * @author Admin
  */
-@WebServlet(name = "StatusChangeController", urlPatterns = {"/StatusChange"})
-public class StatusChangeController extends HttpServlet {
+@WebServlet(name = "ShipperDashBoardController", urlPatterns = {"/ShipperDashBoardURL"})
+public class ShipperDashBoardController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,37 +42,43 @@ public class StatusChangeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/plain;charset=UTF-8");
-
-        String action = request.getParameter("action");
-        if ("updateStatus".equals(action)) {
-            int orderID = Integer.parseInt(request.getParameter("orderID"));
-            String currentStatus = request.getParameter("status");
-            String newStatus = getNextStatus(currentStatus);
-
-            DAOOrders dao = new DAOOrders();
-            int n = dao.updateStatusOrder(newStatus, orderID);
-            try (PrintWriter out = response.getWriter()) {
-                if (n > 0) {
-                    System.out.println("Cập nhật trạng thái thành công: " + newStatus);  // Log kiểm tra
-                    out.write(newStatus);  // Trả về trạng thái mới
-                } else {
-                    System.out.println("Không thể cập nhật trạng thái: " + currentStatus);  // Log kiểm tra
-                    out.write(currentStatus);  // Không thay đổi
-                }
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        DAOOrders daoOrder = new DAOOrders();
+        Account account = (Account)session.getAttribute("dataUser");
+        DAOCustomer daoCustomer = new DAOCustomer();
+        try (PrintWriter out = response.getWriter()) {
+            String service = request.getParameter("service");
+            if (service == null) {
+                service = "show";
             }
-        }
-    }
+            if (service.equals("show")) {
+                Customers customer = (Customers) session.getAttribute("dataCustomer");
+                Vector<Orders> vectorOrder = daoOrder.getOrders("select * from Orders where Status = 'Prepared' or Status = 'Delivering'");
+                String message = request.getParameter("message");
+                request.setAttribute("message", message);
+                request.setAttribute("vectorOrder", vectorOrder);
+                request.getRequestDispatcher("/jsp/shipper-dashboard.jsp").forward(request, response);
 
-    private String getNextStatus(String currentStatus) {
-        switch (currentStatus) {
-            case "On-prepared":
+            }
+                
+            if(service.equals("pickOrder")){
+                String aid = request.getParameter("aid");
+                String oid = request.getParameter("oid");
+               daoOrder.updateIsReceived(Integer.parseInt(oid));
+               daoOrder.updateStatusOrder("Delivering", Integer.parseInt(oid));
+                response.sendRedirect("ShipperDashBoardURL");
+               
+                
+            }
+            
+            if(service.equals("finshedTranspoted")){
+                String orderid = request.getParameter("orderid");
+                daoOrder.updateStatusOrder("Done", Integer.parseInt(orderid));
+                response.sendRedirect("ShipperDashBoardURL");
+            }
 
-               return "Prepared";
-                                  
 
-            default:
-                return currentStatus;
         }
     }
 
