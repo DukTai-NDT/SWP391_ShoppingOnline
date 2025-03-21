@@ -204,7 +204,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-7">
-                    <img src="images/blog/single.jpg" class="img-fluid rounded shadow" alt="">
+                    <img src="images/blogs/<%=blog.getImage()%>" class="img-fluid rounded shadow" alt="">
                     <p class="text-muted mt-4"><%=blog.getContent()%></p>
                 
                     <h5 class="card-title mt-4 mb-0">Comments:</h5>
@@ -353,7 +353,7 @@
                         %>
                         <div class="tiny-slide">
                             <div class="card blog blog-primary border-0 shadow rounded overflow-hidden m-1">
-                                <img src="images/blog/03.jpg" class="img-fluid" alt="">
+                                <img src="images/blogs/<%=currentBlog.getImage()%>" class="img-fluid" alt="">
                                 <div class="card-body p-4">
                                     <ul class="list-unstyled mb-2">
                                         <li class="list-inline-item text-muted small me-3"><i class="uil uil-calendar-alt text-dark h6 me-1"></i><%=currentBlog.getPostTime()%></li>

@@ -70,6 +70,7 @@
             Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
             Vector<Categories> vectorCat = (Vector<Categories>)session.getAttribute("vectorCat");
             Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+        Account account = (Account)session.getAttribute("dataUser");      
         %>
 
         <!-- Navbar -->

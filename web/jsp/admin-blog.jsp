@@ -248,7 +248,7 @@
                                                 <tr>
 
                                                     <td class="p-3">${b.blogID}</td>
-                                                    <td class="p-3"><a href="BlogsURL?service=detailBlog&blog=${b.blogID}" class="text-dark product-name h6" >${b.title}</a></td>
+                                                    <td class="p-3"><a href="BlogsURL?service=detailBlogAdmin&blog=${b.blogID}" class="text-dark product-name h6" >${b.title}</a></td>
                                                     <td class="p-3">${b.postTime}</td>
                                                     <td class="p-3"><img src="images/blogs/${b.image}" alt="Blog Image" style="max-width: 200px; height: auto;"></td>
 

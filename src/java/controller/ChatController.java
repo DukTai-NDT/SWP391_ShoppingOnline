@@ -2,12 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
-import entity.Account;
-import entity.Blogs;
-import entity.Categories;
-import entity.Products;
+import entity.ChatHistory;
+import entity.Customers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,53 +15,53 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.Vector;
-import model.DAOBlogs;
-import model.DAOCategories;
-import model.DAOProducts;
+import model.DAOChatHistory;
 
 /**
  *
- * @author quang
+ * @author Admin
  */
-@WebServlet(name = "HomePageController", urlPatterns = {"/HomePageURL"})
-public class HomePageController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="ChatController", urlPatterns={"/ChatURL"})
+public class ChatController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        DAOChatHistory daoChat = new DAOChatHistory();
         response.setContentType("text/html;charset=UTF-8");
-
-            HttpSession session = request.getSession();
-            DAOCategories daocategories = new DAOCategories();
-            DAOProducts daoproduct = new DAOProducts();
-            DAOBlogs daoblog = new DAOBlogs();
-            Vector<Categories> vcategories = daocategories.getCategories("select * from Categories");
-            Vector<Products> vproduct = daoproduct.getProducts("select * from products");
-            Vector<Blogs> vblog = daoblog.getBlogs("select * from blogs");
-            Vector<Products> vproductspecial = daoproduct.getProducts("select * from Products\n"
-                    + "where Quantity >100");
-            session.setAttribute("vproductspecial", vproductspecial);
-            session.setAttribute("vblog", vblog);
-            session.setAttribute("vproduct", vproduct);
-            session.setAttribute("vcategories", vcategories);
-            
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-            
-    }
+        try (PrintWriter out = response.getWriter()) {
+            Customers customerNow = (Customers) session.getAttribute("dataCustomer");
+            String service = request.getParameter("service");
+            if(service == null){
+                service = "show";
+            }
+            if(service.equals("show")){
+                Vector<ChatHistory> vectorChat = daoChat.getChatHistory("select * from Chat_History where CustomerID_1 = "+customerNow.getCustomerID()+" or CustomerID_2 = "+ +customerNow.getCustomerID());
+                request.setAttribute("dataChat", vectorChat);
+                request.getRequestDispatcher("jsp/customer-chat.jsp").forward(request, response);
+            }
+            if(service.equals("sendMess")){
+                String messageChat = request.getParameter("message");
+                
+                daoChat.addChatHistory(new ChatHistory(customerNow.getCustomerID(), 3006, LocalDateTime.now(), messageChat, false));
+                response.sendRedirect("ChatURL?service=show");
+            }
+           
+        }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -70,13 +69,12 @@ public class HomePageController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -84,13 +82,12 @@ public class HomePageController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

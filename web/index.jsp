@@ -273,7 +273,11 @@
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
-
+                                <a class="dropdown-item text-dark" href="ChatURL?service=show">
+                                    <span class="mb-0 d-inline-block me-1">
+                                        <i class="uil uil-comment-dots align-middle h6"></i>
+                                    </span>Chat
+                                </a>
                                 <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                         <%if(account.getRoleID() != 2){%> 
                                 <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>

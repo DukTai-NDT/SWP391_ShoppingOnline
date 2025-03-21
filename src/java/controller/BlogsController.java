@@ -49,34 +49,32 @@ public class BlogsController extends HttpServlet {
         DAOBlogs dao = new DAOBlogs();
         DAOCustomer daoCus = new DAOCustomer();
         DAOComment daoComments = new DAOComment();
-        DAOCartItem daoCartItem = new DAOCartItem(); 
+        DAOCartItem daoCartItem = new DAOCartItem();
         HttpSession session = request.getSession();
         DAOCategories daoCat = new DAOCategories();
         Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
         if (currentCustomer != null) {
-             Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy(
-        "select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy " +
-        "from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = " + currentCustomer.getCustomerID()
-   );
-    session.setAttribute("dataCartItem", vectorCartItems);
-    
+            Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy(
+                    "select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy "
+                    + "from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = " + currentCustomer.getCustomerID()
+            );
+            session.setAttribute("dataCartItem", vectorCartItems);
 
         }
-        
-   try (PrintWriter out = response.getWriter()) {
+
+        try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("service");
             if (service == null) {
                 service = "listAllBlogs";
             }
-           
-      
-        if (service.equals("deleteBlog") || service.equals("updateBlog") || service.equals("insertBlog")) {
-            if (currentCustomer == null) {
-                response.sendRedirect("LoginURL?service=login");
-                return;
+
+            if (service.equals("deleteBlog") || service.equals("updateBlog") || service.equals("insertBlog")) {
+                if (currentCustomer == null) {
+                    response.sendRedirect("LoginURL?service=login");
+                    return;
+                }
             }
-        }
 
             if (service.equals("deleteBlog")) {
                 int blogId = Integer.parseInt(request.getParameter("blogId"));
@@ -168,75 +166,82 @@ public class BlogsController extends HttpServlet {
             if (service.equals("listAllBlogs")) {
                 String sql = "SELECT * FROM Blogs";
                 String submit = request.getParameter("submit");
-                
-                int page = request.getParameter("page")!= null ? Integer.parseInt(request.getParameter("page")) :1;
+
+                int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
                 int limit = 6;
-                int offset = (page -1) * limit;
-                
+                int offset = (page - 1) * limit;
+
                 Vector<Blogs> vectorBlogs;
                 int totalBlogs;
                 int totalPages;
-                
+
                 if (submit != null) {
                     String title = request.getParameter("title");
-                    sql="SELECT * FROM Blogs WHERE Title LIKE N'%" + title + "%'" ;
+                    sql = "SELECT * FROM Blogs WHERE Title LIKE N'%" + title + "%'";
                     Vector<Blogs> allBlog = dao.getBlogs(sql);
                     totalBlogs = allBlog.size();
-                    totalPages = (int) Math.ceil((double) totalBlogs /limit);
-                    
-                    
+                    totalPages = (int) Math.ceil((double) totalBlogs / limit);
+
                     vectorBlogs = new Vector<>();
                     int start = offset;
-                    int end= Math.min(offset +limit, totalBlogs);
+                    int end = Math.min(offset + limit, totalBlogs);
                     for (int i = start; i < end; i++) {
                         vectorBlogs.add(allBlog.get(i));
-                        
+
                     }
-                    
-                  
+
+                } else {
+
+                    vectorBlogs = dao.getBlogsByPage(offset, limit);
+                    totalBlogs = dao.countTotalBlogs();
+                    totalPages = (int) Math.ceil((double) totalBlogs / limit);
+
                 }
-                else{
-               
-                
-                vectorBlogs = dao.getBlogsByPage(offset, limit);
-                totalBlogs = dao.countTotalBlogs();
-                totalPages = (int)Math.ceil((double)totalBlogs /limit);
-                
-                
-                }
-                 
-                 Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
+
+                Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
                 session.setAttribute("vectorBlogs", vectorBlogs);
                 session.setAttribute("vectorCat", vectorCat);
                 request.setAttribute("currentPage", page);
                 request.setAttribute("totalPages", totalPages);
-              
+
                 RequestDispatcher dispatch = request.getRequestDispatcher("blog.jsp");
                 dispatch.forward(request, response);
             }
 
-            
-         
-         if (service.equals("detailBlog")) {
-         String blogIdParam = request.getParameter("blog");
-         Vector<Blogs> vectorBlogs = dao.getBlogs("select * from Blogs where BlogID = " + blogIdParam);
-         Blogs blog = vectorBlogs.get(0);
-         Vector<Blogs> vectorAllBlogs = dao.getBlogs("select * from Blogs" );
-         session.setAttribute("vectorBlogs", vectorAllBlogs);
-         session.setAttribute("blog", blog);
-         Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
-         Vector<Comment> comments = daoComments.getCommentsByBlogId(blog.getBlogID());
-         session.setAttribute("comments" + blog.getBlogID(), comments);
-         session.setAttribute("vectorCat", vectorCat);
-         
-             Account account = (Account) session.getAttribute("dataUser");
-             if(account.getRoleID() == 2){
-         request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
-             }else{
-                 request.getRequestDispatcher("admin/adminBlog-detail.jsp").forward(request, response);
-             }
-}
+            if (service.equals("detailBlog")) {
+                String blogIdParam = request.getParameter("blog");
+                Vector<Blogs> vectorBlogs = dao.getBlogs("select * from Blogs where BlogID = " + blogIdParam);
+                Blogs blog = vectorBlogs.get(0);
+                Vector<Blogs> vectorAllBlogs = dao.getBlogs("select * from Blogs");
+                session.setAttribute("vectorBlogs", vectorAllBlogs);
+                session.setAttribute("blog", blog);
+                Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
+                Vector<Comment> comments = daoComments.getCommentsByBlogId(blog.getBlogID());
+                session.setAttribute("comments" + blog.getBlogID(), comments);
+                session.setAttribute("vectorCat", vectorCat);
 
+                Account account = (Account) session.getAttribute("dataUser");
+
+                request.getRequestDispatcher("blogDetail.jsp").forward(request, response);
+
+            }
+            if (service.equals("detailBlogAdmin")) {
+                String blogIdParam = request.getParameter("blog");
+                Vector<Blogs> vectorBlogs = dao.getBlogs("select * from Blogs where BlogID = " + blogIdParam);
+                Blogs blog = vectorBlogs.get(0);
+                Vector<Blogs> vectorAllBlogs = dao.getBlogs("select * from Blogs");
+                session.setAttribute("vectorBlogs", vectorAllBlogs);
+                session.setAttribute("blog", blog);
+                Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
+                Vector<Comment> comments = daoComments.getCommentsByBlogId(blog.getBlogID());
+                session.setAttribute("comments" + blog.getBlogID(), comments);
+                session.setAttribute("vectorCat", vectorCat);
+
+                Account account = (Account) session.getAttribute("dataUser");
+
+                request.getRequestDispatcher("admin/adminBlog-detail.jsp").forward(request, response);
+
+            }
         }
     }
 

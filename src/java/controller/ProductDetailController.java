@@ -78,8 +78,9 @@ public class ProductDetailController extends HttpServlet {
                 String rating = request.getParameter("rating");
                 int rate = Integer.parseInt(rating);
                 String content = request.getParameter("content");
-                daoFeed.addFeedbacks(new Feedbacks(content, LocalDate.now(), rate, account.getAccountID(), Integer.parseInt(pid)));
-
+                System.out.println("abc"+account);
+               int n = daoFeed.addFeedbacks(new Feedbacks(content, LocalDate.now(), rate, account.getAccountID(), Integer.parseInt(pid)));
+                System.out.println("abcd123null"+n);
                 response.sendRedirect("ProductDetailURL?service=detailProduct&pid=" + pid);
                 return;
             }

@@ -273,6 +273,12 @@
                                 </table>
                             </div>
                             <p style="color: red;"><%=(request.getAttribute("message") != null ? request.getAttribute("message") : "")%></p>
+                            <%Vector<String> overFlow = (Vector<String>)request.getAttribute("dataProductHight");
+                            if(overFlow != null){
+                            for (String string : overFlow) {%>
+                            <p style="color: red;"><%=string%></p>
+                                <%}}%>
+    
                             <div class="mt-4 pt-2 text-end">
                                 <button type="submit" name="service" value="checkout" class="btn btn-primary">Proceed to checkout</button>
                             </div>

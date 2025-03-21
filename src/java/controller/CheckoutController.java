@@ -11,6 +11,7 @@ import entity.OrderDetails;
 import entity.Orders;
 import entity.Payments;
 import entity.Categories;
+import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -28,6 +29,7 @@ import model.DAOOrderDetails;
 import model.DAOOrders;
 import model.DAOPaymentMethod;
 import model.DAOPayments;
+import model.DAOProducts;
 
 /**
  *
@@ -48,6 +50,9 @@ public class CheckoutController extends HttpServlet {
             DAODeliveryAddress daoDeliAddress = new DAODeliveryAddress();
             DAOCartItem daoCartItem = new DAOCartItem();
             DAOCategories daoCat = new DAOCategories();
+            DAOProducts daoPro = new DAOProducts();
+                    
+                    
             Customers customer = (Customers) session.getAttribute("dataCustomer");
             String service = request.getParameter("service");
             if (service == null) {
@@ -102,7 +107,7 @@ public class CheckoutController extends HttpServlet {
 
 
                     int orderID = daoOrder.addOrder(new Orders("On-prepared", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID()));
-
+                    
 
                     if (orderID == 0) {
                         request.setAttribute("message", "Order processing failed");
@@ -127,6 +132,10 @@ public class CheckoutController extends HttpServlet {
                         int n = daoOrderDetail.addOrderDetails(new OrderDetails(vectorCartItem.getPrice(),
                                 vectorCartItem.getQuantity(), vectorCartItem.getProductID(),
                                 daoOrder.getLastOrderID()));
+                        Products pro= daoPro.getProductByID(vectorCartItem.getProductID());
+                        int quantityAfter = pro.getQuantity() - vectorCartItem.getQuantity();
+                        pro.setQuantity(quantityAfter);
+                        int z = daoPro.updateProduct(pro);
                         int y = daoCartItem.changeIsBuy(1, vectorCartItem.getCartItemID());
                     }
                     session.setAttribute("selectedCartItems", new Vector<CartItems>());

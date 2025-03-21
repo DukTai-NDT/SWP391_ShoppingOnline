@@ -243,6 +243,7 @@ public class DAOCustomer extends DBConnection {
         return customer;
 
     }
+
     public String getCustomerNameByID(int customerID) {
         String customerName = null;
         String sql = "SELECT FirstName, LastName FROM Customers WHERE CustomerID = ?";
@@ -262,13 +263,36 @@ public class DAOCustomer extends DBConnection {
         return customerName;
     }
 
-    
-    
+    public String getCustomerImgByID(int customerID) {
+        String customerImg = null;
+        String sql = "SELECT ProfileImg\n"
+                + "  FROM [ECommerceDB].[dbo].[Customers]\n"
+                + "  where CustomerID = ?";
+
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, customerID);
+            ResultSet rs = preState.executeQuery();
+
+            if (rs.next()) {
+                customerImg = rs.getString("ProfileImg");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return customerImg;
+    }
 
     public static void main(String[] args) {
         DAOCustomer dao = new DAOCustomer();
-        Customers cus = dao.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID").get(0);
-        System.out.println(cus);
+        Vector<Customers> cus = dao.getCustomer("select * from Customers");
+        for (Customers cu : cus) {
+            System.out.println(cu);
+        }
+        String img = dao.getCustomerImgByID(3);
+        System.out.println(img);
+
     }
 
 }

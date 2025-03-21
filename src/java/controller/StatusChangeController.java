@@ -57,8 +57,8 @@ public class StatusChangeController extends HttpServlet {
         switch (currentStatus) {
             case "On-prepared":
                 return "Delivering";
-            case "Delivering":
-                return "Done";
+//            case "Delivering":
+//                return "Done";
             default:
                 return currentStatus;
         }

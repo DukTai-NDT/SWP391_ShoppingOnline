@@ -30,32 +30,9 @@
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
-        Dưới đây là phiên bản cải tiến của đoạn mã JSP mà bạn cung cấp, với việc sử dụng HTML và CSS được tối ưu hóa để làm cho giao diện đẹp hơn, hiện đại hơn và dễ đọc hơn. Tôi sẽ thay thế scriptlet bằng JSTL để giữ mã sạch sẽ, thêm các yếu tố thiết kế như bóng đổ, khoảng cách hợp lý, và định dạng văn bản rõ ràng hơn.
-
-        Mã JSP cải tiến
-        jsp
-
-        Réduire
-
-        Envelopper
-
-        Copier
-        <%@ page contentType="text/html" pageEncoding="UTF-8" %>
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-        <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Blog Detail</title>
-            <!-- Bootstrap CSS -->
-            <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-            <!-- Bootstrap Icons -->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-            <!-- Custom CSS -->
+        
             <style>
-                /* Định dạng section tiêu đề */
+                /* ??nh d?ng section ti�u ?? */
                 .bg-half-150 {
                     padding: 100px 0;
                     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -86,7 +63,7 @@
                     font-size: 1.2rem;
                 }
 
-                /* Định dạng hình ảnh blog */
+                /* ??nh d?ng h�nh ?nh blog */
                 .blog-image {
                     max-width: 100%;
                     height: auto;
@@ -99,7 +76,7 @@
                     transform: scale(1.02);
                 }
 
-                /* Định dạng nội dung blog */
+                /* ??nh d?ng n?i dung blog */
                 .blog-content {
                     font-size: 1.1rem;
                     line-height: 1.8;
@@ -114,7 +91,7 @@
                     margin: 0;
                 }
 
-                /* Hiệu ứng shape ở dưới section */
+                /* Hi?u ?ng shape ? d??i section */
                 .shape {
                     position: absolute;
                     bottom: 0;
@@ -148,49 +125,57 @@
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
                         <a href="Dashboard">
+                            <!--<a href="index.jsp">-->
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
                     </div>
 
                     <ul class="sidebar-menu pt-3">
-
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
-                        <br>
-                        <%if(account.getRoleID()  == 3){%>
+
+
+                        <%   if(account.getRoleID()  != 4){
+                            if(account.getRoleID()  == 3){%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
                         <%}%>
-                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
-                        <br>
+
                         <li class="sidebar-dropdown">
+
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
-                            <div class="sidebar-submenu">
-                            </div>
+
                         </li>
-                        <br>
                         <li class="sidebar-dropdown">
                             <a href="AdminBrands">
                                 <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
                             </a>
                         </li>
-                        <br>
+
+
                         <li class="sidebar-dropdown">
                             <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
-                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
 
                         </li>
-                        <br>
-                          </ul>
+                           <%}else{%>
+
+                        <li class="sidebar-dropdown">
+                            <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
+
+                        </li>
+                        <%}%>
+                    </ul>
                     <!-- sidebar-menu  -->
                 </div>
                 <!-- sidebar-content  -->
@@ -294,7 +279,7 @@
                         </div>
                     </section>
 
-                     Blog Image and Content 
+                    
                     <section class="section">
                         <div class="container">
                             <div class="row justify-content-center">
@@ -314,7 +299,7 @@
                         <div class="row align-items-center">
                             <div class="col">
                                 <div class="text-sm-start text-center">
-                                    <p class="mb-0 text-muted"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                    <p class="mb-0 text-muted"><script>document.write(new Date().getFullYear())</script> � Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
                                 </div>
                             </div><!--end col-->
                         </div><!--end row-->
@@ -507,10 +492,10 @@
                 document.addEventListener("DOMContentLoaded", function () {
                     const postTimeElements = document.querySelectorAll(".post-time");
                     postTimeElements.forEach(element => {
-                        const localDate = element.textContent; // Lấy giá trị dạng "2025-03-04"
+                        const localDate = element.textContent; // L?y gi� tr? d?ng "2025-03-04"
                         const date = new Date(localDate);
                         const options = {year: 'numeric', month: 'long', day: '2-digit'};
-                        element.textContent = date.toLocaleDateString('en-US', options); // Định dạng thành "March 04, 2025"
+                        element.textContent = date.toLocaleDateString('en-US', options); // ??nh d?ng th�nh "March 04, 2025"
                     });
                 });
             </script>

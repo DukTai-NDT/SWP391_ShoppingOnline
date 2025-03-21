@@ -105,9 +105,10 @@
 
         <div class="page-wrapper doctris-theme toggled">
             <nav id="sidebar" class="sidebar-wrapper">
-                <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
+               <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
                         <a href="Dashboard">
+                            <!--<a href="index.jsp">-->
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -117,44 +118,46 @@
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
-                        <br>
-                        <%if(account.getRoleID() == 3){%>
+
+
+                        <%   if(account.getRoleID()  != 4){
+                            if(account.getRoleID()  == 3){%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
                         <%}%>
-                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
+                        </li>
+
+                        <li class="sidebar-dropdown">
+
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
+
                         </li>
                         <li class="sidebar-dropdown">
                             <a href="AdminBrands">
                                 <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
                             </a>
                         </li>
-                        <br>
-                        <li class="sidebar-dropdown">
-                            <a href="admin"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
-                        </li>
-                        <br>
-                        <li class="sidebar-dropdown">
 
+
+                        <li class="sidebar-dropdown">
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                        </li>
+
+                        <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
 
-                            <!--                            <div class="sidebar-submenu">
-                                                            <ul>
-                                                                <li><a href="faqs.html">FAQs</a></li>
-                                                                <li><a href="review.html">Reviews</a></li>
-                                                                <li><a href="invoice-list.html">Invoice List</a></li>
-                                                                <li><a href="invoice.html">Invoice</a></li>
-                                                                <li><a href="terms.html">Terms & Policy</a></li>
-                                                                <li><a href="privacy.html">Privacy Policy</a></li>
-                                                                <li><a href="error.html">404 !</a></li>
-                                                                <li><a href="blank-page.html">Blank Page</a></li>
-                                                            </ul>
-                                                        </div>-->
                         </li>
-                        <br>
+                           <%}else{%>
+
+                        <li class="sidebar-dropdown">
+                            <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
+
+                        </li>
+                        <%}%>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>

@@ -63,18 +63,19 @@
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
-                        <br>
-                        
-                        <%if(account.getRoleID()  == 3){%>
+
+
+                        <%   if(account.getRoleID()  != 4){
+                            if(account.getRoleID()  == 3){%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
                         <%}%>
-                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
-                        <br>
+
                         <li class="sidebar-dropdown">
 
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
@@ -85,29 +86,23 @@
                                 <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
                             </a>
                         </li>
-                        <br>
+
 
                         <li class="sidebar-dropdown">
                             <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
-                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
 
-                            <!--                            <div class="sidebar-submenu">
-                                                            <ul>
-                                                                <li><a href="faqs.html">FAQs</a></li>
-                                                                <li><a href="review.html">Reviews</a></li>
-                                                                <li><a href="invoice-list.html">Invoice List</a></li>
-                                                                <li><a href="invoice.html">Invoice</a></li>
-                                                                <li><a href="terms.html">Terms & Policy</a></li>
-                                                                <li><a href="privacy.html">Privacy Policy</a></li>
-                                                                <li><a href="error.html">404 !</a></li>
-                                                                <li><a href="blank-page.html">Blank Page</a></li>
-                                                            </ul>
-                                                        </div>-->
                         </li>
-                        <br>
+                           <%}else{%>
+
+                        <li class="sidebar-dropdown">
+                            <a href="AdminRepInboxURL?service=show"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
+
+                        </li>
+                        <%}%>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -151,12 +146,12 @@
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            
-                           
+
+
                             <%
                              if(currentCustomer != null){
                             %>
-                            
+
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
 
@@ -189,16 +184,16 @@
                         </ul>
                     </div>
                 </div>
-                          <div id="navigation">
-        <!-- Navigation Menu-->   
-        <ul class="navigation-menu nav-left nav-light">
-            <li class="parent-menu-item">
-                <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
+                <div id="navigation">
+                    <!-- Navigation Menu-->   
+                    <ul class="navigation-menu nav-left nav-light">
+                        <li class="parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
 
-            </li>
-            
-        </ul><!--end navigation menu-->
-    </div><!--end navigation-->
+                        </li>
+
+                    </ul><!--end navigation menu-->
+                </div><!--end navigation-->
 
                 <div class="container-fluid">
                     <div class="layout-specing">
@@ -218,19 +213,19 @@
                                     </div>
                                 </div>
                             </div><!--end col-->
- <%if(account.getRoleID() == 3){%>
+                            <%if(account.getRoleID() == 3){%>
                             <div class="col-md-6 mt-4">
                                 <div class="card features feature-primary rounded border-0 shadow p-4">
                                     <div class="d-flex align-items-center">
                                         <div class="icon text-center rounded-md">
                                             <i class="uil uil-user h3 mb-0"></i>
                                         </div>
-                                        
+
                                         <div class="flex-1 ms-2">
                                             <h5 class="mb-0">${accountCount}</h5>
                                             <p class="text-muted mb-0">Users</p>
                                         </div>
-                                           
+
                                     </div>
                                 </div>
                             </div><!--end col-->
