@@ -575,12 +575,12 @@
                             case "On-prepared":
                                 nextStatus = "Prepared";
                                 break;
-                            case "Prepared":
-                                nextStatus = "Delivery";
-                                break;
-                            case "Delivery":
-                                nextStatus = "Done";
-                                break;
+//                            case "Prepared":
+//                                nextStatus = "Delivery";
+//                                break;
+//                            case "Delivery":
+//                                nextStatus = "Done";
+//                                break;
                             default:
                                 nextStatus = "On-prepared"; // Trường hợp mặc định nếu không xác định được
                         }
