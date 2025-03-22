@@ -51,10 +51,10 @@ public class OrderManagerController extends HttpServlet {
         DAOPayments pDAO = new DAOPayments();
         DAOProducts prdDAO = new DAOProducts();
         DAOPaymentMethod pmDao = new DAOPaymentMethod();
+
         // Pagination setup
         int page = 1;
         int ordersPerPage = 10;
-
         String pageStr = request.getParameter("page");
         if (pageStr != null) {
             try {
@@ -64,49 +64,46 @@ public class OrderManagerController extends HttpServlet {
             }
         }
 
-        // Get total orders and calculate total pages
-        int totalOrders = oDAO.getTotalOrders();
+        String orderType = request.getParameter("orderType");
+        if (orderType == null || (!orderType.equalsIgnoreCase("newest") && !orderType.equalsIgnoreCase("oldest"))) {
+            orderType = "newest"; // Mặc định newest
+        }
+
+        Vector<Orders> oList = oDAO.filterOrders(orderType);
+
+        int totalOrders = oList.size();
         int totalPages = (int) Math.ceil((double) totalOrders / ordersPerPage);
 
-        // Get paginated order list
-        Vector<Orders> oList = oDAO.getOrdersByPage(page, ordersPerPage);
+        int startIndex = (page - 1) * ordersPerPage;
+        int endIndex = Math.min(startIndex + ordersPerPage, totalOrders);
+        Vector<Orders> paginatedOrders = new Vector<>(oList.subList(startIndex, endIndex));
 
-        // Get all order details (will filter by orderID in JSP)
         Vector<OrderDetails> odList = odDAO.getOrderDetails("SELECT * FROM dbo.OrderDetails");
 
-        // Create maps for additional information
+        // Tạo maps chứa thông tin bổ sung
         Map<Integer, String> customerUsernames = new HashMap<>();
         Map<Integer, String> customerNames = new HashMap<>();
         Map<Integer, String> paymentMethods = new HashMap<>();
         Map<Integer, Products> productDetails = new HashMap<>();
 
-        // Populate customer and payment information maps
-        for (Orders order : oList) {
+        // Lấy thông tin khách hàng & phương thức thanh toán
+        for (Orders order : paginatedOrders) {
             int customerID = order.getCustomerID();
-            if (!customerUsernames.containsKey(customerID)) {
-                customerUsernames.put(customerID, cDAO.getUsernameByCustomerID(customerID));
-            }
-
-            if (!customerNames.containsKey(customerID)) {
-                customerNames.put(customerID, cDAO.getCustomerNameByID(customerID));
-            }
+            customerUsernames.putIfAbsent(customerID, cDAO.getUsernameByCustomerID(customerID));
+            customerNames.putIfAbsent(customerID, cDAO.getCustomerNameByID(customerID));
 
             int paymentID = order.getPaymentID();
-            if (!paymentMethods.containsKey(paymentID)) {
-                paymentMethods.put(paymentID, pmDao.getMethodPaymentName(pDAO.getMethodByPaymentID(paymentID)));
-            }
+            paymentMethods.putIfAbsent(paymentID, pmDao.getMethodPaymentName(pDAO.getMethodByPaymentID(paymentID)));
         }
 
-        // Populate product details map
+        // Lấy thông tin sản phẩm
         for (OrderDetails od : odList) {
             int productID = od.getProductID();
-            if (!productDetails.containsKey(productID)) {
-                productDetails.put(productID, prdDAO.getProductByID(productID));
-            }
+            productDetails.putIfAbsent(productID, prdDAO.getProductByID(productID));
         }
 
-        // Set attributes for JSP
-        request.setAttribute("oList", oList);
+        // Set attributes cho JSP
+        request.setAttribute("oList", paginatedOrders);
         request.setAttribute("odList", odList);
         request.setAttribute("customerUsernames", customerUsernames);
         request.setAttribute("customerNames", customerNames);
@@ -114,6 +111,7 @@ public class OrderManagerController extends HttpServlet {
         request.setAttribute("productDetails", productDetails);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
+        request.setAttribute("orderType", orderType);
 
         request.getRequestDispatcher("admin/orders-management.jsp").forward(request, response);
     }
@@ -158,4 +156,3 @@ public class OrderManagerController extends HttpServlet {
     }// </editor-fold>
 
 }
-

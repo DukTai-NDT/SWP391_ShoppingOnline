@@ -36,51 +36,55 @@ public class ProductManagerController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
 
-        DAOProducts pDAO = new DAOProducts();
-        DAOCategories cDAO = new DAOCategories();
-        DAOBrand bDAO = new DAOBrand();
+    DAOProducts pDAO = new DAOProducts();
+    DAOCategories cDAO = new DAOCategories();
+    DAOBrand bDAO = new DAOBrand();
 
-        String searchQuery = request.getParameter("search");
-        int page = 1;
-        int productsPerPage = 10;
-
-        String pageStr = request.getParameter("page");
-        if (pageStr != null) {
-            try {
-                page = Integer.parseInt(pageStr);
-            } catch (NumberFormatException e) {
-                page = 1;
-            }
+    // Pagination setup
+    int page = 1;
+    int productsPerPage = 10;
+    String pageStr = request.getParameter("page");
+    if (pageStr != null) {
+        try {
+            page = Integer.parseInt(pageStr);
+        } catch (NumberFormatException e) {
+            page = 1;
         }
-
-        Vector<Products> pList;
-        int totalProducts;
-
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            totalProducts = pDAO.getTotalSearchProducts(searchQuery);
-            pList = pDAO.searchProductByPage(searchQuery, page, productsPerPage);
-        } else {
-            totalProducts = pDAO.getTotalProducts();
-            pList = pDAO.getProductsByPage(page, productsPerPage);
-        }
-
-        int totalPages = (int) Math.ceil((double) totalProducts / productsPerPage);
-
-        Vector<Categories> cList = cDAO.getCategories("SELECT * FROM dbo.Categories");
-        Vector<Brand> bList = bDAO.getBrand("SELECT * FROM dbo.Brand");
-
-        request.setAttribute("pList", pList);
-        request.setAttribute("cList", cList);
-        request.setAttribute("bList", bList);
-        request.setAttribute("searchQuery", searchQuery);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-
-        request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
     }
+
+    // Order filter setup
+    String orderType = request.getParameter("orderType");
+    if (orderType == null || (!orderType.equalsIgnoreCase("newest") && !orderType.equalsIgnoreCase("oldest"))) {
+        orderType = "newest"; // Mặc định newest
+    }
+
+    // Fetch and paginate products
+    Vector<Products> allProducts = pDAO.filterProducts(orderType);
+    int totalProducts = allProducts.size();
+    int totalPages = (int) Math.ceil((double) totalProducts / productsPerPage);
+
+    int startIndex = (page - 1) * productsPerPage;
+    int endIndex = Math.min(startIndex + productsPerPage, totalProducts);
+    Vector<Products> paginatedProducts = new Vector<>(allProducts.subList(startIndex, endIndex));
+
+    // Fetch categories and brands
+    Vector<Categories> cList = cDAO.getCategories("SELECT * FROM dbo.Categories");
+    Vector<Brand> bList = bDAO.getBrand("SELECT * FROM dbo.Brand");
+
+    // Set attributes for JSP
+    request.setAttribute("pList", paginatedProducts);
+    request.setAttribute("cList", cList);
+    request.setAttribute("bList", bList);
+    request.setAttribute("currentPage", page);
+    request.setAttribute("totalPages", totalPages);
+    request.setAttribute("orderType", orderType);
+
+    request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
+}
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

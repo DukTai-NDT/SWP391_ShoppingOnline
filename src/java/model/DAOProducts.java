@@ -271,7 +271,7 @@ public class DAOProducts extends DBConnection {
 
     public Vector<Products> getProductsByPage(int page, int pageSize) {
         Vector<Products> vector = new Vector<>();
-        String sql = "SELECT * FROM dbo.Products ORDER BY ProductID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String sql = "SELECT * FROM dbo.Products ORDER BY ProductID DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, (page - 1) * pageSize);
@@ -389,6 +389,37 @@ public class DAOProducts extends DBConnection {
             Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
         }
         return list;
+    }
+
+    public Vector<Products> filterProducts(String orderType) {
+        Vector<Products> productList = new Vector<>();
+        String sql = "SELECT * FROM [dbo].[Products] ORDER BY ProductID " + (orderType.equalsIgnoreCase("newest") ? "DESC" : "ASC");
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                Products product = new Products(
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getFloat("Price"),
+                        rs.getString("Description"),
+                        rs.getString("UnitPrice"),
+                        rs.getInt("CategoryID"),
+                        rs.getInt("BrandID"),
+                        rs.getBoolean("isPrescriptionDrug"),
+                        rs.getInt("Quantity"),
+                        rs.getString("Image"),
+                        rs.getBoolean("isAvailable")
+                );
+                productList.add(product);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return productList;
     }
 
     public static void main(String[] args) {
