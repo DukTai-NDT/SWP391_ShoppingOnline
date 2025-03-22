@@ -256,11 +256,11 @@
                                 <div class="card features feature-primary rounded border-0 shadow p-4">
                                     <div class="d-flex align-items-center">
                                         <div class="icon text-center rounded-md">
-                                            <i class="uil uil-flip-h h3 mb-0"></i>
+                                            <i class="uil uil-coins h3 mb-0"></i>
                                         </div>
                                         <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">${blogCount}</h5>
-                                            <p class="text-muted mb-0">Blogs</p>
+                                            <h5 class="mb-0">${totalSales}</h5>
+                                            <p class="text-muted mb-0">Total Sales</p>
                                         </div>
                                     </div>
                                 </div>

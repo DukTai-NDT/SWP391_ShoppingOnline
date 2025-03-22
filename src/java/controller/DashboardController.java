@@ -18,6 +18,7 @@ import java.util.Vector;
 import model.DAOProducts;
 import model.DAOAccount;
 import model.DAOBlogs;
+import model.DAOOrderDetails;
 import model.DAOOrders;
 
 /**
@@ -38,11 +39,13 @@ public class DashboardController extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session =request.getSession();
         response.setContentType("text/html;charset=UTF-8");
-
+        
+        DAOOrderDetails odDAO = new DAOOrderDetails();
         DAOProducts pDAO = new DAOProducts();
         DAOAccount aDAO = new DAOAccount();
         DAOBlogs bDAO = new DAOBlogs();
         DAOOrders oDao = new DAOOrders();
+        
         Vector<Blogs> vectorAllBlogs = bDAO.getBlogs("select * from Blogs");
                 session.setAttribute("vectorBlogs", vectorAllBlogs);
         int productCount = pDAO.countProducts();
@@ -52,7 +55,9 @@ public class DashboardController extends HttpServlet {
         int orderOnPrepared = oDao.countOnPreparedOrders();
         int orderDelivering = oDao.countDeliveringOrders();
         int orderDone = oDao.countDoneOrders();
-
+        float totalSales = odDAO.getTotalSales();
+        
+        request.setAttribute("totalSales", totalSales);
         request.setAttribute("productCount", productCount);
         request.setAttribute("accountCount", accountCount);
         request.setAttribute("blogCount", blogCount);
@@ -60,6 +65,7 @@ public class DashboardController extends HttpServlet {
         request.setAttribute("orderOnPrepared", orderOnPrepared);
         request.setAttribute("orderDelivering", orderDelivering);
         request.setAttribute("orderDone", orderDone);
+        
         request.getRequestDispatcher("admin/dashboard.jsp").forward(request, response);
     }
 

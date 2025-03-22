@@ -145,8 +145,6 @@ public class DAOOrderDetails extends DBConnection {
         }
         return status;
     }
-    
-    
 
     public OrderDetails getOrderDetailsByIDs(int orderDetailID, int orderID) {
         OrderDetails orderDetails = null;
@@ -170,13 +168,27 @@ public class DAOOrderDetails extends DBConnection {
         return orderDetails;
     }
 
-    public static void main(String[] args) {
-        DAOOrderDetails dao = new DAOOrderDetails();
+    public float getTotalSales() {
+        float totalSales = 0;
+        String sql = "SELECT SUM(od.Price * od.Quantity) AS total_sales "
+                + "FROM dbo.OrderDetails od "
+                + "JOIN dbo.Orders o ON o.OrderID = od.OrderID "
+                + "WHERE o.Status = 'Done'";
 
-         Vector<OrderDetails> vectorOrderDetail = dao.getOrderDetails("Select * from OrderDetails where OrderDetailID=3019");
-        if(vectorOrderDetail.isEmpty()){
-            System.out.println("1");
+        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                totalSales = rs.getFloat("total_sales");
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+        return totalSales;
     }
 
+    public static void main(String[] args) {
+        DAOOrderDetails dao = new DAOOrderDetails();
+        System.out.println(dao.getTotalSales());
+
+    }
 }

@@ -52,7 +52,6 @@ public class OrderManagerController extends HttpServlet {
         DAOProducts prdDAO = new DAOProducts();
         DAOPaymentMethod pmDao = new DAOPaymentMethod();
 
-        // Pagination setup
         int page = 1;
         int ordersPerPage = 10;
         String pageStr = request.getParameter("page");
@@ -65,11 +64,23 @@ public class OrderManagerController extends HttpServlet {
         }
 
         String orderType = request.getParameter("orderType");
-        if (orderType == null || (!orderType.equalsIgnoreCase("newest") && !orderType.equalsIgnoreCase("oldest"))) {
-            orderType = "newest"; // Mặc định newest
+        if (orderType == null) {
+            orderType = "newest";
         }
 
-        Vector<Orders> oList = oDAO.filterOrders(orderType);
+        Vector<Orders> oList = new Vector<>();
+
+        // Filter theo newest/oldest (giữ nguyên)
+        if (orderType.equalsIgnoreCase("newest") || orderType.equalsIgnoreCase("oldest")) {
+            oList = oDAO.filterOrders(orderType);
+        } // Filter theo status (on-prepared, delivering, done)
+        else if (orderType.equalsIgnoreCase("on-prepared")) {
+            oList = oDAO.getOnPreparedOrders();
+        } else if (orderType.equalsIgnoreCase("delivering")) {
+            oList = oDAO.getDeliveringOrders();
+        } else if (orderType.equalsIgnoreCase("done")) {
+            oList = oDAO.getDoneOrders();
+        }
 
         int totalOrders = oList.size();
         int totalPages = (int) Math.ceil((double) totalOrders / ordersPerPage);
@@ -80,13 +91,11 @@ public class OrderManagerController extends HttpServlet {
 
         Vector<OrderDetails> odList = odDAO.getOrderDetails("SELECT * FROM dbo.OrderDetails");
 
-        // Tạo maps chứa thông tin bổ sung
         Map<Integer, String> customerUsernames = new HashMap<>();
         Map<Integer, String> customerNames = new HashMap<>();
         Map<Integer, String> paymentMethods = new HashMap<>();
         Map<Integer, Products> productDetails = new HashMap<>();
 
-        // Lấy thông tin khách hàng & phương thức thanh toán
         for (Orders order : paginatedOrders) {
             int customerID = order.getCustomerID();
             customerUsernames.putIfAbsent(customerID, cDAO.getUsernameByCustomerID(customerID));
@@ -96,7 +105,6 @@ public class OrderManagerController extends HttpServlet {
             paymentMethods.putIfAbsent(paymentID, pmDao.getMethodPaymentName(pDAO.getMethodByPaymentID(paymentID)));
         }
 
-        // Lấy thông tin sản phẩm
         for (OrderDetails od : odList) {
             int productID = od.getProductID();
             productDetails.putIfAbsent(productID, prdDAO.getProductByID(productID));

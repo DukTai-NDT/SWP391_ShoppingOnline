@@ -151,12 +151,7 @@
                             </a>
                             <div class="search-bar p-0 d-none d-md-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <!--                                    <form role="search" method="get" id="searchform" class="searchform">
-                                                                            <div>
-                                                                                <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
-                                                                                <input type="submit" id="searchsubmit" value="Search">
-                                                                            </div>
-                                                                        </form>-->
+
                                 </div>
                             </div>
                         </div>
@@ -206,6 +201,19 @@
                         <div class="d-md-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 <h5 class="mb-0 me-3">Order List</h5>
+
+                                <form action="OrderManager" method="GET" class="d-inline">
+                                    <div class="input-group">
+                                        <select class="form-select" name="orderType" id="orderType" onchange="this.form.submit()">
+                                            <option value="newest" ${orderType == "newest" ? "selected" : ""}>ALL</option>
+                                            <option value="on-prepared" ${orderType == "on-prepared" ? "selected" : ""}>On-Prepared</option>
+                                            <option value="delivering" ${orderType == "delivering" ? "selected" : ""}>Delivering</option>
+                                            <option value="done" ${orderType == "done" ? "selected" : ""}>Done</option>
+                                        </select>
+                                        <input type="hidden" name="page" value="${currentPage}">
+                                    </div>
+                                </form>
+
                                 <form action="OrderManager" method="GET" class="d-inline">
                                     <div class="input-group">
                                         <select class="form-select" name="orderType" id="orderType" onchange="this.form.submit()">

@@ -393,6 +393,84 @@ public class DAOOrders extends DBConnection {
 
         return ordersList;
     }
+    
+    public Vector<Orders> getOnPreparedOrders() {
+        Vector<Orders> onPreparedOrders = new Vector<>();
+        String sql = "SELECT * FROM Orders WHERE Status = 'On-prepared'";
+
+        try (Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = state.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Orders order = new Orders(
+                        rs.getInt("OrderID"),
+                        rs.getString("Status"),
+                        rs.getInt("CustomerID"),
+                        rs.getDate("OrderTime").toLocalDate(),
+                        rs.getDate("DeliveryETA") != null ? rs.getDate("DeliveryETA").toLocalDate() : null,
+                        rs.getInt("PaymentID"),
+                        rs.getBoolean("isReceived")
+                );
+                onPreparedOrders.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return onPreparedOrders;
+    }
+    
+    public Vector<Orders> getDeliveringOrders() {
+        Vector<Orders> deliveringOrders = new Vector<>();
+        String sql = "SELECT * FROM Orders WHERE Status = 'Delivering'";
+
+        try (Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = state.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Orders order = new Orders(
+                        rs.getInt("OrderID"),
+                        rs.getString("Status"),
+                        rs.getInt("CustomerID"),
+                        rs.getDate("OrderTime").toLocalDate(),
+                        rs.getDate("DeliveryETA") != null ? rs.getDate("DeliveryETA").toLocalDate() : null,
+                        rs.getInt("PaymentID"),
+                        rs.getBoolean("isReceived")
+                );
+                deliveringOrders.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return deliveringOrders;
+    }
+    
+    public Vector<Orders> getDoneOrders() {
+        Vector<Orders> doneOrders = new Vector<>();
+        String sql = "SELECT * FROM Orders WHERE Status = 'Done'";
+
+        try (Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = state.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Orders order = new Orders(
+                        rs.getInt("OrderID"),
+                        rs.getString("Status"),
+                        rs.getInt("CustomerID"),
+                        rs.getDate("OrderTime").toLocalDate(),
+                        rs.getDate("DeliveryETA") != null ? rs.getDate("DeliveryETA").toLocalDate() : null,
+                        rs.getInt("PaymentID"),
+                        rs.getBoolean("isReceived")
+                );
+                doneOrders.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return doneOrders;
+    }
 
     public static void main(String[] args) {
         DAOOrders dao = new DAOOrders();
