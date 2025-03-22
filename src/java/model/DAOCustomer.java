@@ -18,26 +18,27 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class DAOCustomer extends DBConnection {
-    
-public Customers getCustomerByAccountId(int accountId) {
+
+    public Customers getCustomerByAccountId(int accountId) {
         Customers customer = null;
         String sql = "SELECT * FROM Customers WHERE AccountID = ?";
-        
+
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setInt(1, accountId);
             ResultSet rs = preState.executeQuery();
-            
+
             if (rs.next()) {
                 customer = new Customers(
-                    rs.getInt("CustomerID"),
-                    rs.getString("FirstName"),
-                    rs.getString("LastName"),
-                    rs.getString("Email"),
-                    rs.getString("Address"),
-                    rs.getString("Gender"),
-                    rs.getString("Phone"),
-                    rs.getInt("AccountID")
+                        rs.getInt("CustomerID"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Address"),
+                        rs.getString("Gender"),
+                        rs.getString("Phone"),
+                        rs.getInt("AccountID"),
+                        rs.getString("ProfileImg")
                 );
             }
         } catch (SQLException ex) {
@@ -49,22 +50,23 @@ public Customers getCustomerByAccountId(int accountId) {
     public Customers getCustomerByUsername(String username) {
         Customers customer = null;
         String sql = "SELECT c.* FROM Customers c JOIN Accounts a ON c.AccountID = a.AccountID WHERE a.UserName = ?";
-        
+
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, username);
             ResultSet rs = preState.executeQuery();
-            
+
             if (rs.next()) {
                 customer = new Customers(
-                    rs.getInt("CustomerID"),
-                    rs.getString("FirstName"),
-                    rs.getString("LastName"),
-                    rs.getString("Email"),
-                    rs.getString("Address"),
-                    rs.getString("Gender"),
-                    rs.getString("Phone"),
-                    rs.getInt("AccountID")
+                        rs.getInt("CustomerID"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Address"),
+                        rs.getString("Gender"),
+                        rs.getString("Phone"),
+                        rs.getInt("AccountID"),
+                        rs.getString("ProfileImg")
                 );
             }
         } catch (SQLException ex) {
@@ -82,9 +84,10 @@ public Customers getCustomerByAccountId(int accountId) {
                 + "           ,[Address]\n"
                 + "           ,[Gender]\n"
                 + "           ,[Phone]\n"
-                + "           ,[AccountID])\n"
+                + "           ,[AccountID]\n"
+                + "           ,[ProfileImg])\n               "
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setString(1, other.getFirstName());
@@ -94,6 +97,7 @@ public Customers getCustomerByAccountId(int accountId) {
             preState.setString(5, other.getGender());
             preState.setString(6, other.getPhone());
             preState.setInt(7, other.getAccountID());
+            preState.setString(8, other.getProfileImg());
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,6 +128,7 @@ public Customers getCustomerByAccountId(int accountId) {
                 + "      ,[Address] = ?\n"
                 + "      ,[Gender] = ?\n"
                 + "      ,[Phone] = ?\n"
+                + "      ,[ProfileImg]=?\n"
                 + " WHERE CustomerID = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
@@ -133,7 +138,8 @@ public Customers getCustomerByAccountId(int accountId) {
             preState.setString(4, other.getAddress());
             preState.setString(5, other.getGender());
             preState.setString(6, other.getPhone());
-            preState.setInt(7, other.getCustomerID());
+            preState.setString(7, other.getProfileImg());
+            preState.setInt(8, other.getCustomerID());
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,7 +161,8 @@ public Customers getCustomerByAccountId(int accountId) {
                 String Gender = rs.getString("Gender");
                 String Phone = rs.getString("Phone");
                 int AccountID = rs.getInt("AccountID");
-                Customers cus = new Customers(CustomerID, FirstName, LastName, Email, Address, Gender, Phone, AccountID);
+                String ProfileImg = rs.getString("ProfileImg");
+                Customers cus = new Customers(CustomerID, FirstName, LastName, Email, Address, Gender, Phone, AccountID, ProfileImg);
                 vector.add(cus);
             }
         } catch (SQLException ex) {
@@ -163,24 +170,131 @@ public Customers getCustomerByAccountId(int accountId) {
         }
         return vector;
     }
-    
-    public String getNameByID(int id){
-        String name = "";
-        String sql ="select LastName from customers where customerID ="+id; 
+
+    public String[] getCustomerByID(int CustomerID) {
+        String[] result = new String[3];
+        result[0] = "";
+        result[1] = "";
+        result[2] = "";
+
+        String sql = "SELECT FirstName, LastName, ProfileImg FROM Customers WHERE CustomerID =?";
         try {
-            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = state.executeQuery(sql);
-            while (rs.next()) {
-               
-               
-                name = rs.getString("LastName");
-               
-                
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, CustomerID);
+            ResultSet rs = preState.executeQuery();
+            if (rs.next()) {
+                result[0] = rs.getString("FirstName");
+                result[1] = rs.getString("LastName");
+                result[2] = rs.getString("ProfileImg");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return name;
+        return result;
     }
-    
+
+    public String getUsernameByCustomerID(int customerID) {
+        String username = null;
+        String sql = "SELECT a.UserName FROM Customers c JOIN Accounts a ON c.AccountID = a.AccountID WHERE c.CustomerID = ?";
+
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, customerID);
+            ResultSet rs = preState.executeQuery();
+
+            if (rs.next()) {
+                username = rs.getString("UserName");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return username;
+    }
+
+    public Customers getCustomerByFeedbackID(int fid) {
+        String sql = "SELECT c.* FROM Customers c "
+                + "JOIN Accounts a ON c.AccountID = a.AccountID "
+                + "JOIN Feedbacks f ON a.AccountID = f.AccountID "
+                + "WHERE f.FeedbackID = ?";
+        Customers customer = null;
+
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, fid);
+            ResultSet rs = preState.executeQuery();
+
+            if (rs.next()) {
+                customer = new Customers(
+                        rs.getInt("CustomerID"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Address"),
+                        rs.getString("Gender"),
+                        rs.getString("Phone"),
+                        rs.getInt("AccountID"),
+                        rs.getString("ProfileImg")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return customer;
+
+    }
+
+    public String getCustomerNameByID(int customerID) {
+        String customerName = null;
+        String sql = "SELECT FirstName, LastName FROM Customers WHERE CustomerID = ?";
+
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, customerID);
+            ResultSet rs = preState.executeQuery();
+
+            if (rs.next()) {
+                customerName = rs.getString("FirstName") + " " + rs.getString("LastName");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return customerName;
+    }
+
+    public String getCustomerImgByID(int customerID) {
+        String customerImg = null;
+        String sql = "SELECT ProfileImg\n"
+                + "  FROM [ECommerceDB].[dbo].[Customers]\n"
+                + "  where CustomerID = ?";
+
+        try {
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setInt(1, customerID);
+            ResultSet rs = preState.executeQuery();
+
+            if (rs.next()) {
+                customerImg = rs.getString("ProfileImg");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return customerImg;
+    }
+
+    public static void main(String[] args) {
+        DAOCustomer dao = new DAOCustomer();
+
+        Vector<Customers> cus = dao.getCustomer("select * from Customers");
+        for (Customers cu : cus) {
+            System.out.println(cu);
+        }
+        String img = dao.getCustomerImgByID(3);
+        System.out.println(img);
+
+
+    }
+
 }

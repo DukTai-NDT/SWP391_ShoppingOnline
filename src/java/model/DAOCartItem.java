@@ -5,6 +5,7 @@
 package model;
 
 import entity.CartItems;
+import entity.Products;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -161,15 +162,25 @@ public class DAOCartItem extends DBConnection {
         }
         return vector;
     }
+    public boolean checkQuantity(int quantity, int pid){
+        DAOProducts dao = new DAOProducts();
+        Products pro = dao.getProductByID(pid);
+        if(pro.getQuantity() < quantity){
+            return false;
+        }
+        return true;
+        
+    }
     public static void main(String[] args) {
         DAOCartItem dao = new DAOCartItem();
-
-        Vector<CartItems> vectorCartItem = dao.getCartItem("select * from CartItem");
-        
-        Vector<CartItems> vector = dao.getProductIsntBuy("  select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = 3");
-        for (CartItems cartItems : vectorCartItem) {
-            System.out.println(cartItems);
-        }
+        boolean status = dao.checkQuantity(49, 8);
+        System.out.println(status);
+//        Vector<CartItems> vectorCartItem = dao.getCartItem("select * from CartItem");
+//        
+//        Vector<CartItems> vector = dao.getProductIsntBuy("  select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = 3");
+//        for (CartItems cartItems : vectorCartItem) {
+//            System.out.println(cartItems);
+//        }
     }
 
 }

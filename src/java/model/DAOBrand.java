@@ -102,7 +102,7 @@ public class DAOBrand extends DBConnection {
 
     public Brand getBrandByID(int brandID) {
         Brand brand = null;
-        String sql = "SELECT * FROM dbo.Brands WHERE BrandID = ?";
+        String sql = "SELECT * FROM dbo.Brand WHERE BrandID = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, brandID);

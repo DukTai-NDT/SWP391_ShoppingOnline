@@ -5,6 +5,7 @@
 
 package controller;
 
+import entity.Blogs;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,12 +13,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.DAOBlogs;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name="AdminBlogDetailController", urlPatterns={"/adminblogdetail"})
+@WebServlet(name="AdminBlogDetailController", urlPatterns={"/AdminBlogsDetail"})
 public class AdminBlogDetailController extends HttpServlet {
    
     /** 
@@ -30,6 +33,12 @@ public class AdminBlogDetailController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String bid = request.getParameter("bid");
+        DAOBlogs dblog = new DAOBlogs();
+        Blogs blog = dblog.getBlogsByID(bid);
+        List<Blogs> list=dblog.getAllBlogs();
+        request.setAttribute("list", list);
+        request.setAttribute("blogdetail", blog);
         request.getRequestDispatcher("/jsp/blog-detail.jsp").forward(request, response);
     } 
 

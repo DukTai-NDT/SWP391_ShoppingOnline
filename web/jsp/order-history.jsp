@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ page import=" entity.Account , entity.Customers,entity.OrderDetails,model.DAOProducts,model.DAOOrderDetails,java.util.Vector" %>
+<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <html lang="vi">
@@ -126,7 +127,17 @@
       DAOProducts daoProduct = new DAOProducts();
       DAOOrderDetails daoOrderDetail = new DAOOrderDetails();
     %>
+    <% String message = (String)request.getAttribute("message"); 
+    %>
+    <%Vector<Categories> vcategories = (Vector<Categories>)session.getAttribute("vcategories");%>
+    <%Vector<Products> vproduct = (Vector<Products>)session.getAttribute("vproduct");%>
+    <% Vector<Products> vproductspecial= (Vector<Products>)session.getAttribute("vproductspecial");%>
+    <%
+        Account account = (Account)session.getAttribute("dataUser");
+       Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
+             Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+    %>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -165,66 +176,71 @@
                 </div>
                 <!-- End Mobile Toggle -->
 
-                <!-- Start Dropdown --><%
-            Account account = (Account)session.getAttribute("dataUser");
-                %>
+                <!-- Start Dropdown -->
+                
                 <ul class="dropdowns list-inline mb-0">
+                     <%
+            if(currentCustomer != null){
+                    %>
+                    <li class="list-inline-item mb-0">
+                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
+                        </a>
+                    </li>
 
+                    <li class="list-inline-item mb-0 ms-1">
+                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                            <i class="uil uil-search"></i>
+                        </a>
+
+                    </li>
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
 
-
-                            <%if(account != null){%>
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/products/z5341925245712_e4a232314bec6b8096527cf5ad9a3d92.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                            </button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="images/products/z5341925245712_e4a232314bec6b8096527cf5ad9a3d92.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
-                                    <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1"><%=account.getUserName()%></span>
+                                    <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
 
+                                    <div class="flex-1 ms-2">
+                                        <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="OrderHistoryURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Đơn mua</a>
-                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
+                                <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
-                            </div>        
-                            <%}else{%>
+                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
 
-                            <div class="auth-links">
-                                <a href="SignUpURL?service=signup">Sign up</a>
-                                <span>|</span>
-                                <a href="LoginURL?service=login">Log in</a>
                             </div>
-                            <%}%>
-
                         </div>
                     </li>
+                    <%} else{%>
+                    <div class="auth-links">
+                        <a href="SignUpURL?service=signup">Sign up</a>
+                        <span>|</span>
+                        <a href="LoginURL?service=login">Log in</a>
+                    </div>
+                    <%}%>
                 </ul>
                 <!-- Start Dropdown -->
 
                 <div id="navigation">
-                    <!-- Navigation Menu -->
+                    <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left nav-light">
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
+                        <li class="parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
+
+                        </li>
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a></li>
-                                <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="CartURL?service=showCart" class="sub-menu-item">Shop Cart</a></li>
-                                <li><a href="CheckoutURL" class="sub-menu-item">Checkout</a></li>
-                                <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
+                                <%for (Categories cat : vcategories){%>
+                                <li><a href="ProductURL?service=categories&cid=<%=cat.getCategoryID()%>" class="sub-menu-item"> <%=cat.getCategoryName()%></a></li>
+                                    <%}%>
                             </ul>
                         </li>
-                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="aboutus.jsp" class="sub-menu-item">About Us</a></li>
-                                <li><a href="DepartmentURL?service=listAllDepartment" class="sub-menu-item">Departments</a></li>
-                                <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="BlogsURL">Blog </a></li>
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -237,13 +253,13 @@
                 <div class="row mt-5 justify-content-center">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h3 class="sub-title mb-4">Lịch Sử Đơn Hàng</h3>
-                            <p class="para-desc mx-auto text-muted">Xem lại lịch sử mua hàng của bạn và theo dõi trạng thái đơn hàng một cách dễ dàng.</p>
+                            <h3 class="sub-title mb-4">Order History</h3>
+                            <p class="para-desc mx-auto text-muted">Review your purchase history and track order status easily.</p>
                             <nav aria-label="breadcrumb" class="d-inline-block mt-3">
                                 <ul class="breadcrumb bg-light rounded mb-0 bg-transparent">
                                     <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
                                     <li class="breadcrumb-item"><a href="pharmacy.html">Pharmacy</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Lịch Sử Đơn Hàng</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Order History</li>
                                 </ul>
                             </nav>
                         </div>
@@ -263,38 +279,39 @@
         <!-- Start -->
         <section class="section">
             <div class="container">
-
+                <p style="color: red;"><%=(message!=null?message:"")%></p>
                 <form action="CartURL" method="POST">
                     <div class="row">
                         <div class="col-12">
                             <div class="table-container">
                                 <nav class="status-bar">
-                                    <a href="#" class="status" data-status="all" aria-current="page">Tất cả đơn hàng</a>
-                                    <a href="#" class="status" data-status="pending">Đang chờ duyệt</a>
-                                    <a href="#" class="status" data-status="shipping">Đang vận chuyển</a>
-                                    <a href="#" class="status" data-status="completed">Đã hoàn thành</a>
+                                    <a href="#" class="status" data-status="all" aria-current="page">All Orders</a>
+                                    <a href="#" class="status" data-status="pending">Pending</a>
+                                    <a href="#" class="status" data-status="shipping">Shipping</a>
+                                    <a href="#" class="status" data-status="completed">Completed</a>
                                 </nav>
                                 <table class="table table-hover table-striped mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Sản Phẩm</th>
-                                            <th>Giá</th>
-                                            <th>Số Lượng</th>
-                                            <th>Tổng Cộng</th>
-                                            <th>Trạng Thái</th>
-                                            <th>Hành Động</th>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <%
                                         for (OrderDetails orderDetails : vectorOrderDetail) {
-                    
-                                        if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Hoàn thành")){
+                                            if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){
                                         %>
                                         <tr data-status="completed">
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang vận chuyển")){%>
+                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Delivering")){%>
                                         <tr data-status="shipping">
-                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang chuẩn bị hàng")){%>
+                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Prepared")){%>
+                                            <tr data-status="shipping">
+                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
                                         <tr data-status="pending">
                                             <%}%>
                                             <td>
@@ -306,70 +323,32 @@
                                             <td>₫<%=orderDetails.getPrice()%></td>
                                             <td><%=orderDetails.getQuantity()%></td>
                                             <td>₫<%=orderDetails.getPrice() * orderDetails.getQuantity()%></td>
-                                            <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Hoàn thành")){
-                                            %>
+                                            <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){ %>
                                             <td><span class="badge bg-success"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
-                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang vận chuyển")){%>
+                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Delivering")){%>
                                             <td><span class="badge bg-info"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
-                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang chuẩn bị hàng")){%>
+                                            <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Prepared")){%>
+                                            <td><span class="badge bg-info"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
+                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
                                             <td><span class="badge bg-warning"><%=daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID())%></span></td>
                                                 <%}%>
-
                                             <td>
-                                                <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Hoàn thành")){
-                                                %>
+                                                <% if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Done")){ %>
                                                 <div class="order-actions">
-                                                    <button class="btn btn-danger btn-sm me-2">Đánh Giá</button>
-                                                    <button class="btn btn-primary btn-sm">Mua Lại</button>
+                                                    <a href="ProductDetailURL?service=detailProduct&pid=<%=orderDetails.getProductID()%>" class="btn btn-danger btn-sm me-2">Review</a>
+                                                    <a href="ProductDetailURL?service=detailProduct&pid=<%=orderDetails.getProductID()%>" class="btn btn-primary btn-sm">Buy Again</a>
                                                 </div>
-                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang chuẩn bị hàng")){%>
+                                                <%} else if(daoOrderDetail.getStatusOrder(orderDetails.getOrderDetailID()).equals("On-prepared")){%>
                                                 <div class="order-actions">
-                                                    <button class="btn btn-danger btn-sm">Hủy Đơn</button>
-                                                </div>
+                                                    <a href="OrderHistoryURL?service=cancerOrder&orderDetaiID=<%=orderDetails.getOrderDetailID()%>" class="btn btn-danger">Cancer</a>
 
+                                                </div>
                                                 <%}%>
-
                                             </td>
                                         </tr>
                                         <%}%>
-                                        <!--                                        
-                                                                                <tr data-status="pending">
-                                                                                    <td>
-                                                                                        <div class="product-info">
-                                                                                            <img src="https://via.placeholder.com/50" alt="Áo thun nam cao cấp" class="product-image">
-                                                                                            <span>Áo thun nam cao cấp</span>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>₫150,000</td>
-                                                                                    <td>2</td>
-                                                                                    <td>₫300,000</td>
-                                                                                    <td><span class="badge bg-warning">Đang chờ duyệt</span></td>
-                                                                                    <td>
-                                                                                        <div class="order-actions">
-                                                    <button class="btn btn-danger btn-sm">Hủy Đơn</button>
-                                                </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr data-status="shipping">
-                                                                                    <td>
-                                                                                        <div class="product-info">
-                                                                                            <img src="https://via.placeholder.com/50" alt="Tai nghe Bluetooth 5.0" class="product-image">
-                                                                                            <span>Tai nghe Bluetooth 5.0</span>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>₫200,000</td>
-                                                                                    <td>1</td>
-                                                                                    <td>₫200,000</td>
-                                                                                    <td><span class="badge bg-info">Đang vận chuyển</span></td>
-                                                                                    <td>
-                                                                                        <div class="order-actions">
-                                                                                            <button class="btn btn-primary btn-sm">Theo Dõi</button>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>-->
                                     </tbody>
                                 </table>
-                                
                             </div>
                         </div><!--end col-->
                     </div><!--end row-->
@@ -469,6 +448,46 @@
         </div>
         <!-- Offcanvas End -->
 
+        <% if (currentCustomer != null) { %>
+        <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header p-4 border-bottom">
+                <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
+                <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <% 
+           
+                    if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
+               
+               
+                      for(CartItems vectorCartItem : vectorCartItems) {
+                %>
+                <div class="cart-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
+                        <div class="ms-3 flex-1">
+                            <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
+                            <div class="d-flex justify-content-between">
+                                <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
+                                <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    } }else {
+                %>
+                <p class="text-muted text-center " >No Products In Cart...</p>
+                <%
+                    }
+                %>
+                <div class="mt-4 text-center">
+                    <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
+                </div>
+            </div>
+        </div>
+        <% }%>
         <!-- Offcanvas Start -->
         <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header p-4 border-bottom">
@@ -523,62 +542,71 @@
         <script src="js/viewMore.js"></script>
         <!-- Custom JavaScript -->
         <script>
-                                        document.addEventListener('DOMContentLoaded', () => {
-                                            // Lọc đơn hàng theo trạng thái
-                                            const statusLinks = document.querySelectorAll('.status');
-                                            const rows = document.querySelectorAll('.table tbody tr');
-
-                                            statusLinks.forEach(link => {
-                                                link.addEventListener('click', (e) => {
-                                                    e.preventDefault();
-                                                    const selectedStatus = link.getAttribute('data-status');
-
-                                                    // Xóa trạng thái active khỏi tất cả các tab
-                                                    statusLinks.forEach(s => s.removeAttribute('aria-current'));
-                                                    link.setAttribute('aria-current', 'page');
-
-                                                    rows.forEach(row => {
-                                                        const rowStatus = row.getAttribute('data-status');
-                                                        if (selectedStatus === 'all' || rowStatus === selectedStatus) {
-                                                            row.style.display = '';
-                                                        } else {
-                                                            row.style.display = 'none';
-                                                        }
-                                                    });
-                                                });
-                                            });
-
-                                            // Thêm sự kiện cho các nút
-                                            document.querySelectorAll('.btn-rate').forEach(button => {
-                                                button.addEventListener('click', () => {
-                                                    alert('Đánh giá đơn hàng!');
-                                                });
-                                            });
-
-                                            document.querySelectorAll('.btn-buy').forEach(button => {
-                                                button.addEventListener('click', () => {
-                                                    alert('Mua lại sản phẩm!');
-                                                });
-                                            });
-
-                                            document.querySelectorAll('.btn-cancel').forEach(button => {
-                                                button.addEventListener('click', () => {
-                                                    if (confirm('Bạn có chắc muốn hủy đơn hàng này?')) {
-                                                        alert('Đơn hàng đã được hủy!');
-                                                    }
-                                                });
-                                            });
-
-                                            document.querySelectorAll('.btn-track').forEach(button => {
-                                                button.addEventListener('click', () => {
-                                                    alert('Theo dõi đơn hàng!');
-                                                });
-                                            });
-
-                                            document.getElementById('viewMoreBtn').addEventListener('click', () => {
-                                                alert('Tải thêm đơn hàng!');
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            console.log("Bootstrap JS loaded:", typeof bootstrap !== "undefined");
+                                            var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+                                            dropdownElementList.forEach(function (dropdownToggleEl) {
+                                                new bootstrap.Dropdown(dropdownToggleEl);
                                             });
                                         });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Lọc đơn hàng theo trạng thái
+                const statusLinks = document.querySelectorAll('.status');
+                const rows = document.querySelectorAll('.table tbody tr');
+
+                statusLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const selectedStatus = link.getAttribute('data-status');
+
+                        // Xóa trạng thái active khỏi tất cả các tab
+                        statusLinks.forEach(s => s.removeAttribute('aria-current'));
+                        link.setAttribute('aria-current', 'page');
+
+                        rows.forEach(row => {
+                            const rowStatus = row.getAttribute('data-status');
+                            if (selectedStatus === 'all' || rowStatus === selectedStatus) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+
+                // Thêm sự kiện cho các nút
+                document.querySelectorAll('.btn-rate').forEach(button => {
+                    button.addEventListener('click', () => {
+                        alert('Đánh giá đơn hàng!');
+                    });
+                });
+
+                document.querySelectorAll('.btn-buy').forEach(button => {
+                    button.addEventListener('click', () => {
+                        alert('Mua lại sản phẩm!');
+                    });
+                });
+
+                document.querySelectorAll('.btn-cancel').forEach(button => {
+                    button.addEventListener('click', () => {
+                        if (confirm('Bạn có chắc muốn hủy đơn hàng này?')) {
+                            alert('Đơn hàng đã được hủy!');
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.btn-track').forEach(button => {
+                    button.addEventListener('click', () => {
+                        alert('Theo dõi đơn hàng!');
+                    });
+                });
+
+                document.getElementById('viewMoreBtn').addEventListener('click', () => {
+                    alert('Tải thêm đơn hàng!');
+                });
+            });
         </script>
     </body>
 </html>

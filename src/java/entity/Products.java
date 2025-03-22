@@ -19,8 +19,9 @@ public class Products {
     private boolean isPrescriptionDrug;
     private int Quantity;
     private String Image;
+    private boolean isAvailable;
 
-    public Products(int ProductID, String ProductName, float Price, String Description, String UnitPrice, int CategoryID, int BrandID, boolean isPrescriptionDrug, int Quantity, String Image) {
+    public Products(int ProductID, String ProductName, float Price, String Description, String UnitPrice, int CategoryID, int BrandID, boolean isPrescriptionDrug, int Quantity, String Image, boolean isAvailable) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.Price = Price;
@@ -31,9 +32,10 @@ public class Products {
         this.isPrescriptionDrug = isPrescriptionDrug;
         this.Quantity = Quantity;
         this.Image = Image;
+        this.isAvailable = isAvailable;
     }
 
-    public Products(String ProductName, float Price, String Description, String UnitPrice, int CategoryID, int BrandID, boolean isPrescriptionDrug, int Quantity, String Image) {
+    public Products(String ProductName, float Price, String Description, String UnitPrice, int CategoryID, int BrandID, boolean isPrescriptionDrug, int Quantity, String Image, boolean isAvailable) {
         this.ProductName = ProductName;
         this.Price = Price;
         this.Description = Description;
@@ -43,6 +45,7 @@ public class Products {
         this.isPrescriptionDrug = isPrescriptionDrug;
         this.Quantity = Quantity;
         this.Image = Image;
+        this.isAvailable = isAvailable;
     }
 
     public Products() {
@@ -128,9 +131,19 @@ public class Products {
         this.Image = Image;
     }
 
+    public boolean isIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
     @Override
     public String toString() {
-        return "Products{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", Price=" + Price + ", Description=" + Description + ", UnitPrice=" + UnitPrice + ", CategoryID=" + CategoryID + ", BrandID=" + BrandID + ", isPrescriptionDrug=" + isPrescriptionDrug + ", Quantity=" + Quantity + ", Image=" + Image + '}';
-    } 
+        return "Products{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", Price=" + Price + ", Description=" + Description + ", UnitPrice=" + UnitPrice + ", CategoryID=" + CategoryID + ", BrandID=" + BrandID + ", isPrescriptionDrug=" + isPrescriptionDrug + ", Quantity=" + Quantity + ", Image=" + Image + ", isAvailable=" + isAvailable + '}';
+    }
+
+    
     
 }

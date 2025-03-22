@@ -77,7 +77,7 @@ public class SignUpController extends HttpServlet {
 
                     int n = dao.addAccount(new Account(acc.getName(),2 , getRandom(6), acc.getEmail(),true));
                     Customers customer = new Customers(acc.getName(), acc.getFamily_name(),
-                             acc.getEmail(), null, null, null, dao.getLastAccountID());
+                             acc.getEmail(), null, null, null, dao.getLastAccountID(),null);
                      int x = daoCustomer.addCustomer(customer);
 
                     request.setAttribute("message", "Sign up successfully. Please login");
@@ -111,7 +111,7 @@ public class SignUpController extends HttpServlet {
                     //request.setAttribute("accountFail", "Can not to signup !!!");
                     request.getRequestDispatcher("jsp/signup.jsp").forward(request, response);
                 } else {
-                    Customers customer = new Customers(FirstName, LastName,Email, null, null, null, dao.getLastAccountID());
+                    Customers customer = new Customers(FirstName, LastName,Email, null, null, null, dao.getLastAccountID(),null);
                     int x = daoCustomer.addCustomer(customer);
 
                    response.sendRedirect("LoginURL?service=login");

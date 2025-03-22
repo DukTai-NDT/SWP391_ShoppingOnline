@@ -4,12 +4,15 @@
  */
 package controller;
 
+import entity.Account;
 import entity.CartItems;
 import entity.Customers;
 import entity.DeliveryAddress;
 import entity.OrderDetails;
 import entity.Orders;
 import entity.Payments;
+import entity.Categories;
+import entity.Products;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,11 +24,13 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.Vector;
 import model.DAOCartItem;
+import model.DAOCategories;
 import model.DAODeliveryAddress;
 import model.DAOOrderDetails;
 import model.DAOOrders;
 import model.DAOPaymentMethod;
 import model.DAOPayments;
+import model.DAOProducts;
 
 /**
  *
@@ -45,12 +50,18 @@ public class CheckoutController extends HttpServlet {
             DAOOrderDetails daoOrderDetail = new DAOOrderDetails();
             DAODeliveryAddress daoDeliAddress = new DAODeliveryAddress();
             DAOCartItem daoCartItem = new DAOCartItem();
+            DAOCategories daoCat = new DAOCategories();
+            DAOProducts daoPro = new DAOProducts();
+            Account account = (Account)session.getAttribute("dataUser");
+
             Customers customer = (Customers) session.getAttribute("dataCustomer");
             String service = request.getParameter("service");
             if (service == null) {
                 response.sendRedirect("DeliveryAddressURL?service=first");
             }
             if (service.equals("theFirst")) {
+                Vector<Categories> vcategories = daoCat.getCategories("select * from Categories");
+                session.setAttribute("vcategories", vcategories);
                 response.sendRedirect("DeliveryAddressURL?service=first");
             }
             if (service.equals("checkout")) {
@@ -73,12 +84,14 @@ public class CheckoutController extends HttpServlet {
                 System.out.println(districtId);
                 System.out.println(orderDate);
                 System.out.println(deliveryDate);
-
+                
                 try {
                     int paymentMethodID = 0;
                     int methodPayment = 0;
                     if (paymentMethod.equals("COD")) {
+
                         paymentMethodID = daoPaymentMethod.getMethodPaymentID("Cash on Delivery (COD)");
+
                         methodPayment++;
                     } else {
                         paymentMethodID = daoPaymentMethod.getMethodPaymentID("VNPay");
@@ -93,11 +106,15 @@ public class CheckoutController extends HttpServlet {
 
                     // Add Order
 
-                    int orderID = daoOrder.addOrder(new Orders("Đang chuẩn bị hàng", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID()));
+
+
+                    int orderID = daoOrder.addOrder(new Orders("On-prepared", customer.getCustomerID(), orderDate, deliveryDate, daoPayment.getLastPaymentID(), false));
+
 
 
                     if (orderID == 0) {
-                        request.setAttribute("message", "Tạo mới đơn hàng thất bại");
+                        request.setAttribute("message", "Order processing failed");
+
                         request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
                         return;
 
@@ -106,7 +123,8 @@ public class CheckoutController extends HttpServlet {
                     // Add Delivery Address
                     int addressID = daoDeliAddress.addDeliveryAddress(new DeliveryAddress(address, daoOrder.getLastOrderID(), Integer.parseInt(provinceId), Integer.parseInt(districtId)));
                     if (addressID == 0) {
-                        request.setAttribute("message", "Địa chỉ không hợp lệ");
+                        request.setAttribute("message", "Address saving failed");
+
                         request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
                         return;
 
@@ -117,20 +135,29 @@ public class CheckoutController extends HttpServlet {
                         int n = daoOrderDetail.addOrderDetails(new OrderDetails(vectorCartItem.getPrice(),
                                 vectorCartItem.getQuantity(), vectorCartItem.getProductID(),
                                 daoOrder.getLastOrderID()));
+                        Products pro= daoPro.getProductByID(vectorCartItem.getProductID());
+                        int quantityAfter = pro.getQuantity() - vectorCartItem.getQuantity();
+                        pro.setQuantity(quantityAfter);
+                        int z = daoPro.updateProduct(pro);
                         int y = daoCartItem.changeIsBuy(1, vectorCartItem.getCartItemID());
                     }
                     session.setAttribute("selectedCartItems", new Vector<CartItems>());
+
                     if (methodPayment != 0) {
+
                         request.setAttribute("transResult", true);
                         request.getRequestDispatcher("jsp/paymentResult.jsp").forward(request, response);
 
                     } else {
+
                         response.sendRedirect("ajaxServletURL");
                     }
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    request.setAttribute("message", "Thanh toán thất bại");
+
+                    request.setAttribute("message", "Checkout Failler");
+
                     request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
                 }
             }

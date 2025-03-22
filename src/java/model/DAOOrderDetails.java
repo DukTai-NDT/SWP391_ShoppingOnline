@@ -5,6 +5,7 @@
 package model;
 
 import entity.OrderDetails;
+import entity.Orders;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -94,7 +95,7 @@ public class DAOOrderDetails extends DBConnection {
                 int Quantity = rs.getInt("Quantity");
                 int ProductID = rs.getInt("ProductID");
                 int OrderID = rs.getInt("OrderID");
-                
+
                 OrderDetails orderdetails = new OrderDetails(OrderDetailID, Price, Quantity, ProductID, OrderID);
                 vector.add(orderdetails);
             }
@@ -105,14 +106,15 @@ public class DAOOrderDetails extends DBConnection {
         }
         return vector;
     }
-    public double getTotalPriceOrder(int orderId){
+
+    public double getTotalPriceOrder(int orderId) {
         double total = 0;
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = state.executeQuery("select * from OrderDetails where OrderID ="+orderId);
+            ResultSet rs = state.executeQuery("select * from OrderDetails where OrderID =" + orderId);
             while (rs.next()) {
-                
+
                 float Price = rs.getFloat("Price");
                 total += Price;
             }
@@ -121,19 +123,20 @@ public class DAOOrderDetails extends DBConnection {
             Logger.getLogger(DAOOrderDetails.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return total;
     }
-    public String getStatusOrder(int orderID){
+
+    public String getStatusOrder(int orderID) {
         String status = "";
         String sql = "select Status from OrderDetails od join Orders o on od.OrderID = o.OrderID where  OrderDetailID =" + orderID;
-         try {
+        try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 status = rs.getString("Status");
-              
+
             }
 
         } catch (SQLException ex) {
@@ -142,20 +145,38 @@ public class DAOOrderDetails extends DBConnection {
         }
         return status;
     }
+    
+    
+
+    public OrderDetails getOrderDetailsByIDs(int orderDetailID, int orderID) {
+        OrderDetails orderDetails = null;
+        try {
+            String sql = "SELECT ProductID, Price, Quantity FROM OrderDetails WHERE OrderDetailID = ? AND OrderID = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderDetailID);
+            ps.setInt(2, orderID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                float price = rs.getFloat("Price");
+                int quantity = rs.getInt("Quantity");
+                int productID = rs.getInt("ProductID");
+
+                orderDetails = new OrderDetails(orderDetailID, price, quantity, productID, orderID);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOOrderDetails.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return orderDetails;
+    }
+
     public static void main(String[] args) {
         DAOOrderDetails dao = new DAOOrderDetails();
-        int n = 1002;
-         Vector<OrderDetails> vector = dao.getOrderDetails(" select od.[OrderDetailID]\n"
-                        + "      ,od.[Price]\n"
-                        + "      ,od.[Quantity]\n"
-                        + "      ,od.[ProductID]\n"
-                        + "      ,od.[OrderID] from OrderDetails od join Orders o on od.OrderID = o.OrderID where o.CustomerID = "+n);
-                
-         for (OrderDetails orderDetails : vector) {
-             System.out.println(orderDetails.getQuantity());
-             if(dao.getStatusOrder(orderDetails.getOrderDetailID()).equals("Đang vận chuyển")){
-                 System.out.println("\n"+dao.getStatusOrder(orderDetails.getOrderDetailID()));
-             };
+
+         Vector<OrderDetails> vectorOrderDetail = dao.getOrderDetails("Select * from OrderDetails where OrderDetailID=3019");
+        if(vectorOrderDetail.isEmpty()){
+            System.out.println("1");
         }
     }
+
 }

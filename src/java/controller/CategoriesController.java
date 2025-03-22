@@ -15,6 +15,7 @@ import model.DAOProducts;
 import entity.Products;
 import java.util.Vector;
 import entity.Categories;
+import java.util.List;
 import java.util.Vector;
 import model.DAOCategories;
 /**
@@ -36,6 +37,12 @@ public class CategoriesController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        String cid=request.getParameter("cid");
+        DAOProducts daoproduct=new DAOProducts();
+        List<Products> list=daoproduct.getProductByCategory(cid);
+        request.setAttribute("vector", list);
+        request.getRequestDispatcher("/jsp/shop.jsp").forward(request, response);
 
     }
 

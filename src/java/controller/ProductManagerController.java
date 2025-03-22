@@ -38,18 +38,47 @@ public class ProductManagerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         DAOProducts pDAO = new DAOProducts();
         DAOCategories cDAO = new DAOCategories();
         DAOBrand bDAO = new DAOBrand();
-        
-        Vector<Products> pList = pDAO.getProducts("SELECT * FROM dbo.Products");
+
+        String searchQuery = request.getParameter("search");
+        int page = 1;
+        int productsPerPage = 10;
+
+        String pageStr = request.getParameter("page");
+        if (pageStr != null) {
+            try {
+                page = Integer.parseInt(pageStr);
+            } catch (NumberFormatException e) {
+                page = 1;
+            }
+        }
+
+        Vector<Products> pList;
+        int totalProducts;
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            totalProducts = pDAO.getTotalSearchProducts(searchQuery);
+            pList = pDAO.searchProductByPage(searchQuery, page, productsPerPage);
+        } else {
+            totalProducts = pDAO.getTotalProducts();
+            pList = pDAO.getProductsByPage(page, productsPerPage);
+        }
+
+        int totalPages = (int) Math.ceil((double) totalProducts / productsPerPage);
+
         Vector<Categories> cList = cDAO.getCategories("SELECT * FROM dbo.Categories");
         Vector<Brand> bList = bDAO.getBrand("SELECT * FROM dbo.Brand");
-        
+
         request.setAttribute("pList", pList);
         request.setAttribute("cList", cList);
         request.setAttribute("bList", bList);
+        request.setAttribute("searchQuery", searchQuery);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+
         request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
     }
 
@@ -93,3 +122,5 @@ public class ProductManagerController extends HttpServlet {
     }// </editor-fold>
 
 }
+
+

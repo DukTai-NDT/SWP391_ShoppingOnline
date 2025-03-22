@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
+
 <html lang="en">
 
     <head>
@@ -29,7 +31,12 @@
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
     </head>
+    <%
+                Account account = (Account)session.getAttribute("dataUser");
+               Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
+           
+    %>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -44,105 +51,59 @@
 
         <div class="page-wrapper doctris-theme toggled">
             <nav id="sidebar" class="sidebar-wrapper">
-                <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
+               <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="Dashboard">
+                            <!--<a href="index.jsp">-->
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
                     </div>
 
-                    <!--                    <ul class="sidebar-menu pt-3">
-                                            <li><a href="index.jsp"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
-                                            <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>-->
+                    <ul class="sidebar-menu pt-3">
+                        <li class="sidebar-dropdown">
+                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
+                        </li>
 
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-user me-2 d-inline-block"></i>Doctors</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="doctors.html">Doctors</a></li>
-                                                        <li><a href="add-doctor.html">Add Doctor</a></li>
-                                                        <li><a href="dr-profile.html">Profile</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
 
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-wheelchair me-2 d-inline-block"></i>Patients</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="patients.html">All Patients</a></li>
-                                                        <li><a href="add-patient.html">Add Patients</a></li>
-                                                        <li><a href="patient-profile.html">Profile</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
+                        <%   if(account.getRoleID()  != 4){
+                            if(account.getRoleID()  == 3){%>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
+                        </li>
+                        <%}%>
 
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="chat.html">Chat</a></li>
-                                                        <li><a href="email.html">Email</a></li>
-                                                        <li><a href="calendar.html">Calendar</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
+                        <li class="sidebar-dropdown">
+                            <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
+                        </li>
 
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Pharmacy</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="shop.html">Shop</a></li>
-                                                        <li><a href="product-detail.html">Shop Detail</a></li>
-                                                        <li><a href="shopcart.html">Shopcart</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
+                        <li class="sidebar-dropdown">
 
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="blogs.html">Blogs</a></li>
-                                                        <li><a href="blog-detail.html">Blog Detail</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
 
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="faqs.html">FAQs</a></li>
-                                                        <li><a href="review.html">Reviews</a></li>
-                                                        <li><a href="invoice-list.html">Invoice List</a></li>
-                                                        <li><a href="invoice.html">Invoice</a></li>
-                                                        <li><a href="terms.html">Terms & Policy</a></li>
-                                                        <li><a href="privacy.html">Privacy Policy</a></li>
-                                                        <li><a href="error.html">404 !</a></li>
-                                                        <li><a href="blank-page.html">Blank Page</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminBrands">
+                                <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
+                            </a>
+                        </li>
 
-                    <!--                        <li class="sidebar-dropdown">
-                                                <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li><a href="jsp/login.jsp">Login</a></li>
-                                                        <li><a href="jsp/signup.jsp">Signup</a></li>
-                                                        <li><a href="forgot-password.html">Forgot Password</a></li>
-                                                        <li><a href="jsp/login.jsp">Lock Screen</a></li>
-                                                        <li><a href="thankyou.html">Thank you...!</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>-->
 
-                    <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>-->
+                        <li class="sidebar-dropdown">
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
+                        </li>
 
-                    <!--<li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
+                        <li class="sidebar-dropdown">
+                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+
+                        </li>
+                           <%}else{%>
+
+                        <li class="sidebar-dropdown">
+                            <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
+
+                        </li>
+                        <%}%>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -172,136 +133,54 @@
                             <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
                                 <i class="uil uil-bars"></i>
                             </a>
-                            <div class="search-bar p-0 d-none d-lg-block ms-2">
+                            <div class="search-bar p-0 d-none d-md-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <form role="search" method="get" id="searchform" class="searchform">
-                                        <div>
-                                            <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
-                                            <input type="submit" id="searchsubmit" value="Search">
-                                        </div>
-                                    </form>
+                                    <!--                                    <form role="search" method="get" id="searchform" class="searchform">
+                                                                            <div>
+                                                                                <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
+                                                                                <input type="submit" id="searchsubmit" value="Search">
+                                                                            </div>
+                                                                        </form>-->
                                 </div>
                             </div>
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            <li class="list-inline-item mb-0">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/language/american.png" class="avatar avatar-ex-small rounded-circle p-2" alt=""></button>
-                                    <div class="dropdown-menu dd-menu drop-ups dropdown-menu-end bg-white shadow border-0 mt-3 p-2" data-simplebar style="height: 175px;">
-                                        <a href="javascript:void(0)" class="d-flex align-items-center">
-                                            <img src="images/language/chinese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Chinese</small>
-                                            </div>
-                                        </a>
 
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/european.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">European</small>
-                                            </div>
-                                        </a>
 
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/indian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Indian</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/japanese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Japanese</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/russian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Russian</small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="list-inline-item mb-0 ms-1">
-                                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                    <div class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
-                                </a>
-                            </li>
+                            <%
+                             if(currentCustomer != null){
+                            %>
 
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-icon btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail" class="fea icon-sm"></i></button>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4 <span class="visually-hidden">unread mail</span></span>
 
-                                    <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2" data-simplebar style="height: 320px; width: 300px;">
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/02.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Janalia</b> <small class="text-muted fw-normal d-inline-block">1 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/Codepen.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>codepen</b>  <small class="text-muted fw-normal d-inline-block">4 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/03.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Cristina</b> <small class="text-muted fw-normal d-inline-block">5 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/dribbble.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Dribbble</b> <small class="text-muted fw-normal d-inline-block">24 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/06.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Donald Aghori</b> <small class="text-muted fw-normal d-inline-block">1 day ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/07.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Calvin</b> <small class="text-muted fw-normal d-inline-block">2 day ago</small></small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="list-inline-item mb-0 ms-1">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                                    </button>
                                     <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                                        <a class="dropdown-item d-flex align-items-center text-dark" href="https://shreethemes.in/doctris/layouts/admin/profile.html">
-                                            <img src="images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                        <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
+                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+
                                             <div class="flex-1 ms-2">
-                                                <span class="d-block mb-1">Calvin Carlo</span>
-                                                <small class="text-muted">Orthopedic</small>
+                                                <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
                                             </div>
                                         </a>
-                                        <a class="dropdown-item text-dark" href="index.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                        <a class="dropdown-item text-dark" href="dr-profile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+
+                                        <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                         <div class="dropdown-divider border-top"></div>
-                                        <a class="dropdown-item text-dark" href="jsp/login.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                        <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+
                                     </div>
                                 </div>
                             </li>
+                            <%} else{%>
+                            <div class="auth-links">
+                                <a href="SignUpURL?service=signup">Sign up</a>
+                                <span>|</span>
+                                <a href="LoginURL?service=login">Log in</a>
+                            </div>
+                            <%}%>
                         </ul>
                     </div>
                 </div>
@@ -310,14 +189,6 @@
                     <div class="layout-specing">
                         <div class="d-md-flex justify-content-between">
                             <h5 class="mb-0">Add New Patient</h5>
-
-                            <!--                            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
-                                                            <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-                                                                <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                                                <li class="breadcrumb-item"><a href="patients.html">Patients</a></li>
-                                                                <li class="breadcrumb-item active" aria-current="page">Add Patient</li>
-                                                            </ul>
-                                                        </nav>-->
                         </div>
 
                         <div class="row">
@@ -325,21 +196,21 @@
 
                                 <div class="card border-0 p-4 rounded shadow">
                                     <form action="EditAccount" method="post">
-<!--                                        <div class="row align-items-center">
-                                            <div class="col-lg-2 col-md-4">
-                                                <img src="images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
-                                            </div>end col
-
-                                            <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
-                                                <h5 class="">Upload your picture</h5>
-                                                <p class="text-muted mb-0">For best results, use an image at least 600px by 600px in either .jpg or .png format</p>
-                                            </div>end col
-
-                                            <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
-                                                <a href="#" class="btn btn-primary">Upload</a>
-                                                <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
-                                            </div>end col
-                                        </div>end row-->
+                                        <!--                                        <div class="row align-items-center">
+                                                                                    <div class="col-lg-2 col-md-4">
+                                                                                        <img src="images/client/01.jpg" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="">
+                                                                                    </div>end col
+                                        
+                                                                                    <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
+                                                                                        <h5 class="">Upload your picture</h5>
+                                                                                        <p class="text-muted mb-0">For best results, use an image at least 600px by 600px in either .jpg or .png format</p>
+                                                                                    </div>end col
+                                        
+                                                                                    <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
+                                                                                        <a href="#" class="btn btn-primary">Upload</a>
+                                                                                        <a href="#" class="btn btn-soft-primary ms-2">Remove</a>
+                                                                                    </div>end col
+                                                                                </div>end row-->
 
                                         <form class="mt-4">
                                             <div class="row">
@@ -353,36 +224,24 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Username</label>
-                                                        <input value="${account.userName}" name="username" id="username" type="text" class="form-control" >
+                                                        <input value="${account.userName}" name="username" id="username" type="text" class="form-control"readonly required >
                                                     </div>
                                                 </div><!--end col-->
 
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Password</label>
-                                                        <input value="${account.password}" name="password" id="password" type="text" class="form-control">
+                                                        <input value="${account.password}" name="password" id="password" type="text" class="form-control"readonly required>
                                                     </div> 
                                                 </div><!--end col-->
                                                 <div class="col-md-6">
                                                     <label>Role</label>
-                                                    <select class="form-control" name="roleID" disabled>
-                                                        <option value="1"
-                                                                <c:if test="${account.roleID == 1}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Admin</option>
-                                                        <option value="2"
-                                                                <c:if test="${account.roleID == 2}">
-                                                                    selected
-                                                                </c:if>
-                                                                >User</option>
-                                                        <option value="3"
-                                                                <c:if test="${account.roleID == 3}">
-                                                                    selected
-                                                                </c:if>
-                                                                >Editor</option>
+                                                    <select class="form-control" name="roleID">
+                                                        <option value="1" ${account.roleID == 1 ? 'selected' : ''}>Staff</option>
+                                                        <option value="2" ${account.roleID == 2 ? 'selected' : ''}>Customer</option>
+                                                        <option value="3" ${account.roleID == 3 ? 'selected' : ''}>Admin</option>
+                                                        <option value="2003" ${account.roleID == 3 ? 'selected' : ''}>Shipper</option>
                                                     </select>
-                                                    <input value="${account.roleID}" name="roleID" type="text" hidden>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>Status</label>

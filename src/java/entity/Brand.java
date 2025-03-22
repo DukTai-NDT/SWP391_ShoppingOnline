@@ -20,6 +20,11 @@ public class Brand {
         this.Country = Country;
     }
 
+    public Brand(String BrandName, String Country) {
+        this.BrandName = BrandName;
+        this.Country = Country;
+    }
+    
     public int getBrandID() {
         return BrandID;
     }

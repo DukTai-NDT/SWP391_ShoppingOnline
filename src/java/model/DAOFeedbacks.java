@@ -25,7 +25,7 @@ public class DAOFeedbacks extends DBConnection {
         String sql = "INSERT INTO [dbo].[Feedbacks]\n"
                 + "           ([Comment]\n"
                 + "           ,[Time]\n"
-                + "           ,[OrderID]\n"
+                + "           ,[Rating]\n"
                 + "           ,[AccountID]\n"
                 + "           ,[ProductID])\n"
                 + "     VALUES\n"
@@ -38,7 +38,7 @@ public class DAOFeedbacks extends DBConnection {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, feedback.getComment());
             pre.setDate(2, java.sql.Date.valueOf(feedback.getTime()));
-            pre.setInt(3, feedback.getOrderID());
+            pre.setInt(3, feedback.getRating());
             pre.setInt(4, feedback.getAccountID());
             pre.setInt(5, feedback.getProductID());
             n = pre.executeUpdate();
@@ -69,7 +69,7 @@ public class DAOFeedbacks extends DBConnection {
         String sql = "UPDATE [dbo].[Feedbacks]\n"
                 + "   SET [Comment] = ?\n"
                 + "      ,[Time] = ?\n"
-                + "      ,[OrderID] = ?\n"
+                + "      ,[Rating] = ?\n"
                 + "      ,[AccountID] = ?\n"
                 + "      ,[ProductID] = ?\n"
                 + " WHERE FeedbackID = ?";
@@ -78,7 +78,7 @@ public class DAOFeedbacks extends DBConnection {
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setString(1, feedback.getComment());
             pre.setDate(2, java.sql.Date.valueOf(feedback.getTime()));
-            pre.setInt(3, feedback.getOrderID());
+            pre.setInt(3, feedback.getRating());
             pre.setInt(4, feedback.getAccountID());
             pre.setInt(5, feedback.getProductID());
             pre.setInt(6, feedback.getFeedbackID());
@@ -98,19 +98,27 @@ public class DAOFeedbacks extends DBConnection {
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-                int FeedbackID = rs.getInt("FeebackID");
+                int FeedbackID = rs.getInt("FeedbackID");
                 String Comment = rs.getString("Comment");
                 LocalDate Time = rs.getDate("Time").toLocalDate();
-                int OrderID = rs.getInt("OrderID");
+                int Rating = rs.getInt("Rating");
                 int AccountID = rs.getInt("AccountID");
                 int ProductID = rs.getInt("ProductID");
                 
-                Feedbacks feed = new Feedbacks(Comment, Time, OrderID, AccountID, ProductID);
+                Feedbacks feed = new Feedbacks(FeedbackID,Comment, Time, Rating, AccountID, ProductID);
                 vector.add(feed);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOFeedbacks.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+    
+    public static void main(String[] args) {
+        DAOFeedbacks dao = new DAOFeedbacks();
+        Vector<Feedbacks> vector = dao.getFeedback("select * from Feedbacks");
+        for (Feedbacks feedbacks : vector) {
+            System.out.println(feedbacks);
+        }
     }
 }

@@ -4,6 +4,7 @@
  */
 package controller;
 
+import entity.Account;
 import entity.Brand;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,11 +15,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import entity.Products;
 import entity.Categories;
+import entity.Feedbacks;
 import entity.Function;
 import entity.Ingredient;
+import entity.Customers;
+import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.Vector;
 import model.DAOBrand;
 import model.DAOCategories;
+import model.DAOCustomer;
+import model.DAOFeedbacks;
 import model.DAOFunction;
 import model.DAOIngredient;
 import model.DAOProducts;
@@ -27,6 +34,7 @@ import model.DAOProducts;
  *
  * @author quang
  */
+
 @WebServlet(name = "ProductDetailController", urlPatterns = {"/ProductDetailURL"})
 public class ProductDetailController extends HttpServlet {
 
@@ -42,18 +50,41 @@ public class ProductDetailController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
         DAOProducts dao = new DAOProducts();
         DAOBrand daobrand = new DAOBrand();
         DAOCategories daoCat = new DAOCategories();
         DAOFunction daof = new DAOFunction();
         DAOIngredient daoIngre = new DAOIngredient();
+        DAOFeedbacks daoFeed = new DAOFeedbacks();
+        DAOCustomer daoCus = new DAOCustomer();
         Vector<Brand> vectorBrand = new Vector<Brand>();
+        Account account = (Account) session.getAttribute("dataUser");
+        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+        Vector<Feedbacks> vectorFeed = new Vector<Feedbacks>();
+        
+        
         try (PrintWriter out = response.getWriter()) {
 
             /* TODO output your page here. You may use following sample code. */
             String sql = "";
             String pid = request.getParameter("pid");
             String service = request.getParameter("service");
+            String submit = request.getParameter("submit");
+            
+
+            
+            if (submit != null) {
+                String rating = request.getParameter("rating");
+                int rate = Integer.parseInt(rating);
+                String content = request.getParameter("content");
+                System.out.println("abc"+account);
+               int n = daoFeed.addFeedbacks(new Feedbacks(content, LocalDate.now(), rate, account.getAccountID(), Integer.parseInt(pid)));
+                System.out.println("abcd123null"+n);
+                response.sendRedirect("ProductDetailURL?service=detailProduct&pid=" + pid);
+                return;
+            }
+
             if (service.equals("detailProduct")) {
 
                 sql = "select * from Products where ProductID = " + pid;
@@ -63,20 +94,77 @@ public class ProductDetailController extends HttpServlet {
             Brand brand = vectorBrand.get(0);
             Vector<Products> vector = dao.getProducts(sql);
 
-
             Products product = vector.get(0);
             Vector<Categories> category = daoCat.getCategories("select * from Categories c join Products p on c.CategoryID = p.CategoryID\n"
                     + "where p.ProductID = " + pid);
             Categories cat = category.get(0);
+            
+            
+            
+            
             Vector<Function> vectorf = daof.getFunction("select * from [Function] where ProductID = " + pid);
             Vector<Ingredient> vectorIngre = daoIngre.getIngredient("select * from Ingredient where ProductID = " + pid);
-            request.setAttribute("product", product);
-            request.setAttribute("brand", brand);
-            request.setAttribute("cat", cat);
-            request.setAttribute("vectorf", vectorf);
-            request.setAttribute("vectorIngre", vectorIngre);
-            request.getRequestDispatcher("/jsp/product-detail.jsp").forward(request, response);
+            vectorFeed = daoFeed.getFeedback("select * from Feedbacks where ProductID = " + pid);
+            Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
+//            
+            double averageStar = 0.0;
+            int totalRating = 0;
+            int star5 = 0, star4 = 0, star3 = 0, star2 = 0, star1 = 0;
 
+            int size = vectorFeed.size(); // Số lượng đánh giá
+            String formattedAverageStar = "";
+            for (Feedbacks feed : vectorFeed) {
+                int rating = feed.getRating();
+                totalRating += rating;
+
+                switch (rating) {
+                    case 5 ->
+                        star5++;
+                    case 4 ->
+                        star4++;
+                    case 3 ->
+                        star3++;
+                    case 2 ->
+                        star2++;
+                    case 1 ->
+                        star1++;
+                }
+            }
+
+// Tính điểm trung bình
+            if (size > 0) {
+                averageStar = (double) totalRating / size;
+                formattedAverageStar = String.format("%.1f", averageStar);
+            }
+
+// Tính tỷ lệ phần trăm số sao
+            double with5 = (size > 0) ? (double) star5 / size * 100 : 0;
+            double with4 = (size > 0) ? (double) star4 / size * 100 : 0;
+            double with3 = (size > 0) ? (double) star3 / size * 100 : 0;
+            double with2 = (size > 0) ? (double) star2 / size * 100 : 0;
+            double with1 = (size > 0) ? (double) star1 / size * 100 : 0;
+
+            session.setAttribute("total", size);
+            session.setAttribute("with5", with5);
+            session.setAttribute("with4", with4);
+            session.setAttribute("with3", with3);
+            session.setAttribute("with2", with2);
+            session.setAttribute("with1", with1);
+            session.setAttribute("star5", star5);
+            session.setAttribute("star4", star4);
+            session.setAttribute("star3", star3);
+            session.setAttribute("star2", star2);
+            session.setAttribute("star1", star1);
+            session.setAttribute("averageStar", formattedAverageStar);
+
+            session.setAttribute("vectorFeed", vectorFeed);
+            session.setAttribute("product", product);
+            session.setAttribute("brand", brand);
+            session.setAttribute("cat", cat);
+            session.setAttribute("vectorCat", vectorCat);
+            session.setAttribute("vectorf", vectorf);
+            session.setAttribute("vectorIngre", vectorIngre);
+            request.getRequestDispatcher("/jsp/product-detail.jsp").forward(request, response);
 
         }
     }
@@ -121,3 +209,5 @@ public class ProductDetailController extends HttpServlet {
     }// </editor-fold>
 
 }
+
+

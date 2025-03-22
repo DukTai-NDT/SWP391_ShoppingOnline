@@ -9,11 +9,16 @@ import entity.Blogs;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.time.LocalDate;
 import model.DAOBlogs;
 
@@ -22,6 +27,12 @@ import model.DAOBlogs;
  * @author Admin
  */
 @WebServlet(name = "AminAddBlogController", urlPatterns = {"/adminaddblog"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50 // 50MB
+)
+
 public class AminAddBlogController extends HttpServlet {
 
     /**
@@ -36,15 +47,25 @@ public class AminAddBlogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String name = request.getParameter("title");
+
+         String title = request.getParameter("title");
         String date = request.getParameter("date");
-        String customerIDStr = request.getParameter("customerID");
+//        String customerIDStr = request.getParameter("customerID");
         String description = request.getParameter("description:");
-//        String image = request.getParameter("images");
-        boolean statusStr = Boolean.parseBoolean(request.getParameter("active"));
+        Part part = request.getPart("image");
+        String fileName = part.getSubmittedFileName();
+
+        String uploadDir = "D:\\FU_Learning\\SUM2024\\CSD201\\Code\\SWP391\\web\\images\\blogs";
+        File uploadFolder = new File(uploadDir);
+
+        String path = uploadDir + File.separator + fileName;
+        InputStream is = part.getInputStream();
+        boolean test = uploadFile(is, path);
+
         DAOBlogs dblogs = new DAOBlogs();
-        dblogs.insertBlog(customerIDStr, "", name, description, "", statusStr);
-        response.sendRedirect("admin");
+        dblogs.insertBlog(date, title, description, fileName, true);
+        response.sendRedirect("BlogManagement");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -73,7 +94,39 @@ public class AminAddBlogController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String title = request.getParameter("title");
+        String date = request.getParameter("date");
+//        String customerIDStr = request.getParameter("customerID");
+        String description = request.getParameter("description:");
+        Part part = request.getPart("image");
+        String fileName = part.getSubmittedFileName();
+
+        String uploadDir = "D:\\FU_Learning\\SUM2024\\CSD201\\Code\\SWP391\\web\\images\\blogs";
+        File uploadFolder = new File(uploadDir);
+
+        String path = uploadDir + File.separator + fileName;
+        InputStream is = part.getInputStream();
+        boolean test = uploadFile(is, path);
+
+        DAOBlogs dblogs = new DAOBlogs();
+        dblogs.insertBlog(date, title, description, fileName, true);
+        response.sendRedirect("BlogManagement");
+    }
+
+    public boolean uploadFile(InputStream is, String path) {
+        boolean test = false;
+        try (FileOutputStream fops = new FileOutputStream(path)) {
+            byte[] buffer = new byte[1024]; // Đọc từng khối 1KB
+            int bytesRead;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                fops.write(buffer, 0, bytesRead);
+            }
+            test = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return test;
     }
 
     /**

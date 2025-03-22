@@ -1,9 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="entity.Products, java.util.Vector" %>
-<%@page import="entity.Account" %>
-
-<%@page import="entity.Products,entity.Brand, java.util.Vector, entity.Categories, entity.Function, entity.Ingredient" %>
+<%@page import="entity.Account, model.DAOCustomer" %>
+<%@page import="entity.Products,entity.Brand, java.util.Vector, entity.Categories, entity.Function, entity.Ingredient,entity.Feedbacks,entity.Customers, entity.CartItems"%>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -540,16 +539,63 @@
             .submit-review-form .cancel-btn:hover {
                 background-color: #e0e0e0;
             }
+            .hidden-review {
+                display: none;
+            }
+
+            .view-more-btn {
+                background: none;
+                border: none;
+                color: blue;
+                cursor: pointer;
+                font-size: 14px;
+                margin-left: 5px;
+            }
+
+            .load-more-reviews {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                font-size: 14px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+
+            .load-more-reviews:hover {
+                background-color: #0056b3;
+            }
+
+
         </style>
     </head>
-    
-        <%Brand brand = (Brand)request.getAttribute("brand");%>
-        <%Products product = (Products)request.getAttribute("product");%>
-        <%Categories cat = (Categories)request.getAttribute("cat");%>
-        <%Vector<Function> vectorf = (Vector<Function>)request.getAttribute("vectorf");%>
-        <%Vector<Ingredient> vectorIngre = (Vector<Ingredient>)request.getAttribute("vectorIngre");
-        Account account = (Account)session.getAttribute("dataUser");
-        %>
+
+    <%Brand brand = (Brand)session.getAttribute("brand");%>
+    <%Products product = (Products)session.getAttribute("product");%>
+    <%Categories cat = (Categories)session.getAttribute("cat");%>
+    <%Vector<Function> vectorf = (Vector<Function>)session.getAttribute("vectorf");%>
+    <%Vector<Ingredient> vectorIngre = (Vector<Ingredient>)session.getAttribute("vectorIngre");
+    Vector<Feedbacks> vectorFeed = (Vector<Feedbacks>)session.getAttribute("vectorFeed");
+    Vector<Categories> vectorCat = (Vector<Categories>) session.getAttribute("vectorCat");
+     Account account = (Account)session.getAttribute("dataUser");
+    Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+   DAOCustomer daoCus = new DAOCustomer();
+    double with5 = (double)session.getAttribute("with5");
+    double with4 = (double)session.getAttribute("with4");
+    double with3 = (double)session.getAttribute("with3");
+    double with2 = (double)session.getAttribute("with2");
+    double with1 = (double)session.getAttribute("with1");
+    String averageStar = (String)session.getAttribute("averageStar");
+    int star5 = (int)session.getAttribute("star5");
+    int star4 = (int)session.getAttribute("star4");
+    int star3 = (int)session.getAttribute("star3");
+    int star2 = (int)session.getAttribute("star2");
+    int star1 = (int)session.getAttribute("star1");
+    int total = (int)session.getAttribute("total");
+   
+        
+    %>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -589,7 +635,10 @@
                 <!-- End Mobile Toggle -->
 
                 <!-- Start Dropdown -->
-                  <ul class="dropdowns list-inline mb-0">
+                <ul class="dropdowns list-inline mb-0">
+                    <%
+                    if(currentCustomer != null){
+                    %>
                     <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
@@ -600,75 +649,57 @@
                         <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             <i class="uil uil-search"></i>
                         </a>
-                    </li>
 
+                    </li>
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
-
-
-                            <%if(account != null){%>
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                            </button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                    <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
                                     <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1"><%=account.getUserName()%></span>
-
+                                        <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
+                               
+                                <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <%if(account.getRoleID() != 2){%> 
+                                <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
+                                <%}%>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
-                            </div>        
-                            <%}else{%>
+                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
 
-                            <div class="auth-links">
-                                <a href="SignUpURL?service=signup">Sign up</a>
-                                <span>|</span>
-                                <a href="LoginURL?service=login">Log in</a>
                             </div>
-                            <%}%>
-
                         </div>
                     </li>
+                    <%} else{%>
+                    <div class="auth-links">
+                        <a href="SignUpURL?service=signup">Sign up</a>
+                        <span>|</span>
+                        <a href="LoginURL?service=login">Log in</a>
+                    </div>
+                    <%}%>
+
                 </ul>
                 <!-- Start Dropdown -->
 
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left">              
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
+                        <li class="parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts">Shop</a><span class="menu-arrow"></span> 
+                        </li>
+                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
-                                <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
-                                <li><a href="CheckoutURL" class="sub-menu-item">Checkout</a></li>
-                                <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
+                                <%for (Categories cate : vectorCat){%>
+                                <li><a href="ProductURL?service=categories&cid=<%=cate.getCategoryID()%>" class="sub-menu-item"> <%=cate.getCategoryName()%></a></li>
+                                    <%}%>
                             </ul>
                         </li>
-
-                        <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="aboutus.html" class="sub-menu-item"> About Us</a></li>
-                                <li><a href="departments.html" class="sub-menu-item">Departments</a></li>
-                                <li><a href="faqs.html" class="sub-menu-item">FAQs</a></li>
-                                <li class="has-submenu parent-menu-item">
-                                    <a href="javascript:void(0)" class="menu-item"> Blogs </a><span class="submenu-arrow"></span>
-                                    <ul class="submenu">
-                                        <li><a href="blogs.html" class="sub-menu-item">Blogs</a></li>
-                                        <li><a href="blog-detail.html" class="sub-menu-item">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="terms.html" class="sub-menu-item">Terms & Policy</a></li>
-                                <li><a href="privacy.html" class="sub-menu-item">Privacy Policy</a></li>
-                                <li><a href="error.html" class="sub-menu-item">404 !</a></li>
-                                <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
+                        <li><a href="BlogsURL"">Blog</a></li>
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -691,198 +722,226 @@
                     <!-- Phần hình ảnh -->
                     <div class="product-images">
                         <div class="main-image">
-                            <img src="images/product-image.jpg" alt="Ultra Brain Lab Well">
+                            <img src="images/products/<%=product.getImage()%>" alt="Ultra Brain Lab Well">
                         </div>
-                        <div class="thumbnail-gallery">
-                            <img src="images/thumbnail1.jpg" alt="Thumbnail 1">
-                            <img src="images/thumbnail2.jpg" alt="Thumbnail 2">
-                            <img src="images/thumbnail3.jpg" alt="Thumbnail 3">
-                        </div>
+                        
                     </div>
 
                     <!-- Phần thông tin -->
                     <div class="product-info">
                         <div class="product-header">
-                            <div class="brand">Thương hiệu: <span><a href="ProductURL?service=brand&bid=<%=brand.getBrandID()%>"><%=brand.getBrandName()%></a></span></div>
+                            <div class="brand">Brand: <span><a href="ProductURL?service=brand&bid=<%=brand.getBrandID()%>"><%=brand.getBrandName()%></a></span></div>
                             <h1><%=product.getProductName()%></h1>
                             <div class="rating">
-                                <span class="code">00345415</span> • 
-                                <span class="rating">4.8 ★</span> • 
-                                <span class="reviews">43 đánh giá</span> • 
-                                <span class="sold">359 bình luận</span>
+
+                                <span class="rating"><%=averageStar%>★</span> • 
+                                <span class="reviews"><%=total%> comment</span> • 
+
                             </div>
 
 
                             <div class="mt-4 pt-2">
-                                <a href="#" class="btn btn-primary">Shop Now</a>
+                                <% if(account != null) { %>
+                                <a href="ProductURL?service=listAllProducts" class="btn btn-primary">Shop Now</a>
+
+
+                                <% if(product.getQuantity() > 0 && product.isIsAvailable() == true) { %>
                                 <a href="CartURL?service=add2cart&pid=<%=product.getProductID()%>" class="btn btn-soft-primary ms-2">Add to Cart</a>
+                                <% } else { %>
+                                <span class="btn btn-danger ms-2">Out of Stock</span>
+                                <% } %>
+                                <% } else { %>
+                                <span class="btn btn-warning ms-2"><a href="LoginURL?service=login">You must Login to buy</a></span>
+                                <% } %>
 
-                            <div class="price">
-                                <span class="current-price"><%=product.getPrice()%></span>
-                                <span class="unit">/ <%=product.getUnitPrice()%></span>
+
+                                <div class="price">
+                                    <span class="current-price"><%=product.getPrice()%></span>
+                                    <span class="unit">/ <%=product.getUnitPrice()%></span>
+                                </div>
+
                             </div>
-                          
-                        </div>
 
-                        <div class="product-details">
-                            <p><strong>Category: </strong> <a> <%=cat.getCategoryName()%></a></p>
-                            <p><strong>Country: </strong> <%=brand.getCountry()%></p>
-                            <p><strong>Ingredient:  <%for (Ingredient ingre : vectorIngre){%><a href="ProductURL?service=ingredient&ingreid=<%=ingre.getIngredientID()%>"> <%=ingre.getIngredientName()%> </a><%}%></p> 
+                            <div class="product-details">
+                                <p><strong>Category: </strong> <a> <%=cat.getCategoryName()%></a></p>
+                                <p><strong>Country: </strong> <%=brand.getCountry()%></p>
+                                <p><strong>Ingredient:  <%for (Ingredient ingre : vectorIngre){%><a href="ProductURL?service=ingredient&ingreid=<%=ingre.getIngredientID()%>"> <%=ingre.getIngredientName()%> </a><%}%></p> 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Phần bổ sung bên dưới -->
-            <div class="additional-info-container">
-                <!-- Mô tả sản phẩm -->
-                <div class="description-section">
-                    <h2>Mô tả sản phẩm</h2>
-                    <p><%=product.getDescription()%></p>  
-                </div>
+                <!-- Phần bổ sung bên dưới -->
+                <div class="additional-info-container">
+                    <!-- Mô tả sản phẩm -->
+                    <div class="description-section">
+                        <h2>Product Description</h2>
+                        <p><%=product.getDescription()%></p>  
+                    </div>
 
-                <!-- Thông tin bổ sung -->
-                <div class="additional-info-section">
-                    <h2>Thông tin bổ sung</h2>
-                    <h3>Công dụng:</h3>
-                    
-                    <ul>
-                        <%for(Function f : vectorf){%>
-                        <li><%=f.getFunctionDescription()%></li>
-                        <%}%>
-                    </ul>
-                    
-                    <h3>Lưu ý:</h3>
-                    <p>- Không sử dụng cho người dị ứng với cá hoặc các thành phần của sản phẩm.<br>
-                        - Phụ nữ mang thai và cho con bú nên tham khảo ý kiến bác sĩ trước khi dùng.<br>
-                        - Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.</p>
-                </div>
+                    <!-- Thông tin bổ sung -->
+                    <div class="additional-info-section">
+                        <h2>Additional information</h2>
+                        <h3>Uses:</h3>
 
-                <!-- Đánh giá khách hàng -->
-                <div class="reviews-section">
-                    <h2>Đánh giá khách hàng</h2>
-                    <div class="rating-summary">
-                        <h3>Đánh giá sản phẩm (43 đánh giá)</h3>
-                        <div class="rating-overview">
-                            <span class="average-rating">4.8</span>
-                            <span class="stars">★</span>
-                        </div>
-                        <div class="rating-bars">
-                            <div class="rating-bar">
-                                <span class="stars">★★★★★</span>
-                                <div class="bar">
-                                    <div class="filled" style="width: 93%"></div>
-                                </div>
-                                <span class="count">40</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span class="stars">★★★★</span>
-                                <div class="bar">
-                                    <div class="filled" style="width: 5%"></div>
-                                </div>
-                                <span class="count">1</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span class="stars">★★★</span>
-                                <div class="bar">
-                                    <div class="filled" style="width: 10%"></div>
-                                </div>
-                                <span class="count">2</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span class="stars">★★</span>
-                                <div class="bar">
-                                    <div class="filled" style="width: 0%"></div>
-                                </div>
-                                <span class="count">0</span>
-                            </div>
-                            <div class="rating-bar">
+                        <ul>
+                            <%for(Function f : vectorf){%>
+                            <li><%=f.getFunctionDescription()%></li>
+                                <%}%>
+                        </ul>
+
+                        <h3>Note:</h3>
+                        <p>- Do not use for people allergic to fish or other ingredients of the product.<br>
+                            - Pregnant and lactating women should consult a doctor before use.<br>
+                            - Store in a cool, dry place, away from direct sunlight.</p>
+                    </div>
+
+                    <!-- Đánh giá khách hàng -->
+                    <div class="reviews-section">
+                        <h2>Customer Reviews</h2>
+                        <div class="rating-summary">
+                            <h3>Product Reviews (<%=total%> reviews)</h3>
+                            <div class="rating-overview">
+                                <span class="average-rating"><%=averageStar%></span>
                                 <span class="stars">★</span>
-                                <div class="bar">
-                                    <div class="filled" style="width: 0%"></div>
-                                </div>
-                                <span class="count">0</span>
                             </div>
-                        </div>
-                        <button class="submit-review-btn">Gửi đánh giá</button>
-                        <div class="filter-buttons">
-                            <h4>Lọc theo:</h4>
-                            <button class="filter-btn active">5 sao</button>
-                            <button class="filter-btn">4 sao</button>
-                            <button class="filter-btn">3 sao</button>
-                            <button class="filter-btn">2 sao</button>
-                            <button class="filter-btn">1 sao</button>
-                        </div>
-                    </div>
-
-                    <!-- Danh sách đánh giá -->
-                    <div class="review">
-                        <div class="review-header">
-                            <span class="reviewer-name">Nguyễn Văn A</span>
-                            <span class="review-rating">★★★★★ 5/5</span>
-                        </div>
-                        <p class="review-content">Sản phẩm rất tốt, tôi dùng được 1 tháng và cảm thấy đầu óc minh mẫn hơn, mắt cũng đỡ mỏi. Sẽ tiếp tục ủng hộ!</p>
-                        <span class="review-date">Ngày 15/02/2025</span>
-                    </div>
-                    <div class="review">
-                        <div class="review-header">
-                            <span class="reviewer-name">Trần Thị B</span>
-                            <span class="review-rating">★★★★☆ 4/5</span>
-                        </div>
-                        <p class="review-content">Hiệu quả khá tốt nhưng giá hơi cao so với thu nhập của tôi. Tuy nhiên, chất lượng thì không có gì để chê.</p>
-                        <span class="review-date">Ngày 10/02/2025</span>
-                    </div>
-                    <button class="load-more-reviews">Xem thêm đánh giá</button>
-
-                    <!-- Phần gửi đánh giá -->
-                    <div class="submit-review-form" style="display: none;">
-                        <h3>Gửi đánh giá của bạn</h3>
-                        <form>
-                            <div class="rating-input">
-                                <label>Đánh giá của bạn:</label>
-                                <div class="star-rating">
-                                    <input type="radio" name="rating" value="5" id="star5"><label for="star5">★</label>
-                                    <input type="radio" name="rating" value="4" id="star4"><label for="star4">★</label>
-                                    <input type="radio" name="rating" value="3" id="star3"><label for="star3">★</label>
-                                    <input type="radio" name="rating" value="2" id="star2"><label for="star2">★</label>
-                                    <input type="radio" name="rating" value="1" id="star1"><label for="star1">★</label>
+                            <div class="rating-bars">
+                                <div class="rating-bar">
+                                    <span class="stars">★★★★★</span>
+                                    <div class="bar">
+                                        <div class="filled" style="width: <%=with5%>%"></div>
+                                    </div>
+                                    <span class="count"><%=star5%></span>
+                                </div>
+                                <div class="rating-bar">
+                                    <span class="stars">★★★★</span>
+                                    <div class="bar">
+                                        <div class="filled" style="width: <%=with4%>%"></div>
+                                    </div>
+                                    <span class="count"><%=star4%></span>
+                                </div>
+                                <div class="rating-bar">
+                                    <span class="stars">★★★</span>
+                                    <div class="bar">
+                                        <div class="filled" style="width: <%=with3%>%"></div>
+                                    </div>
+                                    <span class="count"><%=star3%></span>
+                                </div>
+                                <div class="rating-bar">
+                                    <span class="stars">★★</span>
+                                    <div class="bar">
+                                        <div class="filled" style="width: <%=with2%>%"></div>
+                                    </div>
+                                    <span class="count"><%=star2%></span>
+                                </div>
+                                <div class="rating-bar">
+                                    <span class="stars">★</span>
+                                    <div class="bar">
+                                        <div class="filled" style="width: <%=with1%>%"></div>
+                                    </div>
+                                    <span class="count"><%=star1%></span>
                                 </div>
                             </div>
-                            <div class="review-text">
-                                <label for="review-content">Nội dung đánh giá:</label>
-                                <textarea id="review-content" name="content" rows="5" placeholder="Viết đánh giá của bạn..." required></textarea>
-                            </div>
-                            <button type="submit" class="submit-btn">Gửi</button>
-                            <button type="button" class="cancel-btn">Hủy</button>
-                        </form>
-                    </div>
-                </div>
+                            <%if(account != null){%>    
+                            <button class="submit-review-btn">Submit a review</button>
+                            <%}%>
+                            <div class="filter-buttons">
 
-                <!-- Sản phẩm liên quan -->
-                <div class="related-products-section">
-                    <h2>Sản phẩm liên quan</h2>
-                    <div class="related-products">
-                        <div class="related-product">
-                            <img src="images/related-product1.jpg" alt="Sản phẩm liên quan 1">
-                            <h3>Viên uống Omega-3 Fish Oil</h3>
-                            <p class="price">220.000đ</p>
-                            <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                            </div>
                         </div>
-                        <div class="related-product">
-                            <img src="images/related-product2.jpg" alt="Sản phẩm liên quan 2">
-                            <h3>Viên uống bổ mắt Bright Eyes</h3>
-                            <p class="price">180.000đ</p>
-                            <button class="add-to-cart">Thêm vào giỏ hàng</button>
+
+                        <!-- Danh sách đánh giá -->
+
+                        <% if (vectorFeed != null && !vectorFeed.isEmpty()) { %> 
+                        <div id="review-container" class="review">
+                            <% int count = 0;
+                            for (Feedbacks feedbacks : vectorFeed) { 
+                                Customers customer = daoCus.getCustomerByFeedbackID(feedbacks.getFeedbackID());
+                                String comment = feedbacks.getComment();
+                                boolean isHidden = count >= 5; // Ẩn comment nếu lớn hơn 5
+                            %>
+                            <div class="review-item <%= isHidden ? "hidden-review" : "" %>">
+                                <div class="review-header">
+                                    <span class="reviewer-name"><%= customer != null ? customer.getLastName() : "Unknown" %></span>
+                                    <span class="review-rating"> <%= feedbacks.getRating() %>/5★</span>
+                                </div>
+
+                                <p class="review-content">
+                                    <span class="short-comment">
+                                        <%= comment.length() > 100 ? comment.substring(0, 100) + "..." : comment %>
+                                    </span>
+                                    <% if (comment.length() > 100) { %>
+                                    <span class="full-comment" style="display: none;"><%= comment %></span>
+                                    <button class="view-more-btn">View More</button>
+                                    <% } %>
+                                </p>
+                                <span class="review-date">Ngày <%= feedbacks.getTime() %></span>
+                            </div>
+                            <% count++; } %>
                         </div>
-                        <div class="related-product">
-                            <img src="images/related-product3.jpg" alt="Sản phẩm liên quan 3">
-                            <h3>Viên uống hỗ trợ tim mạch Cardio Plus</h3>
-                            <p class="price">250.000đ</p>
-                            <button class="add-to-cart">Thêm vào giỏ hàng</button>
+
+                        <% if (vectorFeed.size() > 5) { %>
+                        <button id="toggle-reviews" class="load-more-reviews">View More</button>
+                        <% } %>
+                        <% } else { %>
+                        <h1>No reviews yet</h1>
+                        <% } %>
+
+
+
+
+
+                        <!-- Phần gửi đánh giá -->
+                        <div class="submit-review-form" style="display: none;">
+                            <h3>Submit your review</h3>
+                            <form action="ProductDetailURL">
+                                <input type="hidden" name="pid" value="<%=product.getProductID()%>">
+                                <input type="hidden" name="service" value="detailProduct">
+                                <div class="rating-input">
+                                    <label>Your review:</label>
+                                    <div class="star-rating">
+                                        <input type="radio" name="rating" value="5" id="star5"><label for="star5">★</label>
+                                        <input type="radio" name="rating" value="4" id="star4"><label for="star4">★</label>
+                                        <input type="radio" name="rating" value="3" id="star3"><label for="star3">★</label>
+                                        <input type="radio" name="rating" value="2" id="star2"><label for="star2">★</label>
+                                        <input type="radio" name="rating" value="1" id="star1"><label for="star1">★</label>
+                                    </div>
+                                </div>
+                                <div class="review-text">
+                                    <label for="review-content">Review content:</label>
+                                    <textarea id="review-content" name="content" rows="5" placeholder="Write your review..." required></textarea>
+                                </div>
+                                <button type="submit" name="submit" value="submit" class="submit-btn">Submit</button>
+                                <button type="button" class="cancel-btn">Cancel</button>
+                            </form>
                         </div>
                     </div>
+
+                    <!-- Sản phẩm liên quan -->
+                    <!--                    <div class="related-products-section">
+                                            <h2>Sản phẩm liên quan</h2>
+                                            <div class="related-products">
+                                                <div class="related-product">
+                                                    <img src="images/related-product1.jpg" alt="Sản phẩm liên quan 1">
+                                                    <h3>Viên uống Omega-3 Fish Oil</h3>
+                                                    <p class="price">220.000đ</p>
+                                                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                                                </div>
+                                                <div class="related-product">
+                                                    <img src="images/related-product2.jpg" alt="Sản phẩm liên quan 2">
+                                                    <h3>Viên uống bổ mắt Bright Eyes</h3>
+                                                    <p class="price">180.000đ</p>
+                                                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                                                </div>
+                                                <div class="related-product">
+                                                    <img src="images/related-product3.jpg" alt="Sản phẩm liên quan 3">
+                                                    <h3>Viên uống hỗ trợ tim mạch Cardio Plus</h3>
+                                                    <p class="price">250.000đ</p>
+                                                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                                                </div>
+                                            </div>
+                                        </div>-->
                 </div>
-            </div>
         </section><!--end section-->
 
 
@@ -1002,7 +1061,46 @@
             </div>
         </div>
         <!-- Offcanvas End -->
+        <% if (currentCustomer != null) { %>
+        <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header p-4 border-bottom">
+                <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
+                <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <% 
+           
+                    if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
+               
+               
+                      for(CartItems vectorCartItem : vectorCartItems) {
+                %>
+                <div class="cart-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
+                        <div class="ms-3 flex-1">
+                            <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
+                            <div class="d-flex justify-content-between">
+                                <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
+                                <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    } }else {
+                %>
+                <p class="text-muted text-center " >No Products In Cart...</p>
+                <%
+                    }
+                %>
+                <div class="mt-4 text-center">
+                    <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
+                </div>
+            </div>
+        </div>
+        <% }%>
         <!-- Offcanvas Start -->
         <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header p-4 border-bottom">
@@ -1060,6 +1158,56 @@
                 document.querySelector('.submit-review-btn').style.display = 'block'; // Hiển thị lại nút "Gửi đánh giá"
             });
         </script>
+        <script>
+            // Lấy danh sách các nút
+            const buttons = document.querySelectorAll(".filter-btn");
+
+            // Thêm sự kiện click cho từng nút
+            buttons.forEach(button => {
+                button.addEventListener("click", () => {
+                    // Xóa lớp active khỏi tất cả các nút
+                    buttons.forEach(btn => btn.classList.remove("active"));
+
+                    // Thêm lớp active cho nút được nhấn
+                    button.classList.add("active");
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Mở rộng nội dung comment dài
+                const buttons = document.querySelectorAll(".view-more-btn");
+                buttons.forEach(button => {
+                    button.addEventListener("click", function () {
+                        const parent = this.parentElement;
+                        const shortComment = parent.querySelector(".short-comment");
+                        const fullComment = parent.querySelector(".full-comment");
+
+                        shortComment.style.display = "none";
+                        fullComment.style.display = "inline";
+                        this.style.display = "none"; // Ẩn nút sau khi mở rộng
+                    });
+                });
+
+                // Xử lý hiển thị/tắt comment khi bấm View More hoặc Show Less
+                const toggleBtn = document.getElementById("toggle-reviews");
+                if (toggleBtn) {
+                    toggleBtn.addEventListener("click", function () {
+                        const hiddenReviews = document.querySelectorAll(".hidden-review");
+                        let isExpanded = toggleBtn.textContent === "Show Less";
+
+                        hiddenReviews.forEach(review => {
+                            review.style.display = isExpanded ? "none" : "block";
+                        });
+
+                        // Đổi text của nút
+                        toggleBtn.textContent = isExpanded ? "View More" : "Show Less";
+                    });
+                }
+            });
+        </script>
+
+
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <!-- SLIDER -->
@@ -1071,5 +1219,15 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                console.log("Bootstrap JS loaded:", typeof bootstrap !== "undefined");
+                var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+                dropdownElementList.forEach(function (dropdownToggleEl) {
+                    new bootstrap.Dropdown(dropdownToggleEl);
+                });
+            });
+        </script>
     </body>
 </html>
+

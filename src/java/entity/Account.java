@@ -15,9 +15,9 @@ public class Account {
     private int RoleID;
     private String Password;
     private String Email;
-
     private boolean active;
 
+    
     public Account(int AccountID, String UserName, int RoleID, String Password,String Email,boolean active) {
         this.AccountID = AccountID;
         this.UserName = UserName;
@@ -35,6 +35,12 @@ public class Account {
         this.active=active;
 
     }
+
+    public Account(String UserName, String Email) {
+        this.UserName = UserName;
+        this.Email = Email;
+    }
+    
 
     public Account() {
     }

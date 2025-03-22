@@ -3,10 +3,10 @@
     Created on : Feb 10, 2025, 9:35:21 PM
     Author     : quang
 --%>
-<%@ page import=" entity.Account " %>
+<%@page import="entity.Account" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%@page import="entity.Products, entity.Brand, java.util.Vector, entity.Categories" %>
+<%@page import="entity.Products, entity.Brand, java.util.Vector, entity.Categories,entity.CartItems, entity.Customers"%>
 
 
 
@@ -216,7 +216,7 @@
             /* Lưới sản phẩm */
             .product-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: repeat(4, 1fr);
                 gap: 20px;
             }
 
@@ -226,6 +226,30 @@
                 padding: 15px;
                 text-align: center;
                 transition: box-shadow 0.3s ease;
+            }
+
+            .pagination {
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .pagination a {
+                display: inline-block;
+                padding: 8px 12px;
+                margin: 0 5px;
+                text-decoration: none;
+                background: #007bff;
+                color: white;
+                border-radius: 5px;
+            }
+
+            .pagination a.active {
+                background: #0056b3;
+                font-weight: bold;
+            }
+
+            .pagination a:hover {
+                background: #0056b3;
             }
 
             .product-card:hover {
@@ -299,10 +323,12 @@
     </head>
 
 
-    <%Vector<Products> vector = (Vector<Products>)request.getAttribute("vector");%>
-    <%Vector<Brand> vectorB = (Vector<Brand>)request.getAttribute("vectorB");
+    <%Vector<Products> vector = (Vector<Products>)session.getAttribute("vector");%>
+    <%Vector<Brand> vectorB = (Vector<Brand>)session.getAttribute("vectorB");
     Account account = (Account)session.getAttribute("dataUser");
-    Vector<Categories> vectorCat = (Vector<Categories>)request.getAttribute("vectorCat");
+   Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+    Vector<Categories> vectorCat = (Vector<Categories>)session.getAttribute("vectorCat");
     %>
     <body>
         <!-- Loader -->
@@ -349,74 +375,77 @@
                 <div id="navigation">
                     <!-- Navigation Menu-->   
                     <ul class="navigation-menu nav-left">              
-                        <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Pharmacy</a><span class="menu-arrow"></span>
-                            <ul class="submenu">
-                                <li><a href="pharmacy.html" class="sub-menu-item">Pharmacy</a></li>
-                                <li><a href="shop.jsp" class="sub-menu-item">Shop</a></li>
-                                <li><a href="pharmacy-product-detail.html" class="sub-menu-item">Medicine Detail</a></li>
-                                <li><a href="CartURL" class="sub-menu-item">Shop Cart</a></li>
-                                <li><a href="CheckoutURL" class="sub-menu-item">Checkout</a></li>
-                                <li><a href="pharmacy-account.html" class="sub-menu-item">Account</a></li>
-                            </ul>
+                        <li class="parent-menu-item">
+                            <a href="ProductURL?service=listAllProducts">Shop</a><span class="menu-arrow"></span>
                         </li>
 
                         <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
                             <ul class="submenu">
                                 <%for (Categories cat : vectorCat){%>
                                 <li><a href="ProductURL?service=categories&cid=<%=cat.getCategoryID()%>" class="sub-menu-item"> <%=cat.getCategoryName()%></a></li>
-                                <%}%>
+                                    <%}%>
                             </ul>
                         </li>
-                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Blog </a></li>
-                        <li><a href="indexAdmin.jsp" class="sub-menu-item" target="_blank">Admin</a></li>
+                        <li><a href="BlogsURL" >Blog </a></li>
+
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
                 <ul class="dropdowns list-inline mb-0">
-                    <li class="list-inline-item mb-0">
-
-                        <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
-                        </a>
-
-                        
-                        
-
-                    </li>
-
-                    <li class="list-inline-item mb-0 ms-1">
-                        <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-                            <i class="uil uil-search"></i>
-                        </a>
-                    </li>
 
                     <li class="list-inline-item mb-0 ms-1">
                         <div class="dropdown dropdown-primary">
 
 
-                            <%if(account != null){%>
-                            <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
-                            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                                <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
-                                    <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1"><%=account.getUserName()%></span>
+                            <ul class="dropdowns list-inline mb-0">
+                                <%
+                                if(currentCustomer != null){
+                                %>
+                                <li class="list-inline-item mb-0">
 
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-dark" href="doctor-dashboard.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                <a class="dropdown-item text-dark" href="doctor-profile-setting.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                    <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                        <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
+                                    </a>
+                                </li>
+
+                                <li class="list-inline-item mb-0 ms-1">
+                                    <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                                        <i class="uil uil-search"></i>
+                                    </a>
+
+                                </li>
+                                <li class="list-inline-item mb-0 ms-1">
+                                    <div class="dropdown dropdown-primary">
+                                        <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                                        </button>
+                                        <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
+                                            <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
+                                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+                                                <div class="flex-1 ms-2">
+                                                    <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
+                                                </div>
+                                            </a>
+                                           <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
+                               
+                                <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                <%if(account.getRoleID() != 2){%> 
+                                <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
+                                <%}%>
                                 <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil ujsp/login.jspil-sign-out-alt align-middle h6"></i></span> Logout</a>
-                            </div>        
-                            <%}else{%>
+                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
 
-                            <div class="auth-links">
-                                <a href="SignUpURL?service=signup">Sign up</a>
-                                <span>|</span>
-                                <a href="LoginURL?service=login">Log in</a>
-                            </div>
-                            <%}%>
+                                        </div>
+                                    </div>
+                                </li>
+                                <%} else{%>
+                                <div class="auth-links">
+                                    <a href="SignUpURL?service=signup">Sign up</a>
+                                    <span>|</span>
+                                    <a href="LoginURL?service=login">Log in</a>
+                                </div>
+                                <%}%>
+
+                            </ul>   
 
                         </div>
                     </li>
@@ -429,83 +458,96 @@
         <div class="container">
             <!-- Sidebar (Bộ lọc) -->
             <div class="sidebar">
-                <h3>Bộ lọc</h3>
+                <h3>Filter</h3>
 
                 <!-- Bộ lọc giá bán -->
                 <div class="filter-section">
-                    <h4>Giá bán</h4>
+                    <h4>Price</h4>
                     <div class="price-filter">
-                        <a href="ProductURL?service=duoi100">Dưới 100.000đ</a>
-                        <a href="ProductURL?service=duoi300">100.000đ đến 300.000đ</a>
-                        <a href="ProductURL?service=duoi500">300.000đ đến 500.000đ</a>
-                        <a href="ProductURL?service=tren500">Trên 500.000đ</a>
+                        <a href="ProductURL?service=duoi100">Under 100.000đ</a>
+                        <a href="ProductURL?service=duoi300">100.000đ To 300.000đ</a>
+                        <a href="ProductURL?service=duoi500">300.000đ To 500.000đ</a>
+                        <a href="ProductURL?service=tren500">More than 500.000đ</a>
                     </div>
                 </div>
 
 
                 <!-- Bộ lọc loại thuốc -->
                 <div class="filter-section">
-                    <div class="drug">
-                        <input type="radio" id="html" name="fav_language" value="HTML" checked="">
-                        <label for="html"><a href="ProductURL?service=listAllProducts" >Tất cả</a></label><br>
-                    </div>
-                    <div class="drug">
-                        <input type="radio" id="css" name="fav_language" value="CSS">
-                        <label for="css"><a href="ProductURL?service=isDrug">Thuốc kê đơn</a></label><br>
-                    </div >
-                    <div class="drug">
-                        <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                        <label for="javascript"><a href="ProductURL?service=notIsDrug">Thuốc không kê đơn</a></label>
-                    </div>
+                    <a href="ProductURL?service=listAllProducts" >All</a>
+                    <a href="ProductURL?service=isDrug">Prescription</a>
+                    <a href="ProductURL?service=notIsDrug">Non-prescription</a>
+
                 </div>
 
-
-
-
-                <!-- Bộ lọc nước sản xuất -->
-                <div class="filter-section">
-                    <h4>Nước sản xuất</h4>
-
-                    <select name="BrandID">
-                        <%for (Brand b : vectorB){%>
-                        <option value="<%=b.getBrandID()%>" ><%=b.getCountry()%></option>
-                        <%}%>
-                    </select>
-                </div>
 
             </div>
 
             <!-- Danh sách sản phẩm -->
+            <%if(vector != null && !vector.isEmpty()){%>
             <div class="main-content">
                 <div class="header">
-                    <h2>Danh sách sản phẩm</h2>
+                    <h2>Product List</h2>
                     <div class="sort-filter">
 
-                        <span><a href="ProductURL">Bán chạy</a></span>
-                        <span><a href="ProductURL?service=listAllProductsLowPrice">Giá thấp</a></span>
-                        <span><a href="ProductURL?service=listAllProductsHighPrice">Giá cao</a></span>
+                        <span><a href="ProductURL">Best Seller</a></span>
+                        <span><a href="ProductURL?service=listAllProductsLowPrice">Low price</a></span>
+                        <span><a href="ProductURL?service=listAllProductsHighPrice">High price</a></span>
 
                     </div>
 
                 </div>
+                <%
+                int pageSize = 12; // Số sản phẩm trên mỗi trang
+                int totalProducts = vector.size(); // Tổng số sản phẩm
+                int totalPages = (int) Math.ceil((double) totalProducts / pageSize); // Tổng số trang
+
+                // Xác định trang hiện tại từ URL (nếu không có, mặc định là trang 1)
+                String pageParam = request.getParameter("page");
+                int currentPage = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
+
+                // Tính vị trí bắt đầu và kết thúc của sản phẩm trong trang hiện tại
+                int startIndex = (currentPage - 1) * pageSize;
+                int endIndex = Math.min(startIndex + pageSize, totalProducts);
+                %>
 
                 <div class="product-grid">
-                    <%for (Products pro : vector) {%>
-                    <!-- Sản phẩm 1 -->
+                    <% for (int i = startIndex; i < endIndex; i++) { 
+                        Products pro = vector.get(i);
+                    %>
+                    <!-- Sản phẩm -->
                     <div class="product-card">
-                        <a href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><img src="images/products/<%=pro.getImage()%>" alt="Product 1"></a>
+                        <a href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><img src="images/products/<%=pro.getImage()%>" alt="Product"></a>
                         <h3><%=pro.getProductName()%></h3>
-                        <p class="price"><%=pro.getPrice()%>/ Túyp</p>
+                        <p class="price"><%=pro.getPrice()%>/ <%=pro.getUnitPrice()%></p>
                         <div class="buttons">
-
-                            <a class="no-buy-btn" href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><button >Chọn mua </button></a>
-                            <button class="pack-btn">Túyp</button>
+                            <a class="no-buy-btn" href="ProductDetailURL?service=detailProduct&pid=<%=pro.getProductID()%>"><button>Buy</button></a>
+                            <button class="pack-btn"><%=pro.getUnitPrice()%></button>
                         </div>
                     </div>
-
-                    <%}%>
+                    <% } %>
                 </div>
+
+                <!-- Phân trang -->
+                <div class="pagination">
+                    <% if (currentPage > 1) { %>
+                    <a href="?page=<%=currentPage - 1%>">Previous</a>
+                    <% } %>
+
+                    <% for (int i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%=i%>" class="<%= (i == currentPage) ? "active" : "" %>"><%=i%></a>
+                    <% } %>
+
+                    <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%=currentPage + 1%>">Next</a>
+                    <% } %>
+                </div>
+
+
             </div>
+            <%}else {%>
+            <h2 style="color:red;"> There are currently no products. </h2>
+            <%}%>
         </div>
 
         <!-- Start -->
@@ -627,7 +669,46 @@
             </div>
         </div>
         <!-- Offcanvas End -->
+        <% if (currentCustomer != null) { %>
+        <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header p-4 border-bottom">
+                <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
+                <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <% 
+           
+                    if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
+               
+               
+                      for(CartItems vectorCartItem : vectorCartItems) {
+                %>
+                <div class="cart-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
+                        <div class="ms-3 flex-1">
+                            <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
+                            <div class="d-flex justify-content-between">
+                                <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
+                                <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    } }else {
+                %>
+                <p class="text-muted text-center " >No Products In Cart...</p>
+                <%
+                    }
+                %>
+                <div class="mt-4 text-center">
+                    <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
+                </div>
+            </div>
+        </div>
+        <% }%>
         <!-- Offcanvas Start -->
         <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header p-4 border-bottom">
@@ -679,11 +760,17 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
+        <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            console.log("Bootstrap JS loaded:", typeof bootstrap !== "undefined");
+                                            var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+                                            dropdownElementList.forEach(function (dropdownToggleEl) {
+                                                new bootstrap.Dropdown(dropdownToggleEl);
+                                            });
+                                        });
+        </script>
     </body>
 
 </html>
-<<<<<<< HEAD
-=======
 
 
->>>>>>> be7ef0e7f19e65985d5abcd66018942d0d434889

@@ -34,7 +34,7 @@ public class AdminDeleteBlogController extends HttpServlet {
         String bid=request.getParameter("bid");
         DAOBlogs dblogs=new DAOBlogs();
         dblogs.deleteBlog(bid);
-        response.sendRedirect("admin");
+        response.sendRedirect("BlogManagement");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import entity.Categories;
 import entity.Products;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpSession;
 import java.util.Vector;
 import java.sql.ResultSet;
 import model.DAOBrand;
@@ -41,6 +42,7 @@ public class ProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
         DAOProducts dao = new DAOProducts();
         DAOBrand daoB = new DAOBrand();
         Vector<Products> vector = new Vector<Products>();
@@ -99,9 +101,9 @@ public class ProductController extends HttpServlet {
             Vector<Brand> vectorB = daoB.getBrand("select * from Brand");
             Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
             vector = dao.getProducts(sql);
-            request.setAttribute("vectorB", vectorB);
-            request.setAttribute("vector", vector);
-            request.setAttribute("vectorCat", vectorCat);
+            session.setAttribute("vectorB", vectorB);
+            session.setAttribute("vector", vector);
+            session.setAttribute("vectorCat", vectorCat);
             request.getRequestDispatcher("/jsp/shop.jsp").forward(request, response);
 
         }

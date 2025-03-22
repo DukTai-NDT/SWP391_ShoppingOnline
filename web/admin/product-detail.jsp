@@ -6,7 +6,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entity.Products, java.util.Vector" %>
-
+<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
+    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -84,7 +85,12 @@
 
         </style>
     </head>
+<%
+            Account account = (Account)session.getAttribute("dataUser");
+           Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
+           
+    %>
     <body>
         <!-- Loader -->
         <div id="preloader">
@@ -99,83 +105,59 @@
 
         <div class="page-wrapper doctris-theme toggled">
             <nav id="sidebar" class="sidebar-wrapper">
-                <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
+               <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="index.jsp">
+                        <a href="Dashboard">
+                            <!--<a href="index.jsp">-->
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
                     </div>
 
                     <ul class="sidebar-menu pt-3">
-                        <li><a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li><!--
-                                                <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>-->
+                        <li class="sidebar-dropdown">
+                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
+                        </li>
+
+
+                        <%   if(account.getRoleID()  != 4){
+                            if(account.getRoleID()  == 3){%>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
+                        </li>
+                        <%}%>
 
                         <li class="sidebar-dropdown">
-                            <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts</a>
-                            <!--                                                    <div class="sidebar-submenu">
-                                                                                    <ul>
-                                                                                        <li><a href="AdminAccounts">All Accounts</a></li>
-                                                                                        <li><a href="add-patient.html">Add Patients</a></li>
-                                                                                        <li><a href="patient-profile.html">Profile</a></li>
-                                                                                    </ul>
-                                                                                </div>-->
+                            <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
 
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Manager</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="ProductManager">All Products</a></li>
-                                    <li><a href="product-detail.html">Dermatological drugs</a></li>
-                                    <li><a href="shopcart.html">Musculoskeletal</a></li>
-                                    <li><a href="checkout.html">Supplements and vitamins</a></li>
-                                    <li><a href="checkout.html">Cancer drugs</a></li>
-                                </ul>
-                            </div>
+
+                            <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
+
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="AdminBrands">
+                                <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
+                            </a>
+                        </li>
+
+
+                        <li class="sidebar-dropdown">
+                            <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
 
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="admin">Blogs</a></li>
-                                </ul>
-                            </div>
+                            <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
+
                         </li>
+                           <%}else{%>
 
                         <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="faqs.html">FAQs</a></li>
-                                    <li><a href="review.html">Reviews</a></li>
-                                    <li><a href="invoice-list.html">Invoice List</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="terms.html">Terms & Policy</a></li>
-                                    <li><a href="privacy.html">Privacy Policy</a></li>
-                                    <li><a href="error.html">404 !</a></li>
-                                    <li><a href="blank-page.html">Blank Page</a></li>
-                                </ul>
-                            </div>
+                            <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
+
                         </li>
-
-                        <!--                        <li class="sidebar-dropdown">
-                                                    <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li><a href="jsp/login.jsp">Login</a></li>
-                                                            <li><a href="jsp/signup.jsp">Signup</a></li>
-                                                            <li><a href="forgot-password.html">Forgot Password</a></li>
-                                                            <li><a href="jsp/login.jsp">Lock Screen</a></li>
-                                                            <li><a href="thankyou.html">Thank you...!</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>-->
-
-                        <!--                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
-                        
-                                                <li><a href="../landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>-->
+                        <%}%>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -205,136 +187,54 @@
                             <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
                                 <i class="uil uil-bars"></i>
                             </a>
-                            <div class="search-bar p-0 d-none d-lg-block ms-2">
+                            <div class="search-bar p-0 d-none d-md-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <form role="search" method="get" id="searchform" class="searchform">
-                                        <div>
-                                            <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
-                                            <input type="submit" id="searchsubmit" value="Search">
-                                        </div>
-                                    </form>
+                                    <!--                                    <form role="search" method="get" id="searchform" class="searchform">
+                                                                            <div>
+                                                                                <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
+                                                                                <input type="submit" id="searchsubmit" value="Search">
+                                                                            </div>
+                                                                        </form>-->
                                 </div>
                             </div>
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            <li class="list-inline-item mb-0">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/language/american.png" class="avatar avatar-ex-small rounded-circle p-2" alt=""></button>
-                                    <div class="dropdown-menu dd-menu drop-ups dropdown-menu-end bg-white shadow border-0 mt-3 p-2" data-simplebar style="height: 175px;">
-                                        <a href="javascript:void(0)" class="d-flex align-items-center">
-                                            <img src="images/language/chinese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Chinese</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/european.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">European</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/indian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Indian</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/japanese.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Japanese</small>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:void(0)" class="d-flex align-items-center mt-2">
-                                            <img src="images/language/russian.png" class="avatar avatar-client rounded-circle shadow" alt="">
-                                            <div class="flex-1 text-left ms-2 overflow-hidden">
-                                                <small class="text-dark mb-0">Russian</small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="list-inline-item mb-0 ms-1">
-                                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                    <div class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="settings" class="fea icon-sm"></i></div>
-                                </a>
-                            </li>
-
+                            
+                           
+                            <%
+                             if(currentCustomer != null){
+                            %>
+                            
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-icon btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="mail" class="fea icon-sm"></i></button>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4 <span class="visually-hidden">unread mail</span></span>
 
-                                    <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 px-2 py-2" data-simplebar style="height: 320px; width: 300px;">
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/02.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Janalia</b> <small class="text-muted fw-normal d-inline-block">1 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/Codepen.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>codepen</b>  <small class="text-muted fw-normal d-inline-block">4 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/03.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Cristina</b> <small class="text-muted fw-normal d-inline-block">5 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/dribbble.svg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Dribbble</b> <small class="text-muted fw-normal d-inline-block">24 hour ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/06.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Donald Aghori</b> <small class="text-muted fw-normal d-inline-block">1 day ago</small></small>
-                                            </div>
-                                        </a>
-
-                                        <a href="#" class="d-flex align-items-center justify-content-between py-2 border-top">
-                                            <div class="d-inline-flex position-relative overflow-hidden">
-                                                <img src="images/client/07.jpg" class="avatar avatar-md-sm rounded-circle shadow" alt="">
-                                                <small class="text-dark mb-0 d-block text-truncat ms-3">You received a new email from <b>Calvin</b> <small class="text-muted fw-normal d-inline-block">2 day ago</small></small>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="list-inline-item mb-0 ms-1">
-                                <div class="dropdown dropdown-primary">
-                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/doctors/01.jpg" class="avatar avatar-ex-small rounded-circle" alt=""></button>
+                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                                    </button>
                                     <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                                        <a class="dropdown-item d-flex align-items-center text-dark" href="https://shreethemes.in/doctris/layouts/admin/profile.html">
-                                            <img src="images/doctors/01.jpg" class="avatar avatar-md-sm rounded-circle border shadow" alt="">
+                                        <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
+                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+
                                             <div class="flex-1 ms-2">
-                                                <span class="d-block mb-1">Calvin Carlo</span>
-                                                <small class="text-muted">Orthopedic</small>
+                                                <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
                                             </div>
                                         </a>
-                                        <a class="dropdown-item text-dark" href="index.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-dashboard align-middle h6"></i></span> Dashboard</a>
-                                        <a class="dropdown-item text-dark" href="dr-profile.html"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+
+                                        <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
                                         <div class="dropdown-divider border-top"></div>
-                                        <a class="dropdown-item text-dark" href="jsp/login.jsp"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                        <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+
                                     </div>
                                 </div>
                             </li>
+                            <%} else{%>
+                            <div class="auth-links">
+                                <a href="SignUpURL?service=signup">Sign up</a>
+                                <span>|</span>
+                                <a href="LoginURL?service=login">Log in</a>
+                            </div>
+                            <%}%>
                         </ul>
                     </div>
                 </div>
@@ -358,8 +258,8 @@
                                 <a href="LoadDetail?pid=${pDetail.productID}" id="edit-product-btn" class="edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="DeleteProduct?pid=${pDetail.productID}" class="delete-icon"
-                                   onclick="return confirm('Are you sure you want to delete this product?');">
+                                <a href="DeleteProduct?pid=${pDetail.productID}" class="setting-icon"
+                                   onclick="return confirm('Are you sure you want to change status this product?');">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -367,7 +267,7 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-4 col-md-5">
                                     <div class="slider slider-for">
-                                        <div><img src="${pDetail.image}" class="img-fluid rounded" alt=""></div>
+                                        <div><img src="images/products/${pDetail.image}" class="img-fluid rounded" alt=""></div>
                                     </div>
                                 </div><!--end col-->
 
@@ -411,6 +311,12 @@
                                             <h5 class="py-2 mb-0">Description :</h5>
                                             <p class="text-muted mb-0 ms-2">${pDetail.description}</p>
                                         </div>
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="py-2 mb-0">Status :</h5>
+                                            <p class="text-muted mb-0 ms-2">
+                                                ${pDetail.isAvailable ? "In Stock" : "Out of Stock"}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div><!--end col-->
                             </div><!--end row-->
@@ -425,13 +331,13 @@
                                     </div>
 
                                     <div class="modal-body p-3 pt-4">
-                                        <form action="EditProduct" method="post">
+                                        <form action="EditProduct" method="post" enctype="multipart/form-data">
                                             <div class="row">
                                                 <!-- Trường nhập ảnh -->
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Image URL:</label>
-                                                        <input value="${pDetail.image}" type="text" name="loadImage" id="loadImage" class="form-control" placeholder="Enter image URL">
+                                                        <input  type="file" name="image" id="image" class="form-control" value="${pDetail.image} placeholder=" image file">
                                                     </div>
                                                     <div class="preview-box d-flex justify-content-center align-items-center rounded shadow overflow-hidden bg-light p-1"
                                                          style="width: 200px; height: 200px; margin-left: 70px;">
@@ -529,6 +435,13 @@
                                                                 <label class="form-check-label" for="isPrescriptionDrug">Prescription Drug</label>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3 form-check">
+                                                                <input name="loadIsAvailable" id="loadIsAvailable" type="checkbox" class="form-check-input"
+                                                                       value="true" ${pDetail.isAvailable ? 'checked' : ''}>
+                                                                <label class="form-check-label" for="loadIsAvailable">Is Available</label>
+                                                            </div>
+                                                        </div>
 
                                                         <!-- Button Add -->
                                                         <div class="col-md-6 text-end">
@@ -577,33 +490,19 @@
                             </div>
                         </div>
 
-                        <div class="row mt-4">
+<!--                        <div class="row mt-4">
                             <div class="col-12">
                                 <h5 class="mb-0">Related Products:</h5>
-                            </div><!--end col-->
-                        </div><!--end row-->
+                            </div>end col
+                        </div>end row-->
 
-                        <div class="row">
+<!--                        <div class="row">
                             <div class="col-lg-12 mt-4">
                                 <div class="slider-range-four">
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <ul class="label list-unstyled mb-0">
-                                                <li><a href="javascript:void(0)" class="badge badge-pill badge-success">Featured</a></li>
-                                            </ul>
                                             <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/thermometer.jpg" class="img-fluid" alt=""></a>
-                                                <ul class="list-unstyled shop-icons">
-                                                    <li><a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i data-feather="heart" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="eye" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-warning"><i data-feather="shopping-cart" class="icons"></i></a></li>
-                                                </ul>                                
-
-                                                <div class="qty-icons">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-pills btn-icon btn-primary minus">-</button>
-                                                    <input min="0" name="quantity" value="0" type="number" class="btn btn-pills btn-icon btn-primary qty-btn quantity">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-pills btn-icon btn-primary plus">+</button>
-                                                </div>
+                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/thermometer.jpg" class="img-fluid" alt=""></a>                               
                                             </div>
                                             <div class="card-body content pt-4 border-top">
                                                 <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Thermometer</a>
@@ -619,7 +518,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -651,7 +550,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -683,7 +582,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -715,7 +614,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -747,7 +646,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -779,7 +678,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -811,7 +710,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--end col-->
+                                    </div>end col
 
                                     <div class="tiny-slide">
                                         <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
@@ -845,8 +744,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><!--end col-->
-                        </div><!--end row-->
+                            </div>end col
+                        </div>end row-->
                     </div>
                 </div><!--end container-->
 

@@ -5,6 +5,7 @@
 package model;
 
 import entity.Account;
+import entity.Blogs;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -84,6 +85,23 @@ public class DAOAccount extends DBConnection {
 
     }
 
+    public boolean checkPassword(String email, String oldPassword) {
+        boolean isValid = false;
+        String sql = "SELECT * FROM Accounts WHERE CustomerID = ? AND Password = ?";
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            stmt.setString(2, oldPassword);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                isValid = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return isValid;
+    }
+
     public int changePassword(String email, String password) {
         int n = 0;
         String sql = "UPDATE [dbo].[Accounts]\n"
@@ -113,8 +131,7 @@ public class DAOAccount extends DBConnection {
                 String Email = rs.getString("Email");
                 boolean Active = (rs.getInt("Active") == 1 ? true : false);
 
-                Account account = new Account(AccountID,UserName, RoleID, Password, Email, Active);
-
+                Account account = new Account(AccountID, UserName, RoleID, Password, Email, Active);
 
                 vector.add(account);
             }
@@ -193,10 +210,9 @@ public class DAOAccount extends DBConnection {
         return listEmail;
     }
 
-
     public List<Account> getAllAccounts() {
         List<Account> list = new ArrayList<>();
-        String query = "select * from Accounts where RoleID!=1";
+        String query = "select * from Accounts ";
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(query);
@@ -270,22 +286,59 @@ public class DAOAccount extends DBConnection {
         return null;
     }
 
-    public void EditAccount(Account account) {
-
+    public void insertAccount(String username, String role, String password, String email, boolean active) {
+        String sql = "INSERT INTO [dbo].[Accounts] (username, roleID, password, email, active) VALUES (?, ?, ?, ?, ?)";
         try {
-            String sql = "UPDATE [Accounts]\n"
-                    + "   SET [active] = ?\n"
-                    + " WHERE AccountID = ?";
+            PreparedStatement preState = conn.prepareStatement(sql);
+            preState.setString(1, username);
+            preState.setString(2, role);
+            preState.setString(3, password);
+            preState.setString(4, email);
+            preState.setBoolean(5, true);
+            preState.executeQuery();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public List<Account> getAccountByName(String txtSearch) {
+        List<Account> list = new ArrayList<>();
+        String query = "select * from Accounts where username like ?";
+        try {
+            PreparedStatement preState = conn.prepareStatement(query);
+            preState.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = preState.executeQuery();
+            while (rs.next()) {
+                list.add(new Account(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getBoolean(6)));
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return list;
+    }
+
+    public int EditAccount(Account account) {
+        int n = 0;
+        try {
+            String sql = "UPDATE [dbo].[Accounts]\n"
+                    + "   SET [RoleID] = ?\n"
+                    + "      ,[Active] = ?\n"
+                    + "WHERE AccountID = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
-            stm.setBoolean(1, account.isActive());
-            stm.setInt(2, account.getAccountID());
-            stm.executeUpdate();
+            stm.setInt(1, account.getRoleID());
+            stm.setBoolean(2, account.isActive());
+            stm.setInt(3, account.getAccountID());
+            n = stm.executeUpdate();
+            
         } catch (SQLException ex) {
             Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return n;
 
     }
-    
+
     public int countAccounts() {
         int count = 0;
         String query = "SELECT COUNT(*) FROM Accounts";
@@ -303,28 +356,37 @@ public class DAOAccount extends DBConnection {
         return count;
     }
 
+    public Account checkAccountExist(String username) {
+        String sql = "SELECT * FROM accounts WHERE username = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Account(rs.getInt("id"), rs.getString("username"), rs.getInt("roleid"), rs.getString("password"), rs.getString("email"), rs.getBoolean("status"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
 //        Account accountAdd = new Account("Tainguyenduc", 2, "abcd123");
 
 //        int n = dao.addAccount(accountAdd);
-
 //    int n = dao.deleteAccount(1);
 //          Account accountUpdate = new Account(2, "TaiNguye", 1, "cde123");
 //          int n = dao.updateAccount(accountUpdate);
 //        System.out.println(n);
         Vector<Account> vector = dao.getAccount("SELECT *  FROM [dbo].[Accounts] ");
-        if(!vector.isEmpty()){
         for (Account account : vector) {
             System.out.println(account);
-        }}
-        System.out.println("-------------");
-        Account acc = dao.getLogin("DungTien", "123456");
-
-        System.out.println(acc);
+        }
         
         
-        int n = dao.changePassword("taindhe181162@fpt.edu.vn", "abc");
-        System.out.println(n); 
+        int n = dao.EditAccount(new Account(6007, "abc", 3, "abc", "abc@gmail.com", false));
+        System.out.println(n);
     }
 }

@@ -107,10 +107,30 @@ public class DAOPaymentMethod extends DBConnection {
         }
         return n;
     }
+    public String getMethodPaymentName(String methodID){
+        String n = "";
+       String sql = "SELECT MethodName FROM MethodPayment WHERE MethodID = ?"; 
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, methodID); 
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) { 
+                n = rs.getString("MethodName");
+        }} catch (SQLException ex) {
+            Logger.getLogger(DAOPaymentMethod.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n;
+    }
     
     public static void main(String[] args) {
        DAOPaymentMethod dao = new DAOPaymentMethod();
-          int n = dao.getMethodPaymentID("Cash on Delivery (COD)");
+          Vector<PaymentMethod> vector = dao.getPaymentMethod("select * from MethodPayment");
+          for (PaymentMethod paymentMethod : vector) {
+              System.out.println(paymentMethod);
+        }
+          String n = dao.getMethodPaymentName("1");
           System.out.println(n);
     }
 }
