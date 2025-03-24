@@ -207,71 +207,91 @@
                     <img src="images/blogs/<%=blog.getImage()%>" class="img-fluid rounded shadow" alt="">
                     <p class="text-muted mt-4"><%=blog.getContent()%></p>
                 
-                    <h5 class="card-title mt-4 mb-0">Comments:</h5>
+        <h5 class="card-title mt-4 mb-0">Comments:</h5>
 
-                    <%
-                    Vector<Comment> comments = (Vector<Comment>) session.getAttribute("comments" + blog.getBlogID());
-                    DAOCustomer daoCus = new DAOCustomer();
-                    if (comments == null) {
-                        comments = new Vector<>(); 
-                    }
+<%
+Vector<Comment> comments = (Vector<Comment>) session.getAttribute("comments" + blog.getBlogID());
+DAOCustomer daoCus = new DAOCustomer();
+if (comments == null) {
+    comments = new Vector<>(); 
+}
 
-                    int displayLimit = 3; 
-                    int totalComments = comments.size();
-                    boolean showAll = "true".equals(request.getParameter("showAll")); 
+int displayLimit = 3; 
+int totalComments = comments.size();
+boolean showAll = "true".equals(request.getParameter("showAll")); 
 
-                    if (!comments.isEmpty()) { 
-                        int limit = showAll ? totalComments : Math.min(displayLimit, totalComments); 
-                        for (int i = 0; i < limit; i++) { 
-                            Comment comment = comments.get(i);
-                            String[] customerInfo = daoCus.getCustomerByID(comment.getCustomerID());
-                            String customerName = customerInfo[0] + " " + customerInfo[1];
-                            String profileImg = (customerInfo[2] != null && !customerInfo[2].isEmpty())
-                                ? customerInfo[2] : "images/client/09.jpg";
-                    %>
-                    <ul class="media-list list-unstyled mb-0">
-                        <li class="mt-4">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center">
-                                    <a class="pe-3" href="#">
-                                        <img src="<%=profileImg%>" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
-                                    </a>
-                                    <div class="commentor-detail">
-                                        <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading"><%=customerName%></a></h6>
-                                        <small class="text-muted"><%=comment.getPostTime()%></small>
-                                    </div>
-                                </div>
-                                <% if (currentCustomer != null && comment.getCustomerID() == currentCustomer.getCustomerID()) { %>
-                                <div class="dropdown">
-                                    <a href="#" class="text-muted" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <!-- Thay thế biểu tượng MDI bằng Bootstrap Icons nếu MDI không hoạt động -->
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li><a class="dropdown-item" href="CommentURL?service=deleteComment&commentId=<%=comment.getCommentID()%>&blogId=<%=blog.getBlogID()%>">Delete</a></li>
-                                    </ul>
-                                </div>
-                                <% } %>
-                            </div>
-                            <div class="mt-3">
-                                <p class="text-muted font-italic p-3 bg-light rounded"><%=comment.getCommentText()%></p>
-                            </div>
-                        </li>
-                    </ul>
-                    <%
-                        }
-                    } else {
-                    %>
-                    <p class="text-muted">No comments yet. Be the first to comment!</p>
-                    <% } %>
+// Kiểm tra xem có đang hiển thị form chỉnh sửa không
+String editCommentId = request.getParameter("editCommentId");
+boolean isEditing = editCommentId != null;
 
-                    <% 
-                    if (totalComments > displayLimit && !showAll) { 
-                    %>
-                    <div class="mt-3">
-                        <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>&showAll=true" class="btn btn-primary">All Comments (<%=totalComments%>)</a>
-                    </div>
-                    <% } %>
+if (!comments.isEmpty()) { 
+    int limit = showAll ? totalComments : Math.min(displayLimit, totalComments); 
+    for (int i = 0; i < limit; i++) { 
+        Comment comment = comments.get(i);
+        String[] customerInfo = daoCus.getCustomerByID(comment.getCustomerID());
+        String customerName = customerInfo[0] + " " + customerInfo[1];
+        String profileImg = (customerInfo[2] != null && !customerInfo[2].isEmpty())
+            ? customerInfo[2] : "images/client/09.jpg";
+%>
+<ul class="media-list list-unstyled mb-0">
+    <li class="mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <a class="pe-3" href="#">
+                    <img src="<%=profileImg%>" class="img-fluid avatar avatar-md-sm rounded-circle shadow" alt="img">
+                </a>
+                <div class="commentor-detail">
+                    <h6 class="mb-0"><a href="javascript:void(0)" class="text-dark media-heading"><%=customerName%></a></h6>
+                    <small class="text-muted"><%=comment.getPostTime()%></small>
+                </div>
+            </div>
+            <% if (currentCustomer != null && comment.getCustomerID() == currentCustomer.getCustomerID()) { %>
+            <div class="dropdown">
+                <a href="#" class="text-muted" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="CommentURL?service=deleteComment&commentId=<%=comment.getCommentID()%>&blogId=<%=blog.getBlogID()%>">Delete</a></li>
+                    <li><a class="dropdown-item" href="CommentURL?service=showEditForm&commentId=<%=comment.getCommentID()%>&blogId=<%=blog.getBlogID()%>">Edit</a></li>
+                </ul>
+            </div>
+            <% } %>
+        </div>
+        <div class="mt-3">
+            <% 
+            // Nếu đang chỉnh sửa bình luận này, hiển thị biểu mẫu
+            if (isEditing && editCommentId.equals(String.valueOf(comment.getCommentID()))) { 
+            %>
+            <form action="CommentURL" method="post">
+                <input type="hidden" name="service" value="editComment">
+                <input type="hidden" name="commentId" value="<%=comment.getCommentID()%>">
+                <input type="hidden" name="blogId" value="<%=blog.getBlogID()%>">
+                <div class="mb-3">
+                    <textarea name="commentText" class="form-control" rows="3" required><%=comment.getCommentText()%></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>" class="btn btn-secondary btn-sm">Cancel</a>
+            </form>
+            <% } else { %>
+            <p class="text-muted font-italic p-3 bg-light rounded"><%=comment.getCommentText()%></p>
+            <% } %>
+        </div>
+    </li>
+</ul>
+<%
+    }
+} else {
+%>
+<p class="text-muted">Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
+<% } %>
+
+<% 
+if (totalComments > displayLimit && !showAll) { 
+%>
+<div class="mt-3">
+    <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>&showAll=true" class="btn btn-primary">Tất cả bình luận (<%=totalComments%>)</a>
+</div>
+<% } %>
 
                     <h5 class="card-title mt-4 mb-0">Leave A Comment:</h5>
                     <% if (currentCustomer != null) { %>
@@ -551,7 +571,20 @@
         <!-- Main Js -->
         <script src="js/app.js"></script>
         <script src="js/comment.js"></script>
+<!--        <script>
+    function showEditForm(commentId) {
+        document.getElementById('editForm' + commentId).style.display = 'block';
+        document.getElementById('commentText' + commentId).style.display = 'none';
+    }
+
+    function hideEditForm(commentId) {
+        document.getElementById('editForm' + commentId).style.display = 'none';
+        document.getElementById('commentText' + commentId).style.display = 'block';
+    }
+</script>-->
 
     </body>
 
 </html>
+
+

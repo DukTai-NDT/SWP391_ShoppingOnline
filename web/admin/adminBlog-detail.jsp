@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account,entity.Blogs" %>
 
+<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account,entity.Blogs,model.DAOCustomer,entity.Comment" %>
 <html lang="en">
 
     <head>
@@ -30,97 +30,97 @@
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
-        
-            <style>
-                /* ??nh d?ng section tiêu ?? */
-                .bg-half-150 {
-                    padding: 100px 0;
-                    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-                    position: relative;
-                    overflow: hidden;
-                }
-                .section-title h3 {
-                    font-size: 2.5rem;
-                    font-weight: 700;
-                    color: #2c3e50;
-                    line-height: 1.3;
-                    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-                }
-                .section-title ul {
-                    margin-top: 1.5rem;
-                    padding: 0;
-                }
-                .section-title ul li {
-                    font-size: 1rem;
-                    color: #7f8c8d;
-                    display: inline-flex;
-                    align-items: center;
-                    margin-right: 1.5rem;
-                }
-                .section-title ul li i {
-                    margin-right: 0.5rem;
-                    color: #3498db;
-                    font-size: 1.2rem;
-                }
 
-                /* ??nh d?ng hình ?nh blog */
-                .blog-image {
-                    max-width: 100%;
-                    height: auto;
-                    border-radius: 15px;
-                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-                    margin: 2rem 0;
-                    transition: transform 0.3s ease;
-                }
-                .blog-image:hover {
-                    transform: scale(1.02);
-                }
+        <style>
+            /* ??nh d?ng section tiêu ?? */
+            .bg-half-150 {
+                padding: 100px 0;
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                position: relative;
+                overflow: hidden;
+            }
+            .section-title h3 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #2c3e50;
+                line-height: 1.3;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            .section-title ul {
+                margin-top: 1.5rem;
+                padding: 0;
+            }
+            .section-title ul li {
+                font-size: 1rem;
+                color: #7f8c8d;
+                display: inline-flex;
+                align-items: center;
+                margin-right: 1.5rem;
+            }
+            .section-title ul li i {
+                margin-right: 0.5rem;
+                color: #3498db;
+                font-size: 1.2rem;
+            }
 
-                /* ??nh d?ng n?i dung blog */
-                .blog-content {
-                    font-size: 1.1rem;
-                    line-height: 1.8;
-                    color: #5f6a6a;
-                    background: #fff;
-                    padding: 2rem;
-                    border-radius: 10px;
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-                    margin-top: 2rem;
-                }
-                .blog-content p {
-                    margin: 0;
-                }
+            /* ??nh d?ng hình ?nh blog */
+            .blog-image {
+                max-width: 100%;
+                height: auto;
+                border-radius: 15px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+                margin: 2rem 0;
+                transition: transform 0.3s ease;
+            }
+            .blog-image:hover {
+                transform: scale(1.02);
+            }
 
-                /* Hi?u ?ng shape ? d??i section */
-                .shape {
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 48px;
-                    overflow: hidden;
-                    z-index: 1;
-                }
-            </style>
-        </head>
-        <%
-                    Account account = (Account)session.getAttribute("dataUser");
-                   Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+            /* ??nh d?ng n?i dung blog */
+            .blog-content {
+                font-size: 1.1rem;
+                line-height: 1.8;
+                color: #5f6a6a;
+                background: #fff;
+                padding: 2rem;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+                margin-top: 2rem;
+            }
+            .blog-content p {
+                margin: 0;
+            }
 
+            /* Hi?u ?ng shape ? d??i section */
+            .shape {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 48px;
+                overflow: hidden;
+                z-index: 1;
+            }
+        </style>
+    </head>
+    <%
+                Account account = (Account)session.getAttribute("dataUser");
+               Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+                Vector<Comment> comments = (Vector<Comment>) session.getAttribute("comments" );
            
-        %>
-        <body>
-            <!-- Loader -->
-            <div id="preloader">
-                <div id="status">
-                    <div class="spinner">
-                        <div class="double-bounce1"></div>
-                        <div class="double-bounce2"></div>
-                    </div>
+    %>
+    <body>
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
                 </div>
             </div>
-            <!-- Loader -->
-<div class="page-wrapper doctris-theme toggled">
+        </div>
+        <!-- Loader -->
+        <div class="page-wrapper doctris-theme toggled">
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
@@ -168,7 +168,7 @@
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
 
                         </li>
-                           <%}else{%>
+                        <%}else{%>
 
                         <li class="sidebar-dropdown">
                             <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
@@ -217,12 +217,12 @@
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            
-                           
+
+
                             <%
                              if(currentCustomer != null){
                             %>
-                            
+
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
 
@@ -257,41 +257,97 @@
                 </div>
 
                 <section class="bg-half-150 d-table w-100 bg-light">
-                        <div class="container">
-                            <div class="row mt-5 justify-content-center">
-                                <div class="col-12">
-                                    <div class="section-title text-center">
-                                        <h3 class="sub-title mb-4">${sessionScope.blog.title}</h3>
-                                        <ul class="list-unstyled mt-4">
-                                            <li class="list-inline-item date text-muted">
-                                                <i class="bi bi-calendar-check"></i>
-                                                <span class="post-time">${sessionScope.blog.postTime}</span>
-                                            </li>
-                                        </ul>
-                                    </div>
+                    <div class="container">
+                        <div class="row mt-5 justify-content-center">
+                            <div class="col-12">
+                                <div class="section-title text-center">
+                                    <h3 class="sub-title mb-4">${sessionScope.blog.title}</h3>
+                                    <ul class="list-unstyled mt-4">
+                                        <li class="list-inline-item date text-muted">
+                                            <i class="bi bi-calendar-check"></i>
+                                            <span class="post-time">${sessionScope.blog.postTime}</span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="shape text-white">
-                            <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
-                            </svg>
-                        </div>
-                    </section>
+                    </div>
+                    <div class="shape text-white">
+                        <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                </section>
 
-                    
-                    <section class="section">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-10">
-                                    <img src="${pageContext.request.contextPath}/images/blogs/${sessionScope.blog.image}" class="blog-image img-fluid" alt="${sessionScope.blog.title}">
-                                    <div class="blog-content">
-                                        <p class="text-muted">${sessionScope.blog.content}</p>
-                                    </div>
+
+                <section class="section">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <img src="${pageContext.request.contextPath}/images/blogs/${sessionScope.blog.image}" class="blog-image img-fluid" alt="${sessionScope.blog.title}">
+                                <div class="blog-content">
+                                    <p class="text-muted">${sessionScope.blog.content}</p>
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-7">
+                                <img src="images/blogs/" class="img-fluid rounded shadow" alt="">
+                                <p class="text-muted mt-4"></p>
+                                <h5 class="card-title mt-4 mb-0">Comments:</h5>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="border-bottom p-3" style="min-width: 180px;">Comment ID</th>
+                                            <th class="border-bottom p-3" style="max-width: 180px;">Customer Name</th>
+                                            <th class="border-bottom p-3" style="min-width: 180px;">Comment Text</th>
+                                            <th class="border-bottom p-3 text-end" style="min-width: 150px;">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <% 
+                                           Blogs blog = (Blogs) session.getAttribute("blog");
+                                         
+                                           DAOCustomer daoCus = new DAOCustomer();
+
+                                           if (comments != null) {
+                                               for (Comment c : comments) {
+                                                   String[] customerInfo = daoCus.getCustomerByID(c.getCustomerID());
+                                                   String customerName = customerInfo[0] + " " + customerInfo[1];
+                                        %>
+                                        <tr>
+                                            <td class="p-3"><%= c.getCommentID() %></td>
+                                            <td class="p-3"><a href="" class="text-dark product-name h6"><%= customerName %></a></td>
+                                            <td class="p-3"><%= c.getCommentText() %></td>
+                                            <td class="text-end p-3"> 
+                                                <a href="BlogsURL?service=deleteComment&cid=<%= c.getCommentID() %>" 
+                                                   class="btn btn-icon btn-pills btn-soft-danger"
+                                                   onclick="return confirmDelete(event, '<%= c.getCommentID() %>')">
+                                                    <i class="uil uil-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <%
+                                                }
+                                            }
+                                        %>
+
+                                    </tbody>
+                                </table>
+                            </div><!--end col-->
+
+
+                        </div><!--end row-->
+                    </div><!--end container-->
+                </section>
+
+
 
                 <!-- Footer Start -->
                 <footer class="bg-white shadow py-3">
@@ -309,197 +365,205 @@
             </main>
             <!--End page-content" -->
         </div>
-            <!-- page-wrapper -->
-<!---->
-            <!-- Offcanvas Start -->
-            <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                <div class="offcanvas-header p-4 border-bottom">
-                    <h5 id="offcanvasRightLabel" class="mb-0">
-                        <img src="images/logo-dark.png" height="24" class="light-version" alt="">
-                        <img src="images/logo-light.png" height="24" class="dark-version" alt="">
-                    </h5>
-                    <button type="button" class="btn-close d-flex align-items-center text-dark" data-bs-dismiss="offcanvas" aria-label="Close"><i class="uil uil-times fs-4"></i></button>
-                </div>
-                <div class="offcanvas-body p-4 px-md-5">
-                    <div class="row">
-                        <div class="col-12">
-                            <!-- Style switcher -->
-                            <div id="style-switcher">
-                                <div>
-                                    <ul class="text-center list-unstyled mb-0">
-                                        <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="images/layouts/light-dash-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
-                                        <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
-                                        <li class="d-grid"><a href="javascript:void(0)" class="dark-rtl-version t-rtl-dark" onclick="setTheme('style-dark-rtl')"><img src="images/layouts/dark-dash-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
-                                        <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
-                                        <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
-                                        <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
-                                        <li class="d-grid"><a href="../landing/index.jsp" target="_blank" class="mt-4"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Landing Demos</span></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- end Style switcher -->
-                        </div><!--end col-->
-                    </div><!--end row-->
-                </div>
-
-                <div class="offcanvas-footer p-4 border-top text-center">
-                    <ul class="list-unstyled social-icon mb-0">
-                        <li class="list-inline-item mb-0"><a href="https://1.envato.market/doctris-template" target="_blank" class="rounded"><i class="uil uil-shopping-cart align-middle" title="Buy Now"></i></a></li>
-                        <li class="list-inline-item mb-0"><a href="https://dribbble.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-dribbble align-middle" title="dribbble"></i></a></li>
-                        <li class="list-inline-item mb-0"><a href="https://www.facebook.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-facebook-f align-middle" title="facebook"></i></a></li>
-                        <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
-                        <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
-                        <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-                        <li class="list-inline-item mb-0"><a href="../../../index.jsp" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
-                    </ul><!--end icon-->
-                </div>
+        <!-- page-wrapper -->
+        <!---->
+        <!-- Offcanvas Start -->
+        <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header p-4 border-bottom">
+                <h5 id="offcanvasRightLabel" class="mb-0">
+                    <img src="images/logo-dark.png" height="24" class="light-version" alt="">
+                    <img src="images/logo-light.png" height="24" class="dark-version" alt="">
+                </h5>
+                <button type="button" class="btn-close d-flex align-items-center text-dark" data-bs-dismiss="offcanvas" aria-label="Close"><i class="uil uil-times fs-4"></i></button>
             </div>
-            <!-- Offcanvas End -->
-
-            <!-- View Appintment Start -->
-            <div class="modal fade" id="viewappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header border-bottom p-3">
-                            <h5 class="modal-title" id="exampleModalLabel">Appointment Detail</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body p-3 pt-4">
-                            <div class="d-flex align-items-center">
-                                <img src="images/client/01.jpg" class="avatar avatar-small rounded-pill" alt="">
-                                <h5 class="mb-0 ms-3">Howard Tanner</h5>
+            <div class="offcanvas-body p-4 px-md-5">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Style switcher -->
+                        <div id="style-switcher">
+                            <div>
+                                <ul class="text-center list-unstyled mb-0">
+                                    <li class="d-grid"><a href="javascript:void(0)" class="rtl-version t-rtl-light" onclick="setTheme('style-rtl')"><img src="images/layouts/light-dash-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="ltr-version t-ltr-light" onclick="setTheme('style')"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-rtl-version t-rtl-dark" onclick="setTheme('style-dark-rtl')"><img src="images/layouts/dark-dash-rtl.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">RTL Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
+                                    <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
+                                    <li class="d-grid"><a href="../landing/index.jsp" target="_blank" class="mt-4"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Landing Demos</span></a></li>
+                                </ul>
                             </div>
-                            <ul class="list-unstyled mb-0 d-md-flex justify-content-between mt-4">
-                                <li>
-                                    <ul class="list-unstyled mb-0">
-                                        <li class="d-flex">
-                                            <h6>Age:</h6>
-                                            <p class="text-muted ms-2">25 year old</p>
-                                        </li>
-
-                                        <li class="d-flex">
-                                            <h6>Gender:</h6>
-                                            <p class="text-muted ms-2">Male</p>
-                                        </li>
-
-                                        <li class="d-flex">
-                                            <h6 class="mb-0">Department:</h6>
-                                            <p class="text-muted ms-2 mb-0">Cardiology</p>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <ul class="list-unstyled mb-0">
-                                        <li class="d-flex">
-                                            <h6>Date:</h6>
-                                            <p class="text-muted ms-2">20th Dec 2020</p>
-                                        </li>
-
-                                        <li class="d-flex">
-                                            <h6>Time:</h6>
-                                            <p class="text-muted ms-2">11:00 AM</p>
-                                        </li>
-
-                                        <li class="d-flex">
-                                            <h6 class="mb-0">Doctor:</h6>
-                                            <p class="text-muted ms-2 mb-0">Dr. Calvin Carlo</p>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </div>
+                        <!-- end Style switcher -->
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+
+            <div class="offcanvas-footer p-4 border-top text-center">
+                <ul class="list-unstyled social-icon mb-0">
+                    <li class="list-inline-item mb-0"><a href="https://1.envato.market/doctris-template" target="_blank" class="rounded"><i class="uil uil-shopping-cart align-middle" title="Buy Now"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="https://dribbble.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-dribbble align-middle" title="dribbble"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="https://www.facebook.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-facebook-f align-middle" title="facebook"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="../../../index.jsp" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
+                </ul><!--end icon-->
+            </div>
+        </div>
+        <!-- Offcanvas End -->
+
+        <!-- View Appintment Start -->
+        <div class="modal fade" id="viewappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom p-3">
+                        <h5 class="modal-title" id="exampleModalLabel">Appointment Detail</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-3 pt-4">
+                        <div class="d-flex align-items-center">
+                            <img src="images/client/01.jpg" class="avatar avatar-small rounded-pill" alt="">
+                            <h5 class="mb-0 ms-3">Howard Tanner</h5>
+                        </div>
+                        <ul class="list-unstyled mb-0 d-md-flex justify-content-between mt-4">
+                            <li>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="d-flex">
+                                        <h6>Age:</h6>
+                                        <p class="text-muted ms-2">25 year old</p>
+                                    </li>
+
+                                    <li class="d-flex">
+                                        <h6>Gender:</h6>
+                                        <p class="text-muted ms-2">Male</p>
+                                    </li>
+
+                                    <li class="d-flex">
+                                        <h6 class="mb-0">Department:</h6>
+                                        <p class="text-muted ms-2 mb-0">Cardiology</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="d-flex">
+                                        <h6>Date:</h6>
+                                        <p class="text-muted ms-2">20th Dec 2020</p>
+                                    </li>
+
+                                    <li class="d-flex">
+                                        <h6>Time:</h6>
+                                        <p class="text-muted ms-2">11:00 AM</p>
+                                    </li>
+
+                                    <li class="d-flex">
+                                        <h6 class="mb-0">Doctor:</h6>
+                                        <p class="text-muted ms-2 mb-0">Dr. Calvin Carlo</p>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <!-- View Appintment End -->
+        </div>
+        <!-- View Appintment End -->
 
-            <!-- Accept Appointment Start -->
-            <div class="modal fade" id="acceptappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body py-5">
-                            <div class="text-center">
-                                <div class="icon d-flex align-items-center justify-content-center bg-soft-success rounded-circle mx-auto" style="height: 95px; width:95px;">
-                                    <i class="uil uil-check-circle h1 mb-0"></i>
-                                </div>
+        <!-- Accept Appointment Start -->
+        <div class="modal fade" id="acceptappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body py-5">
+                        <div class="text-center">
+                            <div class="icon d-flex align-items-center justify-content-center bg-soft-success rounded-circle mx-auto" style="height: 95px; width:95px;">
+                                <i class="uil uil-check-circle h1 mb-0"></i>
+                            </div>
+                            <div class="mt-4">
+                                <h4>Accept Appointment</h4>
+                                <p class="para-desc mx-auto text-muted mb-0">Great doctor if you need your family member to get immediate assistance, emergency treatment.</p>
                                 <div class="mt-4">
-                                    <h4>Accept Appointment</h4>
-                                    <p class="para-desc mx-auto text-muted mb-0">Great doctor if you need your family member to get immediate assistance, emergency treatment.</p>
-                                    <div class="mt-4">
-                                        <a href="#" class="btn btn-soft-success">Accept</a>
-                                    </div>
+                                    <a href="#" class="btn btn-soft-success">Accept</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Accept Appointment End -->
+        </div>
+        <!-- Accept Appointment End -->
 
-            <!-- Cancel Appointment Start -->
-            <div class="modal fade" id="cancelappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body py-5">
-                            <div class="text-center">
-                                <div class="icon d-flex align-items-center justify-content-center bg-soft-danger rounded-circle mx-auto" style="height: 95px; width:95px;">
-                                    <i class="uil uil-times-circle h1 mb-0"></i>
-                                </div>
+        <!-- Cancel Appointment Start -->
+        <div class="modal fade" id="cancelappointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body py-5">
+                        <div class="text-center">
+                            <div class="icon d-flex align-items-center justify-content-center bg-soft-danger rounded-circle mx-auto" style="height: 95px; width:95px;">
+                                <i class="uil uil-times-circle h1 mb-0"></i>
+                            </div>
+                            <div class="mt-4">
+                                <h4>Cancel Appointment</h4>
+                                <p class="para-desc mx-auto text-muted mb-0">Great doctor if you need your family member to get immediate assistance, emergency treatment.</p>
                                 <div class="mt-4">
-                                    <h4>Cancel Appointment</h4>
-                                    <p class="para-desc mx-auto text-muted mb-0">Great doctor if you need your family member to get immediate assistance, emergency treatment.</p>
-                                    <div class="mt-4">
-                                        <a href="#" class="btn btn-soft-danger">Cancel</a>
-                                    </div>
+                                    <a href="#" class="btn btn-soft-danger">Cancel</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Cancel Appointment End -->
-            <!-- Modal end -->
+        </div>
+        <!-- Cancel Appointment End -->
+        <!-- Modal end -->
 
-            <!-- javascript -->
-            <script src="js/jquery.min.js"></script>
-            <script src="js/bootstrap.bundle.min.js"></script>
-            <!-- simplebar -->
-            <script src="js/simplebar.min.js"></script>
-            <!-- Select2 -->
-            <script src="js/select2.min.js"></script>
-            <script src="js/select2.init.js"></script>
-            <!-- Datepicker -->
-            <script src="js/flatpickr.min.js"></script>
-            <script src="js/flatpickr.init.js"></script>
-            <!-- Icons -->
-            <script src="js/feather.min.js"></script>
-            <!-- Main Js -->
-            <script src="js/app.js"></script>
-            <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-            <script>
-                                            function previewImage() {
-                                                var imageUrl = document.getElementById("loadImage").value;
-                                                var imagePreview = document.getElementById("imagePreview");
+        <!-- javascript -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <!-- simplebar -->
+        <script src="js/simplebar.min.js"></script>
+        <!-- Select2 -->
+        <script src="js/select2.min.js"></script>
+        <script src="js/select2.init.js"></script>
+        <!-- Datepicker -->
+        <script src="js/flatpickr.min.js"></script>
+        <script src="js/flatpickr.init.js"></script>
+        <!-- Icons -->
+        <script src="js/feather.min.js"></script>
+        <!-- Main Js -->
+        <script src="js/app.js"></script>
+        <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+        <script>
+                                        function previewImage() {
+                                            var imageUrl = document.getElementById("loadImage").value;
+                                            var imagePreview = document.getElementById("imagePreview");
 
-                                                if (imageUrl) {
-                                                    imagePreview.src = imageUrl;
-                                                } else {
-                                                    imagePreview.src = "";
-                                                }
+                                            if (imageUrl) {
+                                                imagePreview.src = imageUrl;
+                                            } else {
+                                                imagePreview.src = "";
                                             }
-            </script>
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const postTimeElements = document.querySelectorAll(".post-time");
-                    postTimeElements.forEach(element => {
-                        const localDate = element.textContent; // L?y giá tr? d?ng "2025-03-04"
-                        const date = new Date(localDate);
-                        const options = {year: 'numeric', month: 'long', day: '2-digit'};
-                        element.textContent = date.toLocaleDateString('en-US', options); // ??nh d?ng thành "March 04, 2025"
-                    });
+                                        }
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const postTimeElements = document.querySelectorAll(".post-time");
+                postTimeElements.forEach(element => {
+                    const localDate = element.textContent; // L?y giá tr? d?ng "2025-03-04"
+                    const date = new Date(localDate);
+                    const options = {year: 'numeric', month: 'long', day: '2-digit'};
+                    element.textContent = date.toLocaleDateString('en-US', options); // ??nh d?ng thành "March 04, 2025"
                 });
-            </script>
+            });
+        </script>
+        <script>
+            function confirmDelete(event, commentID) {
+                event.preventDefault(); // Ng?n trang chuy?n h??ng ngay l?p t?c
+                let confirmation = confirm("Are you sure you want to delete this blog post?");
+                if (confirmation) {
+                    window.location.href = "BlogsURL?service=deleteComment&cid=" + commentID; // Chuy?n h??ng n?u xác nh?n
+                }
+            }
+        </script>
+    </body>
 
-        </body>
-
-    </html>
+</html>

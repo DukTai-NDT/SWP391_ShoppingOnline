@@ -236,7 +236,7 @@
                                                         </a>
                                                     </td>
                                                     <td class="p-3">
-                                                        ${a.roleID == 1 ? 'Staff' : (a.roleID == 2 ? 'Customer' : (a.roleID == 3 ? 'Admin' : 'Unknown'))}
+                                                        ${a.roleID == 1 ? 'Staff' : (a.roleID == 2 ? 'Customer' : (a.roleID == 3 ? 'Admin' :(a.roleID == 1003 ? 'Customer Care' : (a.roleID == 2003 ? 'Shipper' :  'Unknown'))))}
                                                     </td>
 
                                                     <td class="p-3">${a.password}</td>

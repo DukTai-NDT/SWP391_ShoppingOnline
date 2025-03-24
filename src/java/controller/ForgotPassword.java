@@ -49,7 +49,7 @@ public class ForgotPassword extends HttpServlet {
                 Account acc = dao.getAAccount(email);
 
                 if (acc == null) {
-                    //request.setAttribute("message", "Account invalid !!!");
+                    request.setAttribute("message", "Account invalid !!!");
                     request.getRequestDispatcher("jsp/forgot-password.jsp").forward(request, response);
                     return;
                 }

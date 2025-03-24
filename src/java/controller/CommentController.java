@@ -29,8 +29,10 @@ import model.DAOComment;
 @WebServlet(name = "CommentController", urlPatterns = {"/CommentURL"})
 public class CommentController extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -43,21 +45,21 @@ public class CommentController extends HttpServlet {
             HttpSession session = request.getSession();
             DAOBlogs daoBlog = new DAOBlogs();
             DAOComment daoComment = new DAOComment();
-             Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+            Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
-            
             String service = request.getParameter("service");
             if (service == null) {
                 service = "listAllBlogs";
             }
-            if (service.equals("addComment") || service.equals("deleteComment")) {
-              if(currentCustomer == null){
-                  response.sendRedirect("LoginURL?service=login");
-                  return;
-              }
+             if (service.equals("addComment") || service.equals("deleteComment") || service.equals("editComment") || service.equals("showEditForm")) {
+                if (currentCustomer == null) {
+                    response.sendRedirect("LoginURL?service=login");
+                    return;
+                }
             }
-            
-            
+
+
+
 
             if (service.equals("listAllComment")) {
                 String sql = "SELECT * FROM Blogs";
@@ -75,11 +77,54 @@ public class CommentController extends HttpServlet {
                 RequestDispatcher dispatch = request.getRequestDispatcher("blogDetail.jsp");
                 dispatch.forward(request, response);
             }
-            
-            
-            
-            
-            
+            if (service.equals("showEditForm")) {
+                String commentIdStr = request.getParameter("commentId");
+                String blogIdStr = request.getParameter("blogId");
+
+                int commentId = Integer.parseInt(commentIdStr);
+                int blogId = Integer.parseInt(blogIdStr);
+
+                Comment comment = daoComment.getCommentById(commentId);
+                if (comment.getCustomerID() != currentCustomer.getCustomerID()) {
+                    response.sendRedirect("blogDetail.jsp?error");
+                    return;
+                }
+
+              
+                response.sendRedirect("BlogsURL?service=detailBlog&blog=" + blogId + "&editCommentId=" + commentId);
+            }
+
+
+
+
+            if (service.equals("editComment")) {
+                String commentIdStr = request.getParameter("commentId");
+                String blogIdStr = request.getParameter("blogId");
+                String commentText = request.getParameter("commentText");
+
+                if (commentIdStr == null || blogIdStr == null || commentText == null || commentText.trim().isEmpty()) {
+                    response.sendRedirect("blogDetail.jsp?error");
+                    return;
+                }
+
+                int commentId = Integer.parseInt(commentIdStr);
+                int blogId = Integer.parseInt(blogIdStr);
+
+                Comment comment = daoComment.getCommentById(commentId);
+                if (comment.getCustomerID() != currentCustomer.getCustomerID()) {
+                    response.sendRedirect("blogDetail.jsp?error");
+                    return;
+                }
+
+                // Cập nhật bình luận với nội dung mới
+                Comment updatedComment = new Comment(commentId, blogId, currentCustomer.getCustomerID(), commentText, comment.getPostTime());
+                daoComment.update(updatedComment);
+
+                Vector<Comment> updatedComments = daoComment.getCommentsByBlogId(blogId);
+                session.setAttribute("comments" + blogId, updatedComments);
+
+                response.sendRedirect("BlogsURL?service=detailBlog&blog=" + blogId);
+            }
 
             if (service.equals("addComment")) {
                 String CommentText = request.getParameter("CommentText");
@@ -106,10 +151,9 @@ public class CommentController extends HttpServlet {
             }
 
             if (service.equals("deleteComment")) {
-                String commentIdStr = request.getParameter("commentId"); 
-                String blogIdStr = request.getParameter("blogId");       
+                String commentIdStr = request.getParameter("commentId");
+                String blogIdStr = request.getParameter("blogId");
 
-               
                 if (commentIdStr == null || commentIdStr.trim().isEmpty()) {
                     response.sendRedirect("blogDetail.jsp?error=Missing+commentId");
                     return;
@@ -119,43 +163,36 @@ public class CommentController extends HttpServlet {
                     return;
                 }
 
-              
                 int commentId = Integer.parseInt(commentIdStr);
                 int blogId = Integer.parseInt(blogIdStr);
 
-                
                 Comment comment = daoComment.getCommentById(commentId);
                 if (comment == null) {
                     response.sendRedirect("blogDetail.jsp?error=Comment+not+found");
                     return;
                 }
 
-               
                 if (comment.getCustomerID() != currentCustomer.getCustomerID()) {
                     response.sendRedirect("blogDetail.jsp?error=Unauthorized+to+delete+this+comment");
                     return;
                 }
 
-               
                 daoComment.delete(commentId);
 
-               
                 Vector<Comment> updatedComments = daoComment.getCommentsByBlogId(blogId);
 
-               
                 session.setAttribute("comments" + blogId, updatedComments);
 
-              
                 response.sendRedirect("BlogsURL?service=detailBlog&blog=" + blogId);
             }
-            
-            
+
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -167,8 +204,9 @@ public class CommentController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -180,8 +218,9 @@ public class CommentController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
