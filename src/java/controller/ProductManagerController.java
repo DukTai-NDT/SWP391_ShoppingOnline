@@ -43,10 +43,9 @@ public class ProductManagerController extends HttpServlet {
         DAOCategories cDAO = new DAOCategories();
         DAOBrand bDAO = new DAOBrand();
 
-        String searchQuery = request.getParameter("search");
+        // Pagination setup
         int page = 1;
         int productsPerPage = 10;
-
         String pageStr = request.getParameter("page");
         if (pageStr != null) {
             try {
@@ -56,28 +55,47 @@ public class ProductManagerController extends HttpServlet {
             }
         }
 
-        Vector<Products> pList;
-        int totalProducts;
+        // Order filter setup
+        String orderType = request.getParameter("orderType");
+        if (orderType == null || (!orderType.equalsIgnoreCase("newest") && !orderType.equalsIgnoreCase("oldest"))) {
+            orderType = "newest"; // Mặc định newest
+        }
 
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            totalProducts = pDAO.getTotalSearchProducts(searchQuery);
-            pList = pDAO.searchProductByPage(searchQuery, page, productsPerPage);
+        // Search keyword
+        String keyword = request.getParameter("keyword");
+        if (keyword == null) {
+            keyword = "";
+        }
+
+        // Fetch and paginate products
+        Vector<Products> allProducts;
+        int totalProducts;
+        if (!keyword.isEmpty()) {
+            allProducts = pDAO.searchProductByPage(keyword, page, productsPerPage);
+            totalProducts = pDAO.getTotalSearchProducts(keyword);
         } else {
-            totalProducts = pDAO.getTotalProducts();
-            pList = pDAO.getProductsByPage(page, productsPerPage);
+            allProducts = pDAO.filterProducts(orderType);
+            totalProducts = allProducts.size();
         }
 
         int totalPages = (int) Math.ceil((double) totalProducts / productsPerPage);
 
+        int startIndex = (page - 1) * productsPerPage;
+        int endIndex = Math.min(startIndex + productsPerPage, totalProducts);
+        Vector<Products> paginatedProducts = new Vector<>(allProducts.subList(startIndex, endIndex));
+
+        // Fetch categories and brands
         Vector<Categories> cList = cDAO.getCategories("SELECT * FROM dbo.Categories");
         Vector<Brand> bList = bDAO.getBrand("SELECT * FROM dbo.Brand");
 
-        request.setAttribute("pList", pList);
+        // Set attributes for JSP
+        request.setAttribute("pList", paginatedProducts);
         request.setAttribute("cList", cList);
         request.setAttribute("bList", bList);
-        request.setAttribute("searchQuery", searchQuery);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
+        request.setAttribute("orderType", orderType);
+        request.setAttribute("keyword", keyword);
 
         request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
     }
@@ -122,5 +140,3 @@ public class ProductManagerController extends HttpServlet {
     }// </editor-fold>
 
 }
-
-

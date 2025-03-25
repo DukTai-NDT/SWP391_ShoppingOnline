@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
-    
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,11 +49,11 @@
             }
         </style>
     </head>
-<%
-            Account account = (Account)session.getAttribute("dataUser");
-           Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    <%
+        Account account = (Account) session.getAttribute("dataUser");
+        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
-           
+
     %>
     <body>
         <!-- Loader -->
@@ -82,57 +82,51 @@
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
+                        <br>
 
-
-                        <%   if(account.getRoleID()  != 4){
-                            if(account.getRoleID()  == 3){%>
+                        <%   if (account.getRoleID() != 4) {
+                                if (account.getRoleID() == 3) {%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
                         <%}%>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
 
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
-
                         </li>
+                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="AdminBrands">
                                 <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
                             </a>
                         </li>
-
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
-
                         </li>
-                           <%}else{%>
+                        <%} else {%>
 
                         <li class="sidebar-dropdown">
-                            <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
-
+                            <a href="AdminRepInboxURL?service=show"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
                         </li>
                         <%}%>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
-                <!-- sidebar-content  -->
-                <ul class="sidebar-footer list-unstyled mb-0">
-                    <li class="list-inline-item mb-0 ms-1">
-                        <a href="#" class="btn btn-icon btn-pills btn-soft-primary">
-                            <i class="uil uil-comment icons"></i>
-                        </a>
-                    </li>
-                </ul>
             </nav>
             <!-- sidebar-wrapper  -->
 
@@ -153,35 +147,36 @@
                             </a>
                             <div class="search-bar p-0 d-none d-md-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <!--                                    <form role="search" method="get" id="searchform" class="searchform">
-                                                                            <div>
-                                                                                <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
-                                                                                <input type="submit" id="searchsubmit" value="Search">
-                                                                            </div>
-                                                                        </form>-->
+                                    <form role="search" method="get" id="searchform" class="searchform" action="ProductManager">
+                                        <div>
+                                            <input type="text" class="form-control border rounded-pill" name="keyword" id="s" 
+                                                   placeholder="Search Keywords..." value="${keyword}">
+                                            <input type="submit" id="searchsubmit" value="Search" class="btn btn-primary rounded-pill">
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            
-                           
+
+
                             <%
-                             if(currentCustomer != null){
+                                if (currentCustomer != null) {
                             %>
-                            
+
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
 
                                     <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                                        <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg"%>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
                                     </button>
                                     <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                         <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg"%>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
 
                                             <div class="flex-1 ms-2">
-                                                <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
+                                                <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName()%></span>
                                             </div>
                                         </a>
 
@@ -192,7 +187,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <%} else{%>
+                            <%} else {%>
                             <div class="auth-links">
                                 <a href="SignUpURL?service=signup">Sign up</a>
                                 <span>|</span>
@@ -205,36 +200,36 @@
 
                 <div class="container-fluid">
                     <div class="layout-specing">
-                        <div class="d-md-flex justify-content-between">
-                            <div>
-                                <h5 class="mb-0">Doctris</h5>
-
-                                <nav aria-label="breadcrumb" class="d-inline-block mt-1">
-                                    <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
-                                        <li class="breadcrumb-item"><a href="#">Products Manager</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">All Products</li>
-                                    </ul>
-                                </nav>
+                        <div class="d-md-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <h5 class="mb-0 me-3">Product List</h5>
+                                <form action="ProductManager" method="GET" class="d-inline">
+                                    <div class="input-group">
+                                        <select class="form-select" name="orderType" id="orderType" onchange="this.form.submit()">
+                                            <option value="newest" ${orderType == "newest" ? "selected" : ""}>Newest</option>
+                                            <option value="oldest" ${orderType == "oldest" ? "selected" : ""}>Oldest</option>
+                                        </select>
+                                        <input type="hidden" name="page" value="${currentPage}">
+                                    </div>
+                                </form>
                             </div>
 
                             <div class="mt-4 mt-sm-0">
-                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-product">Add Product</a>
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-product">Add Product</a>                              
                             </div>
                         </div>
-
-                        <h6 class="mt-4 mb-0">Products</h6>
                         <br>
 
                         <table class="table align-middle shadow-lg rounded-4 overflow-hidden bg-white">
                             <thead class="bg-primary text-white rounded-top-4">
                                 <tr class="fw-bold text-center">
                                     <th class="p-3">#</th>
-                                    <th class="p-3">Image</th>
+                                    <th class="p-3 text-center">Image</th>
 
-                                    <th class="p-3 text-start ps-5">Product Name</th>
+                                    <th class="p-3 text-start ps-4">Product Name</th>
 
                                     <th class="p-3">Price</th>
-                                    <th class="p-3">Action</th>
+                                    <th class="p-3 text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -267,25 +262,30 @@
                     <div class="row">
                         <div class="col-12 mt-4">
                             <ul class="pagination justify-content-end mb-0 list-unstyled">
-                                <% int currentPage = (int) request.getAttribute("currentPage");
+                                <%
+                                    int currentPage = (int) request.getAttribute("currentPage");
                                     int totalPages = (int) request.getAttribute("totalPages");
+                                    String orderType = request.getParameter("orderType");
+                                    if (orderType == null) {
+                                        orderType = "newest"; // Mặc định là newest nếu không có orderType
+                                    }
                                 %>
 
                                 <!-- Nút Prev -->
                                 <li class="page-item <%= (currentPage == 1) ? "disabled" : ""%>">
-                                    <a class="page-link" href="?page=<%= currentPage - 1%>" aria-label="Previous">Prev</a>
+                                    <a class="page-link" href="?page=<%= currentPage - 1%>&orderType=<%= orderType%>" aria-label="Previous">Prev</a>
                                 </li>
 
                                 <!-- Số trang -->
                                 <% for (int i = 1; i <= totalPages; i++) {%>
                                 <li class="page-item <%= (i == currentPage) ? "active" : ""%>">
-                                    <a class="page-link" href="?page=<%= i%>"><%= i%></a>
+                                    <a class="page-link" href="?page=<%= i%>&orderType=<%= orderType%>"><%= i%></a>
                                 </li>
                                 <% }%>
 
                                 <!-- Nút Next -->
                                 <li class="page-item <%= (currentPage == totalPages) ? "disabled" : ""%>">
-                                    <a class="page-link" href="?page=<%= currentPage + 1%>" aria-label="Next">Next</a>
+                                    <a class="page-link" href="?page=<%= currentPage + 1%>&orderType=<%= orderType%>" aria-label="Next">Next</a>
                                 </li>
                             </ul>
                         </div>

@@ -46,6 +46,7 @@ public class ChatController extends HttpServlet {
             }
             if(service.equals("show")){
                 Vector<ChatHistory> vectorChat = daoChat.getChatHistory("select * from Chat_History where CustomerID_1 = "+customerNow.getCustomerID()+" or CustomerID_2 = "+ +customerNow.getCustomerID());
+                
                 request.setAttribute("dataChat", vectorChat);
                 request.getRequestDispatcher("jsp/customer-chat.jsp").forward(request, response);
             }
@@ -55,7 +56,11 @@ public class ChatController extends HttpServlet {
                 daoChat.addChatHistory(new ChatHistory(customerNow.getCustomerID(), 3006, LocalDateTime.now(), messageChat, false));
                 response.sendRedirect("ChatURL?service=show");
             }
-           
+           if(service.equals("deleteChat")){
+               String chatID = request.getParameter("chatid");
+               daoChat.changeDelete(Integer.parseInt(chatID), 1);
+               response.sendRedirect("ChatURL?service=show");
+           }
         }
     } 
 

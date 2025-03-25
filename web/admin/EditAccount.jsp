@@ -240,7 +240,8 @@
                                                         <option value="1" ${account.roleID == 1 ? 'selected' : ''}>Staff</option>
                                                         <option value="2" ${account.roleID == 2 ? 'selected' : ''}>Customer</option>
                                                         <option value="3" ${account.roleID == 3 ? 'selected' : ''}>Admin</option>
-                                                        <option value="2003" ${account.roleID == 3 ? 'selected' : ''}>Shipper</option>
+                                                        <option value="1003" ${account.roleID == 1003 ? 'selected' : ''}>Customer Care</option>
+                                                        <option value="2003" ${account.roleID == 2003 ? 'selected' : ''}>Shipper</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
