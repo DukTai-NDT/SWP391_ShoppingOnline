@@ -70,10 +70,9 @@ public class OrderManagerController extends HttpServlet {
 
         Vector<Orders> oList = new Vector<>();
 
-        // Filter theo newest/oldest (giữ nguyên)
         if (orderType.equalsIgnoreCase("newest") || orderType.equalsIgnoreCase("oldest")) {
             oList = oDAO.filterOrders(orderType);
-        } // Filter theo status (on-prepared, delivering, done)
+        }
         else if (orderType.equalsIgnoreCase("on-prepared")) {
             oList = oDAO.getOnPreparedOrders();
         } else if (orderType.equalsIgnoreCase("delivering")) {
@@ -110,7 +109,6 @@ public class OrderManagerController extends HttpServlet {
             productDetails.putIfAbsent(productID, prdDAO.getProductByID(productID));
         }
 
-        // Set attributes cho JSP
         request.setAttribute("oList", paginatedOrders);
         request.setAttribute("odList", odList);
         request.setAttribute("customerUsernames", customerUsernames);

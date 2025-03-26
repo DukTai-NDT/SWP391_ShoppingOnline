@@ -53,23 +53,23 @@ import model.DAOProducts;
             DAOBrand bDAO = new DAOBrand();
             DAOCategories cDAO = new DAOCategories();
 
-            // Lấy sản phẩm từ database
             Vector<Products> productList = pDAO.getProducts("SELECT * FROM dbo.Products WHERE ProductID = " + pid);
             if (productList.isEmpty()) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Product not found");
                 return;
             }
             Products product = productList.get(0);
-            // Lấy Brand theo BrandID
+
             Vector<Brand> brands = bDAO.getBrand("SELECT * FROM dbo.Brand WHERE BrandID = " + product.getBrandID());
             Brand brand = brands.isEmpty() ? null : brands.get(0);
-            // Lấy Category theo CategoryID
+            
             Vector<Categories> categories = cDAO.getCategories("SELECT * FROM dbo.Categories WHERE CategoryID = " + product.getCategoryID());
             Categories category = categories.isEmpty() ? null : categories.get(0);
+            
             Vector<Categories> loadCategory = cDAO.getCategories("SELECT * FROM dbo.Categories");
+            
             Vector<Brand> loadBrand = bDAO.getBrand("SELECT * FROM dbo.Brand");
 
-            // Gửi dữ liệu đến JSP
             request.setAttribute("pDetail", product);
             request.setAttribute("bDetail", brand);
             request.setAttribute("cDetail", category);
