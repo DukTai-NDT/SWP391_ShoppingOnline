@@ -210,7 +210,7 @@
                                 <div class="card features feature-primary rounded border-0 shadow p-4">
                                     <div class="d-flex align-items-center">
                                         <div class="icon text-center rounded-md">
-                                            <i class="uil uil-shopping-cart h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
+                                            <i class="uil uil-spinner-alt h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
                                         </div>
                                         <div class="flex-1 ms-2">
                                             <h5 class="mb-0">${orderOnPrepared}</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
@@ -242,11 +242,11 @@
                                 <div class="card features feature-primary rounded border-0 shadow p-4">
                                     <div class="d-flex align-items-center">
                                         <div class="icon text-center rounded-md">
-                                            <i class="uil uil-shopping-cart h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
+                                            <i class="uil uil-box h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
                                         </div>
                                         <div class="flex-1 ms-2">
                                             <h5 class="mb-0">${orderDelivering}</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
-                                            <p class="text-muted mb-0">Delivering</p>
+                                            <p class="text-muted mb-0">Prepared</p>
                                         </div>
                                     </div>
                                 </div>

@@ -135,7 +135,7 @@
                             </a>
                             <div class="search-bar p-0 d-none d-md-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <!--                                    <form role="search" method="get" id="searchform" class="searchform">
+<!--                                                                        <form role="search" method="get" id="searchform" class="searchform">
                                                                             <div>
                                                                                 <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
                                                                                 <input type="submit" id="searchsubmit" value="Search">
@@ -196,9 +196,9 @@
                                                                         <li class="breadcrumb-item active" aria-current="page">Patients</li>-->
                                 </ul>
                             </nav>
-                            <div class="mt-4 mt-sm-0">
+<!--                            <div class="mt-4 mt-sm-0">
                                 <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Account</a>
-                            </div>
+                            </div>-->
                         </div>
 
                         <div class="row">

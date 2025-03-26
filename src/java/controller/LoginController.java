@@ -137,18 +137,19 @@ public class LoginController extends HttpServlet {
                 } else {
                     Account account = dao.getLogin(request.getParameter("username"), request.getParameter("password"));
                     System.out.println("ok+" + account);
-                    if (account.isActive() == false) {
-                        request.setAttribute("message", "Account is block can not login");
-                        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-
-                    }
-                    if (account == null) {
+                    
+                   if (account == null) {
+                        System.out.println("OK12DA");
                         request.setAttribute("message", "Username or password is incorrect");
                         request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
 
                     } else if (account != null) {
+                        if (account.isActive() == false) {
+                        request.setAttribute("message", "Account is block can not login");
+                        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
 
-                        if (account.getRoleID() == 2) {
+                    }
+                        else if (account.getRoleID() == 2) {
                             System.out.println("OK123456789");
                             Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + account.getAccountID()).get(0);
                             System.out.println(cus);

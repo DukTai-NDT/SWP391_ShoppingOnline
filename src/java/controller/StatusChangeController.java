@@ -59,7 +59,6 @@ public class StatusChangeController extends HttpServlet {
 
                return "Prepared";
                                   
-
             default:
                 return currentStatus;
         }

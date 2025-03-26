@@ -207,7 +207,7 @@
                                         <select class="form-select" name="orderType" id="orderType" onchange="this.form.submit()">
                                             <option value="newest" ${orderType == "newest" ? "selected" : ""}>ALL</option>
                                             <option value="on-prepared" ${orderType == "on-prepared" ? "selected" : ""}>On-Prepared</option>
-                                            <option value="delivering" ${orderType == "delivering" ? "selected" : ""}>Delivering</option>
+                                            <option value="prepared" ${orderType == "prepared" ? "selected" : ""}>Prepared</option>
                                             <option value="done" ${orderType == "done" ? "selected" : ""}>Done</option>
                                         </select>
                                         <input type="hidden" name="page" value="${currentPage}">

@@ -385,8 +385,10 @@ public class DAOAccount extends DBConnection {
             System.out.println(account);
         }
         
+       Account acc = dao.getLogin("DungTien", "123");
         
-        int n = dao.EditAccount(new Account(6007, "abc", 3, "abc", "abc@gmail.com", false));
-        System.out.println(n);
+       if(acc == null){
+           System.out.println("ok");
+       }
     }
 }
