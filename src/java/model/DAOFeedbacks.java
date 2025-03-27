@@ -116,9 +116,13 @@ public class DAOFeedbacks extends DBConnection {
     
     public static void main(String[] args) {
         DAOFeedbacks dao = new DAOFeedbacks();
-        Vector<Feedbacks> vector = dao.getFeedback("select * from Feedbacks");
-        for (Feedbacks feedbacks : vector) {
-            System.out.println(feedbacks);
+//        Vector<Feedbacks> vector = dao.getFeedback("select * from Feedbacks");
+//        for (Feedbacks feedbacks : vector) {
+//            System.out.println(feedbacks);
+//        }
+        int n = dao.addFeedbacks(new Feedbacks("Sản phẩm tốt", LocalDate.now(), 5, 2003, 5));
+        if(n > 0){
+            System.out.println("oke");
         }
     }
 }

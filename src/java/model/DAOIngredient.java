@@ -118,9 +118,7 @@ public class DAOIngredient extends DBConnection {
 //        int n = dao.deleteCategories("thuoc");
 //        System.out.println(n);
 
-        Vector<Ingredient> vector = dao.getIngredient("SELECT * FROM dbo.Ingredient");
-        for (Ingredient ingredient : vector) {
-            System.out.println(vector);
-        }
+        Ingredient ingre = new Ingredient("abc", 31);
+        System.out.println(ingre);
     }
 }

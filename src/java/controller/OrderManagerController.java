@@ -75,7 +75,7 @@ public class OrderManagerController extends HttpServlet {
         }
         else if (orderType.equalsIgnoreCase("on-prepared")) {
             oList = oDAO.getOnPreparedOrders();
-        } else if (orderType.equalsIgnoreCase("delivering")) {
+        } else if (orderType.equalsIgnoreCase("prepared")) {
             oList = oDAO.getDeliveringOrders();
         } else if (orderType.equalsIgnoreCase("done")) {
             oList = oDAO.getDoneOrders();

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+
 import entity.Provinces;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,11 +12,13 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Admin
  */
-public class DAOProvinces extends DBConnection{
+public class DAOProvinces extends DBConnection {
+
     // Thêm một province mới
     public int addProvince(Provinces province) {
         int n = 0;
@@ -78,7 +81,7 @@ public class DAOProvinces extends DBConnection{
             while (rs.next()) {
                 int provinceID = rs.getInt("ProvinceID");
                 String provinceName = rs.getString("ProvinceName");
-                
+
                 Provinces province = new Provinces(provinceID, provinceName);
                 vector.add(province);
             }
@@ -88,17 +91,18 @@ public class DAOProvinces extends DBConnection{
         }
         return vector;
     }
-    public String getProvinceName(int id){
+
+    public String getProvinceName(int id) {
         String name = "";
-        String sql = "select p.ProvinceName from Provinces p where p.ProvinceID = "+id;
+        String sql = "select p.ProvinceName from Provinces p where p.ProvinceID = " + id;
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-               
+
                 name = rs.getString("ProvinceName");
-            
+
             }
 
         } catch (SQLException ex) {
@@ -106,18 +110,28 @@ public class DAOProvinces extends DBConnection{
         }
         return name;
     }
+
+    public Provinces getProvinceByOrderID(int orderId) {
+        DAOProvinces dao = new DAOProvinces();
+        Provinces pro = dao.getProvinces("select * from Provinces p join DeliveryAddress d on p.ProvinceID = d.ProvinceID\n"
+                + "where d.OrderID = " + orderId).get(0);
+        return pro;
+    }
+
     public static void main(String[] args) {
         DAOProvinces dao = new DAOProvinces();
-        Vector<Provinces> vector = dao.getProvinces("Select * from Provinces");
-//       ResultSet rs = dao.getData("SELECT [ProvinceID],[ProvinceName] FROM [dbo].[Provinces] ");
-//        try {
-//            while (rs.next()) {
-//                System.out.println(rs.getInt(1)+","+rs.getString(2));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(DAOProvinces.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        String name = dao.getProvinceName(15);
-        System.out.println(name);
+//        Vector<Provinces> vector = dao.getProvinces("Select * from Provinces");
+////       ResultSet rs = dao.getData("SELECT [ProvinceID],[ProvinceName] FROM [dbo].[Provinces] ");
+////        try {
+////            while (rs.next()) {
+////                System.out.println(rs.getInt(1)+","+rs.getString(2));
+////            }
+////        } catch (SQLException ex) {
+////            Logger.getLogger(DAOProvinces.class.getName()).log(Level.SEVERE, null, ex);
+////        }
+//        String name = dao.getProvinceName(15);
+//        System.out.println(name);
+        Provinces pro = dao.getProvinceByOrderID(4);
+        System.out.println(pro);
     }
 }

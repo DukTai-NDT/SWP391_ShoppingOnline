@@ -6,6 +6,7 @@ package controller;
 
 import entity.Brand;
 import entity.Categories;
+import entity.Function;
 import entity.Ingredient;
 import entity.Products;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.Vector;
 import model.DAOBrand;
 import model.DAOCategories;
+import model.DAOFunction;
 import model.DAOIngredient;
 import model.DAOProducts;
 
@@ -52,6 +54,8 @@ import model.DAOProducts;
             DAOProducts pDAO = new DAOProducts();
             DAOBrand bDAO = new DAOBrand();
             DAOCategories cDAO = new DAOCategories();
+            DAOIngredient iDAO = new DAOIngredient();
+            DAOFunction fDAO = new DAOFunction();
 
             Vector<Products> productList = pDAO.getProducts("SELECT * FROM dbo.Products WHERE ProductID = " + pid);
             if (productList.isEmpty()) {
@@ -59,22 +63,29 @@ import model.DAOProducts;
                 return;
             }
             Products product = productList.get(0);
-
-            Vector<Brand> brands = bDAO.getBrand("SELECT * FROM dbo.Brand WHERE BrandID = " + product.getBrandID());
-            Brand brand = brands.isEmpty() ? null : brands.get(0);
             
             Vector<Categories> categories = cDAO.getCategories("SELECT * FROM dbo.Categories WHERE CategoryID = " + product.getCategoryID());
             Categories category = categories.isEmpty() ? null : categories.get(0);
-            
+
+            Vector<Brand> brands = bDAO.getBrand("SELECT * FROM dbo.Brand WHERE BrandID = " + product.getBrandID());
+            Brand brand = brands.isEmpty() ? null : brands.get(0);
+
             Vector<Categories> loadCategory = cDAO.getCategories("SELECT * FROM dbo.Categories");
             
             Vector<Brand> loadBrand = bDAO.getBrand("SELECT * FROM dbo.Brand");
+            
+            Vector<Ingredient> ingredient = iDAO.getIngredient("SELECT * FROM dbo.Ingredient WHERE ProductID = " + pid);
+            
+            Vector<Function> function = fDAO.getFunction("SELECT * FROM dbo.[Function] WHERE ProductID = " + pid);
+            
 
             request.setAttribute("pDetail", product);
             request.setAttribute("bDetail", brand);
             request.setAttribute("cDetail", category);
             request.setAttribute("cLoadDetail", loadCategory);
             request.setAttribute("bLoadDetail", loadBrand);
+            request.setAttribute("iDetail", ingredient);
+            request.setAttribute("fDetail", function);
             request.getRequestDispatcher("admin/product-detail.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Product ID format");

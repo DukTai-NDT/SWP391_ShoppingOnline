@@ -42,17 +42,17 @@
                 min-height: 100vh;
             }
             .bg-hero {
-                flex: 1 0 auto; /* Allows the section to grow and fill available space */
+                flex: 1 0 auto;
             }
             footer.bg-footer {
-                flex-shrink: 0; /* Prevents footer from shrinking */
-                margin-top: auto; /* Pushes footer to the bottom */
+                flex-shrink: 0;
+                margin-top: auto;
             }
             .container:last-child {
-                margin-bottom: 0; /* Remove any default margin on the last container */
+                margin-bottom: 0;
             }
             .footer-bar {
-                padding-bottom: 0; /* Remove extra padding at the bottom of footer-bar */
+                padding-bottom: 0;
             }
         </style>
     </head>
@@ -72,10 +72,8 @@
             Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
             Vector<Categories> vectorCat = (Vector<Categories>)session.getAttribute("vectorCat");
             Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
-         
         %>
-        <% String message = (String)request.getAttribute("message"); 
-        %>
+        <% String message = (String)request.getAttribute("message"); %>
 
         <!-- Navbar -->
         <header id="topnav" class="defaultscroll sticky">
@@ -101,7 +99,6 @@
                             <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                         </a>
                     </li>
-
                     <li class="list-inline-item mb-0 ms-1">
                         <a href="javascript:void(0)" class="btn btn-icon btn-pills btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             <i class="uil uil-search"></i>
@@ -113,18 +110,17 @@
                                 <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile" />
                             </button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px">
-                                <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
+                                <a class="dropdown-item d-flex align-items-center text-dark" href="CustomerURL">
                                     <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile" />
                                     <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1"><%=currentCustomer.getFirstName() + " " +  currentCustomer.getLastName()  %></span>
+                                        <span class="d-block mb-1"><%=currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
-
                                 <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                                        <%if(account.getRoleID() != 2){%> 
+                                <%if(account.getRoleID() != 2){%> 
                                 <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
-                                        <%}%>
+                                <%}%>
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
                             </div>
@@ -140,10 +136,9 @@
                             <ul class="submenu">
                                 <%for (Categories cate : vectorCat){%>
                                 <li><a href="ProductURL?service=categories&cid=<%=cate.getCategoryID()%>" class="sub-menu-item"> <%=cate.getCategoryName()%></a></li>
-                                    <%}%>
+                                <%}%>
                             </ul>
                         </li>
-
                         <li><a href="BlogsURL" class="menu-item">Blogs</a></li>
                     </ul>
                 </div>
@@ -243,7 +238,7 @@
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Your Email</label>
-                                                    <input name="Email" type="email" class="form-control" value="<%=currentCustomer.getEmail() != null ? currentCustomer.getEmail() : ""%>" placeholder="Your email"  readonly/>
+                                                    <input name="Email" type="email" class="form-control" value="<%=currentCustomer.getEmail() != null ? currentCustomer.getEmail() : ""%>" placeholder="Your email" readonly/>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -274,211 +269,230 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <h5 class="mb-0">Change Password :</h5>
-                                    <form class="mt-4" action="CustomerURL" method="post">
-                                        <input type="hidden" name="service" value="updatePasswordCustomer" />
-                                       
-                                        <div class="row">
-                                            <div class="mb-3">
-                                                <label class="form-label">Old Password</label>
-                                                <div class="input-group">
-                                                    <input name="oldpassword" type="password" class="form-control" placeholder="Old Password" />
-                                                    <span class="input-group-text toggle-password" style="cursor: pointer;">
-                                                        <i class="fa fa-eye"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
 
-                                            <div class="mb-3">
-                                                <label class="form-label">New Password</label>
-                                                <div class="input-group">
-                                                    <input name="newpassword" type="password" class="form-control" placeholder="New Password" />
-                                                    <span class="input-group-text toggle-password" style="cursor: pointer;">
-                                                        <i class="fa fa-eye"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                    <!-- Button to toggle Change Password form -->
+                                    <div class="mt-4">
+                                        <h5 class="mb-3">Change Password :</h5>
+                                        <button type="button" class="btn btn-primary" id="togglePasswordForm">Show Change Password</button>
+                                    </div>
 
-                                            <div class="mb-3">
-                                                <label class="form-label">Confirm New Password</label>
-                                                <div class="input-group">
-                                                    <input name="cfPassword" type="password" class="form-control" placeholder="Confirm Password" />
-                                                    <span class="input-group-text toggle-password" style="cursor: pointer;">
-                                                        <i class="fa fa-eye"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <p style="color: red;"><%=(message!=null?message:"")%></p>
-
+                                    <!-- Change Password Form (Initially Hidden) -->
+                                    <div id="passwordFormContainer" style="display: none;" class="mt-4">
+                                        <form action="CustomerURL" method="post">
+                                            <input type="hidden" name="service" value="updatePasswordCustomer" />
                                             <div class="row">
-                                                <div class="col-sm-12">
-                                                    <input type="submit" name="submit" class="btn btn-primary" value="Change Password" />
+                                                <div class="mb-3">
+                                                    <label class="form-label">Old Password</label>
+                                                    <div class="input-group">
+                                                        <input name="oldpassword" type="password" class="form-control" placeholder="Old Password" />
+                                                        <span class="input-group-text toggle-password" style="cursor: pointer;">
+                                                            <i class="fa fa-eye"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">New Password</label>
+                                                    <div class="input-group">
+                                                        <input name="newpassword" type="password" class="form-control" placeholder="New Password" />
+                                                        <span class="input-group-text toggle-password" style="cursor: pointer;">
+                                                            <i class="fa fa-eye"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Confirm New Password</label>
+                                                    <div class="input-group">
+                                                        <input name="cfPassword" type="password" class="form-control" placeholder="Confirm Password" />
+                                                        <span class="input-group-text toggle-password" style="cursor: pointer;">
+                                                            <i class="fa fa-eye"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <p style="color: red;"><%=(message!=null?message:"")%></p>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="submit" name="submit" class="btn btn-primary" value="Change Password" />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </section>
-
-                    <!-- Footer -->
-                    <footer class="bg-footer">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-xl-5 col-lg-4 mb-0 mb-md-4 pb-0 pb-md-2">
-                                    <a href="#" class="logo-footer">
-                                        <img src="images/logo-light.png" height="22" alt="Logo" />
-                                    </a>
-                                    <p class="mt-4 me-xl-5">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
-                                </div>
-                                <div class="col-xl-7 col-lg-8 col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
-                                            <h5 class="text-light title-dark footer-head">Contact us</h5>
-                                            <ul class="list-unstyled footer-list mt-4">
-                                                <li class="d-flex align-items-center"><i data-feather="mail" class="fea icon-sm text-foot align-middle"></i><a href="mailto:contact@example.com" class="text-foot ms-2">contact@example.com</a></li>
-                                                <li class="d-flex align-items-center"><i data-feather="phone" class="fea icon-sm text-foot align-middle"></i><a href="tel:+152534-468-854" class="text-foot ms-2">+152 534-468-854</a></li>
-                                                <li class="d-flex align-items-center"><i data-feather="map-pin" class="fea icon-sm text-foot align-middle"></i><a href="javascript:void(0)" class="text-foot ms-2">View on Google map</a></li>
-                                            </ul>
-                                            <ul class="list-unstyled social-icon footer-social mb-0 mt-4">
-                                                <li class="list-inline-item"><a href="#" class="rounded-pill"><i data-feather="facebook" class="fea icon-sm fea-social"></i></a></li>
-                                                <li class="list-inline-item"><a href="#" class="rounded-pill"><i data-feather="instagram" class="fea icon-sm fea-social"></i></a></li>
-                                                <li class="list-inline-item"><a href="#" class="rounded-pill"><i data-feather="twitter" class="fea icon-sm fea-social"></i></a></li>
-                                                <li class="list-inline-item"><a href="#" class="rounded-pill"><i data-feather="linkedin" class="fea icon-sm fea-social"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="container mt-5">
-                                <div class="pt-4 footer-bar">
-                                    <div class="row align-items-center">
-                                        <div class="col-sm-6">
-                                            <div class="text-sm-start text-center">
-                                                <p class="mb-0">© <script>document.write(new Date().getFullYear());</script> Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="https://shreethemes.in" target="_blank" class="text-reset">Shreethemes</a>.</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 mt-4 mt-sm-0">
-                                            <ul class="list-unstyled footer-list text-sm-end text-center mb-0">
-                                                <li class="list-inline-item"><a href="terms.html" class="text-foot me-2">Terms</a></li>
-                                                <li class="list-inline-item"><a href="privacy.html" class="text-foot me-2">Privacy</a></li>
-                                                <li class="list-inline-item"><a href="aboutus.html" class="text-foot me-2">About</a></li>
-                                                <li class="list-inline-item"><a href="contact.html" class="text-foot me-2">Contact</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-
-                    <!-- Back to Top -->
-                    <a href="#" onclick="topFunction()" id="back-to-top" class="btn btn-icon btn-pills btn-primary back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
-
-                    <!-- Offcanvas Search -->
-                    <div class="offcanvas bg-white offcanvas-top" tabindex="-1" id="offcanvasTop">
-                        <div class="offcanvas-body d-flex align-items-center">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="text-center">
-                                            <h4>Search now.....</h4>
-                                            <div class="subcribe-form mt-4">
-                                                <form>
-                                                    <div class="mb-0">
-                                                        <input type="text" id="help" name="name" class="border bg-white rounded-pill" required="" placeholder="Search" />
-                                                        <button type="submit" class="btn btn-pills btn-primary">Search</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <!-- Offcanvas Settings -->
-                    <!-- Offcanvas Start -->
-                    <% if (currentCustomer != null) { %>
-                    <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                        <div class="offcanvas-header p-4 border-bottom">
-                            <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
-                            <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body p-4">
-                            <% 
-           
-                                if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
-               
-               
-                                  for(CartItems vectorCartItem : vectorCartItems) {
-                            %>
-                            <div class="cart-item">
-                                <div class="d-flex align-items-center mb-3">
-                                    <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
-                                    <div class="ms-3 flex-1">
-                                        <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
-                                        <div class="d-flex justify-content-between">
-                                            <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
-                                            <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%
-                                } }else {
-                            %>
-                            <p class="text-muted text-center " >No Products In Cart...</p>
-                            <%
-                                }
-                            %>
-                            <div class="mt-4 text-center">
-                                <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
+        <!-- Footer -->
+        <footer class="bg-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-4 mb-0 mb-md-4 pb-0 pb-md-2">
+                        <a href="#" class="logo-footer">
+                            <img src="images/logo-light.png" height="22" alt="Logo" />
+                        </a>
+                        <p class="mt-4 me-xl-5">Great doctor if you need your family member to get effective immediate assistance, emergency treatment or a simple consultation.</p>
+                    </div>
+                    <div class="col-xl-7 col-lg-8 col-md-12">
+                        <div class="row">
+                            <div class="col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                                <h5 class="text-light title-dark footer-head">Contact us</h5>
+                                <ul class="list-unstyled footer-list mt-4">
+                                    <li class="d-flex align-items-center"><i data-feather="mail" class="fea icon-sm text-foot align-middle"></i><a href="mailto:contact@example.com" class="text-foot ms-2">contact@example.com</a></li>
+                                    <li class="d-flex align-items-center"><i data-feather="phone" class="fea icon-sm text-foot align-middle"></i><a href="tel:+152534-468-854" class="text-foot ms-2">+152 534-468-854</a></li>
+                                    <li class="d-flex align-items-center"><i data-feather="map-pin" class="fea icon-sm text-foot align-middle"></i><a href="javascript:void(0)" class="text-foot ms-2">View on Google map</a></li>
+                                </ul>
+                                <ul class="list-unstyled social-icon footer-social mb-0 mt-4">
+                                    <li class="list-inline-item"><a href="#" class="rounded-pill"><i data-feather="facebook" class="fea icon-sm fea-social"></i></a></li>
+                                    <li class="list-inline-item"><a href="#" class="rounded-pill"><i data-feather="instagram" class="fea icon-sm fea-social"></i></a></li>
+                                    <li class="list-inline-item"><a href="#" class="rounded-pill"><i data-feather="twitter" class="fea icon-sm fea-social"></i></a></li>
+                                    <li class="list-inline-item"><a href="#" class="rounded-pill"><i data-feather="linkedin" class="fea icon-sm fea-social"></i></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <% }%>
-                    <!-- JavaScript -->
-                    <script src="js/jquery.min.js"></script>
-                    <script src="js/bootstrap.bundle.min.js"></script>
-                    <script src="js/select2.min.js"></script>
-                    <script src="js/select2.init.js"></script>
-                    <script src="js/flatpickr.min.js"></script>
-                    <script src="js/flatpickr.init.js"></script>
-                    <script src="js/jquery.timepicker.min.js"></script>
-                    <script src="js/timepicker.init.js"></script>
-                    <script src="js/feather.min.js"></script>
-                    <script src="js/app.js"></script>
-                    <script>
-                        feather.replace(); // Initialize feather icons
-                        function toggleMenu() {
-                            document.getElementById('navigation').classList.toggle('open');
+                </div>
+                <div class="container mt-5">
+                    <div class="pt-4 footer-bar">
+                        <div class="row align-items-center">
+                            <div class="col-sm-6">
+                                <div class="text-sm-start text-center">
+                                    <p class="mb-0">© <script>document.write(new Date().getFullYear());</script> Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="https://shreethemes.in" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mt-4 mt-sm-0">
+                                <ul class="list-unstyled footer-list text-sm-end text-center mb-0">
+                                    <li class="list-inline-item"><a href="terms.html" class="text-foot me-2">Terms</a></li>
+                                    <li class="list-inline-item"><a href="privacy.html" class="text-foot me-2">Privacy</a></li>
+                                    <li class="list-inline-item"><a href="aboutus.html" class="text-foot me-2">About</a></li>
+                                    <li class="list-inline-item"><a href="contact.html" class="text-foot me-2">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Back to Top -->
+        <a href="#" onclick="topFunction()" id="back-to-top" class="btn btn-icon btn-pills btn-primary back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
+
+        <!-- Offcanvas Search -->
+        <div class="offcanvas bg-white offcanvas-top" tabindex="-1" id="offcanvasTop">
+            <div class="offcanvas-body d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-center">
+                                <h4>Search now.....</h4>
+                                <div class="subcribe-form mt-4">
+                                    <form>
+                                        <div class="mb-0">
+                                            <input type="text" id="help" name="name" class="border bg-white rounded-pill" required="" placeholder="Search" />
+                                            <button type="submit" class="btn btn-pills btn-primary">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Offcanvas Cart -->
+        <% if (currentCustomer != null) { %>
+        <div class="offcanvas offcanvas-end bg-white shadow" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header p-4 border-bottom">
+                <h5 class="mb-0" id="offcanvasRightLabel">New Products Added</h5>
+                <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <% 
+                    if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
+                        for(CartItems vectorCartItem : vectorCartItems) {
+                %>
+                <div class="cart-item">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
+                        <div class="ms-3 flex-1">
+                            <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
+                            <div class="d-flex justify-content-between">
+                                <p class="text-muted mb-0">Quantity: <%=vectorCartItem.getQuantity()%></p>
+                                <p class="text-muted mb-0">Price: <%=vectorCartItem.getPrice()%> VND</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%
                         }
-                        function topFunction() {
-                            document.body.scrollTop = 0;
-                            document.documentElement.scrollTop = 0;
-                        }
-                    </script>
-                    <script>
-                        document.querySelectorAll('.toggle-password').forEach(item => {
-                            item.addEventListener('click', function () {
-                                const input = this.previousElementSibling;
-                                const icon = this.querySelector('i');
+                    } else {
+                %>
+                <p class="text-muted text-center">No Products In Cart...</p>
+                <%
+                    }
+                %>
+                <div class="mt-4 text-center">
+                    <a href="CartURL?service=showCart" class="btn btn-primary btn-sm">View cart</a>
+                </div>
+            </div>
+        </div>
+        <% } %>
 
-                                if (input.type === 'password') {
-                                    input.type = 'text';
-                                    icon.classList.remove('fa-eye');
-                                    icon.classList.add('fa-eye-slash');
-                                } else {
-                                    input.type = 'password';
-                                    icon.classList.remove('fa-eye-slash');
-                                    icon.classList.add('fa-eye');
-                                }
-                            });
-                        });
-                    </script>
-                    </body>
-                    </html>
+        <!-- JavaScript -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/select2.min.js"></script>
+        <script src="js/select2.init.js"></script>
+        <script src="js/flatpickr.min.js"></script>
+        <script src="js/flatpickr.init.js"></script>
+        <script src="js/jquery.timepicker.min.js"></script>
+        <script src="js/timepicker.init.js"></script>
+        <script src="js/feather.min.js"></script>
+        <script src="js/app.js"></script>
+        <script>
+            feather.replace(); // Initialize feather icons
+            function toggleMenu() {
+                document.getElementById('navigation').classList.toggle('open');
+            }
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+        <script>
+            // Toggle password visibility
+            document.querySelectorAll('.toggle-password').forEach(item => {
+                item.addEventListener('click', function () {
+                    const input = this.previousElementSibling;
+                    const icon = this.querySelector('i');
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        input.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
+            });
+
+            // Toggle Change Password Form
+            document.getElementById('togglePasswordForm').addEventListener('click', function () {
+                const formContainer = document.getElementById('passwordFormContainer');
+                if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+                    formContainer.style.display = 'block';
+                    this.textContent = 'Hide Change Password';
+                } else {
+                    formContainer.style.display = 'none';
+                    this.textContent = 'Show Change Password';
+                }
+            });
+        </script>
+    </body>
+</html>
+
+

@@ -400,10 +400,10 @@
                             <div class="text-center">
                                 <h4>Search now.....</h4>
                                 <div class="subcribe-form mt-4">
-                                    <form>
+                                    <form action="ProductURL">
                                         <div class="mb-0">
-                                            <input type="text" id="help" name="name" class="border bg-white rounded-pill" required="" placeholder="Search">
-                                            <button type="submit" class="btn btn-pills btn-primary">Search</button>
+                                            <input type="text" id="help" name="ProductName" class="border bg-white rounded-pill" required="" placeholder="Search">
+                                            <button type="submit" name="submit" class="btn btn-pills btn-primary">Search</button>
                                         </div>
                                     </form>
                                 </div>

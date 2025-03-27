@@ -340,7 +340,7 @@ public class DAOOrders extends DBConnection {
     
     public int countDeliveringOrders() {
         int count = 0;
-        String sql = "SELECT COUNT(*) FROM Orders WHERE status = 'Delivering'";
+        String sql = "SELECT COUNT(*) FROM Orders WHERE status = 'Prepared'";
 
         try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -422,7 +422,7 @@ public class DAOOrders extends DBConnection {
     
     public Vector<Orders> getDeliveringOrders() {
         Vector<Orders> deliveringOrders = new Vector<>();
-        String sql = "SELECT * FROM Orders WHERE Status = 'Delivering'";
+        String sql = "SELECT * FROM Orders WHERE Status = 'Prepared'";
 
         try (Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
              ResultSet rs = state.executeQuery(sql)) {

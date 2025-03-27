@@ -43,10 +43,10 @@ public class StatusChangeController extends HttpServlet {
             int n = dao.updateStatusOrder(newStatus, orderID);
             try (PrintWriter out = response.getWriter()) {
                 if (n > 0) {
-                    System.out.println("Cập nhật trạng thái thành công: " + newStatus);  // Log kiểm tra
+                    System.out.println("Cập nhật trạng thái thành công: " + newStatus);
                     out.write(newStatus);  // Trả về trạng thái mới
                 } else {
-                    System.out.println("Không thể cập nhật trạng thái: " + currentStatus);  // Log kiểm tra
+                    System.out.println("Không thể cập nhật trạng thái: " + currentStatus);
                     out.write(currentStatus);  // Không thay đổi
                 }
             }
@@ -54,11 +54,11 @@ public class StatusChangeController extends HttpServlet {
     }
 
     private String getNextStatus(String currentStatus) {
-        switch (currentStatus) {
+       switch (currentStatus) {
             case "On-prepared":
-                return "Delivering";
-            case "Delivering":
-                return "Done";
+
+               return "Prepared";
+                                  
             default:
                 return currentStatus;
         }

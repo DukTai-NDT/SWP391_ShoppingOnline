@@ -565,6 +565,43 @@
             .load-more-reviews:hover {
                 background-color: #0056b3;
             }
+            .review-contents {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%; /* Đảm bảo nó chiếm toàn bộ chiều rộng */
+            }
+            .btn-danger {
+                padding: 2px 8px; /* Giảm kích thước nút */
+                font-size: 14px; /* Giảm kích thước chữ */
+                line-height: 1; /* Căn chỉnh chiều cao phù hợp */
+            }
+
+            .review-item {
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                margin-bottom: 20px; /* Khoảng cách giữa các review */
+                background-color: #f9f9f9;
+            }
+
+            .review-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-weight: bold;
+            }
+
+            .review-contents {
+                margin-top: 10px;
+            }
+
+            .review-date {
+                display: block;
+                margin-top: 10px;
+                font-size: 0.9em;
+                color: #666;
+            }
 
 
         </style>
@@ -664,11 +701,11 @@
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
-                               
+
                                 <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                                <%if(account.getRoleID() != 2){%> 
+                                        <%if(account.getRoleID() != 2){%> 
                                 <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
-                                <%}%>
+                                        <%}%>
                                 <div class="dropdown-divider border-top"></div>
                                 <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
 
@@ -724,7 +761,7 @@
                         <div class="main-image">
                             <img src="images/products/<%=product.getImage()%>" alt="Ultra Brain Lab Well">
                         </div>
-                        
+
                     </div>
 
                     <!-- Phần thông tin -->
@@ -860,21 +897,27 @@
                                 String comment = feedbacks.getComment();
                                 boolean isHidden = count >= 5; // Ẩn comment nếu lớn hơn 5
                             %>
-                            <div class="review-item <%= isHidden ? "hidden-review" : "" %>">
+                            <div class="review-item">
                                 <div class="review-header">
                                     <span class="reviewer-name"><%= customer != null ? customer.getLastName() : "Unknown" %></span>
                                     <span class="review-rating"> <%= feedbacks.getRating() %>/5★</span>
                                 </div>
 
-                                <p class="review-content">
-                                    <span class="short-comment">
-                                        <%= comment.length() > 100 ? comment.substring(0, 100) + "..." : comment %>
-                                    </span>
-                                    <% if (comment.length() > 100) { %>
-                                    <span class="full-comment" style="display: none;"><%= comment %></span>
-                                    <button class="view-more-btn">View More</button>
-                                    <% } %>
-                                </p>
+                                <div class="review-contents">
+
+                                    <div>
+                                        <span><%= comment %></span>
+                                    </div>
+                                    <%if(account != null){%>
+                                    <%if(account.getRoleID() == 3|| account.getRoleID() == 1){%>
+                                    <div>
+                                        <a href="ProductDetailURL?service=deleteFeedback&feedid=<%=feedbacks.getFeedbackID()%>&proid=<%=product.getProductID()%>" class="btn btn-danger">X</a>
+                                    </div>
+                                    <%}%>
+                                    <%}%>
+
+
+                                </div>
                                 <span class="review-date">Ngày <%= feedbacks.getTime() %></span>
                             </div>
                             <% count++; } %>
@@ -1047,10 +1090,10 @@
                             <div class="text-center">
                                 <h4>Search now.....</h4>
                                 <div class="subcribe-form mt-4">
-                                    <form>
+                                    <form action="ProductURL">
                                         <div class="mb-0">
-                                            <input type="text" id="help" name="name" class="border bg-white rounded-pill" required="" placeholder="Search">
-                                            <button type="submit" class="btn btn-pills btn-primary">Search</button>
+                                            <input type="text" id="help" name="ProductName" class="border bg-white rounded-pill" required="" placeholder="Search">
+                                            <button type="submit" name="submit" class="btn btn-pills btn-primary">Search</button>
                                         </div>
                                     </form>
                                 </div>

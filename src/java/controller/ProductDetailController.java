@@ -34,7 +34,6 @@ import model.DAOProducts;
  *
  * @author quang
  */
-
 @WebServlet(name = "ProductDetailController", urlPatterns = {"/ProductDetailURL"})
 public class ProductDetailController extends HttpServlet {
 
@@ -62,8 +61,7 @@ public class ProductDetailController extends HttpServlet {
         Account account = (Account) session.getAttribute("dataUser");
         Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
         Vector<Feedbacks> vectorFeed = new Vector<Feedbacks>();
-        
-        
+
         try (PrintWriter out = response.getWriter()) {
 
             /* TODO output your page here. You may use following sample code. */
@@ -71,16 +69,14 @@ public class ProductDetailController extends HttpServlet {
             String pid = request.getParameter("pid");
             String service = request.getParameter("service");
             String submit = request.getParameter("submit");
-            
 
-            
             if (submit != null) {
                 String rating = request.getParameter("rating");
                 int rate = Integer.parseInt(rating);
                 String content = request.getParameter("content");
-                System.out.println("abc"+account);
-               int n = daoFeed.addFeedbacks(new Feedbacks(content, LocalDate.now(), rate, account.getAccountID(), Integer.parseInt(pid)));
-                System.out.println("abcd123null"+n);
+                System.out.println("abc" + account);
+                int n = daoFeed.addFeedbacks(new Feedbacks(content, LocalDate.now(), rate, account.getAccountID(), Integer.parseInt(pid)));
+                System.out.println("abcd123null" + n);
                 response.sendRedirect("ProductDetailURL?service=detailProduct&pid=" + pid);
                 return;
             }
@@ -89,6 +85,15 @@ public class ProductDetailController extends HttpServlet {
 
                 sql = "select * from Products where ProductID = " + pid;
             }
+            
+            if (service.equals("deleteFeedback")) {
+                String feedid = request.getParameter("feedid");
+                String proid = request.getParameter("proid");
+                daoFeed.deleteFeedback(Integer.parseInt(feedid));
+                 response.sendRedirect("ProductDetailURL?service=detailProduct&pid=" + proid);
+                return;
+            }
+
             vectorBrand = daobrand.getBrand("select * from Brand b join Products p on b.BrandID = p.BrandID\n"
                     + "where p.ProductID = " + pid);
             Brand brand = vectorBrand.get(0);
@@ -98,10 +103,7 @@ public class ProductDetailController extends HttpServlet {
             Vector<Categories> category = daoCat.getCategories("select * from Categories c join Products p on c.CategoryID = p.CategoryID\n"
                     + "where p.ProductID = " + pid);
             Categories cat = category.get(0);
-            
-            
-            
-            
+
             Vector<Function> vectorf = daof.getFunction("select * from [Function] where ProductID = " + pid);
             Vector<Ingredient> vectorIngre = daoIngre.getIngredient("select * from Ingredient where ProductID = " + pid);
             vectorFeed = daoFeed.getFeedback("select * from Feedbacks where ProductID = " + pid);
@@ -143,7 +145,7 @@ public class ProductDetailController extends HttpServlet {
             double with3 = (size > 0) ? (double) star3 / size * 100 : 0;
             double with2 = (size > 0) ? (double) star2 / size * 100 : 0;
             double with1 = (size > 0) ? (double) star1 / size * 100 : 0;
-
+            
             session.setAttribute("total", size);
             session.setAttribute("with5", with5);
             session.setAttribute("with4", with4);
@@ -209,5 +211,3 @@ public class ProductDetailController extends HttpServlet {
     }// </editor-fold>
 
 }
-
-

@@ -65,6 +65,16 @@ public class DAOChatHistory extends DBConnection {
         return n;
     }
 
+    public void changeDelete(int cid, int newValue) {
+        String sql = "  update Chat_History set IsDeleted = " + newValue + " where Chat_HistoryID = " + cid;
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOChatHistory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public int updateChatHistory(ChatHistory other) {
         int n = 0;
         String sql = "UPDATE [dbo].[Chat_History]\n"
@@ -138,7 +148,7 @@ public class DAOChatHistory extends DBConnection {
 
         Vector<ChatHistory> vector = dao.getChatHistory("select * from Chat_History where CustomerID_1 = " + n + " or CustomerID_2 = " + n);
         for (ChatHistory chatHistory : vector) {
-            System.out.println(chatHistory.getChatDateTime());
+            System.out.println(chatHistory.isIsDeleted());
         }
         
         System.out.println("------------------");
