@@ -122,6 +122,11 @@
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
                         </li>
+                        <br>
+                        
+                        <li class="sidebar-dropdown">
+                            <a href="FeedbackManager"><i class="uil uil-feedback me-2 d-inline-block"></i>Feedback Management</a>
+                        </li>
                         <%} else {%>
 
                         <li class="sidebar-dropdown">
@@ -201,14 +206,12 @@
                         <div class="d-md-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 <h5 class="mb-0 me-3">Order List</h5>
-
+                                
                                 <form action="OrderManager" method="GET" class="d-inline">
                                     <div class="input-group">
                                         <select class="form-select" name="orderType" id="orderType" onchange="this.form.submit()">
-                                            <option value="newest" ${orderType == "newest" ? "selected" : ""}>ALL</option>
-                                            <option value="on-prepared" ${orderType == "on-prepared" ? "selected" : ""}>On-Prepared</option>
-                                            <option value="prepared" ${orderType == "prepared" ? "selected" : ""}>Prepared</option>
-                                            <option value="done" ${orderType == "done" ? "selected" : ""}>Done</option>
+                                            <option value="newest" ${orderType == "newest" ? "selected" : ""}>Newest</option>
+                                            <option value="oldest" ${orderType == "oldest" ? "selected" : ""}>Oldest</option>
                                         </select>
                                         <input type="hidden" name="page" value="${currentPage}">
                                     </div>
@@ -217,8 +220,10 @@
                                 <form action="OrderManager" method="GET" class="d-inline">
                                     <div class="input-group">
                                         <select class="form-select" name="orderType" id="orderType" onchange="this.form.submit()">
-                                            <option value="newest" ${orderType == "newest" ? "selected" : ""}>Newest</option>
-                                            <option value="oldest" ${orderType == "oldest" ? "selected" : ""}>Oldest</option>
+                                            <option value="newest" ${orderType == "newest" ? "selected" : ""}>ALL</option>
+                                            <option value="on-prepared" ${orderType == "on-prepared" ? "selected" : ""}>On-Prepared</option>
+                                            <option value="prepared" ${orderType == "prepared" ? "selected" : ""}>Prepared</option>
+                                            <option value="done" ${orderType == "done" ? "selected" : ""}>Done</option>
                                         </select>
                                         <input type="hidden" name="page" value="${currentPage}">
                                     </div>

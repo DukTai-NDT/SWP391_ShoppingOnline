@@ -97,6 +97,11 @@
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
                         </li>
+                        <br>
+                        
+                        <li class="sidebar-dropdown">
+                            <a href="FeedbackManager"><i class="uil uil-feedback me-2 d-inline-block"></i>Feedback Management</a>
+                        </li>
                         <%} else {%>
 
                         <li class="sidebar-dropdown">

@@ -323,12 +323,12 @@
     </head>
 
 
-    <%Vector<Products> vector = (Vector<Products>)session.getAttribute("vector");%>
-    <%Vector<Brand> vectorB = (Vector<Brand>)session.getAttribute("vectorB");
-    Account account = (Account)session.getAttribute("dataUser");
-   Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
-    Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
-    Vector<Categories> vectorCat = (Vector<Categories>)session.getAttribute("vectorCat");
+    <%Vector<Products> vector = (Vector<Products>) session.getAttribute("vector");%>
+    <%Vector<Brand> vectorB = (Vector<Brand>) session.getAttribute("vectorB");
+        Account account = (Account) session.getAttribute("dataUser");
+        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+        Vector<CartItems> vectorCartItems = (Vector<CartItems>) session.getAttribute("dataCartItem");
+        Vector<Categories> vectorCat = (Vector<Categories>) session.getAttribute("vectorCat");
     %>
     <body>
         <!-- Loader -->
@@ -381,7 +381,7 @@
 
                         <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <%for (Categories cat : vectorCat){%>
+                                <%for (Categories cat : vectorCat) {%>
                                 <li><a href="ProductURL?service=categories&cid=<%=cat.getCategoryID()%>" class="sub-menu-item"> <%=cat.getCategoryName()%></a></li>
                                     <%}%>
                             </ul>
@@ -398,10 +398,10 @@
 
                             <ul class="dropdowns list-inline mb-0">
                                 <%
-                                if(currentCustomer != null){
+                                    if (currentCustomer != null) {
                                 %>
-                                <li class="list-inline-item mb-0">
 
+                                <li class="list-inline-item mb-0">
                                     <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                                         <div class="btn btn-icon btn-pills btn-primary"><i data-feather="shopping-cart" class="fea icon-sm"></i></div>
                                     </a>
@@ -416,28 +416,28 @@
                                 <li class="list-inline-item mb-0 ms-1">
                                     <div class="dropdown dropdown-primary">
                                         <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg"%>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
                                         </button>
                                         <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                             <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+                                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg"%>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
                                                 <div class="flex-1 ms-2">
-                                                    <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
+                                                    <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName()%></span>
                                                 </div>
                                             </a>
-                                           <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
-                               
-                                <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                                <%if(account.getRoleID() != 2){%> 
-                                <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
-                                <%}%>
-                                <div class="dropdown-divider border-top"></div>
-                                <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                            <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
+
+                                            <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                                    <%if (account.getRoleID() != 2) {%> 
+                                            <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
+                                                    <%}%>
+                                            <div class="dropdown-divider border-top"></div>
+                                            <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
 
                                         </div>
                                     </div>
                                 </li>
-                                <%} else{%>
+                                <%} else {%>
                                 <div class="auth-links">
                                     <a href="SignUpURL?service=signup">Sign up</a>
                                     <span>|</span>
@@ -484,7 +484,7 @@
             </div>
 
             <!-- Danh sách sản phẩm -->
-            <%if(vector != null && !vector.isEmpty()){%>
+            <%if (vector != null && !vector.isEmpty()) {%>
             <div class="main-content">
                 <div class="header">
                     <h2>Product List</h2>
@@ -498,22 +498,22 @@
 
                 </div>
                 <%
-                int pageSize = 12; // Số sản phẩm trên mỗi trang
-                int totalProducts = vector.size(); // Tổng số sản phẩm
-                int totalPages = (int) Math.ceil((double) totalProducts / pageSize); // Tổng số trang
+                    int pageSize = 12; // Số sản phẩm trên mỗi trang
+                    int totalProducts = vector.size(); // Tổng số sản phẩm
+                    int totalPages = (int) Math.ceil((double) totalProducts / pageSize); // Tổng số trang
 
-                // Xác định trang hiện tại từ URL (nếu không có, mặc định là trang 1)
-                String pageParam = request.getParameter("page");
-                int currentPage = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
+                    // Xác định trang hiện tại từ URL (nếu không có, mặc định là trang 1)
+                    String pageParam = request.getParameter("page");
+                    int currentPage = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
 
-                // Tính vị trí bắt đầu và kết thúc của sản phẩm trong trang hiện tại
-                int startIndex = (currentPage - 1) * pageSize;
-                int endIndex = Math.min(startIndex + pageSize, totalProducts);
+                    // Tính vị trí bắt đầu và kết thúc của sản phẩm trong trang hiện tại
+                    int startIndex = (currentPage - 1) * pageSize;
+                    int endIndex = Math.min(startIndex + pageSize, totalProducts);
                 %>
 
                 <div class="product-grid">
-                    <% for (int i = startIndex; i < endIndex; i++) { 
-                        Products pro = vector.get(i);
+                    <% for (int i = startIndex; i < endIndex; i++) {
+                            Products pro = vector.get(i);
                     %>
                     <!-- Sản phẩm -->
                     <div class="product-card">
@@ -530,22 +530,22 @@
 
                 <!-- Phân trang -->
                 <div class="pagination">
-                    <% if (currentPage > 1) { %>
+                    <% if (currentPage > 1) {%>
                     <a href="?page=<%=currentPage - 1%>">Previous</a>
                     <% } %>
 
-                    <% for (int i = 1; i <= totalPages; i++) { %>
-                    <a href="?page=<%=i%>" class="<%= (i == currentPage) ? "active" : "" %>"><%=i%></a>
+                    <% for (int i = 1; i <= totalPages; i++) {%>
+                    <a href="?page=<%=i%>" class="<%= (i == currentPage) ? "active" : ""%>"><%=i%></a>
                     <% } %>
 
-                    <% if (currentPage < totalPages) { %>
+                    <% if (currentPage < totalPages) {%>
                     <a href="?page=<%=currentPage + 1%>">Next</a>
                     <% } %>
                 </div>
 
 
             </div>
-            <%}else {%>
+            <%} else {%>
             <h2 style="color:red;"> There are currently no products. </h2>
             <%}%>
         </div>
@@ -676,12 +676,11 @@
                 <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body p-4">
-                <% 
-           
-                    if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
-               
-               
-                      for(CartItems vectorCartItem : vectorCartItems) {
+                <%
+
+                    if (vectorCartItems != null && !vectorCartItems.isEmpty()) {
+
+                        for (CartItems vectorCartItem : vectorCartItems) {
                 %>
                 <div class="cart-item">
                     <div class="d-flex align-items-center mb-3">
@@ -697,7 +696,8 @@
                     </div>
                 </div>
                 <%
-                    } }else {
+                    }
+                } else {
                 %>
                 <p class="text-muted text-center " >No Products In Cart...</p>
                 <%

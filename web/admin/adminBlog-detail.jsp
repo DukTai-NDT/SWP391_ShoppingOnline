@@ -135,47 +135,54 @@
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
+                        <br>
 
-
-                        <%   if(account.getRoleID()  != 4){
-                            if(account.getRoleID()  == 3){%>
+                        <%   if (account.getRoleID() != 4) {
+                                if (account.getRoleID() == 3) {%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
                         <%}%>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
 
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
-
                         </li>
+                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="AdminBrands">
                                 <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
                             </a>
                         </li>
-
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
-
                         </li>
-                        <%}else{%>
+                        <br>
+                        
+                        <li class="sidebar-dropdown">
+                            <a href="FeedbackManager"><i class="uil uil-feedback me-2 d-inline-block"></i>Feedback Management</a>
+                        </li>
+                        <%} else {%>
 
                         <li class="sidebar-dropdown">
-                            <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
-
+                            <a href="AdminRepInboxURL?service=show"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
                         </li>
                         <%}%>
-                    </ul>
+                    </ul>   
                     <!-- sidebar-menu  -->
                 </div>
                 <!-- sidebar-content  -->
