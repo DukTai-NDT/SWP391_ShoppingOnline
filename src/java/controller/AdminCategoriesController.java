@@ -36,7 +36,7 @@ public class AdminCategoriesController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAOCategories daocategory = new DAOCategories();
-        Vector<Categories> vcategory = daocategory.getCategories("select * from categories");
+        Vector<Categories> vcategory = daocategory.getCategories("select * from categories order by CategoryID desc");
         request.setAttribute("vcategory", vcategory);
         request.getRequestDispatcher("admin/adminCategories.jsp").forward(request, response);
     }

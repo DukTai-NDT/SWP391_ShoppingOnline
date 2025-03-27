@@ -16,21 +16,34 @@ public class DeliveryAddress {
 	private int OrderID;
 	private int ProvinceID;
 	private int DistrictID;
+        private String Phone;
 
-    public DeliveryAddress(int DeliveryAddressID, String AddressDetail, int OrderID, int ProvinceID, int DistrictID) {
+    public DeliveryAddress(int DeliveryAddressID, String AddressDetail, int OrderID, int ProvinceID, int DistrictID, String Phone) {
         this.DeliveryAddressID = DeliveryAddressID;
         this.AddressDetail = AddressDetail;
         this.OrderID = OrderID;
         this.ProvinceID = ProvinceID;
         this.DistrictID = DistrictID;
+        this.Phone = Phone;
     }
 
-    public DeliveryAddress(String AddressDetail, int OrderID, int ProvinceID, int DistrictID) {
+    public DeliveryAddress(String AddressDetail, int OrderID, int ProvinceID, int DistrictID, String Phone) {
         this.AddressDetail = AddressDetail;
         this.OrderID = OrderID;
         this.ProvinceID = ProvinceID;
         this.DistrictID = DistrictID;
+        this.Phone = Phone;
     }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
+    }
+
+    
 
     public DeliveryAddress() {
     }
@@ -77,8 +90,9 @@ public class DeliveryAddress {
 
     @Override
     public String toString() {
-        return "DeliveryAddress{" + "DeliveryAddressID=" + DeliveryAddressID + ", AddressDetail=" + AddressDetail + ", OrderID=" + OrderID + ", ProvinceID=" + ProvinceID + ", DistrictID=" + DistrictID + '}';
+        return "DeliveryAddress{" + "DeliveryAddressID=" + DeliveryAddressID + ", AddressDetail=" + AddressDetail + ", OrderID=" + OrderID + ", ProvinceID=" + ProvinceID + ", DistrictID=" + DistrictID + ", Phone=" + Phone + '}';
     }
-        
+
+   
         
 }

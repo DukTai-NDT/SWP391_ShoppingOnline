@@ -13,12 +13,12 @@ import java.time.LocalDate;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
  *
  * @author Admin
  */
-public class DAODistricts extends DBConnection{
+public class DAODistricts extends DBConnection {
+
     public int addDistrict(Districts district) {
         int n = 0;
         String sql = "INSERT INTO [dbo].[Districts]\n"
@@ -86,7 +86,7 @@ public class DAODistricts extends DBConnection{
                 int districtID = rs.getInt("DistrictID");
                 String districtName = rs.getString("DistrictName");
                 int provinceID = rs.getInt("ProvinceID");
-                
+
                 Districts district = new Districts(districtID, districtName, provinceID);
                 vector.add(district);
             }
@@ -96,17 +96,18 @@ public class DAODistricts extends DBConnection{
         }
         return vector;
     }
-    public String getDistrictName(int id){
+
+    public String getDistrictName(int id) {
         String name = "";
-        String sql = "select p.DistrictName from Districts p where p.DistrictID ="+id;
+        String sql = "select p.DistrictName from Districts p where p.DistrictID =" + id;
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-               
+
                 name = rs.getString("DistrictName");
-            
+
             }
 
         } catch (SQLException ex) {
@@ -114,18 +115,27 @@ public class DAODistricts extends DBConnection{
         }
         return name;
     }
+
+    public Districts getDistrictByOrderID(int orderid) {
+        DAODistricts dao = new DAODistricts();
+        Districts dis = dao.getDistricts("select * from Districts di join DeliveryAddress d on di.DistrictID = d.DistrictID\n"
+                + "where d.OrderID = " + orderid).get(0);
+        return dis;
+    }
+
     public static void main(String[] args) {
         DAODistricts dao = new DAODistricts();
-        Vector<Districts> vector = dao.getDistricts("select * from Districts");
-        for (Districts districts : vector) {
-            System.out.println(districts);
-             
-
-        
-        }
-        LocalDate orderDate = LocalDate.now();
-        LocalDate deliveryDate = orderDate.plusDays(2);
-        System.out.println("Order Date: " + orderDate);
-        System.out.println("Delivery Date: " + deliveryDate);
+//        Vector<Districts> vector = dao.getDistricts("select * from Districts");
+//        for (Districts districts : vector) {
+//            System.out.println(districts);
+//
+//        }
+//        LocalDate orderDate = LocalDate.now();
+//        LocalDate deliveryDate = orderDate.plusDays(2);
+//        System.out.println("Order Date: " + orderDate);
+//        System.out.println("Delivery Date: " + deliveryDate);
+           Districts dis = dao.getDistrictByOrderID(5);
+           System.out.println(dis);
+           
     }
 }

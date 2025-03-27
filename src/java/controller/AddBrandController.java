@@ -62,8 +62,12 @@ public class AddBrandController extends HttpServlet {
         String brandname=request.getParameter("brandName");
         String country=request.getParameter("country");
         DAOBrand daobrand=new DAOBrand();
+         if (daobrand.isBrandExist(brandname)) {
+            response.sendRedirect("AdminBrands?message=Brand+Name+already+exists!");
+            return;
+        }
         daobrand.addBrand(new Brand(brandname, country));
-        response.sendRedirect("AdminBrands");
+        response.sendRedirect("AdminBrands?message=Add+Successfully");
     }
 
     /** 

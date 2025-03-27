@@ -67,7 +67,7 @@ public class DAOCategories extends DBConnection {
         return n;
     }
 
-   public Vector<Categories> getCategories(String sql) {
+    public Vector<Categories> getCategories(String sql) {
         Vector<Categories> vector = new Vector<Categories>();
         try {
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -76,7 +76,7 @@ public class DAOCategories extends DBConnection {
                 int CategoryID = rs.getInt("CategoryID");
                 String CategoryName = rs.getString("CategoryName");
                 String imges = rs.getString("image");
-                Categories categories = new Categories(CategoryID, CategoryName,imges);
+                Categories categories = new Categories(CategoryID, CategoryName, imges);
                 vector.add(categories);
             }
         } catch (SQLException ex) {
@@ -126,8 +126,6 @@ public class DAOCategories extends DBConnection {
         }
     }
 
-
-
     public Categories getCategoryByID(int categoryID) {
         Categories category = null;
         String sql = "SELECT * FROM dbo.Categories WHERE CategoryID = ?";
@@ -147,7 +145,6 @@ public class DAOCategories extends DBConnection {
         return category;
     }
 
-
     public List<Categories> getCategoriesesByName(String txtSearch) {
         List<Categories> list = new ArrayList<>();
         String query = "select * from blogs where Title like ?";
@@ -156,7 +153,7 @@ public class DAOCategories extends DBConnection {
             preState.setString(1, "%" + txtSearch + "%");
             ResultSet rs = preState.executeQuery();
             while (rs.next()) {
-              list.add(new Categories(rs.getInt(1), rs.getString(2), rs.getString(3)));
+                list.add(new Categories(rs.getInt(1), rs.getString(2), rs.getString(3)));
             }
 
         } catch (SQLException e) {
@@ -180,14 +177,27 @@ public class DAOCategories extends DBConnection {
             Logger.getLogger(DAOCategories.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void main(String[] args) {
         DAOCategories dao = new DAOCategories();
         Vector<Categories> vcategories = dao.getCategories("select * from Categories");
         for (Categories vcategory : vcategories) {
-            System.out.println(vcategory +"\n");
+            System.out.println(vcategory + "\n");
         }
     }
 
+    public boolean isCategoryExist(String categoryName) {
+        String sql = "SELECT COUNT(*) FROM categories WHERE categoryName = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, categoryName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

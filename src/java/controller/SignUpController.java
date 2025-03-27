@@ -93,9 +93,9 @@ public class SignUpController extends HttpServlet {
                 String Password = request.getParameter("Password");
 
 
-                Vector<Customers> vector = new Vector<>();
+                Vector<Account> vector = dao.getAccount("Select * from Accounts");
 
-                for (Customers customer : vector) {
+                for (Account customer : vector) {
                     if (customer.getEmail().equals(Email)) {
                         request.setAttribute("accountExist", "Account already exist!!!");
                         request.getRequestDispatcher("jsp/signup.jsp").forward(request, response);

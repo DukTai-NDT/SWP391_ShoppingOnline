@@ -6,6 +6,9 @@ import entity.CartItems;
 import entity.Customers;
 import entity.Products;
 import entity.Categories;
+import entity.DeliveryAddress;
+import entity.Districts;
+import entity.Provinces;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -26,7 +29,10 @@ import model.DAOCart;
 import model.DAOCartItem;
 import model.DAOCategories;
 import model.DAOCustomer;
+import model.DAODeliveryAddress;
+import model.DAODistricts;
 import model.DAOProducts;
+import model.DAOProvinces;
 
 @WebServlet(name = "CartController", urlPatterns = {"/CartURL"})
 public class CartController extends HttpServlet {
@@ -180,27 +186,39 @@ public class CartController extends HttpServlet {
                     }
                     int count = 0;
                     Vector<String> overFlow = new Vector<>();
-                   
+
                     for (CartItems selectedCartItem : selectedCartItems) {
-                        
+
                         DAOProducts dao = new DAOProducts();
                         Products pro = dao.getProductByID(selectedCartItem.getProductID());
                         if (pro.getQuantity() < selectedCartItem.getQuantity()) {
                             count++;
                             overFlow.add(selectedCartItem.getProductName());
                         }
-                        
+
                     }
-                    if(count != 0){
-                       
-                    request.setAttribute("message", "We are out of stock of the following products:");
-                    request.setAttribute("dataProductHight",overFlow);
-                    request.getRequestDispatcher("/jsp/shop-cart.jsp").forward(request, response);
-                    }else{
-                    
-                    session.setAttribute("unselectedItems", unselectedItems);
-                    session.setAttribute("selectedCartItems", selectedCartItems);
-                    response.sendRedirect("CheckoutURL?service=theFirst");
+                    if (count != 0) {
+
+                        request.setAttribute("message", "We are out of stock of the following products:");
+                        request.setAttribute("dataProductHight", overFlow);
+                        request.getRequestDispatcher("/jsp/shop-cart.jsp").forward(request, response);
+                    } else {
+                        DAODeliveryAddress daoDeli = new DAODeliveryAddress();
+                        Customers cus = (Customers) session.getAttribute("dataCustomer");
+                        Vector<DeliveryAddress> vectorDeli = daoDeli.getDeliveryAddress("select d.* from Orders o join DeliveryAddress d on o.OrderID = d.OrderID\n"
+                                + "  where CustomerID = " + cus.getCustomerID() + " And  o.OrderID = (SELECT MAX(o2.OrderID) FROM Orders o2 JOIN DeliveryAddress d2 ON o2.OrderID = d2.OrderID WHERE d2.AddressDetail = d.AddressDetail)\n"
+                                + "ORDER BY o.OrderID DESC;");
+                        
+                        DAODistricts daoDistricts = new DAODistricts();
+                        DAOProvinces daoProvinces = new DAOProvinces();
+                        Vector<Districts> vectorDistrics = daoDistricts.getDistricts("Select * from Districts");
+                        Vector<Provinces> vectorProvinces = daoProvinces.getProvinces("Select * from Provinces ");
+                        session.setAttribute("provinces",vectorProvinces);
+                        session.setAttribute("districts",vectorDistrics);
+                        session.setAttribute("savedAddresses", vectorDeli);
+                        session.setAttribute("unselectedItems", unselectedItems);
+                        session.setAttribute("selectedCartItems", selectedCartItems);
+                        response.sendRedirect("CheckoutURL?service=theFirst");
                     }
                 } else {
                     request.setAttribute("message", "Please select at least one item to checkout.");

@@ -1,5 +1,5 @@
 
-<%@page import="entity.Account, entity.Products,entity.Customers ,java.util.Vector,entity.Cart,entity.CartItems,entity.Provinces,entity.Districts, entity.Categories" %>
+<%@page import="model.DAODistricts,model.DAOProvinces,entity.Account, entity.Products,entity.Customers ,java.util.Vector,entity.Cart,entity.CartItems,entity.Provinces,entity.Districts, entity.Categories,entity.DeliveryAddress" %>
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
@@ -233,13 +233,33 @@
                         <div class="card rounded shadow p-4 border-0">
                             <h5 class="mb-3">Billing address</h5>
                             <p style="color: red;"><%=(message!=null?message:"")%></p>
+
+                            <!-- Danh sách địa chỉ cũ -->
+                            <div class="col-12">
+                                <label for="savedAddress" class="form-label">Choose address</label>
+                                <% Vector<DeliveryAddress> savedAddresses = (Vector<DeliveryAddress>) session.getAttribute("savedAddresses"); 
+                                DAODistricts daoDistricts = new DAODistricts();
+                                DAOProvinces daoProvinces = new DAOProvinces();
+                                %>
+                                <select class="form-select form-control" id="savedAddress" name="savedAddress">
+                                    <option value="">Choose saver address</option>
+                                    <% for (DeliveryAddress deliveryAddress : savedAddresses) {%>
+                                    <option value="<%= deliveryAddress.getDeliveryAddressID() %>" data-province="<%= deliveryAddress.getProvinceID()%>" 
+                                            data-district="<%= deliveryAddress.getDistrictID() %>" data-address="<%= deliveryAddress.getAddressDetail() %>">
+                                        <%= deliveryAddress.getAddressDetail() %> - <%= daoDistricts.getDistrictName(deliveryAddress.getDistrictID()) %> - <%= daoProvinces.getProvinceName(deliveryAddress.getProvinceID()) %>
+                                    </option>
+                                    <% } %>
+                                    <option value="new">Add new address</option>
+                                </select>
+                            </div>
+
                             <form action="DeliveryAddressURL" method="get">
                                 <input type="hidden" name="service" value="province" />
                                 <div class="col-md-5">
-                                    <label for="country" class="form-label">Country</label>
+                                    <label for="country" class="form-label">Provinces</label>
                                     <%Vector<Provinces> provinces = (Vector<Provinces>) session.getAttribute("provinces");
                                     String provinceName = (String) session.getAttribute("provinceName");%>
-                                    <select class="form-select form-control" id="country" name="provinceId" onchange="this.form.submit()" required>
+                                    <select class="form-select form-control" id="provinceId" name="provinceId" onchange="this.form.submit()" required>
                                         <%if(provinceName.isEmpty()){%>
                                         <option value="">Choose one....</option>
                                         <%}else{%>
@@ -311,7 +331,7 @@
                                         <div class="input-group has-validation">
 
                                             <input type="text" class="form-control" id="phone" placeholder="Phone number"
-                                                   name="phone" value="<%=customer.getPhone()%>"  readonly>
+                                                   name="phone" value="<%=customer.getPhone()%>"  >
                                         </div>
                                     </div>
                                     <%}else{%>
@@ -320,7 +340,7 @@
                                         <label for="phone" class="form-label" >Phone number</label>
                                         <div class="input-group has-validation">
                                             <input type="text" class="form-control" id="phone" placeholder="Phone number"
-                                                   name="phone" value="<%=customer.getPhone()%>"  readonly>
+                                                   name="phone" value="<%=customer.getPhone()%>"  >
                                         </div>
                                     </div>
                                     <%}%>
@@ -483,10 +503,10 @@
                             <div class="text-center">
                                 <h4>Search now.....</h4>
                                 <div class="subcribe-form mt-4">
-                                    <form>
+                                    <form action="ProductURL">
                                         <div class="mb-0">
-                                            <input type="text" id="help" name="name" class="border bg-white rounded-pill" required="" placeholder="Search">
-                                            <button type="submit" class="btn btn-pills btn-primary">Search</button>
+                                            <input type="text" id="help" name="ProductName" class="border bg-white rounded-pill" required="" placeholder="Search">
+                                            <button type="submit" name="submit" class="btn btn-pills btn-primary">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -588,6 +608,40 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
+        <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            let savedAddressSelect = document.getElementById("savedAddress");
+
+                                            if (savedAddressSelect) {
+                                                savedAddressSelect.addEventListener("change", function () {
+                                                    let selectedOption = this.options[this.selectedIndex];
+
+                                                    if (selectedOption.value !== "new" && selectedOption.value !== "") {
+                                                        // Lấy dữ liệu từ thuộc tính data-*
+                                                        let provinceId = selectedOption.getAttribute("data-province");
+                                                        let districtId = selectedOption.getAttribute("data-district");
+                                                        let addressDetail = selectedOption.getAttribute("data-address");
+
+                                                        // Gán giá trị vào các ô input
+                                                        document.getElementById("provinceId").value = provinceId;
+                                                        document.getElementById("districtId").value = districtId;
+                                                        document.getElementById("address").value = addressDetail;
+                                                        document.querySelector("input[name='provinceID']").value = provinceId;
+                                                        document.querySelector("input[name='districtID']").value = districtId;
+
+                                                    } else {
+                                                        document.getElementById("provinceId").value = "";
+                                                        document.getElementById("districtId").value = "";
+                                                        document.getElementById("address").value = ""; // Xóa input hidden
+                                                        document.querySelector("input[name='provinceID']").value = "";
+                                                        document.querySelector("input[name='districtID']").value =  "";
+                                                    }
+                                                });
+                                            }
+                                        });
+
+
+        </script>
     </body>
 
 </html>

@@ -39,7 +39,7 @@ public class AddProductController extends HttpServlet {
             Part part = request.getPart("image");
             String fileName = part.getSubmittedFileName();
 
-            String uploadDir = "D:\\FU_Learning\\SUM2024\\CSD201\\Code\\SWP391\\web\\images\\products";
+            String uploadDir = "C:\\Users\\whyth\\Downloads\\Git\\SWP391_FinalPrj\\SWP391_ShoppingOnline\\web\\images\\products";
             File uploadFolder = new File(uploadDir);
 
             String path = uploadDir + File.separator + fileName;

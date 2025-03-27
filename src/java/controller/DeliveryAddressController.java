@@ -55,17 +55,19 @@ public class DeliveryAddressController extends HttpServlet {
            session.setAttribute("districtIdStr", "");
            session.setAttribute("provinceId", "");
           
-          session.setAttribute("districts", new Vector<>());
+          Vector<Districts> districts = daoDistricts.getDistricts(
+                "SELECT * FROM Districts ");
+            session.setAttribute("districts", districts);
            }
            if(service.equals("province")){
-        // Lấy provinceId từ request hoặc session
+      
         String provinceIdStr = request.getParameter("provinceId");
         session.setAttribute("provinceId", provinceIdStr);
 
         if (provinceIdStr != null && !provinceIdStr.isEmpty()) {
             int provinceId = Integer.parseInt(provinceIdStr);
            session.setAttribute("selectedProvinceId", provinceId);
-            // Lấy danh sách huyện
+            
             Vector<Districts> districts = daoDistricts.getDistricts(
                 "SELECT * FROM Districts WHERE ProvinceID = " + provinceId);
             System.out.println("123");

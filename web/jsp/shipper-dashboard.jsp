@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ page import=" entity.Account , entity.Customers,entity.OrderDetails,model.DAOProducts,model.DAOOrderDetails,java.util.Vector" %>
-<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Orders, model.DAOOrders" %>
+<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Orders, model.DAOOrders, model.DAOProvinces, model.DAODistricts,  model.DAODeliveryAddress" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <html lang="vi">
@@ -138,6 +138,9 @@
        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
        Customers shipper = (Customers) session.getAttribute("shipper");
              Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+        DAOProvinces pro = new DAOProvinces();
+           DAODistricts dis = new DAODistricts();
+           DAODeliveryAddress deli = new DAODeliveryAddress();
     %>
     <body>
         <!-- Loader -->
@@ -263,6 +266,7 @@
                                         <tr>
                                             <th>OrderID</th>    
                                             <th>Total</th>
+                                            <th>Address</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -289,7 +293,7 @@
                                             </td>
 
                                             <td>₫ <%=daoOrder.getTotalByOrderID(order.getOrderID())%></td>
-
+                                            <td> <%=pro.getProvinceByOrderID(order.getOrderID()).getProvinceName()%>, <%=dis.getDistrictByOrderID(order.getOrderID()).getDistrictName()%>, <%=deli.getDeliveryAddress("select * from DeliveryAddress where OrderID = " + order.getOrderID()).get(0).getAddressDetail()%></td>
                                             <td>
                                                 <% if(status.equals("Done") || status.equals("Delivering")) { %>
                                                 <span class="badge bg-success"><%=status%></span>

@@ -85,7 +85,7 @@ public class CheckoutController extends HttpServlet {
                 System.out.println(orderDate);
                 System.out.println(deliveryDate);
                 
-                try {
+                //try {
                     int paymentMethodID = 0;
                     int methodPayment = 0;
                     if (paymentMethod.equals("COD")) {
@@ -121,7 +121,7 @@ public class CheckoutController extends HttpServlet {
                     }
 
                     // Add Delivery Address
-                    int addressID = daoDeliAddress.addDeliveryAddress(new DeliveryAddress(address, daoOrder.getLastOrderID(), Integer.parseInt(provinceId), Integer.parseInt(districtId)));
+                    int addressID = daoDeliAddress.addDeliveryAddress(new DeliveryAddress(address, daoOrder.getLastOrderID(), Integer.parseInt(provinceId), Integer.parseInt(districtId),phone));
                     if (addressID == 0) {
                         request.setAttribute("message", "Address saving failed");
 
@@ -153,13 +153,13 @@ public class CheckoutController extends HttpServlet {
                         response.sendRedirect("ajaxServletURL");
                     }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                    request.setAttribute("message", "Checkout Failler");
-
-                    request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
-                }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//
+//                    request.setAttribute("message", "Checkout Failler");
+//
+//                    request.getRequestDispatcher("jsp/checkout.jsp").forward(request, response);
+//                }
             }
         }
     }

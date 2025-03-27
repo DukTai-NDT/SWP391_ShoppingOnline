@@ -103,7 +103,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="d-grid">
-                                                <button class="btn btn-primary" type="submit">Register</button>
+                                                <button class="btn btn-primary" type="submit">Sign Up</button>
                                             </div>
                                         </div>
 

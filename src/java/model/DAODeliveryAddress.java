@@ -20,27 +20,23 @@ import java.util.logging.Logger;
 public class DAODeliveryAddress extends DBConnection {
 
     public int addDeliveryAddress(DeliveryAddress other) {
-        int n = 0;
-        String sql = "INSERT INTO [dbo].[DeliveryAddress]\n"
-                + "           ([AddressDetail]\n"
-                + "           ,[OrderID]\n"
-                + "           ,[ProvinceID]\n"
-                + "           ,[DistrictID])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?)";
-        try {
-            PreparedStatement preState = conn.prepareStatement(sql);
-            preState.setString(1, other.getAddressDetail());
-            preState.setInt(2, other.getOrderID());
-            preState.setInt(3, other.getProvinceID());
-            preState.setInt(4, other.getDistrictID());
-            n = preState.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(DAODeliveryAddress.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return n;
+    int n = 0;
+    String sql = "INSERT INTO [dbo].[DeliveryAddress] "
+               + "([AddressDetail], [OrderID], [ProvinceID], [DistrictID], [Phone]) "
+               + "VALUES (?,?,?,?,?)";
+    try {
+        PreparedStatement preState = conn.prepareStatement(sql);
+        preState.setString(1, other.getAddressDetail());
+        preState.setInt(2, other.getOrderID());
+        preState.setInt(3, other.getProvinceID());
+        preState.setInt(4, other.getDistrictID());
+        preState.setString(5, other.getPhone());
+        n = preState.executeUpdate();
+    } catch (SQLException ex) {
+        Logger.getLogger(DAODeliveryAddress.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return n;
+}
 
     public int deleteDeliveryAddress(int id) {
         int n = 0;
@@ -73,6 +69,7 @@ public class DAODeliveryAddress extends DBConnection {
                 + "      ,[OrderID] = ?\n"
                 + "      ,[ProvinceID] = ?\n"
                 + "      ,[DistrictID] = ?\n"
+                + "      ,[Phone] = ?\n"
                 + " WHERE DeliveryAddress.DeliveryAddressID = ?";
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
@@ -80,7 +77,8 @@ public class DAODeliveryAddress extends DBConnection {
             preState.setInt(2, other.getOrderID());
             preState.setInt(3, other.getProvinceID());
             preState.setInt(4, other.getDistrictID());
-            preState.setInt(5, other.getDeliveryAddressID());
+            preState.setString(5, other.getPhone());
+            preState.setInt(6, other.getDeliveryAddressID());
             n = preState.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAODeliveryAddress.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,7 +97,8 @@ public class DAODeliveryAddress extends DBConnection {
 	  int OrderID = rs.getInt("OrderID");
 	  int ProvinceID = rs.getInt("ProvinceID");
 	  int DistrictID = rs.getInt("DistrictID");
-          vector.add(new DeliveryAddress(DeliveryAddressID, AddressDetail, OrderID, ProvinceID, DistrictID));
+          String Phone = rs.getString("Phone");
+          vector.add(new DeliveryAddress(DeliveryAddressID, AddressDetail, OrderID, ProvinceID, DistrictID,Phone));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAODeliveryAddress.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,10 +109,6 @@ public class DAODeliveryAddress extends DBConnection {
     
     public static void main(String[] args) {
         DAODeliveryAddress dao  = new DAODeliveryAddress();
-        Vector<DeliveryAddress> vector = dao.getDeliveryAddress("Select * from DeliveryAddress");
-        for (DeliveryAddress deliveryAddress : vector) {
-            System.out.println("1"+deliveryAddress);
-        }
         
     }
 }

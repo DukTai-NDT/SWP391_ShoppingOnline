@@ -4,7 +4,8 @@
  */
 package controller;
 
-import entity.Brand;
+import entity.Function;
+import entity.Ingredient;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +13,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Vector;
-import model.DAOBrand;
+import model.DAOFunction;
+import model.DAOIngredient;
 
 /**
  *
- * @author Admin
+ * @author whyth
  */
-@WebServlet(name = "AdminBrandController", urlPatterns = {"/AdminBrands"})
-public class AdminBrandController extends HttpServlet {
+@WebServlet(name = "AddIngreFunctionController", urlPatterns = {"/AddIngreAndFunction"})
+public class AddIngreFunctionController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,11 +35,36 @@ public class AdminBrandController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAOBrand daobrand = new DAOBrand();
-        Vector<Brand> vectorbrand = daobrand.getBrand("  select * from Brand\n"
-                + "  order by BrandID desc");
-        request.setAttribute("vectorbrand", vectorbrand);
-        request.getRequestDispatcher("admin/adminBrands.jsp").forward(request, response);
+
+        int productID;
+        try {
+            productID = Integer.parseInt(request.getParameter("productID"));
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid or missing Product ID.");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+            return;
+        }
+
+        String ingredients = request.getParameter("ingredients");
+        String functions = request.getParameter("functions");
+
+        DAOIngredient daoIngredient = new DAOIngredient();
+        DAOFunction daoFunction = new DAOFunction();
+
+        if (ingredients != null && !ingredients.trim().isEmpty()) {
+            for (String ing : ingredients.split("\\n")) {
+                daoIngredient.addIngredient(new Ingredient(ing.trim(), productID));
+            }
+        }
+
+        if (functions != null && !functions.trim().isEmpty()) {
+            for (String func : functions.split("\\n")) {
+                daoFunction.addFunction(new Function(func.trim(), productID));
+            }
+        }
+
+        request.setAttribute("message", "Ingredients and functions added successfully.");
+        response.sendRedirect("ProductManagerDetail?pid=" + productID);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

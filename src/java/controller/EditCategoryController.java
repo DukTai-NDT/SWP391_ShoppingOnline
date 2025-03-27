@@ -88,8 +88,12 @@ public class EditCategoryController extends HttpServlet {
         boolean test = uploadFile(is, path);
 
         DAOCategories daocategory = new DAOCategories();
+        if (daocategory.isCategoryExist(name)) {
+            response.sendRedirect("AdminCategories?message=Category+Name+already+exists!");
+            return;
+        }
         daocategory.editCategory(id, name, fileName);
-        response.sendRedirect("AdminCategories");
+        response.sendRedirect("AdminCategories?message=Edit+Successfully");
     }
 
     public boolean uploadFile(InputStream is, String path) {

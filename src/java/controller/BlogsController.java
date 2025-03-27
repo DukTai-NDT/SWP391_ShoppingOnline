@@ -233,13 +233,20 @@ public class BlogsController extends HttpServlet {
                 session.setAttribute("vectorBlogs", vectorAllBlogs);
                 session.setAttribute("blog", blog);
                 Vector<Categories> vectorCat = daoCat.getCategories("select * from Categories");
-                Vector<Comment> comments = daoComments.getCommentsByBlogId(blog.getBlogID());
-                session.setAttribute("comments" + blog.getBlogID(), comments);
+                Vector<Comment> comments = daoComments.getCommentsByBlogId(Integer.parseInt(blogIdParam));
+                session.setAttribute("comments", comments);
                 session.setAttribute("vectorCat", vectorCat);
-
                 Account account = (Account) session.getAttribute("dataUser");
 
                 request.getRequestDispatcher("admin/adminBlog-detail.jsp").forward(request, response);
+            }
+            if (service.equals("deleteComment")) {
+                int cid = Integer.parseInt(request.getParameter("cid"));
+                DAOComment daocomment = new DAOComment();
+                Comment comment = daoComments.getCommentById(cid);
+                int blogID = comment.getBlogID();
+                daocomment.delete(cid);
+                response.sendRedirect("BlogsURL?service=detailBlogAdmin&blog=" + blogID);
 
             }
         }
