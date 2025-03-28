@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
-import entity.Blogs;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,52 +12,41 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.DAOBlogs;
+import model.DAOBrand;
+import model.DAOCategories;
+import model.DAOProducts;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "AdminBlogController", urlPatterns = {"/BlogManagement"})
-public class AdminBlogController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="DeleteBrandController", urlPatterns={"/DeleteBrand"})
+public class DeleteBrandController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
- String sortOrder = request.getParameter("sortOrder");
-        if (sortOrder == null || sortOrder.isEmpty()) {
-            sortOrder = "newest"; 
+        String cid = request.getParameter("cid");
+        DAOBrand daobrand = new DAOBrand();
+        DAOProducts daoproduct = new DAOProducts();
+        if (daoproduct.isBrandExistProduct(cid)) {
+            response.sendRedirect("AdminBrands?message=Category+has+product+so+can+not+be+delete.");
+            return;
         }
-        DAOBlogs blogsdao = new DAOBlogs();
-        List<Blogs> bloglist;
-
-        if ("newest".equalsIgnoreCase(sortOrder)) {
-            bloglist = blogsdao.sortDesc();
-        } else if ("oldest".equalsIgnoreCase(sortOrder)) {
-            bloglist = blogsdao.sortAsc();
-        } else {
-            bloglist = blogsdao.getAllBlogs();
-        }
-
-        request.setAttribute("sortOrder", sortOrder);
-        request.setAttribute("bloglist", bloglist);
-        request.getRequestDispatcher("/jsp/admin-blog.jsp").forward(request, response);
-    }
+        daobrand.deleteBrand(Integer.parseInt(cid));
+        response.sendRedirect("AdminBrands?message=Delete+successfully.");
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -65,14 +54,12 @@ public class AdminBlogController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-        
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -80,13 +67,12 @@ public class AdminBlogController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

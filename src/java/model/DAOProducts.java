@@ -216,6 +216,20 @@ public class DAOProducts extends DBConnection {
         return count;
     }
 
+    public boolean isProductNameExists(String productName) {
+        String sql = "SELECT COUNT(*) FROM Products WHERE ProductName = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, productName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true; // Tên sản phẩm đã tồn tại
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public String getProductImg(int id) {
         String img = null;
         String sql = "SELECT * FROM dbo.Products WHERE ProductID = ?";
@@ -420,6 +434,34 @@ public class DAOProducts extends DBConnection {
         }
 
         return productList;
+    }
+
+    public boolean isCategoryExistProduct(String categoryID) {
+        String sql = "SELECT COUNT(*) FROM Products WHERE CategoryID = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, categoryID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isBrandExistProduct(String brandID) {
+        String sql = "SELECT COUNT(*) FROM Products WHERE BrandID = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, brandID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static void main(String[] args) {

@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
-    
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -38,9 +38,9 @@
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
     </head>
-<%
-            Account account = (Account)session.getAttribute("dataUser");
-           Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    <%
+                Account account = (Account)session.getAttribute("dataUser");
+               Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
            
     %>
@@ -91,7 +91,7 @@
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
                         </li>
                         <br>
-                        
+
                         <li class="sidebar-dropdown">
                             <a href="AdminBrands">
                                 <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
@@ -107,7 +107,7 @@
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
                         </li>
-                           <%}else{%>
+                        <%}else{%>
 
                         <li class="sidebar-dropdown">
                             <a href="AdminRepInboxURL?service=show"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
@@ -145,49 +145,48 @@
                                 </div>
                             </div>
                         </div>
-<%
-                             if(currentCustomer != null){
-                            %>
-                            
-                            <li class="list-inline-item mb-0 ms-1">
-                                <div class="dropdown dropdown-primary">
+                        <%
+                                                     if(currentCustomer != null){
+                        %>
 
-                                    <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
-                                    </button>
-                                    <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
-                                        <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+                        <li class="list-inline-item mb-0 ms-1">
+                            <div class="dropdown dropdown-primary">
 
-                                            <div class="flex-1 ms-2">
-                                                <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
-                                            </div>
-                                        </a>
+                                <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                                </button>
+                                <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
+                                    <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
+                                        <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
 
-                                        <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                                        <div class="dropdown-divider border-top"></div>
-                                        <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+                                        <div class="flex-1 ms-2">
+                                            <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
+                                        </div>
+                                    </a>
 
-                                    </div>
+                                    <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
+                                    <div class="dropdown-divider border-top"></div>
+                                    <a class="dropdown-item text-dark" href="LogOutURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6"></i></span> Logout</a>
+
                                 </div>
-                            </li>
-                            <%} else{%>
-                            <div class="auth-links">
-                                <a href="SignUpURL?service=signup">Sign up</a>
-                                <span>|</span>
-                                <a href="LoginURL?service=login">Log in</a>
                             </div>
-                            <%}%>
-                        
+                        </li>
+                        <%} else{%>
+                        <div class="auth-links">
+                            <a href="SignUpURL?service=signup">Sign up</a>
+                            <span>|</span>
+                            <a href="LoginURL?service=login">Log in</a>
+                        </div>
+                        <%}%>
+
                     </div>
                 </div>
 
                 <div class="container-fluid">
                     <div class="layout-specing">
-                        <div class="d-md-flex justify-content-between">
+                        <div class="d-md-flex justify-content-between align-items-center pb-3">
                             <div>
                                 <h5 class="mb-0">Blogs</h5>
-
                                 <nav aria-label="breadcrumb" class="d-inline-block mt-1">
                                     <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
                                         <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
@@ -195,8 +194,13 @@
                                     </ul>
                                 </nav>
                             </div>
-
-                            <div class="mt-4 mt-sm-0">
+                            <div class="d-flex align-items-center gap-2 mt-4 mt-sm-0">
+                                <form action="BlogManagement" class="d-inline">
+                                    <select class="form-select border rounded-pill" name="sortOrder" id="sortOrder" onchange="this.form.submit()">
+                                        <option value="newest" ${sortOrder == 'newest' ? "selected" : ""}>Newest</option>
+                                        <option value="oldest" ${sortOrder == 'oldest' ? "selected" : ""}>Oldest</option>
+                                    </select>
+                                </form>
                                 <a href="adminaddblog" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Blog</a>
                             </div>
                         </div>
@@ -212,7 +216,7 @@
                                                 <th class="border-bottom p-3" style="min-width: 180px;">Image</th>
 
 
-                                                <th class="border-bottom p-3" style="min-width: 150px;"></th>
+                                                <th class="border-bottom p-3" style="min-width: 150px;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>

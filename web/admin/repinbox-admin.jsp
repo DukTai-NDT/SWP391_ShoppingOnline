@@ -3,7 +3,7 @@
     Created on : Mar 3, 2025, 4:39:21 PM
     Author     : Admin
 --%>
-
+<%@ page import="java.time.LocalDateTime, java.time.format.DateTimeFormatter" %>
 <%@page import="entity.Products,entity.ChatHistory,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account,model.DAOChatHistory,model.DAOCustomer" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -79,20 +79,20 @@
             }
 
             /* Phần chat chính */
-           .chat-container {
-                    width: 100%;
-                    max-width: 800px;
-                    height: 70vh;
-                    /* Giảm chiều cao để phù hợp với layout có navbar */
-                    display: flex;
-                    flex-direction: column;
-                    background: white;
-                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                    border-radius: 10px;
-                    overflow: hidden;
-                    margin: 0 auto;
-                    /* Căn giữa */
-                }
+            .chat-container {
+                width: 100%;
+                max-width: 800px;
+                height: 70vh;
+                /* Giảm chiều cao để phù hợp với layout có navbar */
+                display: flex;
+                flex-direction: column;
+                background: white;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                overflow: hidden;
+                margin: 0 auto;
+                /* Căn giữa */
+            }
 
             .chat-header {
                 padding: 15px;
@@ -109,13 +109,13 @@
                 margin-right: 10px;
             }
             .chat-box {
-                    flex: 1;
-                    overflow-y: auto;
-                    padding: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    scroll-behavior: smooth;
-                }
+                flex: 1;
+                overflow-y: auto;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                scroll-behavior: smooth;
+            }
 
             .chat-header h3 {
                 font-size: 16px;
@@ -229,6 +229,23 @@
             .chat-footer button:hover {
                 background-color: #1557b0;
             }
+            .message small {
+                display: block;
+                margin-top: 5px;
+                font-size: 12px;
+                color: #888;
+            }
+            .delete-btn {
+                text-decoration: none;
+                color: #ff4444;
+                padding: 5px;
+                margin-left: 5px;
+                font-size: 14px;
+            }
+
+            .delete-btn:hover {
+                color: #cc0000;
+            }
         </style>
     </head>
 
@@ -262,16 +279,16 @@
                     </div>
 
                     <ul class="sidebar-menu pt-3">
-                        
 
 
-                    
+
+
 
                         <li class="sidebar-dropdown">
                             <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
 
                         </li>
-                       
+
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
@@ -371,17 +388,15 @@
                                         <%}}%>
                                     </div>
                                     <%
-                                    String showMess = (String) request.getAttribute("showMess");
-                                    if(!showMess.equals("none")){
-                                    Vector<ChatHistory> dataChat=( Vector<ChatHistory>) request.getAttribute("dataChat");
-                                    String cid = (String) request.getAttribute("cid");
-                                    
+ String showMess = (String) request.getAttribute("showMess");
+ if(!showMess.equals("none")){
+     Vector<ChatHistory> dataChat = (Vector<ChatHistory>) request.getAttribute("dataChat");
+     String cid = (String) request.getAttribute("cid");
                                     %>
                                     <!-- Phần chat chính -->
                                     <%
                                     if(!dataChat.isEmpty()){
-                                    int customerID = Integer.parseInt(cid); 
-                                        
+                                        int customerID = Integer.parseInt(cid); 
                                     %>
                                     <div class="chat-container">
                                         <div class="chat-header">
@@ -389,26 +404,50 @@
                                             <h3 id="chat-header-name"> <%=daoCustomer.getUsernameByCustomerID(customerID)%></h3>
                                         </div>
                                         <div class="chat-box">
-                                            <%for (ChatHistory chatHistory : dataChat) {%>
+                                            <%for (ChatHistory chatHistory : dataChat) {
+                                                LocalDateTime dateTime = chatHistory.getChatDateTime();
+                                                String formattedDate = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+                                            %>
                                             <%
-                                            if(chatHistory.getCustomerID_1() == currentCustomer.getCustomerID()){
+                                            if(chatHistory.isIsDeleted() == false){
+                                                if(chatHistory.getCustomerID_1() == currentCustomer.getCustomerID() ){
                                             %>
                                             <!-- Tin nhắn mẫu tĩnh -->
                                             <div class="message user">
                                                 <%=chatHistory.getDescription()%>
-                                                <small><%=chatHistory.getChatDateTime()%></small>
+                                                <small><%=formattedDate%></small>
+                                                <a href="AdminRepInboxURL?service=deleteChat&cid=<%=customerID%>&chatid=<%=chatHistory.getChat_HistoryID()%>" 
+                                                   class="delete-btn" 
+                                                   onclick="return confirm('Bạn có chắc muốn xóa tin nhắn này?')">
+                                                    <i class="fas fa-trash-alt">Xoa</i>
+                                                </a>
                                             </div>
                                             <%}else{%>
                                             <div class="message other">
                                                 <%=chatHistory.getDescription()%>
-                                                <small><%=chatHistory.getChatDateTime()%></small>
+                                                <small><%=formattedDate%></small>
+<!--                                                <a href="AdminRepInboxURL?service=deleteChat&cid=<%=customerID%>&chatid=<%=chatHistory.getChat_HistoryID()%>" 
+                                                   class="delete-btn" 
+                                                   onclick="return confirm('Bạn có chắc muốn xóa tin nhắn này?')">
+                                                    <i class="fas fa-trash-alt">Xoa</i>
+                                                </a>-->
                                             </div>
-                                            <%} }%>
+                                            <%}}else{
+                        if(chatHistory.getCustomerID_1() == currentCustomer.getCustomerID() ){%>
+                                            <!-- Tin nhắn mẫu tĩnh -->
+                                            <div class="message user">
+                                                Đoạn chat này đã bị xóa
+                                            </div>
+                                            <%}else{%>
+                                            <div class="message other">
+                                                Đoạn chat này đã bị xóa
+                                            </div>
+                                            <%}}}%>
                                         </div>
                                         <div class="chat-footer">
-                                            <form action="AdminRepInboxURL"   method="POST">
-                                                  <input type="hidden" name="service" value="sendMess">
-                                                  <input type="hidden" name="cid" value="<%=cid%>">
+                                            <form action="AdminRepInboxURL" method="POST">
+                                                <input type="hidden" name="service" value="sendMess">
+                                                <input type="hidden" name="cid" value="<%=cid%>">
                                                 <input type="text" name="message" placeholder="Enter message" required>
                                                 <button type="submit">Send</button>
                                             </form>

@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entity.Products, java.util.Vector" %>
 <%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
-    
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,13 +83,26 @@
                 white-space: normal; /* Đảm bảo chữ xuống dòng khi cần */
             }
 
+            .add-icon {
+                transition: transform 0.2s ease, color 0.2s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                color: #007bff; /* Màu mặc định (xanh) */
+            }
+
+            .add-icon:hover {
+                transform: scale(1.1);
+                color: #f64747 !important; /* Bắt buộc đổi màu đỏ */
+            }
+
         </style>
     </head>
-<%
-            Account account = (Account)session.getAttribute("dataUser");
-           Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    <%
+        Account account = (Account) session.getAttribute("dataUser");
+        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
-           
+
     %>
     <body>
         <!-- Loader -->
@@ -105,7 +118,7 @@
 
         <div class="page-wrapper doctris-theme toggled">
             <nav id="sidebar" class="sidebar-wrapper">
-               <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
+                <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
                         <a href="Dashboard">
                             <!--<a href="index.jsp">-->
@@ -118,57 +131,51 @@
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
+                        <br>
 
-
-                        <%   if(account.getRoleID()  != 4){
-                            if(account.getRoleID()  == 3){%>
+                        <%   if (account.getRoleID() != 4) {
+                                if (account.getRoleID() == 3) {%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
                         <%}%>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
 
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
-
                         </li>
+                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="AdminBrands">
                                 <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
                             </a>
                         </li>
-
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
-
                         </li>
-                           <%}else{%>
+                        <%} else {%>
 
                         <li class="sidebar-dropdown">
-                            <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
-
+                            <a href="AdminRepInboxURL?service=show"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
                         </li>
                         <%}%>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
-                <!-- sidebar-content  -->
-                <ul class="sidebar-footer list-unstyled mb-0">
-                    <li class="list-inline-item mb-0 ms-1">
-                        <a href="#" class="btn btn-icon btn-pills btn-soft-primary">
-                            <i class="uil uil-comment icons"></i>
-                        </a>
-                    </li>
-                </ul>
             </nav>
             <!-- sidebar-wrapper  -->
 
@@ -189,35 +196,29 @@
                             </a>
                             <div class="search-bar p-0 d-none d-md-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <!--                                    <form role="search" method="get" id="searchform" class="searchform">
-                                                                            <div>
-                                                                                <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
-                                                                                <input type="submit" id="searchsubmit" value="Search">
-                                                                            </div>
-                                                                        </form>-->
                                 </div>
                             </div>
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            
-                           
+
+
                             <%
-                             if(currentCustomer != null){
+                                if (currentCustomer != null) {
                             %>
-                            
+
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
 
                                     <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                                        <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg"%>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
                                     </button>
                                     <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                         <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg"%>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
 
                                             <div class="flex-1 ms-2">
-                                                <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
+                                                <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName()%></span>
                                             </div>
                                         </a>
 
@@ -228,7 +229,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <%} else{%>
+                            <%} else {%>
                             <div class="auth-links">
                                 <a href="SignUpURL?service=signup">Sign up</a>
                                 <span>|</span>
@@ -241,18 +242,14 @@
 
                 <div class="container-fluid">
                     <div class="layout-specing">
+                        <% if (request.getAttribute("errorMessage") != null) {%>
+                        <div class="alert alert-danger text-center" role="alert">
+                            <%= request.getAttribute("errorMessage")%>
+                        </div>
+                        <% }%>
                         <div class="d-md-flex justify-content-between">
                             <h5 class="mb-0">Product Detail:</h5>
-
-                            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
-                                <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-                                    <li class="breadcrumb-item"><a href="#">Pharmacy</a></li>
-                                    <li class="breadcrumb-item"><a href="ProductManager">Product Manager</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Product Detail</li>
-                                </ul>
-                            </nav>
                         </div>
-
                         <div class="card border-0 rounded shadow p-4 mt-4">
                             <div class="action-icons">
                                 <a href="LoadDetail?pid=${pDetail.productID}" id="edit-product-btn" class="edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
@@ -272,54 +269,169 @@
                                 </div><!--end col-->
 
                                 <div class="col-lg-7 col-md-6 mt-0 pt-0">
-                                    <div class="ms-md-4">
-                                        <h6 class="brand">Brand:
-                                            <a href="#">
-                                                ${bDetail != null ? bDetail.brandName : "Unknown Brand"}
-                                            </a>
-                                        </h6>
-                                        <h4 class="title">${pDetail.productName}</h4>
-                                        <h5 class="text-muted">${pDetail.price}</h5>
-
-                                        <div class="d-flex align-items-center">
-                                            <h5 class="py-2 mb-0">Unit :</h5>
-                                            <p class="text-muted mb-0 ms-2">${pDetail.unitPrice}</p>
-                                        </div>
-
-                                        <div class="d-flex align-items-center">
-                                            <h5 class="py-2 mb-0">Quantity :</h5>
-                                            <p class="text-muted mb-0 ms-2">${pDetail.quantity}</p>
-                                        </div>
-
-                                        <div class="d-flex align-items-center">
-                                            <h5 class="py-2 mb-0">Category :</h5>
-                                            <p class="text-muted mb-0 ms-2">
-                                                <a href="#">${cDetail != null ? cDetail.categoryName : "Unknown Category"}</a>
-                                            </p>
-                                        </div>
-
-                                        <!--                                        <div class="d-flex align-items-center">
-                                                                                    <h5 class="py-2 mb-0">Ingredient :</h5>
-                                                                                    <p class="text-muted mb-0 ms-2">
-                                        <c:forEach var="i" items="${iList}">
-                                            ${i}<br/>
-                                        </c:forEach>
-                                    </p>
-                                </div>-->
-
-                                        <div class="d-flex align-items-center">
-                                            <h5 class="py-2 mb-0">Description :</h5>
-                                            <p class="text-muted mb-0 ms-2">${pDetail.description}</p>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <h5 class="py-2 mb-0">Status :</h5>
-                                            <p class="text-muted mb-0 ms-2">
-                                                ${pDetail.isAvailable ? "In Stock" : "Out of Stock"}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Brand</th>
+                                            <td><a href="#">${bDetail != null ? bDetail.brandName : "Unknown Brand"}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <td>${pDetail.productName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Price</th>
+                                            <td>${pDetail.price}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Unit</th>
+                                            <td>${pDetail.unitPrice}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Quantity</th>
+                                            <td>${pDetail.quantity}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Category</th>
+                                            <td><a href="#">${cDetail != null ? cDetail.categoryName : "Unknown Category"}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Description</th>
+                                            <td>${pDetail.description}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status</th>
+                                            <td>${pDetail.isAvailable ? "In Stock" : "Out of Stock"}</td>
+                                        </tr>
+                                    </table>
                                 </div><!--end col-->
                             </div><!--end row-->
+                        </div>
+
+                        <div class="card border-0 rounded shadow p-4 mt-4">
+                            <c:choose>
+                                <c:when test="${not empty iDetail or not empty fDetail}">
+                                    <table class="table table-bordered">
+                                        <div class="action-icons">
+                                            <a href="LoadDetail?pid=${pDetail.productID}" id="edit-ingredient-function-btn" class="edit-icon" 
+                                               data-bs-toggle="modal" data-bs-target="#edit-ingredient-function">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </div>
+
+                                        <c:if test="${not empty iDetail}">
+                                            <tr>
+                                                <th>Ingredients</th>
+                                                <td>
+                                                    <c:forEach var="i" items="${iDetail}">
+                                                        - ${i.ingredientName}<br>
+                                                    </c:forEach>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+
+                                        <c:if test="${not empty fDetail}">
+                                            <tr>
+                                                <th>Functions</th>
+                                                <td>
+                                                    <c:forEach var="f" items="${fDetail}">
+                                                        - ${f.functionDescription}<br>
+                                                    </c:forEach>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+                                    </table>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <div class="text-center">
+                                        <a href="#" class="add-icon" data-bs-toggle="modal" data-bs-target="#add-ingredient-function" style="color: #007bff;">
+                                            <i class="fas fa-plus-circle fa-2x"></i> Add Ingredient & Function
+                                        </a>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+
+                        <div class="modal fade" id="add-ingredient-function" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom p-3">
+                                        <h5 class="modal-title" id="addProduct">Add Ingredient & Function</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body p-3 pt-4">
+                                        <form action="AddIngreAndFunction" method="post">
+                                            <c:if test="${empty pDetail}">
+                                                <p style="color: red;">Error: Product details not found!</p>
+                                            </c:if>
+
+                                            <input type="hidden" name="productID" value="${not empty pDetail.productID ? pDetail.productID : ''}">
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Ingredients: <span class="text-danger">*</span></label>
+                                                <textarea name="ingredients" class="form-control" placeholder="Ingredients" rows="3"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Functions: <span class="text-danger">*</span></label>
+                                                <textarea name="functions" class="form-control" placeholder="Functions" rows="3"></textarea>
+                                            </div>
+                                            <div class="text-end">
+                                                <button type="submit" class="btn btn-primary">Add</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="edit-ingredient-function" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom p-3">
+                                        <h5 class="modal-title" id="editProduct">Edit Ingredient and Function</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body p-3 pt-4">
+                                        <form action="EditIngreFunction" method="post">
+                                            <input type="hidden" name="productID" value="${pDetail.productID}">
+
+                                            <!-- Ingredients -->
+                                            <div class="mb-3">
+                                                <label class="form-label">Ingredients: <span class="text-danger">*</span></label>
+                                                <textarea name="ingredients" id="ingredients" class="form-control" rows="3">
+                                                    <c:forEach var="i" items="${iDetail}" varStatus="status">
+                                                        ${i.ingredientName}<c:if test="${!status.last}">, </c:if>
+                                                    </c:forEach></textarea>
+
+                                                <!-- Hidden fields for ingredient IDs -->
+                                                <c:forEach var="i" items="${iDetail}">
+                                                    <input type="hidden" name="ingredientID" value="${i.ingredientID}">
+                                                </c:forEach>
+                                            </div>
+
+                                            <!-- Functions -->
+                                            <div class="mb-3">
+                                                <label class="form-label">Functions: <span class="text-danger">*</span></label>
+                                                <textarea name="functions" id="functions" class="form-control" rows="3">
+                                                    <c:forEach var="f" items="${fDetail}" varStatus="status">
+                                                        ${f.functionDescription}<c:if test="${!status.last}">, </c:if>
+                                                    </c:forEach></textarea>
+
+                                                <!-- Hidden fields for function IDs -->
+                                                <c:forEach var="f" items="${fDetail}">
+                                                    <input type="hidden" name="functionID" value="${f.functionID}">
+                                                </c:forEach>
+                                            </div>
+
+                                            <div class="text-end">
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="modal fade" id="edit-product" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -412,14 +524,6 @@
                                                             </div>
                                                         </div><!--end col-->
 
-
-                                                        <!--                                                        <div class="col-md-6">
-                                                                                                                    <div class="mb-3">
-                                                                                                                        <label class="form-label">Ingredient</label>
-                                                                                                                        <input name="ingredient" id="ingredient" type="text" class="form-control" placeholder="Ingredient" required>
-                                                                                                                    </div>
-                                                                                                                </div>-->
-
                                                         <div class="col-md-12">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Description:</label>
@@ -490,262 +594,6 @@
                             </div>
                         </div>
 
-<!--                        <div class="row mt-4">
-                            <div class="col-12">
-                                <h5 class="mb-0">Related Products:</h5>
-                            </div>end col
-                        </div>end row-->
-
-<!--                        <div class="row">
-                            <div class="col-lg-12 mt-4">
-                                <div class="slider-range-four">
-                                    <div class="tiny-slide">
-                                        <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/thermometer.jpg" class="img-fluid" alt=""></a>                               
-                                            </div>
-                                            <div class="card-body content pt-4 border-top">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Thermometer</a>
-                                                <div class="d-flex justify-content-between mt-1">
-                                                    <h6 class="text-muted small font-italic mb-0 mt-1">$16.00 </h6>
-                                                    <ul class="list-unstyled text-warning mb-0">
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>end col
-
-                                    <div class="tiny-slide">
-                                        <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/stethoscope.jpg" class="img-fluid" alt=""></a>
-                                                <ul class="list-unstyled shop-icons">
-                                                    <li><a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i data-feather="heart" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="eye" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-warning"><i data-feather="shopping-cart" class="icons"></i></a></li>
-                                                </ul>                                
-
-                                                <div class="qty-icons">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-pills btn-icon btn-primary minus">-</button>
-                                                    <input min="0" name="quantity" value="0" type="number" class="btn btn-pills btn-icon btn-primary qty-btn quantity">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-pills btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body content pt-4 border-top">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Stethoscope</a>
-                                                <div class="d-flex justify-content-between mt-1">
-                                                    <h6 class="text-muted small font-italic mb-0 mt-1">$16.00 </h6>
-                                                    <ul class="list-unstyled text-warning mb-0">
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>end col
-
-                                    <div class="tiny-slide">
-                                        <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/pulse-oximeter.jpg" class="img-fluid" alt=""></a>
-                                                <ul class="list-unstyled shop-icons">
-                                                    <li><a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i data-feather="heart" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="eye" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-warning"><i data-feather="shopping-cart" class="icons"></i></a></li>
-                                                </ul>                                
-
-                                                <div class="qty-icons">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-pills btn-icon btn-primary minus">-</button>
-                                                    <input min="0" name="quantity" value="0" type="number" class="btn btn-pills btn-icon btn-primary qty-btn quantity">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-pills btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body content pt-4 border-top">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Pulse oximeter</a>
-                                                <div class="d-flex justify-content-between mt-1">
-                                                    <h6 class="text-muted small font-italic mb-0 mt-1">$16.00 </h6>
-                                                    <ul class="list-unstyled text-warning mb-0">
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>end col
-
-                                    <div class="tiny-slide">
-                                        <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/medicine.jpg" class="img-fluid" alt=""></a>
-                                                <ul class="list-unstyled shop-icons">
-                                                    <li><a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i data-feather="heart" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="eye" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-warning"><i data-feather="shopping-cart" class="icons"></i></a></li>
-                                                </ul>                                
-
-                                                <div class="qty-icons">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-pills btn-icon btn-primary minus">-</button>
-                                                    <input min="0" name="quantity" value="0" type="number" class="btn btn-pills btn-icon btn-primary qty-btn quantity">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-pills btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body content pt-4 border-top">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Medicine pills</a>
-                                                <div class="d-flex justify-content-between mt-1">
-                                                    <h6 class="text-muted small font-italic mb-0 mt-1">$16.00 </h6>
-                                                    <ul class="list-unstyled text-warning mb-0">
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>end col
-
-                                    <div class="tiny-slide">
-                                        <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/smoking-habit.jpg" class="img-fluid" alt=""></a>
-                                                <ul class="list-unstyled shop-icons">
-                                                    <li><a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i data-feather="heart" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="eye" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-warning"><i data-feather="shopping-cart" class="icons"></i></a></li>
-                                                </ul>                                
-
-                                                <div class="qty-icons">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-pills btn-icon btn-primary minus">-</button>
-                                                    <input min="0" name="quantity" value="0" type="number" class="btn btn-pills btn-icon btn-primary qty-btn quantity">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-pills btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body content pt-4 border-top">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Smokill smoking habit</a>
-                                                <div class="d-flex justify-content-between mt-1">
-                                                    <h6 class="text-muted small font-italic mb-0 mt-1">$16.00 </h6>
-                                                    <ul class="list-unstyled text-warning mb-0">
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>end col
-
-                                    <div class="tiny-slide">
-                                        <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/sanitizer.jpg" class="img-fluid" alt=""></a>
-                                                <ul class="list-unstyled shop-icons">
-                                                    <li><a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i data-feather="heart" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="eye" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-warning"><i data-feather="shopping-cart" class="icons"></i></a></li>
-                                                </ul>                                
-
-                                                <div class="qty-icons">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-pills btn-icon btn-primary minus">-</button>
-                                                    <input min="0" name="quantity" value="0" type="number" class="btn btn-pills btn-icon btn-primary qty-btn quantity">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-pills btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body content pt-4 border-top">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Sanitizer</a>
-                                                <div class="d-flex justify-content-between mt-1">
-                                                    <h6 class="text-muted small font-italic mb-0 mt-1">$16.00 </h6>
-                                                    <ul class="list-unstyled text-warning mb-0">
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>end col
-
-                                    <div class="tiny-slide">
-                                        <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/nicotex.jpg" class="img-fluid" alt=""></a>
-                                                <ul class="list-unstyled shop-icons">
-                                                    <li><a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i data-feather="heart" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="eye" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-warning"><i data-feather="shopping-cart" class="icons"></i></a></li>
-                                                </ul>                                
-
-                                                <div class="qty-icons">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-pills btn-icon btn-primary minus">-</button>
-                                                    <input min="0" name="quantity" value="0" type="number" class="btn btn-pills btn-icon btn-primary qty-btn quantity">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-pills btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body content pt-4 border-top">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Nicotex</a>
-                                                <div class="d-flex justify-content-between mt-1">
-                                                    <h6 class="text-muted small font-italic mb-0 mt-1">$16.00 </h6>
-                                                    <ul class="list-unstyled text-warning mb-0">
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>end col
-
-                                    <div class="tiny-slide">
-                                        <div class="card shop-list border-0 overflow-hidden rounded shadow m-1">
-                                            <div class="shop-image position-relative overflow-hidden">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html"><img src="images/pharmacy/shop/medigrip.jpg" class="img-fluid" alt=""></a>
-                                                <ul class="list-unstyled shop-icons">
-                                                    <li><a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i data-feather="heart" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-primary"><i data-feather="eye" class="icons"></i></a></li>
-                                                    <li class="mt-2"><a href="#" class="btn btn-icon btn-pills btn-soft-warning"><i data-feather="shopping-cart" class="icons"></i></a></li>
-                                                </ul>                                
-
-                                                <div class="qty-icons">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-pills btn-icon btn-primary minus">-</button>
-                                                    <input min="0" name="quantity" value="0" type="number" class="btn btn-pills btn-icon btn-primary qty-btn quantity">
-                                                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-pills btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body content pt-4 border-top">
-                                                <a href="https://shreethemes.in/doctris/layouts/admin/pharmacy-product-detail.html" class="text-dark product-name h6">Medigrip</a>
-                                                <div class="d-flex justify-content-between mt-1">
-                                                    <h6 class="text-muted small font-italic mb-0 mt-1">$16.00 </h6>
-                                                    <ul class="list-unstyled text-warning mb-0">
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                        <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>end col
-                        </div>end row-->
                     </div>
                 </div><!--end container-->
 

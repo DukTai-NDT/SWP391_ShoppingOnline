@@ -1,7 +1,8 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
 <!DOCTYPE html>
 <html lang="en">
-    <%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
+
     <head>
         <meta charset="utf-8" />
         <title>Doctris - Doctor Appointment Booking System</title>
@@ -10,7 +11,7 @@
         <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health" />
         <meta name="author" content="Shreethemes" />
         <meta name="email" content="support@shreethemes.in" />
-        <meta name="website" content="../../../index.jsp" />
+        <meta name="website" content="../../../index.html" />
         <meta name="Version" content="v1.2.0" />
         <!-- favicon -->
         <link rel="shortcut icon" href="images/favicon.ico.png">
@@ -18,17 +19,19 @@
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- simplebar -->
         <link href="css/simplebar.css" rel="stylesheet" type="text/css" />
-        <!-- Select2 -->
-        <link href="css/select2.min.css" rel="stylesheet" />
         <!-- Icons -->
         <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
         <link href="css/remixicon.css" rel="stylesheet" type="text/css" />
         <link href="https://unicons.iconscout.com/release/v3.0.6/css/line.css"  rel="stylesheet">
-        <!-- SLIDER -->
-        <link href="css/tiny-slider.css" rel="stylesheet" />
         <!-- Css -->
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+        <style>
 
+            .table-responsive {
+                overflow-x: auto !important;
+            }
+
+        </style>
     </head>
     <%
         Account account = (Account) session.getAttribute("dataUser");
@@ -50,8 +53,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="Dashboard">
-                            <!--<a href="index.jsp">-->
+                        <a href="index.html">
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                         </a>
@@ -98,7 +100,7 @@
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
                         </li>
                         <br>
-                        
+
                         <li class="sidebar-dropdown">
                             <a href="FeedbackManager"><i class="uil uil-feedback me-2 d-inline-block"></i>Feedback Management</a>
                         </li>
@@ -111,6 +113,7 @@
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
+                <!-- sidebar-content  -->
             </nav>
             <!-- sidebar-wrapper  -->
 
@@ -129,17 +132,6 @@
                             <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
                                 <i class="uil uil-bars"></i>
                             </a>
-                            <a style="margin: 0 10px 0 10px;" href="ProductURL?service=listAllProducts">View Shop</a>
-                            <div class="search-bar p-0 d-none d-md-block ms-2">
-                                <div id="search" class="menu-search mb-0">
-                                    <!--                                    <form role="search" method="get" id="searchform" class="searchform">
-                                                                            <div>
-                                                                                <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
-                                                                                <input type="submit" id="searchsubmit" value="Search">
-                                                                            </div>
-                                                                        </form>-->
-                                </div>
-                            </div>
                         </div>
 
                         <ul class="list-unstyled mb-0">
@@ -181,111 +173,130 @@
                         </ul>
                     </div>
                 </div>
-                <div id="navigation">
-                    <!-- Navigation Menu-->   
-                    <ul class="navigation-menu nav-left nav-light">
-                        <li class="parent-menu-item">
-                            <a href="ProductURL?service=listAllProducts" class="sub-menu-item">Shop</a><span class="menu-arrow"></span>
-
-                        </li>
-
-                    </ul><!--end navigation menu-->
-                </div><!--end navigation-->
 
                 <div class="container-fluid">
                     <div class="layout-specing">
-                        <h5 class="mb-0">Dashboard</h5>
+                        <div class="d-md-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <h5 class="mb-0 me-3">Feedbacks</h5>
 
-                        <div class="row">
-                            <div class="col-md-6 mt-4">
-                                <div class="card features feature-primary rounded border-0 shadow p-4">
-                                    <div class="d-flex align-items-center">
-                                        <div class="icon text-center rounded-md">
-                                            <i class="uil uil-capsule h3 mb-0"></i>
-                                        </div>
-                                        <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">${productCount}</h5>
-                                            <p class="text-muted mb-0">Products</p>
+                                <form action="FeedbackManager" method="GET" class="d-inline">
+                                    <div class="input-group">
+                                        <select class="form-select" name="orderType" id="orderType" onchange="this.form.submit()">
+                                            <option value="newest" ${orderType == "newest" ? "selected" : ""}>Newest</option>
+                                            <option value="oldest" ${orderType == "oldest" ? "selected" : ""}>Oldest</option>
+                                        </select>
+                                        <input type="hidden" name="page" value="${currentPage}">
+                                    </div>
+                                </form>
+
+                                <form action="FeedbackManager" method="GET" class="d-inline">
+                                    <div class="input-group">
+                                        <select class="form-select" name="orderType" id="orderType" onchange="this.form.submit()">
+                                            <option value="newest" ${orderType == "newest" ? "selected" : ""}>Rating</option>
+                                            <option value="1" ${orderType == "1" ? "selected" : ""}>1</option>
+                                            <option value="2" ${orderType == "2" ? "selected" : ""}>2</option>
+                                            <option value="3" ${orderType == "3" ? "selected" : ""}>3</option>
+                                            <option value="4" ${orderType == "4" ? "selected" : ""}>4</option>
+                                            <option value="5" ${orderType == "5" ? "selected" : ""}>5</option>
+                                        </select>
+                                        <input type="hidden" name="page" value="${currentPage}">
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                        <!-- Start Content -->
+                        <div class="row justify-content-center text-center">
+                            <div class="col-12 mt-4">
+                                <div class="row justify-content-center">
+                                    <div class="col-12">
+                                        <div class="table-responsive bg-white shadow rounded text-center">
+                                            <table class="table mb-0 table-center">
+                                                <thead class="bg-primary text-white">
+                                                    <tr>
+                                                        <th class="border-bottom p-3 text-center" style="min-width: 50px;">#</th>
+                                                        <th class="border-bottom p-3 text-center" style="min-width: 150px;">UserName</th>
+                                                        <th class="border-bottom p-3 text-center" style="min-width: 200px;">Product</th>
+                                                        <th class="border-bottom p-3 text-center" style="min-width: 300px;">Comments</th>
+                                                        <th class="border-bottom p-3 text-center" style="min-width: 200px;">Rating</th>
+                                                        <th class="border-bottom p-3 text-center" style="min-width: 150px;">Time</th>
+                                                        <th class="border-bottom p-3 text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach var="fb" items="${feedbackList}" varStatus="loop">
+                                                        <tr>
+                                                            <th class="p-3 text-center">${loop.index + 1}</th>
+                                                            <td class="p-3 text-center">
+                                                                <a href="#" class="text-dark d-block">
+                                                                    <div class="d-flex justify-content-center align-items-center">
+                                                                        <span class="ms-2">${fbDAO.getUserNameByFeedbackID(fb.feedbackID)}</span>
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                            <td class="p-3 text-center">${fbDAO.getProductNameByFeedbackID(fb.feedbackID)}</td>
+                                                            <td class="p-3 text-muted text-center">${fb.comment}</td>
+                                                            <td class="p-3 text-center">
+                                                                <ul class="list-unstyled mb-0 d-flex justify-content-center">
+                                                                    <c:forEach var="star" begin="1" end="${fb.rating}">
+                                                                        <li class="list-inline-item"><i class="mdi mdi-star text-warning"></i></li>
+                                                                        </c:forEach>
+                                                                </ul>
+                                                            </td>
+                                                            <td class="p-3 text-center">${fb.time}</td>
+                                                            <td class="p-3 text-center">
+                                                                <a href="DeleteFeedback?id=${fb.feedbackID}" 
+                                                                   class="btn btn-sm btn-soft-danger"
+                                                                   onclick="return confirm('Are you sure to delete this feedback?');">
+                                                                    Delete
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                            </div><!--end col-->
 
-                            <div class="col-md-6 mt-4">
-                                <div class="card features feature-primary rounded border-0 shadow p-4">
-                                    <div class="d-flex align-items-center">
-                                        <div class="icon text-center rounded-md">
-                                            <i class="uil uil-spinner-alt h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
-                                        </div>
-                                        <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">${orderOnPrepared}</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
-                                            <p class="text-muted mb-0">On-Prepared</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
+                                <div class="row text-center">
+                                    <!-- PAGINATION START -->
+                                    <div class="col-12 mt-4">
+                                        <ul class="pagination justify-content-end mb-0 list-unstyled">
+                                            <%
+                                                int currentPage = (int) request.getAttribute("currentPage");
+                                                int totalPages = (int) request.getAttribute("totalPages");
+                                                String orderType = request.getParameter("orderType");
+                                                if (orderType == null) {
+                                                    orderType = "newest"; // M?c ??nh là newest n?u không có orderType
+                                                }
+                                            %>
 
-                            <%if (account.getRoleID() == 3) {%>
-                            <div class="col-md-6 mt-4">
-                                <div class="card features feature-primary rounded border-0 shadow p-4">
-                                    <div class="d-flex align-items-center">
-                                        <div class="icon text-center rounded-md">
-                                            <i class="uil uil-user h3 mb-0"></i>
-                                        </div>
+                                            <!-- Nút Prev -->
+                                            <li class="page-item <%= (currentPage == 1) ? "disabled" : ""%>">
+                                                <a class="page-link" href="?page=<%= currentPage - 1%>&orderType=<%= orderType%>" aria-label="Previous">Prev</a>
+                                            </li>
 
-                                        <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">${accountCount}</h5>
-                                            <p class="text-muted mb-0">Accounts</p>
-                                        </div>
+                                            <!-- S? trang -->
+                                            <% for (int i = 1; i <= totalPages; i++) {%>
+                                            <li class="page-item <%= (i == currentPage) ? "active" : ""%>">
+                                                <a class="page-link" href="?page=<%= i%>&orderType=<%= orderType%>"><%= i%></a>
+                                            </li>
+                                            <% }%>
 
+                                            <!-- Nút Next -->
+                                            <li class="page-item <%= (currentPage == totalPages) ? "disabled" : ""%>">
+                                                <a class="page-link" href="?page=<%= currentPage + 1%>&orderType=<%= orderType%>" aria-label="Next">Next</a>
+                                            </li>
+                                        </ul>
                                     </div>
+                                    <!-- PAGINATION END -->
                                 </div>
-                            </div><!--end col-->
-                            <%}%> 
-                            
-                            <div class="col-md-6 mt-4">
-                                <div class="card features feature-primary rounded border-0 shadow p-4">
-                                    <div class="d-flex align-items-center">
-                                        <div class="icon text-center rounded-md">
-                                            <i class="uil uil-box h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
-                                        </div>
-                                        <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">${orderDelivering}</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
-                                            <p class="text-muted mb-0">Prepared</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
-                            
-                            <div class="col-md-6 mt-4">
-                                <div class="card features feature-primary rounded border-0 shadow p-4">
-                                    <div class="d-flex align-items-center">
-                                        <div class="icon text-center rounded-md">
-                                            <i class="uil uil-coins h3 mb-0"></i>
-                                        </div>
-                                        <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">${totalSales}</h5>
-                                            <p class="text-muted mb-0">Total Sales</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
-                            
-                            <div class="col-md-6 mt-4">
-                                <div class="card features feature-primary rounded border-0 shadow p-4">
-                                    <div class="d-flex align-items-center">
-                                        <div class="icon text-center rounded-md">
-                                            <i class="uil uil-bill h3 mb-0"></i> <!-- Icon s? l??ng s?n ph?m ?ã bán -->
-                                        </div>
-                                        <div class="flex-1 ms-2">
-                                            <h5 class="mb-0">${orderDone}</h5> <!-- S? l??ng s?n ph?m ?ã bán -->
-                                            <p class="text-muted mb-0">Sold</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
-
-                        </div><!--end row-->
+                            </div>
+                        </div>
+                        <!-- End Content -->
                     </div>
                 </div><!--end container-->
 
@@ -295,7 +306,7 @@
                         <div class="row align-items-center">
                             <div class="col">
                                 <div class="text-sm-start text-center">
-                                    <p class="mb-0 text-muted"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.jsp" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                    <p class="mb-0 text-muted"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="../../../index.html" target="_blank" class="text-reset">Shreethemes</a>.</p>
                                 </div>
                             </div><!--end col-->
                         </div><!--end row-->
@@ -329,7 +340,7 @@
                                     <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
                                     <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="images/layouts/dark-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
                                     <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
-                                    <li class="d-grid"><a href="../landing/index.jsp" target="_blank" class="mt-4"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Landing Demos</span></a></li>
+                                    <li class="d-grid"><a href="../landing/index.html" target="_blank" class="mt-4"><img src="images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Landing Demos</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -346,7 +357,7 @@
                     <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="../../../index.jsp" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="../../../index.html" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
                 </ul><!--end icon-->
             </div>
         </div>
@@ -356,9 +367,6 @@
         <script src="js/bootstrap.bundle.min.js"></script>
         <!-- simplebar -->
         <script src="js/simplebar.min.js"></script>
-        <!-- Chart -->
-        <script src="js/apexcharts.min.js"></script>
-        <script src="js/columnchart.init.js"></script>
         <!-- Icons -->
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->

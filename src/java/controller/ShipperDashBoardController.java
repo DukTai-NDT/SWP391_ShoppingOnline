@@ -52,6 +52,7 @@ public class ShipperDashBoardController extends HttpServlet {
             if (service == null) {
                 service = "show";
             }
+            
             if (service.equals("show")) {
                 Customers customer = (Customers) session.getAttribute("dataCustomer");
                 Vector<Orders> vectorOrder = daoOrder.getOrders("select * from Orders where Status = 'Prepared' or Status = 'Delivering'");
@@ -59,7 +60,6 @@ public class ShipperDashBoardController extends HttpServlet {
                 request.setAttribute("message", message);
                 request.setAttribute("vectorOrder", vectorOrder);
                 request.getRequestDispatcher("/jsp/shipper-dashboard.jsp").forward(request, response);
-
             }
                 
             if(service.equals("pickOrder")){
@@ -67,9 +67,7 @@ public class ShipperDashBoardController extends HttpServlet {
                 String oid = request.getParameter("oid");
                daoOrder.updateIsReceived(Integer.parseInt(oid));
                daoOrder.updateStatusOrder("Delivering", Integer.parseInt(oid));
-                response.sendRedirect("ShipperDashBoardURL");
-               
-                
+                response.sendRedirect("ShipperDashBoardURL");   
             }
             
             if(service.equals("finshedTranspoted")){
@@ -77,7 +75,6 @@ public class ShipperDashBoardController extends HttpServlet {
                 daoOrder.updateStatusOrder("Done", Integer.parseInt(orderid));
                 response.sendRedirect("ShipperDashBoardURL");
             }
-
 
         }
     }

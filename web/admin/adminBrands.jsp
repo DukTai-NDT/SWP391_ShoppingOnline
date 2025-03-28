@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
-    
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -38,9 +38,9 @@
         <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
 
     </head>
-<%
-            Account account = (Account)session.getAttribute("dataUser");
-           Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+    <%
+                Account account = (Account)session.getAttribute("dataUser");
+               Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
            
     %>
@@ -71,57 +71,56 @@
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
+                        <br>
 
-
-                        <%   if(account.getRoleID()  != 4){
-                            if(account.getRoleID()  == 3){%>
+                        <%   if (account.getRoleID() != 4) {
+                                if (account.getRoleID() == 3) {%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
                         <%}%>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
 
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
-
                         </li>
+                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="AdminBrands">
                                 <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
                             </a>
                         </li>
-
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
-
                         </li>
-                           <%}else{%>
+                        <br>
+                        
+                        <li class="sidebar-dropdown">
+                            <a href="FeedbackManager"><i class="uil uil-feedback me-2 d-inline-block"></i>Feedback Management</a>
+                        </li>
+                        <%} else {%>
 
                         <li class="sidebar-dropdown">
-                            <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
-
+                            <a href="AdminRepInboxURL?service=show"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
                         </li>
                         <%}%>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
-                <!-- sidebar-content  -->
-                <ul class="sidebar-footer list-unstyled mb-0">
-                    <li class="list-inline-item mb-0 ms-1">
-                        <a href="#" class="btn btn-icon btn-pills btn-soft-primary">
-                            <i class="uil uil-comment icons"></i>
-                        </a>
-                    </li>
-                </ul>
             </nav>
             <!-- sidebar-wrapper  -->
 
@@ -153,12 +152,12 @@
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            
-                           
+
+
                             <%
                              if(currentCustomer != null){
                             %>
-                            
+
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
 
@@ -210,6 +209,9 @@
                                 <a href="adminaddblog" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Brand</a>
                             </div>
                         </div>
+                        <c:if test="${not empty param.message}">
+                            <p style="color: red; font-weight: bold;">${param.message}</p>
+                        </c:if>
                         <div class="row">
                             <div class="col-12 mt-4">
                                 <div class="table-responsive shadow rounded">
@@ -235,11 +237,11 @@
                                                            class="btn btn-icon btn-pills btn-soft-primary">
                                                             <i class="uil uil-edit"></i>
                                                         </a>
-<!--                                                        <a href="DeleteCategories?cid=${c.categoryID}" 
+                                                        <a href="DeleteBrand?cid=${brand.brandID}" 
                                                            class="btn btn-icon btn-pills btn-soft-danger"
-                                                           onclick="return confirmDelete(event, '${c.categoryID}')">
+                                                           onclick="return confirmDelete(event, '${brand.brandID}')">
                                                             <i class="uil uil-trash"></i>
-                                                        </a>-->
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -349,7 +351,7 @@
                                                     </div>
                                                     <div class="col-md-6 align-items-center">
                                                         <div class="col-md-6">
-                                                           
+
                                                             <div class="mb-3">
                                                                 <label class="form-label">Brand Name</label>
                                                                 <input value="" name="brandName" id="brandname" type="text" class="form-control" style="width: 750px">
@@ -414,11 +416,11 @@
                                         };
         </script>
         <script>
-            function confirmDelete(event, categoryID) {
+            function confirmDelete(event, brandID) {
                 event.preventDefault(); // Ngăn trang chuyển hướng ngay lập tức
-                let confirmation = confirm("Are you sure you want to delete this blog post?");
+                let confirmation = confirm("Are you sure you want to delete this brand?");
                 if (confirmation) {
-                    window.location.href = "DeleteCategories?cid=" + categoryID; // Chuyển hướng nếu xác nhận
+                    window.location.href = "DeleteBrand?cid=" + brandID; // Chuyển hướng nếu xác nhận
                 }
             }
         </script>

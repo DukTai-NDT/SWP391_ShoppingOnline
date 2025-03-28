@@ -196,90 +196,53 @@
                             <div class="tab-content p-4" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-overview" role="tabpanel" aria-labelledby="overview-tab">
                                     <h5 class="mb-0">Personal Information :</h5>
-                                    <div class="row align-items-center mt-4">
-                                        <div class="col-lg-2 col-md-4">
-                                            <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-md rounded-pill shadow mx-auto d-block" alt="Profile" />
-                                        </div>
-                                        <div class="col-lg-5 col-md-8 text-center text-md-start mt-4 mt-sm-0">
-                                            <h6>Upload your picture</h6>
-                                            <p class="text-muted mb-0">For best results, use an image at least 256px by 256px in either .jpg or .png format</p>
-                                        </div>
-                                        <div class="col-lg-5 col-md-12 text-lg-end text-center mt-4 mt-lg-0">
-                                            <form action="CustomerURL" method="post" enctype="multipart/form-data" id="uploadForm" class="d-inline-block">
-                                                <input type="hidden" name="service" value="uploadProfileImg" />
-                                                <input type="hidden" name="CustomerID" value="<%=currentCustomer.getCustomerID()%>" />
-                                                <input type="file" name="profileImg" id="profileImgInput" accept=".jpg,.png" style="display: none;" onchange="this.form.submit();" />
-                                                <button type="button" class="btn btn-primary" onclick="document.getElementById('profileImgInput').click()">Upload</button>
-                                            </form>
-                                            <form action="CustomerURL" method="post" class="d-inline-block ms-2">
-                                                <input type="hidden" name="service" value="removeProfileImg" />
-                                                <input type="hidden" name="CustomerID" value="<%=currentCustomer.getCustomerID()%>" />
-                                                <button type="submit" class="btn btn-soft-primary">Remove</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <form class="mt-4" action="CustomerURL" method="post">
-                                        <input type="hidden" name="service" value="updateCustomer" />
-                                        <input type="hidden" name="CustomerID" value="<%=currentCustomer.getCustomerID()%>" />
-                                        <input type="hidden" name="profileImg" value="<%=currentCustomer.getProfileImg() != null ? currentCustomer.getProfileImg() : ""%>" />
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">First Name</label>
-                                                    <input name="FirstName" type="text" class="form-control" value="<%=currentCustomer.getFirstName() != null ? currentCustomer.getFirstName() : ""%>" placeholder="First Name" />
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Last Name</label>
-                                                    <input name="LastName" type="text" class="form-control" value="<%=currentCustomer.getLastName() != null ? currentCustomer.getLastName() : ""%>" placeholder="Last Name" />
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Your Email</label>
-                                                    <input name="Email" type="email" class="form-control" value="<%=currentCustomer.getEmail() != null ? currentCustomer.getEmail() : ""%>" placeholder="Your email" readonly/>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Gender</label>
-                                                    <select name="Gender" class="form-control">
-                                                        <option value="Male" <%= ("Male".equals(currentCustomer.getGender())) ? "selected" : "" %>>Male</option>
-                                                        <option value="Female" <%= ("Female".equals(currentCustomer.getGender())) ? "selected" : "" %>>Female</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Phone no.</label>
-                                                    <input name="Phone" type="text" class="form-control" value="<%=currentCustomer.getPhone() != null ? currentCustomer.getPhone() : ""%>" placeholder="Phone no." />
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Address</label>
-                                                    <input name="Address" type="text" class="form-control" value="<%=currentCustomer.getAddress() != null ? currentCustomer.getAddress() : ""%>" placeholder="Address" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <input type="submit" name="submit" class="btn btn-primary" value="Save Changes" />
-                                            </div>
-                                        </div>
-                                    </form>
 
                                     <!-- Button to toggle Change Password form -->
-                                  <div class="mt-4">
-                                <h5 class="mb-3">Change Password :</h5>
-                                <a href="CustomerURL?service=updatePasswordCustomer" class="btn btn-primary btn-custom">
-                                    Show Change Password
-                                </a>          
+                                    <div class="mt-4">
+                                        <h5 class="mb-3">Change Password :</h5>
                                     </div>
-                                  <div class="mt-4">    
-                                <h5 class="mb-0" style="color: red"><%=(message!=null?message:"")%></h5>
-                                    </div>
+
+                                    <form action="CustomerURL" method="post">
+                                        <input type="hidden" name="service" value="updatePasswordCustomer" />
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <label class="form-label">Old Password</label>
+                                                <div class="input-group">
+                                                    <input name="oldpassword" type="password" class="form-control" placeholder="Old Password" id="oldPassword" />
+                                                    <span class="input-group-text toggle-password" style="cursor: pointer;">
+                                                        <i class="fa fa-eye" id="toggleOldPassword"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">New Password</label>
+                                                <div class="input-group">
+                                                    <input name="newpassword" type="password" class="form-control" placeholder="New Password" id="newPassword" />
+                                                    <span class="input-group-text toggle-password" style="cursor: pointer;">
+                                                        <i class="fa fa-eye" id="toggleNewPassword"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Confirm New Password</label>
+                                                <div class="input-group">
+                                                    <input name="cfPassword" type="password" class="form-control" placeholder="Confirm Password" id="cfPassword" />
+                                                    <span class="input-group-text toggle-password" style="cursor: pointer;">
+                                                        <i class="fa fa-eye" id="toggleCfPassword"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                          
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <input type="submit" name="submit" class="btn btn-primary" value="Change Password" />
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">    
+                                            <h5 class="mb-0" style="color: red"><%=(message!=null?message:"")%></h5>
+                                             </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -424,13 +387,13 @@
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             }
-        </script>
-        <script>
+
             // Toggle password visibility
-            document.querySelectorAll('.toggle-password').forEach(item => {
-                item.addEventListener('click', function () {
-                    const input = this.previousElementSibling;
-                    const icon = this.querySelector('i');
+            document.querySelectorAll('.toggle-password').forEach(toggle => {
+                toggle.addEventListener('click', function () {
+                    const input = this.previousElementSibling; 
+                    const icon = this.querySelector('i'); 
+
                     if (input.type === 'password') {
                         input.type = 'text';
                         icon.classList.remove('fa-eye');
@@ -442,10 +405,6 @@
                     }
                 });
             });
-
-           
         </script>
     </body>
 </html>
-
-

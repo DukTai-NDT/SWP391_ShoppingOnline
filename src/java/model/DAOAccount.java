@@ -370,6 +370,114 @@ public class DAOAccount extends DBConnection {
         }
         return null;
     }
+      public List<Account> getOnStaff() {
+        List<Account> list = new ArrayList<>();
+        String query = "select * from Accounts where RoleID=1";
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()) {
+                int AccountID = rs.getInt("AccountID");
+                String UserName = rs.getString("UserName");
+                int RoleID = rs.getInt("RoleID");
+                String Password = rs.getString("Password");
+                String Email = rs.getString("Email");
+                boolean active = rs.getBoolean("active");
+                Account account = new Account(AccountID, UserName, RoleID, Password, Email, active);
+                list.add(account);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+     public List<Account> getOnCustomer() {
+        List<Account> list = new ArrayList<>();
+        String query = "select * from Accounts where RoleID=2";
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()) {
+                int AccountID = rs.getInt("AccountID");
+                String UserName = rs.getString("UserName");
+                int RoleID = rs.getInt("RoleID");
+                String Password = rs.getString("Password");
+                String Email = rs.getString("Email");
+                boolean active = rs.getBoolean("active");
+                Account account = new Account(AccountID, UserName, RoleID, Password, Email, active);
+                list.add(account);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Account> getOnAdmin() {
+        List<Account> list = new ArrayList<>();
+        String query = "select * from Accounts where RoleID=3";
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()) {
+                int AccountID = rs.getInt("AccountID");
+                String UserName = rs.getString("UserName");
+                int RoleID = rs.getInt("RoleID");
+                String Password = rs.getString("Password");
+                String Email = rs.getString("Email");
+                boolean active = rs.getBoolean("active");
+                Account account = new Account(AccountID, UserName, RoleID, Password, Email, active);
+                list.add(account);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Account> getOnCustomerCare() {
+        List<Account> list = new ArrayList<>();
+        String query = "select * from Accounts where RoleID=1003";
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()) {
+                int AccountID = rs.getInt("AccountID");
+                String UserName = rs.getString("UserName");
+                int RoleID = rs.getInt("RoleID");
+                String Password = rs.getString("Password");
+                String Email = rs.getString("Email");
+                boolean active = rs.getBoolean("active");
+                Account account = new Account(AccountID, UserName, RoleID, Password, Email, active);
+                list.add(account);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Account> getOnShipper() {
+        List<Account> list = new ArrayList<>();
+        String query = "select * from Accounts where RoleID=2003";
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()) {
+                int AccountID = rs.getInt("AccountID");
+                String UserName = rs.getString("UserName");
+                int RoleID = rs.getInt("RoleID");
+                String Password = rs.getString("Password");
+                String Email = rs.getString("Email");
+                boolean active = rs.getBoolean("active");
+                Account account = new Account(AccountID, UserName, RoleID, Password, Email, active);
+                list.add(account);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();

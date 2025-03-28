@@ -301,6 +301,56 @@ public class DAOBlogs extends DBConnection {
         return count;
     }
 
+    public List<Blogs> sortDesc() {
+        List<Blogs> list = new ArrayList<>();
+        String query = "  select * from Blogs\n"
+                + "order by PostTime desc ";
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()) {
+                int BlogID = rs.getInt("BlogID");
+                int CustomerID = rs.getInt("CustomerID");
+                LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
+                String Title = rs.getString("Title");
+                String Content = rs.getString("Content");
+                String Image = rs.getString("Image");
+                boolean Status = (rs.getInt("Status") == 1 ? true : false);
+                Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
+                list.add(blog);
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return list;
+    }
+
+    public List<Blogs> sortAsc() {
+        List<Blogs> list = new ArrayList<>();
+        String query = "  select * from Blogs\n"
+                + "order by PostTime asc ";
+        try {
+            Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(query);
+            while (rs.next()) {
+                int BlogID = rs.getInt("BlogID");
+                int CustomerID = rs.getInt("CustomerID");
+                LocalDate PostTime = rs.getDate("PostTime").toLocalDate();
+                String Title = rs.getString("Title");
+                String Content = rs.getString("Content");
+                String Image = rs.getString("Image");
+                boolean Status = (rs.getInt("Status") == 1 ? true : false);
+                Blogs blog = new Blogs(BlogID, CustomerID, PostTime, Title, Content, Image, Status);
+                list.add(blog);
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(DAOBlogs.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAOBlogs dao = new DAOBlogs();
         Vector<Blogs> vector = dao.getBlogs("select * from blogs");

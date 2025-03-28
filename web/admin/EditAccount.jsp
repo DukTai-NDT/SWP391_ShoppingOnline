@@ -51,7 +51,7 @@
 
         <div class="page-wrapper doctris-theme toggled">
             <nav id="sidebar" class="sidebar-wrapper">
-               <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
+                <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
                         <a href="Dashboard">
                             <!--<a href="index.jsp">-->
@@ -97,7 +97,7 @@
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
 
                         </li>
-                           <%}else{%>
+                        <%}else{%>
 
                         <li class="sidebar-dropdown">
                             <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
@@ -231,6 +231,12 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Password</label>
+                                                        <input value="${account.email}" name="password" id="password" type="text" class="form-control"readonly required>
+                                                    </div> 
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Email</label>
                                                         <input value="${account.password}" name="password" id="password" type="text" class="form-control"readonly required>
                                                     </div> 
                                                 </div><!--end col-->
@@ -240,7 +246,8 @@
                                                         <option value="1" ${account.roleID == 1 ? 'selected' : ''}>Staff</option>
                                                         <option value="2" ${account.roleID == 2 ? 'selected' : ''}>Customer</option>
                                                         <option value="3" ${account.roleID == 3 ? 'selected' : ''}>Admin</option>
-                                                        <option value="2003" ${account.roleID == 3 ? 'selected' : ''}>Shipper</option>
+                                                        <option value="1003" ${account.roleID == 1003 ? 'selected' : ''}>Customer Care</option>
+                                                        <option value="2003" ${account.roleID == 2003 ? 'selected' : ''}>Shipper</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">

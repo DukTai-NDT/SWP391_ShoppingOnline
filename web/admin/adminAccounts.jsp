@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entity.Products,java.util.Vector, entity.Categories, entity.CartItems, entity.Customers,entity.Account" %>
-    
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,57 +69,56 @@
                         <li class="sidebar-dropdown">
                             <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
+                        <br>
 
-
-                        <%   if(account.getRoleID()  != 4){
-                            if(account.getRoleID()  == 3){%>
+                        <%   if (account.getRoleID() != 4) {
+                                if (account.getRoleID() == 3) {%>
                         <li class="sidebar-dropdown">
                             <a href="AdminAccounts"><i class="uil uil-user me-2 d-inline-block"></i>Accounts Management</a>
                         </li>
                         <%}%>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="ProductManager"><i class="uil uil-capsule me-2 d-inline-block"></i>Products Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
 
                             <a href="AdminCategories"><i class="uil uil-flip-h me-2 d-inline-block"></i>Categories Management</a>
-
                         </li>
+                        <br>
+
                         <li class="sidebar-dropdown">
                             <a href="AdminBrands">
                                 <i class="uil uil-store me-2 d-inline-block"></i> Brand Management
                             </a>
                         </li>
-
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="BlogManagement"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs Management</a>
                         </li>
+                        <br>
 
                         <li class="sidebar-dropdown">
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
-
                         </li>
-                           <%}else{%>
+                        <br>
 
                         <li class="sidebar-dropdown">
-                            <a href="AdminRepInboxURL"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
+                            <a href="FeedbackManager"><i class="uil uil-feedback me-2 d-inline-block"></i>Feedback Management</a>
+                        </li>
+                        <%} else {%>
 
+                        <li class="sidebar-dropdown">
+                            <a href="AdminRepInboxURL?service=show"><i class="uil uil-comment me-2 d-inline-block"></i>Reply Customer</a>
                         </li>
                         <%}%>
                     </ul>
                     <!-- sidebar-menu  -->
                 </div>
-                <!-- sidebar-content  -->
-                <ul class="sidebar-footer list-unstyled mb-0">
-                    <li class="list-inline-item mb-0 ms-1">
-                        <a href="#" class="btn btn-icon btn-pills btn-soft-primary">
-                            <i class="uil uil-comment icons"></i>
-                        </a>
-                    </li>
-                </ul>
             </nav>
             <!-- sidebar-wrapper  -->
 
@@ -140,23 +139,23 @@
                             </a>
                             <div class="search-bar p-0 d-none d-md-block ms-2">
                                 <div id="search" class="menu-search mb-0">
-                                    <!--                                    <form role="search" method="get" id="searchform" class="searchform">
-                                                                            <div>
-                                                                                <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
-                                                                                <input type="submit" id="searchsubmit" value="Search">
-                                                                            </div>
-                                                                        </form>-->
+                                    <!--                                                                        <form role="search" method="get" id="searchform" class="searchform">
+                                                                                                                <div>
+                                                                                                                    <input type="text" class="form-control border rounded-pill" name="s" id="s" placeholder="Search Keywords...">
+                                                                                                                    <input type="submit" id="searchsubmit" value="Search">
+                                                                                                                </div>
+                                                                                                            </form>-->
                                 </div>
                             </div>
                         </div>
 
                         <ul class="list-unstyled mb-0">
-                            
-                           
+
+
                             <%
                              if(currentCustomer != null){
                             %>
-                            
+
                             <li class="list-inline-item mb-0 ms-1">
                                 <div class="dropdown dropdown-primary">
 
@@ -192,18 +191,21 @@
 
                 <div class="container-fluid">
                     <div class="layout-specing">
-                        <div class="d-md-flex justify-content-between">
+                        <div class="d-md-flex justify-content-between align-items-center pb-3">
                             <h5 class="mb-0">Account List</h5>
-
-                            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
-                                <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
-                                    <!--                                    <li class="breadcrumb-item"><a href="index.jsp">Doctris</a></li>
-                                                                        <li class="breadcrumb-item active" aria-current="page">Patients</li>-->
-                                </ul>
-                            </nav>
-                            <div class="mt-4 mt-sm-0">
-                                <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newblogadd">Add Account</a>
-                            </div>
+                            <form action="AdminAccounts" class="d-inline">
+                                <div class="input-group">
+                                    <label for="accountType" class="me-2 fw-bold"></label>
+                                    <select class="form-select border rounded-pill" name="accountType" id="accountType" onchange="this.form.submit()">
+                                        <option value="0" ${accountType == 0 ? "selected" : ""}>ALL</option>
+                                        <option value="1" ${accountType == 1 ? "selected" : ""}>Staff</option>
+                                        <option value="1003" ${accountType == 1003 ? "selected" : ""}>Customer Care</option>
+                                        <option value="2" ${accountType == 2 ? "selected" : ""}>Customer</option>
+                                        <option value="2003" ${accountType == 2003 ? "selected" : ""}>Shipper</option>
+                                        <option value="3" ${accountType == 3 ? "selected" : ""}>Admin</option>
+                                    </select>
+                                </div>
+                            </form>
                         </div>
 
                         <div class="row">
@@ -236,7 +238,7 @@
                                                         </a>
                                                     </td>
                                                     <td class="p-3">
-                                                        ${a.roleID == 1 ? 'Staff' : (a.roleID == 2 ? 'Customer' : (a.roleID == 3 ? 'Admin' : 'Unknown'))}
+                                                        ${a.roleID == 1 ? 'Staff' : (a.roleID == 2 ? 'Customer' : (a.roleID == 3 ? 'Admin' :(a.roleID == 1003 ? 'Customer Care' : (a.roleID == 2003 ? 'Shipper' :  'Unknown'))))}
                                                     </td>
 
                                                     <td class="p-3">${a.password}</td>
@@ -255,8 +257,11 @@
 
 
 
-                                                        <a href="loadAccount?aid=${a.accountID}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-
+                                                        <!--<a href="loadAccount?aid=${a.accountID}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
+                                                        <a href="loadAccount?aid=${a.accountID}"
+                                                           class="btn btn-icon btn-pills btn-soft-primary">
+                                                            <i class="uil uil-edit"></i>
+                                                        </a>
 
                                                     </td>
 

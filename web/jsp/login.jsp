@@ -65,7 +65,7 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label class="form-label">Password <span class="text-danger">*</span></label>
-                                                <input type="password" class="form-control" placeholder="password" required="" name="password">
+                                                <input type="password" class="form-control" placeholder="Password" required="" name="password">
                                             </div>
                                         </div>
 

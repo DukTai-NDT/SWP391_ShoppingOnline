@@ -182,22 +182,36 @@ public class CustomerController extends HttpServlet {
             }
 
             if (service.equals("updatePasswordCustomer")) {
+                String submit = request.getParameter("submit");
+               if (submit == null) { 
+                    request.getRequestDispatcher("/jsp/changepassword.jsp").forward(request, response);
+               }else{
                 String oldPassword = request.getParameter("oldpassword");
                 String newPassword = request.getParameter("newpassword");
                 String confimPassword = request.getParameter("cfPassword");
                 Account account = (Account) session.getAttribute("dataUser");
+                
+                
+                if (oldPassword == null || oldPassword.isEmpty() 
+                        ||newPassword == null || newPassword.isEmpty() 
+                        ||confimPassword == null || confimPassword.isEmpty()) {
+                request.setAttribute("message", "Please enter complete information!");
+                request.getRequestDispatcher("/jsp/changepassword.jsp").forward(request, response);
+                return;
+                }
+               
                 if (oldPassword.equals(newPassword)) {
                     request.setAttribute("message", "New password must be different old password");
-                    request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
+                    request.getRequestDispatcher("/jsp/changepassword.jsp").forward(request, response);
 
                 } else if (!account.getPassword().equals(oldPassword)) {
                     request.setAttribute("message", "Old password is not correct");
-                    request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
+                    request.getRequestDispatcher("/jsp/changepassword.jsp").forward(request, response);
 
                 } else {
                     if (!newPassword.equals(confimPassword)) {
                         request.setAttribute("message", "comfim password must be same new password");
-                        request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
+                        request.getRequestDispatcher("/jsp/changepassword.jsp").forward(request, response);
 
                         return;
                     } else {
@@ -206,7 +220,7 @@ public class CustomerController extends HttpServlet {
                         request.getRequestDispatcher("/jsp/profileSetting.jsp").forward(request, response);
 
                     }
-                }
+                }}
             }
         }
     }
