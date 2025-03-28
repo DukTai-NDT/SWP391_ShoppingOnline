@@ -242,10 +242,14 @@
 
                 <div class="container-fluid">
                     <div class="layout-specing">
+                        <% if (request.getAttribute("errorMessage") != null) {%>
+                        <div class="alert alert-danger text-center" role="alert">
+                            <%= request.getAttribute("errorMessage")%>
+                        </div>
+                        <% }%>
                         <div class="d-md-flex justify-content-between">
                             <h5 class="mb-0">Product Detail:</h5>
                         </div>
-
                         <div class="card border-0 rounded shadow p-4 mt-4">
                             <div class="action-icons">
                                 <a href="LoadDetail?pid=${pDetail.productID}" id="edit-product-btn" class="edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">

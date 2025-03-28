@@ -39,27 +39,34 @@ public class AddProductController extends HttpServlet {
             Part part = request.getPart("image");
             String fileName = part.getSubmittedFileName();
 
+            DAOProducts dao = new DAOProducts();
+
+            if (dao.isProductNameExists(productName)) {
+                request.setAttribute("errorMessage", "Add Failed! Product already exists.");
+                request.getRequestDispatcher("ProductManager").forward(request, response);
+                return;
+            }
+
+            // Đường dẫn lưu ảnh
             String uploadDir = "C:\\Users\\whyth\\Downloads\\Git\\SWP391_FinalPrj\\SWP391_ShoppingOnline\\web\\images\\products";
             File uploadFolder = new File(uploadDir);
-
             String path = uploadDir + File.separator + fileName;
             InputStream is = part.getInputStream();
             boolean test = uploadFile(is, path);
 
             // Gọi DAO để thêm sản phẩm vào DB
-            DAOProducts addDAO = new DAOProducts();
-            int result = addDAO.addProduct(new Products(productName, price, description, unitPrice, categoryID, brandID, isPrescriptionDrug, quantity, fileName,true));
+            int result = dao.addProduct(new Products(productName, price, description, unitPrice, categoryID, brandID, isPrescriptionDrug, quantity, fileName, true));
 
             if (result > 0) {
                 response.sendRedirect("ProductManager"); // Chuyển hướng nếu thêm thành công
             } else {
                 request.setAttribute("errorMessage", "Failed to add product.");
-                request.getRequestDispatcher("errorPage.jsp").forward(request, response);
+                request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
             }
         } catch (NumberFormatException e) {
             Logger.getLogger(AddProductController.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("errorMessage", "Invalid input format.");
-            request.getRequestDispatcher("errorPage.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/shop.jsp").forward(request, response);
         }
     }
 

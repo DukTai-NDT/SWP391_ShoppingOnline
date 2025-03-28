@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,13 +9,14 @@ import model.DAOProducts;
 
 @WebServlet("/DeleteProduct")  // Xác định URL của servlet
 public class DeleteProductController extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         String pid = request.getParameter("pid");
         if (pid == null || pid.trim().isEmpty()) {
-            response.sendRedirect("ProductManager?msg=No Product ID Provided");
+            response.sendRedirect("ProductManagerDetail?msg=No Product ID Provided");
             return;
         }
 
@@ -22,15 +24,20 @@ public class DeleteProductController extends HttpServlet {
         try {
             productID = Integer.parseInt(pid);
         } catch (NumberFormatException e) {
-            response.sendRedirect("ProductManager?msg=Invalid Product ID");
+            response.sendRedirect("ProductManagerDetail?msg=Invalid Product ID");
             return;
         }
 
         DAOProducts dao = new DAOProducts();
         int result = dao.deleteProduct(productID);
 
-        String msg = (result > 0) ? "Deleted Successfully" : "Delete Failed";
-        response.sendRedirect("ProductManager?msg=" + msg);
+        if (result > 0) {
+            response.sendRedirect("ProductManager?msg=Deleted Successfully");
+        } else {
+            request.setAttribute("errorMessage", "Delete Failed");
+            request.getRequestDispatcher("ProductManagerDetail?pid=" + productID).forward(request, response);
+        }
+
     }
 
     @Override

@@ -216,6 +216,20 @@ public class DAOProducts extends DBConnection {
         return count;
     }
 
+    public boolean isProductNameExists(String productName) {
+        String sql = "SELECT COUNT(*) FROM Products WHERE ProductName = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, productName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true; // Tên sản phẩm đã tồn tại
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public String getProductImg(int id) {
         String img = null;
         String sql = "SELECT * FROM dbo.Products WHERE ProductID = ?";

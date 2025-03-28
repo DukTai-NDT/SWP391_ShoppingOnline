@@ -47,6 +47,15 @@
             .table tbody tr:hover {
                 background-color: #eef5ff; /* Hiệu ứng hover */
             }
+
+            .alert {
+                max-width: 80%; /* Giới hạn chiều rộng */
+                margin: 0 auto; /* Canh giữa */
+                padding: 10px 20px; /* Thêm padding hai bên */
+                margin-top: 10px;
+            }
+
+
         </style>
     </head>
     <%
@@ -119,7 +128,7 @@
                             <a href="OrderManager"><i class="uil uil-file me-2 d-inline-block"></i>Orders Management</a>
                         </li>
                         <br>
-                        
+
                         <li class="sidebar-dropdown">
                             <a href="FeedbackManager"><i class="uil uil-feedback me-2 d-inline-block"></i>Feedback Management</a>
                         </li>
@@ -208,6 +217,7 @@
                         <div class="d-md-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 <h5 class="mb-0 me-3">Product List</h5>
+
                                 <form action="ProductManager" method="GET" class="d-inline">
                                     <div class="input-group">
                                         <select class="form-select" name="orderType" id="orderType" onchange="this.form.submit()">
@@ -217,6 +227,7 @@
                                         <input type="hidden" name="page" value="${currentPage}">
                                     </div>
                                 </form>
+
                             </div>
 
                             <div class="mt-4 mt-sm-0">
@@ -373,7 +384,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
+            <c:if test="${not empty errorMessage}">
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let modal = new bootstrap.Modal(document.getElementById('add-product'));
+                        modal.show();
+                    });
+                </script>
+                <div class="alert alert-danger text-center px-3">
+                    ${errorMessage}
+                </div>
+            </c:if>
+
             <div class="modal-body p-3 pt-4">
+
                 <form action="AddProductController" method="post"  enctype="multipart/form-data">
                     <div class="row">
                         <!-- Trường nhập ảnh -->
