@@ -1,0 +1,110 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.section {
+    padding: 30px 0;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.breadcrumb-item {
+    color: #007bff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.breadcrumb-item:hover {
+    color: #0056b3;
+}
+
+.breadcrumb-item[aria-current="page"] {
+    color: #007bff;
+    font-weight: 600;
+    border-bottom: 2px solid #007bff;
+}
+
+.table thead {
+    background-color: #007bff;
+    color: white;
+}
+
+.table thead th {
+    border-bottom: none;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e9ecef;
+    transition: background-color 0.3s;
+}
+
+.product-info {
+    align-items: center;
+}
+
+.product-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border: 2px solid #007bff;
+}
+
+.order-actions .btn {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.order-actions .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.order-actions .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+}
+
+.order-actions .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.order-actions .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.view-more .btn {
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+.badge {
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+.badge.bg-success {
+    background-color: #28a745;
+}
+
+.badge.bg-warning {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.badge.bg-info {
+    background-color: #17a2b8;
+}
