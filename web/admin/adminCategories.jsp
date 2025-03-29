@@ -369,7 +369,7 @@
                                                 </div><!--end col-->
 
                                                 <div class="col-lg-12 text-end">
-                                                    <button type="submit" class="btn btn-primary">Add Blog</button>
+                                                    <button type="submit" class="btn btn-primary">Add Category</button>
                                                 </div><!--end col-->
                                             </div>
                                     </div>

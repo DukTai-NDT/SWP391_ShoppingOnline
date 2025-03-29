@@ -45,6 +45,8 @@ public class ResetPassword extends HttpServlet {
             String submit = request.getParameter("submit");
             if (token != null && submit == null) {
                 TokenForgetPassword tokenForget = dao.getTokenPassword(token);
+                System.out.println("token+-"+token);
+                System.out.println("tokenF+"+tokenForget);
                 if (tokenForget == null) {
                     request.setAttribute("message", "Token invalid");
                     request.getRequestDispatcher("jsp/forgot-password.jsp").forward(request, response);

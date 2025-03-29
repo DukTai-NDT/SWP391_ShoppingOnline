@@ -282,14 +282,14 @@ if (!comments.isEmpty()) {
     }
 } else {
 %>
-<p class="text-muted">Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
+<p class="text-muted">There are no comments yet. Be the first to comment!</p>
 <% } %>
 
 <% 
 if (totalComments > displayLimit && !showAll) { 
 %>
 <div class="mt-3">
-    <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>&showAll=true" class="btn btn-primary">Tất cả bình luận (<%=totalComments%>)</a>
+    <a href="BlogsURL?service=detailBlog&blog=<%=blog.getBlogID()%>&showAll=true" class="btn btn-primary">All Comments(<%=totalComments%>)</a>
 </div>
 <% } %>
 

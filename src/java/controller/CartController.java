@@ -6,9 +6,6 @@ import entity.CartItems;
 import entity.Customers;
 import entity.Products;
 import entity.Categories;
-import entity.DeliveryAddress;
-import entity.Districts;
-import entity.Provinces;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,21 +15,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 import model.DAOCart;
 import model.DAOCartItem;
 import model.DAOCategories;
 import model.DAOCustomer;
-import model.DAODeliveryAddress;
-import model.DAODistricts;
 import model.DAOProducts;
-import model.DAOProvinces;
 
 @WebServlet(name = "CartController", urlPatterns = {"/CartURL"})
 public class CartController extends HttpServlet {
@@ -56,91 +44,60 @@ public class CartController extends HttpServlet {
 
             if (service.equals("showCart")) {
                 Customers cus = (Customers) session.getAttribute("dataCustomer");
-                Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy("select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = " + cus.getCustomerID());
+                Vector<CartItems> vectorCartItems = daoCartItem.getProductIsntBuy(
+                    "SELECT ci.CartItemID, ci.CartID, ci.ProductID, ci.ProductName, ci.Price, ci.Quantity, ci.IsBuy " +
+                    "FROM CartItem ci JOIN Cart c ON ci.CartID = c.CartID " +
+                    "WHERE c.CustomerID = " + cus.getCustomerID() + " " +
+                    "ORDER BY ci.CartItemID DESC"
+                );
                 Vector<Categories> vcategories = daoCat.getCategories("select * from Categories");
+
                 session.setAttribute("dataCartItem", vectorCartItems);
                 session.setAttribute("vcategories", vcategories);
-                // Khôi phục trạng thái checkbox từ session
-                Set<Integer> unselectedItems = (Set<Integer>) session.getAttribute("unselectedItems");
-                if (unselectedItems == null) {
-                    unselectedItems = new HashSet<>();
-                    session.setAttribute("unselectedItems", unselectedItems);
-                }
-
                 request.getRequestDispatcher("/jsp/shop-cart.jsp").forward(request, response);
             }
 
             if (service.equals("add2cart")) {
                 int pid = Integer.parseInt(request.getParameter("pid"));
-                Customers cus = daoCus.getCustomer("select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + acc.getAccountID()).get(0);
+                Customers cus = daoCus.getCustomer(
+                    "select c.CustomerID,c.FirstName,c.LastName,c.Email,c.Address,c.Gender,c.Phone,c.AccountID,c.ProfileImg " +
+                    "from Customers c join Accounts a on c.AccountID = a.AccountID where c.AccountID = " + acc.getAccountID()
+                ).get(0);
                 session.setAttribute("dataCustomer", cus);
                 LocalDate now = LocalDate.now();
-                Vector<Cart> vector = daoCart.getCart("select * from Cart");
-                int cnt = 0;
-                for (Cart cart : vector) {
-                    if (now.equals(cart.getCreateDate()) && cart.getCustomerID() == cus.getCustomerID()) {
-                        cnt++;
-                    }
+                Cart cart = null;
+                Vector<Cart> carts = daoCart.getCart("select * from Cart where CreateDate like '" + now + "' and CustomerID = " + cus.getCustomerID());
+                if (carts.isEmpty()) {
+                    daoCart.addCart(new Cart(cus.getCustomerID(), true, now));
+                    cart = daoCart.getCart("select * from Cart where CreateDate like '" + now + "' and CustomerID = " + cus.getCustomerID()).get(0);
+                } else {
+                    cart = carts.get(0);
                 }
-                if (cnt == 0) {
-                    daoCart.addCart(new Cart(cus.getCustomerID(), true, LocalDate.now()));
-                }
-                Cart cart = daoCart.getCart("select * from Cart where CreateDate like '" + now + "' and CustomerID = " + cus.getCustomerID()).get(0);
+
                 Products pro = daoPro.getProducts("select * from Products where ProductID = " + pid).get(0);
                 CartItems cartItem = new CartItems(cart.getCartID(), pid, pro.getProductName(), pro.getPrice(), 1, false);
-                Vector<CartItems> vectorCartItem = daoCartItem.getCartItem("select * from CartItem");
-                int isExist = 0;
-                int isBuy = 0;
-                for (CartItems cartItems : vectorCartItem) {
-                    if (cartItems.getCartID() == cartItem.getCartID() && cartItem.getProductID() == cartItems.getProductID() && cartItems.isIsBuy() == false) {
-                        isExist++;
-                        daoCartItem.updateQuantityCartItem(cartItems.getQuantity() + 1, cartItems.getCartItemID());
-                    }
-                    if (cartItems.getCartID() == cartItem.getCartID() && cartItem.getProductID() == cartItems.getProductID() && cartItems.isIsBuy() == true) {
-                        isBuy++;
+                Vector<CartItems> vectorCartItem = daoCartItem.getCartItem("select * from CartItem where CartID = " + cart.getCartID());
+                boolean itemExists = false;
+                for (CartItems ci : vectorCartItem) {
+                    if (ci.getProductID() == pid && !ci.isIsBuy()) {
+                        daoCartItem.updateQuantityCartItem(ci.getQuantity() + 1, ci.getCartItemID());
+                        itemExists = true;
+                        break;
                     }
                 }
-
-                if (isExist == 0) {
+                if (!itemExists) {
                     daoCartItem.addCartItem(cartItem);
-
                 }
                 response.sendRedirect("CartURL?service=showCart");
             }
 
             if (service.equals("updateCart")) {
-                Map<String, String[]> parameterMap = request.getParameterMap();
                 Vector<CartItems> vectorCartItems = (Vector<CartItems>) session.getAttribute("dataCartItem");
-                Set<Integer> unselectedItems = new HashSet<>();
-
-                // Xác định các mục không được chọn
-                String[] selectedItems = request.getParameterValues("selectedItems");
-                if (selectedItems != null) {
-                    for (CartItems item : vectorCartItems) {
-                        boolean isSelected = false;
-                        for (String selectedId : selectedItems) {
-                            if (Integer.parseInt(selectedId) == item.getCartItemID()) {
-                                isSelected = true;
-                                break;
-                            }
-                        }
-                        if (!isSelected) {
-                            unselectedItems.add(item.getCartItemID());
-                        }
-                    }
-                } else {
-                    for (CartItems item : vectorCartItems) {
-                        unselectedItems.add(item.getCartItemID());
-                    }
-                }
-                session.setAttribute("unselectedItems", unselectedItems);
-
-                // Cập nhật số lượng
-                for (String paramName : parameterMap.keySet()) {
-                    if (paramName.startsWith("quantity_")) {
-                        int cartItemID = Integer.parseInt(paramName.split("_")[1]);
-                        int newQuantity = Integer.parseInt(request.getParameter(paramName));
-                        daoCartItem.updateQuantityCartItem(newQuantity, cartItemID);
+                for (CartItems item : vectorCartItems) {
+                    String quantityParam = request.getParameter("quantity_" + item.getCartItemID());
+                    if (quantityParam != null) {
+                        int newQuantity = Integer.parseInt(quantityParam);
+                        daoCartItem.updateQuantityCartItem(newQuantity, item.getCartItemID());
                     }
                 }
                 response.sendRedirect("CartURL?service=showCart");
@@ -149,22 +106,12 @@ public class CartController extends HttpServlet {
             if (service.equals("deleteCart")) {
                 int cartItemID = Integer.parseInt(request.getParameter("cartItemID"));
                 daoCartItem.deleteCartItem(cartItemID);
-                Set<Integer> unselectedItems = (Set<Integer>) session.getAttribute("unselectedItems");
-                if (unselectedItems != null) {
-                    unselectedItems.remove(cartItemID);
-                    session.setAttribute("unselectedItems", unselectedItems);
-                }
                 response.sendRedirect("CartURL?service=showCart");
             }
 
             if (service.equals("checkout")) {
-
                 String[] selectedItems = request.getParameterValues("selectedItems");
-                for (String selectedItem : selectedItems) {
-                    System.out.println(selectedItem+"012");
-                }
                 Vector<CartItems> vectorCartItems = (Vector<CartItems>) session.getAttribute("dataCartItem");
-                Set<Integer> unselectedItems = new HashSet<>();
 
                 if (selectedItems != null && selectedItems.length > 0) {
                     Vector<CartItems> selectedCartItems = new Vector<>();
@@ -175,51 +122,18 @@ public class CartController extends HttpServlet {
                             }
                         }
                     }
-                    for (CartItems item : vectorCartItems) {
-                        boolean isSelected = false;
-                        for (String selectedId : selectedItems) {
-                            if (Integer.parseInt(selectedId) == item.getCartItemID()) {
-                                isSelected = true;
-                                break;
-                            }
-                        }
-                        if (!isSelected) {
-                            unselectedItems.add(item.getCartItemID());
-                        }
-                    }
-                    int count = 0;
                     Vector<String> overFlow = new Vector<>();
-
                     for (CartItems selectedCartItem : selectedCartItems) {
-
-                        DAOProducts dao = new DAOProducts();
-                        Products pro = dao.getProductByID(selectedCartItem.getProductID());
+                        Products pro = daoPro.getProductByID(selectedCartItem.getProductID());
                         if (pro.getQuantity() < selectedCartItem.getQuantity()) {
-                            count++;
                             overFlow.add(selectedCartItem.getProductName());
                         }
-
                     }
-                    if (count != 0) {
-
+                    if (!overFlow.isEmpty()) {
                         request.setAttribute("message", "We are out of stock of the following products:");
                         request.setAttribute("dataProductHight", overFlow);
                         request.getRequestDispatcher("/jsp/shop-cart.jsp").forward(request, response);
                     } else {
-                        DAODeliveryAddress daoDeli = new DAODeliveryAddress();
-                        Customers cus = (Customers) session.getAttribute("dataCustomer");
-                        Vector<DeliveryAddress> vectorDeli = daoDeli.getDeliveryAddress("select d.* from Orders o join DeliveryAddress d on o.OrderID = d.OrderID\n"
-                                + "  where CustomerID = " + cus.getCustomerID() + " And  o.OrderID = (SELECT MAX(o2.OrderID) FROM Orders o2 JOIN DeliveryAddress d2 ON o2.OrderID = d2.OrderID WHERE d2.AddressDetail = d.AddressDetail)\n"
-                                + "ORDER BY o.OrderID DESC;");
-                        
-                        DAODistricts daoDistricts = new DAODistricts();
-                        DAOProvinces daoProvinces = new DAOProvinces();
-                        Vector<Districts> vectorDistrics = daoDistricts.getDistricts("Select * from Districts");
-                        Vector<Provinces> vectorProvinces = daoProvinces.getProvinces("Select * from Provinces ");
-                        session.setAttribute("provinces",vectorProvinces);
-                        session.setAttribute("districts",vectorDistrics);
-                        session.setAttribute("savedAddresses", vectorDeli);
-                        session.setAttribute("unselectedItems", unselectedItems);
                         session.setAttribute("selectedCartItems", selectedCartItems);
                         response.sendRedirect("CheckoutURL?service=theFirst");
                     }
@@ -246,6 +160,5 @@ public class CartController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-
     }
 }

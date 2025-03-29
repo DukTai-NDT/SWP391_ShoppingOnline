@@ -194,9 +194,11 @@
                         <li class="sidebar-dropdown">
                             <a href="OrderShipperURL"><i class="uil uil-capsule me-2 d-inline-block"></i>All Order</a>
                         </li>
+                        <br>
                         <li class="sidebar-dropdown">
                             <a href="OrderReceivedURL"><i class="uil uil-coins me-2 d-inline-block"></i>Order received</a>
                         </li>
+                        <br>
                         <li class="sidebar-dropdown">
                             <a href="OrderFinishedURL"><i class="uil uil-coins me-2 d-inline-block"></i>Order finished</a>
                         </li>

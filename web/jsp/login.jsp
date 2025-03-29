@@ -52,7 +52,7 @@
                         <div class="card login-page bg-white shadow mt-4 rounded border-0">
                             <div class="card-body">
                                 <h4 class="text-center">Sign In</h4>  
-                                <form action="LoginURL" class="login-form mt-4">
+                                <form action="LoginURL" class="login-form mt-4" method="post">
                                     <input type="hidden" name="service" value="login">
                                     <div class="row">
                                         <div class="col-lg-12">
