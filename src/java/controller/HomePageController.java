@@ -50,6 +50,7 @@ public class HomePageController extends HttpServlet {
             Vector<Blogs> vblog = daoblog.getBlogs("select * from blogs");
             Vector<Products> vproductspecial = daoproduct.getProducts("select * from Products\n"
                     + "where Quantity >100");
+            
             session.setAttribute("vproductspecial", vproductspecial);
             session.setAttribute("vblog", vblog);
             session.setAttribute("vproduct", vproduct);

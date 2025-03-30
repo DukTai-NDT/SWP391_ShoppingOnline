@@ -553,40 +553,6 @@
                                                         </div><!--end col-->
                                                     </div>
                                                     </form>
-                                                    <!-- Script hiển thị ảnh xem trước -->
-                                                    <script>
-                                                        document.getElementById("loadImage").addEventListener("input", function () {
-                                                            const imgElement = document.getElementById("preview-img");
-                                                            const imageUrl = this.value.trim();
-
-                                                            if (imageUrl) {
-                                                                imgElement.src = imageUrl;
-                                                                imgElement.classList.remove("d-none");
-                                                            } else {
-                                                                imgElement.src = "";
-                                                                imgElement.classList.add("d-none");
-                                                            }
-                                                        });
-
-                                                        document.addEventListener("DOMContentLoaded", function () {
-                                                            const imgElement = document.getElementById("preview-img");
-                                                            const imageInput = document.getElementById("loadImage");
-
-                                                            function updatePreview() {
-                                                                const imageUrl = imageInput.value.trim();
-                                                                if (imageUrl) {
-                                                                    imgElement.src = imageUrl;
-                                                                    imgElement.classList.remove("d-none");
-                                                                } else {
-                                                                    imgElement.src = "";
-                                                                    imgElement.classList.add("d-none");
-                                                                }
-                                                            }
-
-                                                            imageInput.addEventListener("input", updatePreview);
-                                                            updatePreview(); // Gọi ngay khi modal mở để hiển thị ảnh có sẵn
-                                                        });
-                                                    </script>
                                                 </div><!--end col-->
                                             </div><!--end row-->
                                     </div>
@@ -674,6 +640,27 @@
         <script src="js/feather.min.js"></script>
         <!-- Main Js -->
         <script src="js/app.js"></script>
+        
+        <script>
+                    document.getElementById("image").addEventListener("change", function (event) {
+                        const imgElement = document.getElementById("preview-img");
+                        const file = event.target.files[0]; // Lấy file từ input
+
+                        if (file) {
+                            const reader = new FileReader();
+
+                            reader.onload = function (e) {
+                                imgElement.src = e.target.result; // Hiển thị ảnh đã chọn
+                                imgElement.classList.remove("d-none");
+                            };
+
+                            reader.readAsDataURL(file); // Đọc file dưới dạng URL
+                        } else {
+                            imgElement.src = "";
+                            imgElement.classList.add("d-none");
+                        }
+                    });
+                </script>
 
     </body>
 

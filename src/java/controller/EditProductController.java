@@ -61,7 +61,7 @@ public class EditProductController extends HttpServlet {
         String fileName = part.getSubmittedFileName();
 
 //            String uploadDir = "D:\\FU_Learning\\SUM2024\\CSD201\\Code\\UploadFile\\web\\uploads";
-        String uploadDir = "D:\\FU_Learning\\SUM2024\\CSD201\\Code\\SWP391\\web\\images\\products";
+        String uploadDir = "C:\\Users\\whyth\\Downloads\\Git\\Final_SWP391\\Finally\\web\\images\\products";
         File uploadFolder = new File(uploadDir);
 
         String path = uploadDir + File.separator + fileName;

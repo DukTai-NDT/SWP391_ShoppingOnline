@@ -171,9 +171,11 @@
                         <li class="sidebar-dropdown">
                             <a href="OrderShipperURL"><i class="uil uil-capsule me-2 d-inline-block"></i>All Order</a>
                         </li>
+                        <br>
                         <li class="sidebar-dropdown">
                             <a href="OrderReceivedURL"><i class="uil uil-coins me-2 d-inline-block"></i>Order received</a>
                         </li>
+                        <br>
                         <li class="sidebar-dropdown">
                             <a href="OrderFinishedURL"><i class="uil uil-coins me-2 d-inline-block"></i>Order finished</a>
                         </li>
@@ -199,16 +201,7 @@
                             <a id="close-sidebar" class="btn btn-icon btn-pills btn-soft-primary ms-2" href="#">
                                 <i class="uil uil-bars"></i>
                             </a>
-                            <div class="search-bar p-0 d-none d-lg-block ms-2">
-                                <div id="search" class="menu-search mb-0">
-                                    <form action="adminsearchblog" role="search" method="get" id="searchform" class="searchform">
-                                        <div>
-                                            <input type="text" class="form-control border rounded-pill" name="txt" id="s" placeholder="Search Keywords...">
-                                            <input type="submit" id="searchsubmit" value="Search">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                            
                         </div>
                         <%
                                                      if(currentCustomer != null){

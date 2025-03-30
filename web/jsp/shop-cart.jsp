@@ -1,4 +1,5 @@
 
+<%@page import="model.DAOProducts"%>
 <%@page import="entity.Account, entity.Products,entity.Customers, java.util.Vector,entity.Cart,entity.CartItems, entity.Categories" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.HashSet" %>
@@ -208,84 +209,96 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% 
-                                            float totalPriceCart = 0;
-                                            int index = 0;
-                                 
-                                            Set<Integer> unselectedItems = (Set<Integer>) session.getAttribute("unselectedItems");
-                                            if (unselectedItems == null) {
-                                                unselectedItems = new HashSet<>();
-                                            }
-
-
+                            <% 
+                                        float totalPriceCart = 0;
+                                        String[] selectedItems = request.getParameterValues("selectedItems");
+                                            DAOProducts daoProduct = new DAOProducts();
+                                        if (vectorCartItems != null) {
                                             for (CartItems vectorCartItem : vectorCartItems) {
                                                 float totalPrice = vectorCartItem.getPrice() * vectorCartItem.getQuantity();
-                                                boolean isChecked = !unselectedItems.contains(vectorCartItem.getCartItemID());
+                                                boolean isChecked = true; 
+                                                if (selectedItems != null) {
+                                                    isChecked = false; 
+                                                    for (String selectedId : selectedItems) {
+                                                        if (Integer.parseInt(selectedId) == vectorCartItem.getCartItemID()) {
+                                                            isChecked = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
                                                 if (isChecked) {
                                                     totalPriceCart += totalPrice;
                                                 }
-                                        %>
-                                        <tr>
-                                            <td class="p-3 text-center">
-                                                <input type="checkbox" name="selectedItems" value="<%=vectorCartItem.getCartItemID()%>" 
-                                                       class="item-checkbox" <%=isChecked ? "checked" : ""%>>
-                                            </td>
-                                            <td class="p-3">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid avatar avatar-small rounded shadow" style="height: 50px; width: 50px;" alt="">
-                                                    <h6 class="mb-0 ms-3"><%=vectorCartItem.getProductName()%></h6>
-                                                </div>
-                                            </td>
-                                            <td class="text-center p-3"><%=vectorCartItem.getPrice()%></td>
-                                            <td class="text-center shop-list p-3">
-                                                <div class="qty-icons">
-                                                    <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown(); updateTotal();" class="btn btn-icon btn-primary minus">-</button>
-                                                    <input min="1" name="quantity_<%=vectorCartItem.getCartItemID()%>" id="quantity_<%=vectorCartItem.getCartItemID()%>" value="<%=vectorCartItem.getQuantity()%>" type="number" class="btn btn-icon btn-primary qty-btn quantity" onchange="updateTotal()">
-                                                    <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp(); updateTotal();" class="btn btn-icon btn-primary plus">+</button>
-                                                </div>
-                                            </td>
-                                            <td class="text-end font-weight-bold p-3 total-per-item"><%=totalPrice%></td>
-                                            <td class="p-3 text-center">
-                                                <a href="CartURL?service=deleteCart&cartItemID=<%=vectorCartItem.getCartItemID()%>" class="text-danger"><i class="uil uil-times"></i></a>
-                                            </td>
-                                        </tr>
-                                        <% } %>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    %>
+                                    <tr>
+                                        <td class="p-3 text-center">
+                                            <input type="checkbox" name="selectedItems" value="<%=vectorCartItem.getCartItemID()%>"
+                                                   class="item-checkbox" <%=isChecked ? "checked" : ""%> onchange="updateTotal()">
+                                        </td>
+                                        <td class="p-3">
+                                            <div class="d-flex align-items-center">
+                                                <img src="images/products/<%=daoProduct.getProductImg(vectorCartItem.getProductID())%>" class="img-fluid avatar avatar-small rounded shadow" style="height: 50px; width: 50px;" alt="">
+                                                <h6 class="mb-0 ms-3"><%=vectorCartItem.getProductName()%></h6>
+                                            </div>
+                                        </td>
+                                        <td class="text-center p-3"><%=vectorCartItem.getPrice()%></td>
+                                        <td class="text-center shop-list p-3">
+                                            <div class="qty-icons">
+                                                <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown(); updateTotal();" class="btn btn-icon btn-primary minus">-</button>
+                                                <input min="1" name="quantity_<%=vectorCartItem.getCartItemID()%>" id="quantity_<%=vectorCartItem.getCartItemID()%>"
+                                                       value="<%=vectorCartItem.getQuantity()%>" type="number" class="btn btn-icon btn-primary qty-btn quantity" onchange="updateTotal()">
+                                                <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp(); updateTotal();" class="btn btn-icon btn-primary plus">+</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-end font-weight-bold p-3 total-per-item"><%=totalPrice%></td>
+                                        <td class="p-3 text-center">
+                                            <a href="CartURL?service=deleteCart&cartItemID=<%=vectorCartItem.getCartItemID()%>" class="text-danger"><i class="uil uil-times"></i></a>
+                                        </td>
+                                    </tr>
+                                    <% 
+                                            }
+                                        }
+                                    %>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6 mt-4 pt-2">
-                            <a href="ProductURL?service=listAllProducts" class="btn btn-primary">Shop More</a>
-                            <button type="submit" name="service" value="updateCart" class="btn btn-primary">Update Cart</button>
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 mt-4 pt-2">
+                        <a href="ProductURL?service=listAllProducts" class="btn btn-primary">Shop More</a>
+                        <button type="submit" name="service" value="updateCart" class="btn btn-primary">Update Cart</button>
+                    </div>
+                    <div class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
+                        <div class="table-responsive bg-white rounded shadow">
+                            <table class="table table-center table-padding mb-0">
+                                <tbody>
+                                    <tr class="bg-light">
+                                        <td class="h6 p-3">Total</td>
+                                        <td class="text-end font-weight-bold p-3" id="cart-total"><%=totalPriceCart%></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
-                            <div class="table-responsive bg-white rounded shadow">
-                                <table class="table table-center table-padding mb-0">
-                                    <tbody>
-                                        <tr class="bg-light">
-                                            <td class="h6 p-3">Total</td>
-                                            <td class="text-end font-weight-bold p-3" id="cart-total"><%=totalPriceCart%></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <p style="color: red;"><%=(request.getAttribute("message") != null ? request.getAttribute("message") : "")%></p>
-                            <%Vector<String> overFlow = (Vector<String>)request.getAttribute("dataProductHight");
-                            if(overFlow != null){
-                            for (String string : overFlow) {%>
-                            <p style="color: red;"><%=string%></p>
-                                <%}}%>
-    
-                            <div class="mt-4 pt-2 text-end">
-                                <button type="submit" name="service" value="checkout" class="btn btn-primary">Proceed to checkout</button>
-                            </div>
+                        <p style="color: red;"><%=(message != null ? message : "")%></p>
+                        <% 
+                            Vector<String> overFlow = (Vector<String>) request.getAttribute("dataProductHight");
+                            if (overFlow != null) {
+                                for (String string : overFlow) {
+                        %>
+                        <p style="color: red;"><%=string%></p>
+                        <% 
+                                }
+                            }
+                        %>
+                        <div class="mt-4 pt-2 text-end">
+                            <button type="submit" name="service" value="checkout" class="btn btn-primary">Proceed to checkout</button>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
+        </div>
         </section>
         <!-- End -->
         <!-- End -->

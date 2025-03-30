@@ -80,7 +80,7 @@ public class AddCategoryController extends HttpServlet {
         Part part = request.getPart("image");
         String fileName = part.getSubmittedFileName();
 
-        String uploadDir = "D:\\FU_Learning\\SUM2024\\CSD201\\Code\\SWP391\\web\\images\\category";
+        String uploadDir = "C:\\Users\\whyth\\Downloads\\Git\\Final_SWP391\\Finally\\web\\images\\category";
         File uploadFolder = new File(uploadDir);
 
         String path = uploadDir + File.separator + fileName;

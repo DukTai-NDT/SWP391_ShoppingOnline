@@ -48,7 +48,7 @@ public class AddProductController extends HttpServlet {
             }
 
             // Đường dẫn lưu ảnh
-            String uploadDir = "C:\\Users\\whyth\\Downloads\\Git\\SWP391_FinalPrj\\SWP391_ShoppingOnline\\web\\images\\products";
+            String uploadDir = "C:\\Users\\whyth\\Downloads\\Git\\Final_SWP391\\Finally\\web\\images\\products";
             File uploadFolder = new File(uploadDir);
             String path = uploadDir + File.separator + fileName;
             InputStream is = part.getInputStream();

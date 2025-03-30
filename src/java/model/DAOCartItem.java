@@ -175,12 +175,12 @@ public class DAOCartItem extends DBConnection {
         DAOCartItem dao = new DAOCartItem();
         boolean status = dao.checkQuantity(49, 8);
         System.out.println(status);
-//        Vector<CartItems> vectorCartItem = dao.getCartItem("select * from CartItem");
-//        
-//        Vector<CartItems> vector = dao.getProductIsntBuy("  select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = 3");
-//        for (CartItems cartItems : vectorCartItem) {
-//            System.out.println(cartItems);
-//        }
+        Vector<CartItems> vectorCartItem = dao.getCartItem("select * from CartItem");
+        
+        Vector<CartItems> vector = dao.getProductIsntBuy("  select ci.CartItemID,ci.CartID,ci.ProductID,ci.ProductName,ci.Price,ci.Quantity, ci.IsBuy from CartItem ci join Cart c on ci.CartID = c.CartID where c.CustomerID = 3");
+        for (CartItems cartItems : vectorCartItem) {
+            System.out.println(cartItems.getProductID());
+        }
     }
 
 }

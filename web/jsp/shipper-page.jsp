@@ -51,7 +51,7 @@
             <nav id="sidebar" class="sidebar-wrapper">
                 <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
                     <div class="sidebar-brand">
-                        <a href="Dashboard">
+                        <a href="ShipperPageURL">
                             <!--<a href="index.jsp">-->
                             <img src="images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                             <img src="images/logo-light.png" height="24" class="logo-dark-mode" alt="">
@@ -60,15 +60,17 @@
 
                     <ul class="sidebar-menu pt-3">
                         <li class="sidebar-dropdown">
-                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
+                            <a href="ShipperPageURL"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
                         <br>
                         <li class="sidebar-dropdown">
                             <a href="OrderShipperURL"><i class="uil uil-capsule me-2 d-inline-block"></i>All Order</a>
                         </li>
+                        <br>
                         <li class="sidebar-dropdown">
                             <a href="OrderReceivedURL"><i class="uil uil-coins me-2 d-inline-block"></i>Order received</a>
                         </li>
+                        <br>
                         <li class="sidebar-dropdown">
                             <a href="OrderFinishedURL"><i class="uil uil-coins me-2 d-inline-block"></i>Order finished</a>
                         </li>

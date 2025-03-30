@@ -1,3 +1,4 @@
+<%@page import="model.DAOProducts"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import=" entity.Account" %>
 
@@ -185,14 +186,14 @@
 
         </style>
     </head>
-    <%Vector<Categories> vcategories = (Vector<Categories>)session.getAttribute("vcategories");%>
-    <%Vector<Products> vproduct = (Vector<Products>)session.getAttribute("vproduct");%>
-    <% Vector<Products> vproductspecial= (Vector<Products>)session.getAttribute("vproductspecial");%>
+    <%Vector<Categories> vcategories = (Vector<Categories>) session.getAttribute("vcategories");%>
+    <%Vector<Products> vproduct = (Vector<Products>) session.getAttribute("vproduct");%>
+    <% Vector<Products> vproductspecial = (Vector<Products>) session.getAttribute("vproductspecial");%>
     <%
-        Account account = (Account)session.getAttribute("dataUser");
-       Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
+        Account account = (Account) session.getAttribute("dataUser");
+        Customers currentCustomer = (Customers) session.getAttribute("dataCustomer");
 
-             Vector<CartItems> vectorCartItems = (Vector<CartItems>)session.getAttribute("dataCartItem"); 
+        Vector<CartItems> vectorCartItems = (Vector<CartItems>) session.getAttribute("dataCartItem");
     %>
 
     <body>
@@ -244,7 +245,7 @@
 
 
                     <%
-            if(currentCustomer != null){
+                        if (currentCustomer != null) {
                     %>
                     <li class="list-inline-item mb-0">
                         <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
@@ -262,14 +263,14 @@
                         <div class="dropdown dropdown-primary">
 
                             <button type="button" class="btn btn-pills btn-soft-primary dropdown-toggle p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
+                                <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg"%>" class="avatar avatar-ex-small rounded-circle" alt="Profile">
                             </button>
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow border-0 mt-3 py-3" style="min-width: 200px;">
                                 <a class="dropdown-item d-flex align-items-center text-dark" href="doctor-profile.html">
-                                    <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg" %>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
+                                    <img src="<%= (currentCustomer.getProfileImg() != null && !currentCustomer.getProfileImg().isEmpty()) ? currentCustomer.getProfileImg() : "${pageContext.request.contextPath}/images/client/09.jpg"%>" class="avatar avatar-md-sm rounded-circle border shadow" alt="Profile">
 
                                     <div class="flex-1 ms-2">
-                                        <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName() %></span>
+                                        <span class="d-block mb-1"><%= currentCustomer.getFirstName() + " " + currentCustomer.getLastName()%></span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-dark" href="OrderHistoryURL?service=show"><span class="mb-0 d-inline-block me-1"><i class="uil uil-receipt align-middle h6"></i></span>Order History</a>
@@ -279,7 +280,7 @@
                                     </span>Chat
                                 </a>
                                 <a class="dropdown-item text-dark" href="CustomerURL"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span> Profile Settings</a>
-                                        <%if(account.getRoleID() != 2){%> 
+                                        <%if (account.getRoleID() != 2) {%> 
                                 <a class="dropdown-item text-dark" href="Dashboard"><span class="mb-0 d-inline-block me-1"><i class="uil uil-setting align-middle h6"></i></span>Manager Dashboard</a>
                                         <%}%>
                                 <div class="dropdown-divider border-top"></div>
@@ -288,7 +289,7 @@
                             </div>
                         </div>
                     </li>
-                    <%} else{%>
+                    <%} else {%>
                     <div class="auth-links">
                         <a href="SignUpURL?service=signup">Sign up</a>
                         <span>|</span>
@@ -312,7 +313,7 @@
             </li>
             <li class="has-submenu parent-parent-menu-item"><a href="javascript:void(0)">Categories</a><span class="menu-arrow"></span>
                 <ul class="submenu">
-                    <%for (Categories cat : vcategories){%>
+                    <%for (Categories cat : vcategories) {%>
                     <li><a href="ProductURL?service=categories&cid=<%=cat.getCategoryID()%>" class="sub-menu-item"> <%=cat.getCategoryName()%></a></li>
                         <%}%>
                 </ul>
@@ -375,7 +376,7 @@
         <!-- Swiper Container -->
         <!--        <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
-        <%for (Categories c : vcategories){%>
+        <%for (Categories c : vcategories) {%>
         <div class="swiper-slide">
             <div class="card features feature-primary border-0">
                 <div class="icon text-center rounded-md">
@@ -393,13 +394,13 @@
 </div>-->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-                <% for (Categories c : vcategories) { %>
+                <% for (Categories c : vcategories) {%>
                 <div class="swiper-slide">
                     <div class="card features feature-primary border-0 p-2">
                         <div class="d-flex align-items-center"> 
-                            <img src="images/category/<%= c.getImage() %>" alt="Blog Image" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
-                            <a href="ProductURL?service=categories&cid=<%= c.getCategoryID() %>" class="title text-dark h5 mb-0">
-                                <%= c.getCategoryName() %>
+                            <img src="images/category/<%= c.getImage()%>" alt="Blog Image" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                            <a href="ProductURL?service=categories&cid=<%= c.getCategoryID()%>" class="title text-dark h5 mb-0">
+                                <%= c.getCategoryName()%>
                             </a>
                         </div>
                     </div>
@@ -502,7 +503,6 @@
                             <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
                             <div class="buttons mt-2">
                                 <a class="btn btn-primary" href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>">Buy</a>
-                                <button class="btn btn-primary">Tuyp</button>
                             </div>
                         </div>
                     </div>
@@ -571,11 +571,8 @@
                     <div class="card-body1 p-0 mt-3">
                         <a href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>" class="title text-dark h5"><%=p.getProductName()%></a><br>
                         <!--                                    <p class="text-muted mt-3">There is now an abundance of readable dummy texts required purely to fill a space.</p>-->
-                        <div class="buttons1">
-
-                            <a class="btn btn-primary" href="">Buy</a>
-
-                            <button class="btn btn-primary">Tuyp</button>
+                        <div class="buttons mt-2">
+                            <a class="btn btn-primary" href="ProductDetailURL?service=detailProduct&pid=<%=p.getProductID()%>">Buy</a>
                         </div>
                     </div>
 
@@ -803,16 +800,15 @@
         <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body p-4">
-        <% 
-           
-            if(vectorCartItems != null && !vectorCartItems.isEmpty()) {
-               
-               
-              for(CartItems vectorCartItem : vectorCartItems) {
+        <%
+  DAOProducts daoProduct = new DAOProducts();
+            if (vectorCartItems != null && !vectorCartItems.isEmpty()) {
+
+                for (CartItems vectorCartItem : vectorCartItems) {
         %>
         <div class="cart-item">
             <div class="d-flex align-items-center mb-3">
-                <img src="images/pharmacy/shop/ashwagandha.jpg" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
+                <img src="images/products/<%=daoProduct.getProductImg(vectorCartItem.getProductID())%>" class="img-fluid rounded shadow" style="width: 60px; height: 60px;" alt="">
                 <div class="ms-3 flex-1">
                     <h6 class="mb-1"><%=vectorCartItem.getProductName()%></h6>
                     <div class="d-flex justify-content-between">
@@ -824,7 +820,8 @@
             </div>
         </div>
         <%
-            } }else {
+            }
+        } else {
         %>
         <p class="text-muted text-center " >No Products In Cart...</p>
         <%

@@ -81,7 +81,7 @@
 
                     <ul class="sidebar-menu pt-3">
                         <li class="sidebar-dropdown">
-                            <a href="Dashboard"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
+                            <a href="ShipperPageURL"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a>
                         </li>
                         <br>
                         <li class="sidebar-dropdown">

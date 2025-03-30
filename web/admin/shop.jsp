@@ -492,22 +492,6 @@
                     </div>
                 </form>
 
-                <!-- Script hiển thị ảnh xem trước -->
-                <script>
-                    document.getElementById("image").addEventListener("input", function () {
-                        const imgElement = document.getElementById("preview-img");
-                        const imageUrl = this.value.trim();
-
-                        if (imageUrl) {
-                            imgElement.src = imageUrl;
-                            imgElement.classList.remove("d-none");
-                        } else {
-                            imgElement.src = "";
-                            imgElement.classList.add("d-none");
-                        }
-                    });
-                </script>
-
             </div>
         </div>
     </div>
@@ -522,28 +506,47 @@
 <script src="js/feather.min.js"></script>
 <!-- Main Js -->
 <script src="js/app.js"></script>
-
 <script>
-                    const handleChange = () => {
-                        const fileUploader = document.querySelector('#input-file');
-                        const getFile = fileUploader.files
-                        if (getFile.length !== 0) {
-                            const uploadedFile = getFile[0];
-                            readFile(uploadedFile);
-                        }
-                    }
+                    document.getElementById("image").addEventListener("change", function (event) {
+                        const imgElement = document.getElementById("preview-img");
+                        const file = event.target.files[0]; // Lấy file từ input
 
-                    const readFile = (uploadedFile) => {
-                        if (uploadedFile) {
+                        if (file) {
                             const reader = new FileReader();
-                            reader.onload = () => {
-                                const parent = document.querySelector('.preview-box');
-                                parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
+
+                            reader.onload = function (e) {
+                                imgElement.src = e.target.result; // Hiển thị ảnh đã chọn
+                                imgElement.classList.remove("d-none");
                             };
 
-                            reader.readAsDataURL(uploadedFile);
+                            reader.readAsDataURL(file); // Đọc file dưới dạng URL
+                        } else {
+                            imgElement.src = "";
+                            imgElement.classList.add("d-none");
                         }
-                    };
+                    });
+</script>
+<script>
+    const handleChange = () => {
+        const fileUploader = document.querySelector('#input-file');
+        const getFile = fileUploader.files
+        if (getFile.length !== 0) {
+            const uploadedFile = getFile[0];
+            readFile(uploadedFile);
+        }
+    }
+
+    const readFile = (uploadedFile) => {
+        if (uploadedFile) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const parent = document.querySelector('.preview-box');
+                parent.innerHTML = `<img class="preview-content" src=${reader.result} />`;
+            };
+
+            reader.readAsDataURL(uploadedFile);
+        }
+    };
 </script>
 </body>
 

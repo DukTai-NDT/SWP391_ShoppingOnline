@@ -24,7 +24,7 @@ public class DAOCart extends DBConnection {
         int n = 0;
         String sql = "INSERT INTO [dbo].[Cart]\n"
                 + "           ([CustomerID]\n"
-                + "           ,[CartStatus]\n"
+           
                 + "           ,[CreateDate])\n"
                 + "     VALUES\n"
                 + "           (?,?,?)";
@@ -32,7 +32,7 @@ public class DAOCart extends DBConnection {
         try {
             PreparedStatement preState = conn.prepareCall(sql);
             preState.setInt(1, other.getCustomerID());
-            preState.setInt(2, other.isCartStatus() == true ? 1 : 0);
+       
             preState.setDate(3, java.sql.Date.valueOf(other.getCreateDate()));
             n = preState.executeUpdate();
         } catch (SQLException ex) {
@@ -59,15 +59,14 @@ public class DAOCart extends DBConnection {
         int n = 0;
         String sql = "UPDATE [dbo].[Cart]\n"
                 + "   SET [CustomerID] = ?\n"
-                + "      ,[CartStatus] = ?\n"
+             
                 + "      ,[CreateDate] = ?\n"
                 + " WHERE CartID = ?";
 
         try {
             PreparedStatement preState = conn.prepareStatement(sql);
             preState.setInt(1, other.getCustomerID());
-            preState.setInt(2, other.isCartStatus() == true ? 1 : 0);
-
+     
             preState.setDate(3, java.sql.Date.valueOf(other.getCreateDate()));
             preState.setInt(4, other.getCartID());
             n = preState.executeUpdate();
@@ -85,10 +84,9 @@ public class DAOCart extends DBConnection {
             while (rs.next()) {
                 int CartID = rs.getInt("CartID");
                 int CustomerID = rs.getInt("CustomerID");
-                boolean CartStatus = (rs.getInt("CartStatus")) == 1 ? true : false;
-
+              
                 LocalDate CreateDate = rs.getDate("CreateDate").toLocalDate();
-                Cart cart = new Cart(CartID, CustomerID, CartStatus, CreateDate);
+                Cart cart = new Cart(CartID, CustomerID, CreateDate);
                 vector.add(cart);
             }
         } catch (SQLException ex) {

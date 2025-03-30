@@ -243,6 +243,7 @@
                                 %>
                                 <select class="form-select form-control" id="savedAddress" name="savedAddress">
                                     <option value="">Choose saver address</option>
+                                    <%if(savedAddresses != null){%>
                                     <% for (DeliveryAddress deliveryAddress : savedAddresses) {%>
                                     <option value="<%= deliveryAddress.getDeliveryAddressID() %>" data-province="<%= deliveryAddress.getProvinceID()%>" 
                                             data-district="<%= deliveryAddress.getDistrictID() %>" data-address="<%= deliveryAddress.getAddressDetail() %>">
@@ -250,6 +251,9 @@
                                     </option>
                                     <% } %>
                                     <option value="new">Add new address</option>
+                                    <%}else{%>
+                                     <option value="new">Add new address</option>
+                                    <% } %>
                                 </select>
                             </div>
 
