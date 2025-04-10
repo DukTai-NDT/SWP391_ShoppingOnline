@@ -141,8 +141,10 @@ public class CheckoutController extends HttpServlet {
                         Products pro= daoPro.getProductByID(vectorCartItem.getProductID());
                         int quantityAfter = pro.getQuantity() - vectorCartItem.getQuantity();
                         pro.setQuantity(quantityAfter);
+                        pro.setIsAvailable(true);
                         int z = daoPro.updateProduct(pro);
                         int y = daoCartItem.changeIsBuy(1, vectorCartItem.getCartItemID());
+                        
                     }
                     session.setAttribute("selectedCartItems", new Vector<CartItems>());
 
